@@ -71,7 +71,7 @@ Common spatial analysis methods and their applications in urban research
 
 Break and small Q&A
 
-**01:15 - 02:00**: Integration with [Remote sensing](.\contents\rs.md)
+**01:15 - 02:00**: Integration with [Remote sensing](./contents/rs.md)
 
 - Introduction of remote sensing
   - Introduction
