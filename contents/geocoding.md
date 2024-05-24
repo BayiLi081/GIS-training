@@ -2,85 +2,126 @@
 
 Geocoding is the process where it converts address into spatial data and associates the exact geographical coordinates for that address.
 
-| ![geocoding_001](../imgs/geocoding_001.jpg) |
-| ------------------------------------------- |
-|                                             |
-| ![geocoding_002](../imgs/geocoding_002.png) |
-|                                             |
+| ![geocoding_001](../imgs/geocoding_001.jpg)                  |
+| ------------------------------------------------------------ |
+| [Geocoding Service - Google for Developers](https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple) |
 
-### Common points of confusion and misconceptions
+The query result is returned in the format of json as following:
 
+```
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "8",
+          "short_name": "8",
+          "types": [
+            "street_number"
+          ]
+        },
+        {
+          "long_name": "Somapah Road",
+          "short_name": "Somapah Rd",
+          "types": [
+            "route"
+          ]
+        },
+        {
+          "long_name": "Tampines",
+          "short_name": "Tampines",
+          "types": [
+            "neighborhood",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Singapore",
+          "short_name": "Singapore",
+          "types": [
+            "locality",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Singapore",
+          "short_name": "SG",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "487372",
+          "short_name": "487372",
+          "types": [
+            "postal_code"
+          ]
+        }
+      ],
+      "formatted_address": "8 Somapah Rd, Singapore 487372",
+      "geometry": {
+        "location": {
+          "lat": 1.341258,
+          "lng": 103.9637585
+        },
+        "location_type": "ROOFTOP",
+        "viewport": {
+          "south": 1.339127669708498,
+          "west": 103.9612536,
+          "north": 1.341825630291502,
+          "east": 103.9652256
+        }
+      },
+      "partial_match": true,
+      "place_id": "ChIJy2Dymdg82jERGFUCbbzKvpk",
+      "plus_code": {
+        "compound_code": "8XR7+GG Singapore",
+        "global_code": "6PH58XR7+GG"
+      },
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "university"
+      ]
+    }
+  ]
+}
+```
 
+## Notes on the Postcode
 
-#### Postcodes always represent locations
+- A postcode may represent a small area unit or branches of the same facilities, which cannot be used to identify an accurate location by postcode alone.
 
+- Postcodes can change because countries may alter part of or the entire postcode system. In such cases, it is advisable to check the current effectiveness of the postcode system.
 
+- In certain scenarios, multiple postcodes can be assigned to a single address for specific reasons (e.g., a large population residing in one place).
 
-No, for most countries postcodes represent mail delivery points. Those points may or may not be in fixed locations. For example, many countries assign postcodes to military units. The postcodes stays the same regardless of where the unit is physically based. In many countries large companies or government departments have their own postal code with no correlation to physical location.
+- Postcodes are not unique to a specific country. A postcode could refer to multiple locations in different countries; therefore, it is better always to specify the country name.
 
+### Example of Indonesia's Postcode system
 
+Indonesia's postcode system, known locally as "Kode Pos," is a five-digit numerical code used to simplify the sorting and delivery of mail.
 
-#### Postcodes never move or change
+The first two digits represent the province or metropolitan area, while the subsequent digits further refine the location to specific districts and sub-districts. A postcode generally cannot be used to identify a specific house. While postcodes help narrow down locations, they typically cover multiple houses, buildings, or even entire neighborhoods. 
 
+To pinpoint a specific house, you would need additional address details such as the street name and house number.
 
+## Reverse geocoding
 
-No, in most countries there is on-going fluctuations in postcodes. New postcodes are created, old codes are retired, large organization move and take their code with them. Occasionally countries will change their entire postcode system (fun!).
+At rare cases, we need to transform coordinates to addresses, namely reverse geocoding.
 
+| ![geocoding_002](../imgs/geocoding_002.png)                  |
+| ------------------------------------------------------------ |
+| [Reverse Geocoding - Google for Developers](https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse) |
 
+## Useful tools
 
-#### Postcodes work roughly the same way in all countries
-
-
-
-No, not at all. Almost every aspect of what a postcode is and what it means can differ across countries. The format of the code, the number of people it represents, etc, etc.
-
-
-
-#### All countries have postcodes
-
-
-
-No, many countries do not have any form of postal code at all. Also, some countries technically have a postcode system, but it is not widely used.
-
-
-
-#### Every geographic location belongs to a certain, unique postcode region.
-
-
-
-While some countries have assigned postcode regions to all of their territory, many others have not. Remote locations, for example in a large forest, or lakes or other bodies of water, may not fall into any postal region.
-
-
-
-#### Locations have a single, unique postcode
-
-
-
-No, often large buildings will have multiple postcodes, for example if there are multiple, large organizations based there. Usually it will depend on how many people are at the location (and thus how much mail typically needs to be sent there). An example: skyscrapers in New York can have multiple "zipcodes" (as postcodes are known in the US). Also when postcodes change people will often keep using the old postcode, even after a new postcode has been assigned to the location.
-
-
-
-#### Postal systems are unique to a specific country
-
-
-
-No, many countries and territories of the world use the postal service of other countries. For example Liechtenstein uses the Swiss postal system. For logistical convenience, exclaves of one country often use the postal system of another country. For example the German exclave [Büsingen uses both the German and Swiss postal services ](https://en.wikipedia.org/wiki/Büsingen_am_Hochrhein#Postal_services).
-
-
-
-#### Postcodes are unique to a specific country
-
-
-
-No, many countries use strings of numbers as their postal code. So if you just send us a query like `12345` we have no idea which country you mean. Please always also add a country name.
-
-
-
-#### Postcodes are always numbers
-
-
-
-No, many countries like the UK, Canada, and the Netherlands have alphanumeric codes. Some countries require dashes or spaces in their codes. But even in countries that use only digits in their postal codes it is best to always treat postcodes as strings not numbers, otherwise leading zeros can get removed by formatting software (for example Excel). This is one of the most [common problems we see in geocoding query formatting ](https://opencagedata.com/guides/how-to-format-your-geocoding-query).
+- [Google Maps Platform](https://developers.google.com/maps): Provides APIs for map, including for geocoding and reverse geocoding
+- [Mapbox](https://mapbox.com): An alternative to Google Maps
+- [Esri ArcGIS Platform or ArcGIS pro](https://esri.com): Design for Esri User, but with limitation of quota
+- [Nominatum](https://nominatim.openstreetmap.org): An open source geocoding services
+- [geopy](https://github.com/geopy/geopy): A Python library to use geocoding services
 
 ## Reference
 
