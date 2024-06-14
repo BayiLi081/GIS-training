@@ -148,3 +148,10 @@ Geospatial analysis and visualisation with other tools:
   - **20 mins**: Hands-on practice
 
 **03:00 - 03:30**: Open discussion on career opportunities in the cross field and Q&A
+
+## Day 04
+
+[Introduction to the first map online](./contents/webgis.md)
+
+
+
