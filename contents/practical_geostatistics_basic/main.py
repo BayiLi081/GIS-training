@@ -129,15 +129,11 @@ HDB_BFP_inner.plot(column='diff_mn', legend=True)
 plt.show()
 
 # %%
-# Save the file to a new shapefile
-HDB_BFP_inner.to_file('data/HDB_BFP_inner.shp')
-
-# %%
 # add four columns to the table: mn_ratio, af_ratio, ev_ratio, nh_ratio
-HDB_BFP_inner['mn_ratio'] = "No Open"
-HDB_BFP_inner['af_ratio'] = "No Open"
-HDB_BFP_inner['ev_ratio'] = "No Open"
-HDB_BFP_inner['nh_ratio'] = "No Open"
+HDB_BFP_inner['mn_ratio'] = "no access to both"
+HDB_BFP_inner['af_ratio'] = "no access to both"
+HDB_BFP_inner['ev_ratio'] = "no access to both"
+HDB_BFP_inner['nh_ratio'] = "no access to both"
 
 # if the h_wd_mn =/ 0 and unh_wd_mn =/ 0, then calculate the ratio
 for index, row in HDB_BFP_inner.iterrows():
@@ -150,6 +146,8 @@ for index, row in HDB_BFP_inner.iterrows():
             HDB_BFP_inner.at[index, 'mn_ratio'] = "Non fast food > fast food"
         elif row['diff_mn'] < 0:
             HDB_BFP_inner.at[index, 'mn_ratio'] = "Fast food > Non fast food"
+        elif row['diff_mn'] == 0:
+            HDB_BFP_inner.at[index, 'mn_ratio'] = "Fast food = non fast food"
     
     if row['h_wd_af'] != 0 and row['unh_wd_af'] == 0:
         HDB_BFP_inner.at[index, 'af_ratio'] = "neutral no unhealthy"
@@ -160,6 +158,8 @@ for index, row in HDB_BFP_inner.iterrows():
             HDB_BFP_inner.at[index, 'af_ratio'] = "Non fast food > fast food"
         elif row['diff_af'] < 0:
             HDB_BFP_inner.at[index, 'af_ratio'] = "Fast food > Non fast food"
+        elif row['diff_af'] == 0:
+            HDB_BFP_inner.at[index, 'af_ratio'] = "Fast food = non fast food"
     
     if row['h_wd_ev'] != 0 and row['unh_wd_ev'] == 0:
         HDB_BFP_inner.at[index, 'ev_ratio'] = "neutral no unhealthy"
@@ -170,6 +170,8 @@ for index, row in HDB_BFP_inner.iterrows():
             HDB_BFP_inner.at[index, 'ev_ratio'] = "Non fast food > fast food"
         elif row['diff_ev'] < 0:
             HDB_BFP_inner.at[index, 'ev_ratio'] = "Fast food > Non fast food"
+        elif row['diff_ev'] == 0:
+            HDB_BFP_inner.at[index, 'ev_ratio'] = "Fast food = non fast food"
 
     if row['h_wd_nh'] != 0 and row['unh_wd_nh'] == 0:
         HDB_BFP_inner.at[index, 'nh_ratio'] = "neutral no unhealthy"
@@ -180,4 +182,10 @@ for index, row in HDB_BFP_inner.iterrows():
             HDB_BFP_inner.at[index, 'nh_ratio'] = "Non fast food > fast food"
         elif row['diff_nh'] < 0:
             HDB_BFP_inner.at[index, 'nh_ratio'] = "Fast food > Non fast food"
-            
+        elif row['diff_nh'] == 0:
+            HDB_BFP_inner.at[index, 'nh_ratio'] = "Fast food = non fast food"
+
+# %%
+# Save the file to a new shapefile
+HDB_BFP_inner.to_file('data/HDB_BFP_inner2.shp')
+# %%

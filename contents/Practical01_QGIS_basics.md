@@ -1,5 +1,11 @@
 # Create a map with essential elements in QGIS
 
+## Installing QGIS Plugins
+
+You may refer [about plugins in QGIS](qgis_plugins.md) to understand how to install and use some popular QGIS plugins to boost efficiency.
+
+
+
 ## Download road network with QGIS plugin - QuickOSM
 
 ### Install QuickOSM through the plugin manager

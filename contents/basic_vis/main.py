@@ -100,10 +100,10 @@ unheal_median = data_no0['sum_unheal_allhrs'].median()
 neu_median = data_no0['sum_neu_allhrs'].median()
 
 # color the points based on their relation to the medians
-data_no0['color'] = 'g'
-data_no0.loc[(data_no0['sum_unheal_allhrs'] > unheal_median) & (data_no0['sum_neu_allhrs'] < neu_median), 'color'] = 'r'
-data_no0.loc[(data_no0['sum_unheal_allhrs'] < unheal_median) & (data_no0['sum_neu_allhrs'] > neu_median), 'color'] = 'b'
-data_no0.loc[(data_no0['sum_unheal_allhrs'] > unheal_median) & (data_no0['sum_neu_allhrs'] > neu_median), 'color'] = 'y'
+data_no0['color'] = '#A3FF73'
+data_no0.loc[(data_no0['sum_unheal_allhrs'] > unheal_median) & (data_no0['sum_neu_allhrs'] < neu_median), 'color'] = '#FF7F7F'
+data_no0.loc[(data_no0['sum_unheal_allhrs'] < unheal_median) & (data_no0['sum_neu_allhrs'] > neu_median), 'color'] = '#C9D3FE'
+data_no0.loc[(data_no0['sum_unheal_allhrs'] > unheal_median) & (data_no0['sum_neu_allhrs'] > neu_median), 'color'] = '#C9D3FE'
 
 #%%
 left = 0.1
@@ -139,7 +139,9 @@ main_ax.text(neu_median, 50, f'Median of Neutral = {neu_median}', color='black',
 # plt.xlabel('')
 # plt.ylabel('')
 # plt.title('')
-
+plt.show()
 # save the plot as svg
-plt.savefig('four_quadrants.svg')
+#plt.savefig('four_quadrants.svg')
 # %%
+data_onlyunheal['color'] = '#FF0000'
+data_onlyneu['color'] = '#00A884'

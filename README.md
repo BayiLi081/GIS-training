@@ -1,10 +1,6 @@
-# GIS Bootcamp for MUSPP students
+# GIS Training Material 
 
-Contributors: Li Bayi
-
-Designed for 3*3-hour Lecture + Tutorial Contents.
-
-Last Update: 17 May 2023
+Last Update: June 2024
 
 ## Preparation
 
@@ -12,9 +8,23 @@ Last Update: 17 May 2023
 
 Please make sure that you have properly installed the QGIS from the [official website](https://qgis.org/en/site/forusers/download.html) before the bootcamp started. You can download the LTR version as it is more stable to run on your computer and compatible to more extensions normally.
 
-## Day 01
+### Addition: Installing Python
 
-**00:00 - 00:15**: 
+Open [Download Python | Python.org](https://www.python.org/downloads/), choose your OS, and the corresponding version of Python. Because the update of Python libraries may not at the same speed with the latest version of Python, we can just use earlier version of Python. In our course, we will use the **3.11**, more specifically, **[3.11.9](https://www.python.org/downloads/release/python-3119/)**.
+
+<img src="imgs\installingPython.jpg" alt="installingPython" style="zoom:33%;" />
+
+Open your terminal, type `python -V` and enter to check the installed version of Python.
+
+Optional steps:
+
+1. Using virtual environment is more handy for individual project or tasks. You may refer to
+   -  Linux: [Managing Python Virtual Environments using Virtualenvwrapper | by Joseph Kariuki | Medium](https://jkariukidev.medium.com/managing-python-virtual-environments-using-virtualenvwrapper-9c6ebde27ee4)
+   - Windows: `pip install virtualenvwrapper-win`
+   - Mac:
+2. 
+
+## Day 00: 
 
 Software installation troubleshooting (QGIS)
 
