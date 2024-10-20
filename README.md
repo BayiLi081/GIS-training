@@ -163,5 +163,19 @@ Geospatial analysis and visualisation with other tools:
 
 [Introduction to the first map online](./contents/webgis.md)
 
+## Short Themes
+
+### Join tables with Python
+
+[Join attribute table of two spatial data](./contents/jointables_shp.md)
+
+### Shortest Route
+
+[Problem of Shortest Route - Dijkstra's Algorithm](./contents/shortestroute_dijkstraalgo.md)
+
+### Mapping
+
+[Quantitative bivariate map](./contents/bivariate_map.md)
+
 
 
