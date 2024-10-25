@@ -22,9 +22,9 @@ Optional steps:
    -  Linux: [Managing Python Virtual Environments using Virtualenvwrapper | by Joseph Kariuki | Medium](https://jkariukidev.medium.com/managing-python-virtual-environments-using-virtualenvwrapper-9c6ebde27ee4)
    - Windows: `pip install virtualenvwrapper-win`
    - Mac:
-2. 
 
-## Day 00: 
+
+## Lectures
 
 Software installation troubleshooting (QGIS)
 
@@ -62,8 +62,6 @@ Break and small Q&A
 
 [Global spatial autocorrelation and how to calcute it in QGIS/GeoDa](./contents/spatialautocorrelation.md)
 
-
-## Day 2
 
 **00:00 - 00:15**:
 
@@ -117,8 +115,6 @@ Hands-on practice is required to complete after class and to be continued in nex
 
 Reminding the students to register an account on [EROS Registration System (usgs.gov)](https://ers.cr.usgs.gov/register)
 
-## Day 03
-
 **00:00 - 00:30**: 
 
 **Practical (Part2 : Calculation)**: "The change of green cover in Singapore" spatiotemporal analysis on NDVI [Longitudinal study](./contents/longitudinalNDVI2.md)
@@ -159,11 +155,9 @@ Geospatial analysis and visualisation with other tools:
 
 **03:00 - 03:30**: Open discussion on career opportunities in the cross field and Q&A
 
-## Day 04
-
 [Introduction to the first map online](./contents/webgis.md)
 
-## Short Themes
+## Semi-automatic tutorials 
 
 ### Join tables with Python
 
