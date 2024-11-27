@@ -159,9 +159,15 @@ Geospatial analysis and visualisation with other tools:
 
 ## Semi-automatic tutorials 
 
-### Join tables with Python
+### Data Cleaning
+
+#### Join tables with Python
 
 [Join attribute table of two spatial data](./contents/jointables_shp.md)
+
+#### Subsampling
+
+[Subsampling](./contents/subsampling.md)
 
 ### Shortest Route
 
@@ -169,7 +175,7 @@ Geospatial analysis and visualisation with other tools:
 
 ### Mapping
 
-[Quantitative bivariate map](./contents/bivariate_map.md)
+1. [Quantitative bivariate map](./contents/bivariate_map.md)
 
-
+2. [Mapping tabular data (with location information and linked image) with Leaflet](./contents/leaflet_popupimg.md)
 
