@@ -1,0 +1,158 @@
+[33mcommit 75ce72d97c25c9688a42063aa873d45706b7d3bb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Bayi'sWorkingLaptop <barryli081@gmail.com>
+Date:   Sun Dec 8 22:25:37 2024 +0800
+
+    add leaflet and subsampling stuff
+
+[33mcommit bcddeec477a3ddc03570ac3f18b03cf33268364f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Li Bayi <bayi_li@sutd.edu.sg>
+Date:   Wed Nov 27 15:14:18 2024 +0800
+
+    add pop up image and subsampling practicals
+
+[33mcommit b66a074901d79ce4840136965f6b39708d488ed2[m
+Author: bayili_personallaptop <barryli081@gmail.com>
+Date:   Fri Oct 25 10:37:27 2024 +0800
+
+    add the mapping of bivariates
+
+[33mcommit 01029351be22fd255104cf5e5803ea92c87d30c8[m
+Author: bayili_personallaptop <barryli081@gmail.com>
+Date:   Sun Oct 20 20:52:42 2024 +0800
+
+    add how to join spatial data with Python
+
+[33mcommit 627e5d3cd161209ddd053ae51969803348f683d4[m
+Author: bayili_personallaptop <barryli081@gmail.com>
+Date:   Sun Sep 29 16:04:28 2024 +0800
+
+    add sth
+
+[33mcommit 511ede389366ee046cf79737ddbf49724dc18685[m
+Author: bayili_personallaptop <barryli081@gmail.com>
+Date:   Fri Jun 14 21:12:48 2024 +0200
+
+    add some more elements
+
+[33mcommit 673656f5f1e27912ff94a13ad8e38b0cef8a0d86[m
+Author: bayili_personallaptop <barryli081@gmail.com>
+Date:   Sat May 25 00:40:29 2024 +0200
+
+    update the geocoding part
+
+[33mcommit 7d8bd0c7018b0faf6c1cc73b59ce3df32e30f860[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Fri May 19 07:53:44 2023 +0200
+
+    update
+
+[33mcommit 9e4fb47b86cec6eeb7f0bb542a417e1f17226bde[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu May 18 07:58:03 2023 +0200
+
+    update
+
+[33mcommit 14692708ce100ffb1df87ac0f0aef4956aa8fb71[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu May 18 07:39:34 2023 +0200
+
+    update
+
+[33mcommit e8eb2a9edaf93ef500076e13f7b088d4dd45c24d[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Wed May 17 17:55:37 2023 +0200
+
+    update based on the actual speed in the first day
+
+[33mcommit e0f728d7431dcd4ee7d11968e3ae247776459d7a[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Wed May 17 07:37:45 2023 +0200
+
+    update
+
+[33mcommit 2d4bd5663de877e5ecf3238d6e044782f3b672a9[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Tue May 16 23:34:20 2023 +0200
+
+    update
+
+[33mcommit d682991b7631ef1b46fcb4e4b441f808cbb09564[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Tue May 16 10:22:32 2023 +0200
+
+    update
+
+[33mcommit 1acce6e2e2d40cf1782edc30c9a1892642484380[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Mon May 15 15:44:59 2023 +0200
+
+    update
+
+[33mcommit c260467d1eb60b00080a2747eeb89c0ff8f27dee[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Mon May 15 09:52:35 2023 +0200
+
+    update
+
+[33mcommit 8a2f23f6b5888e2f43f859db09e6273276d97432[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Mon May 8 18:01:39 2023 +0200
+
+    add sth
+
+[33mcommit ada8d5a09044140ff2bed4b9a854eaa5825c775c[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu May 4 11:49:22 2023 +0200
+
+    add structre
+
+[33mcommit 212b9250a2f4e56a5276dca294b3943306e21a88[m
+Author: Bayi Li <barryli081@gmail.com>
+Date:   Sat Apr 29 16:20:36 2023 +0200
+
+    add crs md
+
+[33mcommit e9e62eb950cddce561fb8f31078e2dd1dbb74cd4[m
+Merge: d9d6b68 c38ee6a
+Author: Bayi Li <39176076+BayiLi081@users.noreply.github.com>
+Date:   Thu Apr 27 05:34:23 2023 +0200
+
+    Merge pull request #1 from BayiLi081/add-license-1
+    
+    Create LICENSE
+
+[33mcommit c38ee6a288c595b242b5a0b7d78ab10a15e18c46[m
+Author: Bayi Li <39176076+BayiLi081@users.noreply.github.com>
+Date:   Thu Apr 27 05:33:58 2023 +0200
+
+    Create LICENSE
+
+[33mcommit d9d6b68842762ec4b14c8bbab8ce6d22180f8f38[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu Apr 27 05:25:12 2023 +0200
+
+    add dont track file
+
+[33mcommit 5a9eabb2138b42e6fed95b67cba096125055e0b0[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu Apr 27 05:17:34 2023 +0200
+
+    modify the url
+
+[33mcommit 40232f46d7473aa0b682cea034aa577a86214b26[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Thu Apr 27 05:16:25 2023 +0200
+
+    add remote sensing contents
+
+[33mcommit 9428ffd8d05e4240375534ea69e45512a4853fbb[m
+Author: BayiLi081 <barryli081@gmail.com>
+Date:   Tue Apr 25 18:47:11 2023 +0200
+
+    add the course structure
+
+[33mcommit fd7404ffd10708330f54e471ced9a9a629237699[m
+Author: Bayi Li <barryli081@gmail.com>
+Date:   Tue Apr 4 10:00:02 2023 +0200
+
+    add header

@@ -1,0 +1,6 @@
+.DS_Store
+.Rhistory
+contents/.Rhistory
+*.bkp
+data/leaflet_popupimg/imgs/*.jpg
+
