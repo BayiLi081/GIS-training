@@ -118,3 +118,7 @@ Practices
 
 1. **Optional** - `Easy, Data acquiring` [utilising geemap for data acquiring](./contents/geemap.md); the jupyter notebook can be found at [MUSPP_geemap.ipynb](https://colab.research.google.com/drive/1JX-r4sHJhFNW15NWvT_prSXsxcbjKb8D?usp=sharing)
 2. **Optional** - `Medium, Spatial analysis`: [How to use Python scripts to power up your spatial analysis task in QGIS?](./contents/pyqgis.md)
+
+## FAQ
+
+For questions, please raise them at [issues section](https://github.com/BayiLi081/GIS-training/issues). Referring to [Creating an issue from a repository](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue#creating-an-issue-from-a-repository) for how to raise an issue from GitHub repository online
