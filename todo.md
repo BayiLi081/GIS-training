@@ -15,3 +15,5 @@ From the feedback collected from first round, the following tasks to improve the
 5. 3-03-01 static mapping is no longer a big thing to do with Python. Can change to use Python console in QGIS to batch generate journal-quality maps.
 
 6. AI is a big thing now. It is hard to not mention the role of AI-assist coding even AI-generated coding workflow nowadays.
+
+7. Add `Open in Colab` button to each jupyter notebook file, so the students can open directly from Github to Colab
