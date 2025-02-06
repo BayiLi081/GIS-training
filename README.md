@@ -4,17 +4,17 @@
     <a href="https://lkycic.sutd.edu.sg/">
         <img src="https://img.shields.io/badge/LKYCIC-SUTD-blue" alt="LKYCIC-SUTD">
     </a>
-    <a href="https://github.com/academicpages/academicpages.github.io/graphs/contributors">
+    <a href="https://img.shields.io/github/stars/BayiLi081/GIS-training/graphs/contributors">
         <img src="https://img.shields.io/github/contributors/BayiLi081/GIS-training.svg" alt="GitHub contributors">
     </a>
-    <a href="https://github.com/academicpages/academicpages.github.io/blob/master/LICENSE">
+    <a href="https://github.com/BayiLi081/GIS-training/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/BayiLi081/GIS-training?color=blue" alt="GitHub license">
     </a>
     <br>
-    <a href="https://github.com/academicpages/academicpages.github.io">
+    <a href="hhttps://github.com/BayiLi081/GIS-training">
         <img src="https://img.shields.io/github/stars/BayiLi081/GIS-training" alt="GitHub stars">
     </a>
-    <a href="https://github.com/academicpages/academicpages.github.io/fork">
+    <a href="https://github.com/BayiLi081/GIS-training/fork">
         <img src="https://img.shields.io/github/forks/BayiLi081/GIS-training" alt="GitHub forks">
     </a>
 </div>
