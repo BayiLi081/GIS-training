@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 *.qmd
 donttrack_googlemapapi
+donttrack_mapapi
 cache/
 *.code-workspace
 data/processed/part_iii/sg_bike_road.geojson

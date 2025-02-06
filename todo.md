@@ -1,6 +1,6 @@
 From the feedback collected from first round, the following tasks to improve the quality:
 
-1. OneMap provides good geocoding api for SG addresses. For 3-01 geocoding example, adding OneMap API example could be useful.
+1. (Done) OneMap provides good geocoding api for SG addresses. For 3-01 geocoding example, adding OneMap API example could be useful.
 
 2. Raster analysis can be removed as remote sensing analysis is not important skills for urban science students. Make it optional.
 
