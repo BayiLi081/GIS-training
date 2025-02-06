@@ -1,8 +1,23 @@
 # Bootcamp: Introduce to Geospatial Python
 
-[![lkycic-sutd](https://img.shields.io/badge/LKYCIC-SUTD-blue)](https://lkycic.sutd.edu.sg/)
-
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+<div align="center">
+    <a href="https://lkycic.sutd.edu.sg/">
+        <img src="https://img.shields.io/badge/LKYCIC-SUTD-blue" alt="LKYCIC-SUTD">
+    </a>
+    <a href="https://github.com/academicpages/academicpages.github.io/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/BayiLi081/GIS-training.svg" alt="GitHub contributors">
+    </a>
+    <a href="https://github.com/academicpages/academicpages.github.io/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/BayiLi081/GIS-training?color=blue" alt="GitHub license">
+    </a>
+    <br>
+    <a href="https://github.com/academicpages/academicpages.github.io">
+        <img src="https://img.shields.io/github/stars/BayiLi081/GIS-training" alt="GitHub stars">
+    </a>
+    <a href="https://github.com/academicpages/academicpages.github.io/fork">
+        <img src="https://img.shields.io/github/forks/BayiLi081/GIS-training" alt="GitHub forks">
+    </a>
+</div>
 
 **Course Hours:** 3 hours x 3 sessions
 
