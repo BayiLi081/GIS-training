@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vector Data</title>
+    <link href="imgs/logo.svg" rel="icon" type="image/svg"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      /* Slideshow styles */
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Spatial Analysis of Urban Data
+
+## Introduction to Vector Data in GIS
+
+.footnote[[Bayi Li](mailto:barryli081@gmail.com)]
+
+<br>
+<button onclick="window.location.href='index.html'">Go Back to Menu</button>
+
+???
+Welcome everyone to our two-hour session on working with vector data in GIS. These slides follow a flipped-classroom idea: read the bullets with the class while using speaker notes for additional context and stories.
+
+---
+
+# Session Overview
+
+- Format: 90 minutes of content, 20 minute guided demo, 10 minute wrap-up, breaks as needed
+- Learning objectives and key takeaways
+- Interactive pauses for questions and short exercises
+- Resource list for continued practice
+
+???
+Explain how the time will be allocated. Emphasize that participants should follow along in their own GIS tools when possible. Encourage questions at checkpoints.
+
+---
+
+# Learning Objectives
+
+- Recognize how vector data models geographic features using points, lines, and polygons
+- Interpret vector attribute tables, coordinate systems, and topology rules
+- Select appropriate vector formats, data sources, and quality checks
+- Apply common analysis workflows: selection, overlay, buffers, network analysis
+- Design clear, communicative visualizations of vector layers
+
+???
+Highlight how each objective maps to a section: Foundations, Structure, Management, Analysis, Visualization.
+
+---
+
+layout: true
+
+# Part 1 · Vector Foundations
+
+---
+
+## Why Vector Data?
+
+- Represents discrete objects with precise boundaries and shapes
+- Supports detailed attribute descriptions tied to each feature
+- Enables topological relationships (adjacent, connected, contained)
+- Efficient for analysis of transportation, parcels, utilities, zoning, and POIs
+- Complements raster data for continuous phenomena
+
+???
+Share stories from urban contexts: parcels, bike lanes, building footprints. Stress the idea of discrete vs continuous phenomena.
+
+---
+
+## Recap: Vector vs. Raster
+
+- Vector: coordinates + geometry; perfect for points/lines/polygons
+- Raster: grid of cells; great for surfaces and imagery
+- Vector excels at precision, storage efficiency, and attribute richness
+- Raster excels at continuous coverage, complex surfaces, and remote sensing
+- Hybrid workflows often combine both models
+
+???
+If students attended earlier raster lecture, connect to that. Otherwise, sketch quick diagrams on board.
+
+---
+
+## Geometry Primitives
+
+- Point: single x, y coordinate pair (optional z, m values)
+- Polyline: ordered sequence of points forming segments; supports multipart features
+- Polygon: closed ring(s) forming area boundaries with optional holes
+- Multipoint, multiline, multipolygon store multiple geometries in one feature
+- Geometry collection (less common) mixes types under one record
+
+???
+Explain differences between simple and multipart geometry. Mention geometry engines (GEOS, JTS) that enforce rules.
+
+---
+
+## Attribute Tables 101
+
+- Each feature stores attributes in a relational-style table
+- Fields possess data types: integer, float, text, date, boolean, coded domain
+- Unique IDs (ObjectID, FID) maintain linkage between geometry and attributes
+- Multiple features can share same geometry but different attributes (e.g., time slices)
+- Joins and relates extend the attribute information externally
+
+???
+Describe how attribute tables mirror spreadsheets. Warn about null handling and field length limits.
+
+---
+
+## Coordinate Reference Basics
+
+- Coordinates reference Earth using geographic (lat/long) or projected systems
+- Geographic CRS: measured in degrees (WGS84, NAD83)
+- Projected CRS: flatten Earth to a plane for distance/area accuracy (UTM, State Plane)
+- CRS choice affects measurement accuracy, distortion, and overlay alignment
+- Metadata should always document CRS, datum, and units
+
+???
+Use quick example: measuring lengths in degrees vs meters. Mention on-the-fly projection in modern GIS.
+
+---
+
+layout: true
+
+# Part 2 · Geometry & CRS Deep Dive
+
+---
+
+## Coordinate Geometry Refresher
+
+- Coordinates stored as ordered pairs (x, y) within a given CRS
+- Orientation follows right-handed rule; ring direction matters for polygons
+- Vertices vs nodes: vertices describe shape, nodes describe topology intersections
+- Tolerances define when two coordinates snap together during editing
+- Shape integrity relies on consistent precision and snapping settings
+
+???
+If using ArcGIS/QGIS, relate to settings like snapping environment and tolerance. Mention floating-point precision issues.
+
+---
+
+## 2D, 2.5D, and 3D Vectors
+
+- 2D: XY only, typical for planimetric mapping
+- 2.5D: XY with single elevation per vertex (z-values), supports extrusions
+- 3D: true volumetric geometries stored as meshes or multipatch
+- M-values record measures along a line for linear referencing (routes)
+- Choose geometry dimension based on analysis requirements and data availability
+
+???
+Provide transit example: using M-values for bus route scheduling. Mention 3D city models.
+
+---
+
+## Understanding CRS Metadata
+
+- EPSG codes uniquely identify CRS definitions (e.g., EPSG:4326)
+- Projected CRS defined by projection method, central meridian, scale factor, false easting/northing
+- Vertical coordinate systems separate from horizontal; pay attention when mixing z values
+- Always inspect source metadata before reprojecting or combining datasets
+- Tools: `gdalsrsinfo`, QGIS Layer Properties, ArcGIS Describe tool
+
+???
+Show quick screenshot/demonstration if possible. Encourage using authoritative metadata repositories.
+
+---
+
+## Transformations and Reprojection
+
+- Datum transformations convert between different reference frames
+- On-the-fly reprojection visualizes layers together but may hide misalignments
+- Batch reprojection (e.g., GDAL `ogr2ogr`, ArcGIS Project tool) standardizes data for analysis
+- Track transformation parameters in project logs for reproducibility
+- Validate results by checking control points or overlaying known basemaps
+
+???
+Explain difference between NAD27 and NAD83 as case study. Emphasize documentation.
+
+---
+
+## Common Pitfalls with CRS
+
+- Mixing layers in unknown or mismatched CRS leads to misaligned overlays
+- Ignoring unit conversions (feet vs meters) distorts buffers and measurements
+- Assumed geodesic calculations on geographic CRS can lead to underestimation of distances
+- Web Mercator is convenient for maps but distorts area at higher latitudes
+- Always test measurement tools after setting project CRS
+
+???
+Share anecdote about area calculations in WGS84 vs equal-area projections.
+
+---
+
+layout: true
+
+# Part 3 · Attributes, Tables & Data Management
+
+---
+
+## Attribute Table Operations
+
+- Sorting, filtering, and field calculator operations reveal patterns quickly
+- Field calculator supports expressions (Python, SQL, QGIS expression engine)
+- Summary statistics (count, mean, sum) per field or grouped categories
+- Geometry attributes (area, length, centroid) can be calculated and stored
+- Use aliases and units to clarify meanings for map users
+
+???
+Walk through quick demonstration of filtering parcels by zoning code using attribute table.
+
+---
+
+## Joins, Relates, and Relationships
+
+- Table join: one-to-one or many-to-one relationship based on key field
+- Relate: maintains link without merging tables; supports one-to-many
+- Relationship classes (geodatabases) enforce cardinality and cascade rules
+- External databases (PostGIS, SpatiaLite) support SQL joins and views
+- Document join assumptions and key field cleanliness before analysis
+
+???
+Give example: joining census demographic data to block polygons. Discuss cleaning FIPS codes.
+
+---
+
+## Data Formats Overview
+
+- Shapefile: legacy, widely supported, but limited fields and encoding
+- File geodatabase: Esri proprietary, efficient storage, advanced types
+- GeoPackage: open standard, supports vector and raster, SQL-based
+- PostGIS: enterprise-level spatial database with robust analysis capabilities
+- GeoJSON/TopoJSON: lightweight web-friendly exchange formats
+
+???
+Highlight trade-offs: shapefile limitations (10 character field names, 2GB). Encourage GeoPackage/PostGIS for new projects.
+
+---
+
+## Source Discovery & Acquisition
+
+- Government open data portals (city, state, national)
+- Regional planning agencies and NGOs
+- OpenStreetMap and derivative datasets
+- Commercial vendors for specialized layers (utilities, demographic estimates)
+- Field collection via GPS, mobile apps, drones, or digitization from imagery
+
+???
+Share examples relevant to students' local context. Mention licensing considerations and data currency.
+
+---
+
+## Data Management Best Practices
+
+- Maintain organized folder structures and documented naming conventions
+- Track data lineage: source, download date, licensing, transformations
+- Store raw data separately from processed project copies
+- Use metadata standards (ISO 19115, FGDC) or lightweight README files
+- Automate backups and version control (Git, ArcGIS Pro project packages)
+
+???
+Encourage creating a simple data inventory spreadsheet. Mention using scripts to automate downloads.
+
+---
+
+layout: true
+
+# Part 4 · Topology, Editing & Quality
+
+---
+
+## Introducing Topology Rules
+
+- Ensures spatial relationships such as adjacency, connectivity, containment
+- Common rules: polygons must not overlap, lines must not self-intersect, points must be covered by line endpoints
+- Implemented via topology datasets (ArcGIS) or topology checker plugins (QGIS)
+- Violations flagged for correction; tolerance thresholds control sensitivity
+- Topology crucial for network analysis, parcel data, utility mapping
+
+???
+Show screenshot or run quick demo if time allows. Stress difference between geometry validity and topological integrity.
+
+---
+
+## Geometry Validation
+
+- Simple vs valid geometry tests (e.g., ring orientation, self-intersections)
+- Tools: QGIS "Check validity", `ogrinfo -al -geom=SUMMARY`, PostGIS `ST_IsValid`
+- Invalid geometry can break overlays, buffers, or exports
+- Repairs: snapping, dissolving slivers, re-creating features manually if needed
+- Document issues found and resolution steps
+
+???
+Discuss common artifacts: bow-tie polygons, duplicate vertices, spikes. Mention tolerance settings.
+
+---
+
+## Editing & Digitizing Workflow
+
+- Prepare editing environment: snapping, templates, topology rules
+- Heads-up digitizing from imagery: trace features carefully, use multiple scales
+- Attribute capture: drop-down domains, default values, required fields
+- Versioning and change tracking in multi-user environments
+- QA/QC review before publishing: peer review, checklists, automated scripts
+
+???
+Encourage students to take short breaks during long digitizing sessions to avoid fatigue errors.
+
+---
+
+## Data Quality Dimensions
+
+- Positional accuracy: closeness to actual location
+- Attribute accuracy: correctness of descriptive fields
+- Completeness: coverage of all features of interest
+- Temporal currency: data reflects correct time period
+- Logical consistency: relationships obey rules, no duplicates
+
+???
+Use scenario: evaluating building footprint dataset for emergency planning. Ask learners to brainstorm questions per dimension.
+
+---
+
+## Metadata & Documentation
+
+- Minimum elements: title, summary, keywords, CRS, scale, data steward, usage constraints
+- Tools: ArcGIS metadata editor, QGIS metadata panel, text-based templates
+- Encourage storing metadata alongside dataset in open formats (Markdown, XML)
+- Include processing history to support reproducibility
+- Metadata increases trust and aids future project onboarding
+
+???
+Stress that "metadata or it didn't happen." Share template link in resources.
+
+---
+
+layout: true
+
+# Part 5 · Vector Analysis Workflows
+
+---
+
+## Selection Techniques
+
+- Attribute queries (SQL WHERE clauses)
+- Spatial queries: select by location, within distance, intersecting
+- Compound selections: combine attribute and spatial filters
+- Export selected features as new layers for scenario modeling
+- Iterate selections using model builders or Python scripts
+
+???
+Demonstrate selecting parcels within a proposed transit-oriented development zone.
+
+---
+
+## Buffer Analysis
+
+- Creates polygons around features at specified distance
+- Options: dissolving outputs, varying distance by attribute, geodesic vs planar
+- Use cases: accessibility studies, safety zones, impact assessments
+- Beware of projection distortion when buffers span large areas
+- Follow-up analysis: intersect buffers with demographic layers
+
+???
+Share story: using buffers to evaluate walkability around schools. Mention multi-ring buffers for incremental analysis.
+
+---
+
+## Overlay Operations
+
+- Clip: extract features within boundary
+- Intersect: combine attributes from overlapping features
+- Union: merge polygons while preserving all overlaps
+- Erase/Symmetrical difference: remove overlap areas or extract differences
+- Dissolve: merge features based on shared attribute
+
+???
+Explain how overlay operations underpin suitability analysis. Use farmland suitability example.
+
+---
+
+## Network Analysis Essentials
+
+- Build network datasets from roads, transit lines, or utilities
+- Establish impedance attributes (time, distance, cost)
+- Common tasks: shortest path, service areas, origin-destination cost matrix
+- Account for turn restrictions, directionality, and barriers
+- Tools: ArcGIS Network Analyst, pgRouting, OSMnx in Python
+
+**[Advanced network analysis](./network.html)** will be introduced in the following session.
+
+???
+Describe using OSMnx to download street network and compute travel time. Note data cleaning needs for driving vs walking.
+
+---
+
+## Advanced Vector Analytics
+
+- Spatial joins: transfer attributes based on spatial relationship
+- Near/closest feature analysis for proximity metrics
+- Point clustering (DBSCAN, K-means) to detect hotspots
+- Linear referencing for event management along routes
+- Spatial statistics: Moran’s I, Getis-Ord Gi*, kernel density for point patterns
+
+???
+Clarify which advanced techniques require additional modules or scripting. Offer quick examples.
+
+---
+
+layout: true
+
+# Part 6 · Visualization & Communication
+
+---
+
+## Symbology Strategies
+
+- Match geometry type to map purpose (points for POIs, polygons for choropleth)
+- Classify quantitative data using natural breaks, equal interval, quantile, standard deviation
+- Use graduated symbology, proportional symbols, or bivariate approaches for multi-field stories
+- Maintain intuitive color ramps and accessible contrast (consider color blindness)
+- Provide clear legends, labels, and map annotations
+
+???
+Discuss pitfalls of using raw counts vs rates. Reference ColorBrewer as resource.
+
+---
+
+## Labeling and Annotation
+
+- Dynamic labels follow priority rules and placement engines
+- Convert labels to annotations for manual adjustments when necessary
+- Use text formatting for hierarchy (weight, size, halo)
+- Avoid clutter by filtering labels or using callouts
+- Document label expressions for reproducibility
+
+???
+If time, show quick example in QGIS/ArcGIS. Mention labeling for multi-language maps.
+
+---
+
+## Sharing Vector Maps
+
+- Static exports (PDF, PNG) for reports and print layouts
+- Web maps using Leaflet, Mapbox, ArcGIS Online, CARTO
+- Story maps and dashboards combine vector layers with narrative content
+- Data portals and open data catalogs for dataset sharing
+- Consider licensing, privacy, and generalization before publishing
+
+???
+Highlight process of publishing GeoJSON to GitHub Pages and embedding in web apps.
+
+---
+
+## Generalization & Scale
+
+- Simplify geometry (Douglas-Peucker) for smaller scales to improve performance
+- Aggregate features for readability (e.g., merge blocks to neighborhoods)
+- Filter attribute details to match intended audience
+- Multi-scale maps require symbol and label adjustments per zoom level
+- Track multiple representations to avoid overwriting high-resolution originals
+
+???
+Explain how web maps rely on generalized vector tiles. Mention storing generalization rules in project documentation.
+
+---
+
+## Communicating Uncertainty
+
+- Visual cues: transparency, hatching, annotations explaining confidence levels
+- Provide data currency and source notes directly on the map
+- Cite methods used to derive features or metrics
+- Encourage companion documentation or dashboards for deeper context
+- Honest storytelling builds credibility with stakeholders
+
+???
+Share example of mapping survey coverage with hashed areas and disclaimers. Encourage questions about data limitations.
+
+---
+
+layout: true
+
+# Part 7 · Case Study & Practice
+
+---
+
+## Case Study: Transit Equity Analysis
+
+- Objective: evaluate bus stop coverage for low-income households
+- Data: bus stops (points), routes (lines), census tracts (polygons), demographic attributes
+- Steps: clean CRS, buffer stops (400 m), intersect with tracts, calculate served population
+- Visualization: choropleth for % low-income + proportional symbols for service frequency
+- Outcomes: identify underserved tracts for route adjustments or new stops
+
+???
+Walk through the workflow conceptually. If possible, demo in GIS or show screenshots. Invite participants to critique the approach.
+
+---
+
+## Guided Exercise (15 min)
+
+- Task: Using provided city dataset, identify potential locations for new bike-share stations
+- Steps provided in worksheet: load layers, set CRS, create buffers, perform overlay, interpret results
+- Deliverable: short list of candidate intersections with attributes supporting decision
+- Encourage pairs or breakout groups to collaborate
+- Regroup to compare approaches and highlight key learnings
+
+???
+Set timer, circulate to help. Provide hints: use 300 m walk buffer, intersect with population and land use layers.
+
+---
+
+## Discussion Prompts
+
+- Which topology checks were most vital during the exercise?
+- How did CRS choice influence buffer distances?
+- What additional data would improve confidence in results?
+- How could outputs be communicated to transportation planners?
+- What risks emerge if attribute data is outdated or inaccurate?
+
+???
+Facilitate group conversation. Capture insights on whiteboard. Reinforce data quality themes.
+
+---
+
+## Additional Resources
+
+- Books: *GIS Fundamentals* by Bolstad; *The GIS 20* by Crosier
+- Tutorials: QGIS Training Manual (Modules 4–6), Esri Learn Pathways on vector analysis
+- Tools: GDAL/OGR cookbook, PostGIS documentation, GeoPandas user guide
+- Data portals: data.gov, OpenStreetMap, WorldPop, local open data sites
+- Communities: GIS Stack Exchange, local Maptime chapter, URISA events
+
+???
+Provide links via class LMS or shared document. Encourage continued learning and networking.
+
+---
+
+layout: true
+
+# Part 8 · Wrap-up & Next Steps
+
+---
+
+## Key Takeaways
+
+- Vector data models discrete geographic features with rich attributes and topology
+- Coordinate reference systems underpin spatial accuracy and must be managed carefully
+- Quality assurance, metadata, and organized workflows ensure trustworthy data products
+- Core analysis patterns (selection, buffer, overlay, network) support urban planning tasks
+- Effective visualization communicates findings and uncertainty to stakeholders
+
+???
+Recap the main message of each section. Ask the class to share one action item they will apply this week.
+
+---
+
+## Reflection & Questions
+
+- What is one concept you want to explore deeply after today?
+- Where do you still feel uncertain about using vector data?
+- Which tools or workflows resonated with your current projects?
+- Open floor for Q&A and troubleshooting
+
+???
+Give participants time to respond. Capture remaining questions for follow-up resources.
+
+---
+
+## Next Steps
+
+- Complete homework: digitize three urban features and document metadata
+- Optional challenge: replicate transit equity case study with your city’s data
+- Schedule office hours or Slack check-in later this week
+- Share map outputs or scripts with cohort for feedback
+
+???
+Encourage accountability. Provide details on how to submit or share homework assignments.
+
+---
+
+class: center, middle
+
+## Keep exploring vector data to tell better spatial stories.
+
+.right[.footnote[References:]]
+.right[.footnote[
+[QGIS Training Manual: Vector Attribute Data](https://docs.qgis.org/3.40/en/docs/training_manual/vector_classification/attribute_data.html)<br>
+[QGIS Training Manual: Vector Analysis](https://docs.qgis.org/3.40/en/docs/training_manual/vector_analysis/index.html#module-vector-analysis)<br>
+[Esri Learn Pathways](https://learn.arcgis.com/en/)
+]]
+
+.right[.footnote[*Slides created with [remark](https://remarkjs.com/).*]]
+
+???
+End on a high note. Invite people to share key insights on social media or class forum.
+
+</textarea>
+    <script src="src/remark-latest.min.js" type="text/javascript">
+    </script>
+    <!-- Uncomment this if there is no internet -->
+
+    <!-- <script src="remark-0.6.3.min.js" type="text/javascript"> -->
+    <!--   </script> -->
+
+    <script type="text/javascript">
+      var slideshow = remark.create(      {
+        ratio: "16:9",
+        // Navigation options
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: false,
+        }
+      }
+      );
+    </script>
+  </body>
+</html>

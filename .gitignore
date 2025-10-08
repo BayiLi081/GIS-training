@@ -1,3 +1,7 @@
 .DS_Store
 .Rhistory
 *donttrack_googlemapapi
+cache/
+data/
+jupyters/
+other_files/
