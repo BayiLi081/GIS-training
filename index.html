@@ -12,12 +12,13 @@
 
 class: center
 
+<br>
+
 # Spatial Analysis of Urban Data
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
-## List of contents
-
+<br>
 
 <div style="text-align: center;">
     <table style="margin: 0 auto; border-collapse: collapse;">
@@ -119,14 +120,14 @@ Rule of Thumb:
 
 |             |         | Raster                                      |         |Vector |
 |-------------|---------|---------------------------------------------|---------|------------------------------------------------------|
-|Advantages   | -!-  | Simple Data Structure                       | -!-  | More compact                                         |
-|             | -!-  | Efficiency in overlay operations            | -!-  | Efficiency in topology-based operations              |
-|             | -!-  | Better representing high spatial variability| -!-  | Better map visualisation                             |
-|             | -!-  | Widely used in remote sensing and image data|      |                                                      |
-|Disadvantages| -!-  | Less compact                                | -!-  | More complex                                         |                                         
-|             | -!-  | Underrepresented topological relationship   | -!-  | Inefficient representation of high spatial variablity|
-|             | -!-  | Disadvantages in visualisation              | -!-  | Unable to handle image data                          |
-|             | -!-  | Less compact                                |      |                                                      |
+|Advantages   | *  | Simple Data Structure                       | *  | More compact                                         |
+|             | *  | Efficiency in overlay operations            | *  | Efficiency in topology-based operations              |
+|             | *  | Better representing high spatial variability| *  | Better map visualisation                             |
+|             | *  | Widely used in remote sensing and image data|      |                                                      |
+|Disadvantages| *  | Less compact                                | *  | More complex                                         |                                         
+|             | *  | Underrepresented topological relationship   | *  | Inefficient representation of high spatial variablity|
+|             | *  | Disadvantages in visualisation              | *  | Unable to handle image data                          |
+|             | *  | Less compact                                |      |                                                      |
 ---
 
 ## Interconversion between Vector and Raster Data
@@ -251,18 +252,32 @@ Effective spatial analysis requires **an intelligent user**, not just a powerful
 
 Different spatial analysis projects have different aims, so the framework must align the aim with the methods. 
 
-| **Exploratory**                                    | **Descriptive**                                     | **Explanatory**                                     |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Aim -> | Aim -> | Aim -> |
-| To discover patterns, trends, or anomalies in spatial data without starting from a clear hypothesis. | To characterise and summarise spatial phenomena, often through quantification and comparison. | To understand causation or association between spatial variables and to test hypotheses. |
-| Example -> | Example -> | Example -> |
-| “What spatial patterns emerge from mapping daily pedestrian movement across Singapore's park network?” | “How does accessibility to hawker centres vary across housing types in Singapore?” | “To what extent do covered linkways influence the frequency of pedestrian movement across urban neighbourhoods?" |
+| | **Exploratory**                                    | | **Descriptive**                                     | | **Explanatory**                                     |
+|-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |
+|*| Aim -> |*| Aim -> |*| Aim -> |
+| | To discover patterns, trends, or anomalies in spatial data without starting from a clear hypothesis. | | To characterise and summarise spatial phenomena, often through quantification and comparison. | | To understand causation or association between spatial variables and to test hypotheses. |
+|*| Example -> |*| Example -> |*| Example -> |
+| | “What spatial patterns emerge from mapping daily pedestrian movement across Singapore's park network?” | | “How does accessibility to hawker centres vary across housing types in Singapore?” | | “To what extent do covered linkways influence the frequency of pedestrian movement across urban neighbourhoods?" |
 
 <br>
 
 --
 
 <xL>Thinking of the spatial data you have collected, what kind of research questions can you extract from them?</xL>
+
+---
+
+<xL>Is your data sufficient to answer your research question?</xL>
+
+<br>
+
+<xL>Identify an appropriate spatial analysis method that aligns with both your data and research question.</xL>
+
+<br>
+
+--
+
+<xL>Start from vector first: </xL><button onclick="window.location.href='vector.html'">Go to Tutorial</button>
 
     </textarea>
     <script src="src/remark-latest.min.js" type="text/javascript">
