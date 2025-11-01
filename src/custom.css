@@ -227,6 +227,14 @@ keyword {
   /* margin-left: 1em; */
 }
 
+.left_half {
+  float: left;
+  width: 50%;
+  /* position: fixed; */
+  /* left: 10px; */
+  /* margin-left: 1em; */
+}
+
 .right_half {
   float: right;
   width: 50%;
@@ -245,8 +253,9 @@ keyword {
 .column {
   float: left;
   width: 48%;
-  padding: 5px;
+  padding: 30px;
 }
+
 
 /* Clear floats after image containers */
 .row::after {

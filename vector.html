@@ -14,7 +14,7 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture: Introduction to Vector Data in GIS
+## Lecture: Vector Data Analysis in GIS
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
@@ -24,33 +24,91 @@ class: center
 <br>
 <button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
-???
-Welcome everyone to our two-hour session on working with vector data in GIS. These slides follow a flipped-classroom idea: read the bullets with the class while using speaker notes for additional context and stories.
+---
+
+## Vector Data Analysis
+
+- Buffering
+
+- Overlay
+
+- Distance Measurement
+
+- Pattern Analysis
+
+- Feature manipulation
 
 ---
 
-# Session Overview
+## Buffering
 
-- Format: 90 minutes of content, 20 minute guided demo, 10 minute wrap-up, breaks as needed
-- Learning objectives and key takeaways
-- Interactive pauses for questions and short exercises
-- Resource list for continued practice
+Buffers are common vector analysis tools used to **address questions of proximity** in a GIS and can be used on points, lines, or polygons
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/buffer.png" width="50%">
+    <figcaption>Different types of spatial relations based on two Polygon geometries.</figcaption>
+    <figsubcaption>Source: Egenhofer et al. (1992) and https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html</figsubcaption>
+  </figure>
+</div>
+
+--
+
+The analytical method to answer this kind of questions:
+
+<xL>"Which grocery shops are within 200 m of my home?"</xL>
 
 ???
-Explain how the time will be allocated. Emphasize that participants should follow along in their own GIS tools when possible. Encourage questions at checkpoints.
+To answer such question, what data is needed here?
 
 ---
 
-# Learning Objectives
+.right_half[
+  <figure>
+    <img src="imgs/vector/buffer1.png" width="100%">
+  </figure>
+]
 
-- Recognize how vector data models geographic features using points, lines, and polygons
-- Interpret vector attribute tables, coordinate systems, and topology rules
-- Select appropriate vector formats, data sources, and quality checks
-- Apply common analysis workflows: selection, overlay, buffers, network analysis
-- Design clear, communicative visualizations of vector layers
+### Customised Buffering I
 
-???
-Highlight how each objective maps to a section: Foundations, Structure, Management, Analysis, Visualization.
+- Two primary types of buffers are available to the GIS users:
+
+  - Constant width: require users to input a value by which features are buffered
+
+  - Variable width: uses a premade buffer field within the attribute table to determine the buffer width for each specific feature in the dataset
+
+- Linear features can be buffered on both sides of the line, only on the left, or only on the right. Linear features can also be buffered so that the end points of the line are rounded (ending in a half-circle) or flat (ending in a rectangle).
+
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/buffer2.png" width="100%">
+  </figure>
+]
+
+### Customised Buffering II
+
+- Multiple ring buffers can be made such that a series of concentric buffer zones are created around the originating feature at user-specified distances
+
+- Users can choose to dissolve or not dissolve the boundaries between overlapping, coincident buffer areas
+
+---
+
+### Customised Buffering III
+
+.left_half[A doughnut buffer is a buffer around a polygon feature that does not include the area inside the buffered polygon.]
+
+.right_half[Setback buffers are similar to doughnut buffers; however, they only buffer the area inside of the polygon boundary.]
+
+<br>
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/buffer3.png" width="60%">
+  </figure>
+</div>
 
 ---
 
