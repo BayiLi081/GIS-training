@@ -155,20 +155,20 @@ div.references {
 }
 
 figcaption {
-  float: center;
+  text-align: center;
   font-size:0.8em; 
   color: #777873;
 }
 
 figsubcaption {
-  float: center;
+  text-align: center;
   font-size:0.6em; 
   color: #777873;
   font-style: italic;
 }
 
 .caption {
-  float: center;
+  text-align: center;
   font-size: 0.8em;
   color: #777873;
 }

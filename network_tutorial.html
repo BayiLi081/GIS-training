@@ -24,6 +24,56 @@ class: center, middle
 
 ???
 
+## Case Study: Transit Equity Analysis
+
+- Objective: evaluate bus stop coverage for low-income households
+- Data: bus stops (points), routes (lines), census tracts (polygons), demographic attributes
+- Steps: clean CRS, buffer stops (400 m), intersect with tracts, calculate served population
+- Visualization: choropleth for % low-income + proportional symbols for service frequency
+- Outcomes: identify underserved tracts for route adjustments or new stops
+
+???
+Walk through the workflow conceptually. If possible, demo in GIS or show screenshots. Invite participants to critique the approach.
+
+---
+
+## Guided Exercise (15 min)
+
+- Task: Using provided city dataset, identify potential locations for new bike-share stations
+- Steps provided in worksheet: load layers, set CRS, create buffers, perform overlay, interpret results
+- Deliverable: short list of candidate intersections with attributes supporting decision
+- Encourage pairs or breakout groups to collaborate
+- Regroup to compare approaches and highlight key learnings
+
+???
+Set timer, circulate to help. Provide hints: use 300 m walk buffer, intersect with population and land use layers.
+
+---
+
+## Discussion Prompts
+
+- Which topology checks were most vital during the exercise?
+- How did CRS choice influence buffer distances?
+- What additional data would improve confidence in results?
+- How could outputs be communicated to transportation planners?
+- What risks emerge if attribute data is outdated or inaccurate?
+
+???
+Facilitate group conversation. Capture insights on whiteboard. Reinforce data quality themes.
+
+---
+
+## Additional Resources
+
+- Books: *GIS Fundamentals* by Bolstad; *The GIS 20* by Crosier
+- Tutorials: QGIS Training Manual (Modules 4–6), Esri Learn Pathways on vector analysis
+- Tools: GDAL/OGR cookbook, PostGIS documentation, GeoPandas user guide
+- Data portals: data.gov, OpenStreetMap, WorldPop, local open data sites
+- Communities: GIS Stack Exchange, local Maptime chapter, URISA events
+
+???
+Provide links via class LMS or shared document. Encourage continued learning and networking.
+
 ---
 
 # Procedure
