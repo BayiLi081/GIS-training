@@ -112,9 +112,134 @@ To answer such question, what data is needed here?
 
 ---
 
-layout: true
+.right_half[
+  <figure>
+    <img src="imgs/vector/buffer_with_qgis.png" width="80%">
+  </figure>
+]
 
-# Part 1 · Vector Foundations
+### Buffering with QGIS
+
+The diversity of buffering tools avaible in QGIS reflects the different needs and contexts in which buffering is applied
+
+QGIS integrates many third-party plugins and algorithms (e.g., from GRASS, GDAL), each offering unique buffering capabilities.
+
+---
+
+### Buffering with QGIS
+
+<br>
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/buffer_interface_qgis.png" width="80%">
+  </figure>
+</div>
+
+---
+
+### Application Examples of Buffering
+
+<br>
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/buffer_application_examples.png" width="100%">
+  </figure>
+</div>
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/overlay_concept.png" width="100%">
+  </figure>
+]
+
+## Overlay
+
+The ability to integrate data from two or more sources using map overlay is one of the key GIS analysis functions.
+
+Using GIS we can overlay two different thematic map layers of the same area and overlay them one on top f the other to form a new layer.
+Map overlay has many applications:
+
+- It can be used for the visual comparison of data layers
+
+- It can be used to create new spatial datasets by merging two or more input data layers
+
+--
+
+The analytical method to answer this kind of questions:
+
+<xL>"Which grocery shops are within 200 m of my home?"</xL>
+
+--
+
+Combined with buffering, we can answer the question in following steps:
+
+1. we first buffer home with 200m distance
+
+2. then we do an overlay to combine grocery shop data with home data
+
+
+???
+To answer such question, what data is needed here?
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/overlay_example_types.png" width="100%">
+  </figure>
+]
+
+### Overlay Methods
+
+One of the overlay datasets must always be a line or polygon layer, while the second may be point, line, or polygon.
+
+1. point-in-polygon
+
+2. polygon-on-point
+
+3. line-on-line
+
+4. line-in-polygon
+
+5. polygon-on-line
+
+6. polygon-on-polygon
+
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/overlay_bool.jpg" width="80%">
+    <figcaption>Map Overlays and Boolean Logic.</figcaption>
+    <figsubcaption>Source: https://eeg260.academic.wlu.edu/course-notes/spatial-overlays-and-querying/map-overlays-and-boolean-logic/</figsubcaption>
+  </figure>
+]
+
+#### Overlay with Boolean operators
+
+Overlay methods can be more complex than that and therefore employ the basic Boolean operators:
+
+1. Intersection (AND)
+
+  Keeps only the areas where both layers overlap.
+
+2. Union (OR)
+
+  Combines all features from both layers, including overlaps and non-overlaps.
+
+3. Difference (NOT)
+
+  Removes areas of overlap from one layer based on another.
+
+4. Symmetrical Difference (XOR)
+
+  Keeps only the areas that are in one layer or the other, but not both.
+
 
 ---
 

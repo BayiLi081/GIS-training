@@ -68,7 +68,10 @@ h3 {
   color: #747474;
   font-weight: bold;
 }
-h4 { font-size: 1.2em; }
+h4 { 
+  font-size: 1.1em;
+  color: #747474;
+}
 h5 { font-size: 1em; }
 h6 { font-size: 0.8em; }
 
