@@ -152,6 +152,22 @@ QGIS integrates many third-party plugins and algorithms (e.g., from GRASS, GDAL)
 
 ---
 
+### Application Examples of Buffering: Dissolved buffer
+
+- Remove Overlapping Boundaries
+
+- Simplify Analysis
+
+<br>
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/dissolved_buffer.png" width="70%">
+  </figure>
+</div>
+
+---
+
 name: overlay
 
 .right_half[
@@ -487,6 +503,45 @@ Hot spot analysis is a standard tool for mapping and analysing crime locations a
 **G-Statistic**
 
 A spatial statistic that measures the clustering of high and low values in a data set.
+
+Output is usually a **z-score** and **p-value** for each feature:
+
+| z-score | | Interpretation |
+|---------|-|---------------|
+| > +1.96 |: | Hot spot at 95% confidence |
+| < –1.96 |: | Cold spot at 95% confidence |
+| Near 0  |: | No significant clustering |
+
+---
+
+### Pattern Analysis Methods III
+
+**Hot Spot Analysis**
+
+<div align="center">
+  <figure>
+    <img src="imgs/pattern_analysis/hotspot_analysis_example.png" width="99%">
+    <figcaption>Hot spot analysis of COVID-19 cases in Singapore.</figcaption>
+    <figsubcaption>Source: 10.3390/ijgi11030152</figsubcaption>
+  </figure>
+</div>
+
+
+---
+
+### Pattern Analysis Methods
+
+**GeoDa: Addition  to QGIS**
+
+Advanced spatial statistics such as spatial autocorrelation (Moran’s I), spatial regression, and hotspot analysis are not part of QGIS core. These require specialized plugins or external tools.
+
+QGIS supports plugins like Spatial Analyzer and Spatial Analysis Toolbox, which provide advanced methods such as Moran’s I, GWR, clustering, and dispersion measures. 
+
+These plugins often depend on Python libraries like PySAL, libpysal, and esda, which are not always pre-installed in QGIS. Installing them can be tricky because they require managing dependencies in QGIS’s Python environment
+
+GeoDa is specialized for spatial econometrics and pattern analysis, making it a good complement when QGIS plugins are hard to configure.
+
+Installing GeoDa: https://geodacenter.github.io/download
 
 ---
 
