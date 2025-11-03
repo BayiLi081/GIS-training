@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chapters of Spatial Analysis of Urban Data</title>
+    <title>Lecture: Vector Data Analysis in GIS</title>
     <link href="imgs/logo.svg" rel="icon" type="image/svg"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="src/custom.css" />
@@ -269,7 +269,7 @@ Overlay methods can be more complex than that and therefore employ the basic Boo
   </figure>
 ]
 
-## Overlay toolbox by QGIS
+### Overlay toolbox by QGIS
 
 <xL>What is the difference between intersection and clip in QGIS?</xL>
 
@@ -282,7 +282,7 @@ Overlay methods can be more complex than that and therefore employ the basic Boo
 
 ---
 
-## Spatial Join vs. Overlay
+### Spatial Join vs. Overlay
 
 .left_half[
   ### Spatial Join
@@ -312,15 +312,17 @@ Overlay methods can be more complex than that and therefore employ the basic Boo
   </figure>
 ]
 
-## Overlay Errors
+### Overlay Errors
 
 - **Sliver polygons**: A narrow gap formed when the shared boundary of two polygons do not meet exactly.
+
+  - Using plugins like [Topology Checker](https://docs.qgis.org/3.40/en/docs/user_manual/plugins/core_plugins/plugins_topology_checker.html) can help identify and fix these issues.
 
 - **Error propagation**: When inaccuracies are present in the original input and overlay layers and are carried through to an output layer.
 
 ---
 
-## Application Examples of Overlay
+### Application Examples of Overlay
 
 **Areal interpolation** issues: transferring known data from one set of polygons (source polygons) to another (target polygons)
 
@@ -333,7 +335,7 @@ Overlay methods can be more complex than that and therefore employ the basic Boo
 
 ---
 
-## Application Examples of Overlay
+### Application Examples of Overlay
 
 <div align="center">
   <figure>
@@ -388,13 +390,35 @@ name: distance
 
 ---
 
+## Practice: Mapping the data
+
+Dataset of all valid felony, misdemeanor, and violation crimes reported to the New York City Police Department (NYPD)
+
+
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/practice_crime_ntas_data.jpg" width="80%">
+    <figcaption>01: the complaint data to NYPD during 2024; 02: Mapped complaint data; 03: 2020 Neighborhood Tabulation Areas (NTAs).</figcaption>
+    <figsubcaption>Source: NYPD Complaint Data Historic, 2020 Neighborhood Tabulation Areas</figsubcaption>
+    <br>
+    <figsubcaption>https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data</figsubcaption>
+    <br>
+    <figsubcaption>https://data.cityofnewyork.us/City-Government/2020-Neighborhood-Tabulation-Areas-NTAs-/9nt8-h7nd/about_data</figsubcaption>
+  </figure>
+</div>
+
+---
+
 name: pattern
 
 ## Pattern Analysis
 
-Pattern analysis is the study of the spatial arrangements of point or polygon features in two-dimensional space.
+By mapping the spatial data set, we can have a general visual understanding of the distribution and identify any potential patterns or anomalies.
 
-Input: distance measurements 
+However, to further determine **whether these patterns are statistically significant**, we can apply various spatial analysis techniques.
+
+Pattern analysis is the study of the spatial arrangements of point or polygon features in two-dimensional space.
 
 Spatial statistics for describing the distribution pattern. 
 
@@ -402,7 +426,7 @@ Spatial statistics for describing the distribution pattern. 
 
 .right_half[
   <figure>
-    <img src="imgs/pattern_analysis/nearest_neighbour_analysis.png" width="60%">
+    <img src="imgs/pattern_analysis/nearest_neighbour_analysis.jpg" width="120%">
   </figure>
 ]
 
@@ -442,9 +466,7 @@ Provide transit example: using M-values for bus route scheduling. Mention 3D cit
 
 #### Practice of Nearest neighbour analysis
 
-Dataset of all valid felony, misdemeanor, and violation crimes reported to the New York City Police Department (NYPD)
 
-https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data
 
 **Research Question**: 
 
@@ -526,12 +548,29 @@ Output is usually a **z-score** and **p-value** for each feature:
   </figure>
 </div>
 
+---
+
+### Comparison between three pattern analysis methods
+
+Nearest Neighbor Analysis = location only
+
+Spatial Autocorrelation & Hot Spot Analysis = location + attribute values
+
+--
+
+- Global Moran’s I offers a global measure of spatial autocorrelation, indicating whether high or low values cluster together across the entire study area.
+
+- Local indicators of spatial association (LISA) can be derived from the global Moran’s I, providing insights into specific areas of significant clustering.
+
+- Hotspot analysis focuses on identifying statistically significant clusters of high or low values within a dataset, often using local measures like the Getis-Ord Gi* statistic.
+
+<xL>LISA can identify both clusters and outliers, while hot spot analysis only identifies clusters of extremes. And they have different statistical basis.</xL>
 
 ---
 
 ### Pattern Analysis Methods
 
-**GeoDa: Addition  to QGIS**
+**GeoDa: Addition to QGIS**
 
 Advanced spatial statistics such as spatial autocorrelation (Moran’s I), spatial regression, and hotspot analysis are not part of QGIS core. These require specialized plugins or external tools.
 
