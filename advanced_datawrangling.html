@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lecture: Vector Data Analysis in GIS</title>
+        <script>
+            fetch('src/header.html')
+            .then(res => res.text())
+            .then(html => document.head.insertAdjacentHTML('beforeend', html));
+        </script>
+        <script src="src/remark-latest.min.js"></script>
+        <script src="src/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+    </head>
+  <body>
+
+    <textarea id="source">
+
+class: center
+
+<br>
+
+# Spatial Analysis of Urban Data
+
+## Bonus: Advanced Data Wrangling Techniques
+
+[Bayi Li](mailto:barryli081@gmail.com)
+
+---
+
+## Data Wrangling
+
+Data wrangling is the process of cleaning and transforming raw data into a format suitable for analysis. In the context of GIS, this often involves manipulating spatial data to ensure it is accurate, complete, and in the right format for analysis.
+
+---
+
+.right_half[
+    <figure>
+        <img src="imgs/data_cleaning/data_structure_issue.jpg" class="zoomable" id="ZoomableImage" alt="Data Structure Issue">
+        <figcaption>Attributes are embeded in HTML.</figcaption>
+        <figsubcaption>Source: Screenshot from QGIS.</figsubcaption>
+    </figure>
+]
+
+## Examples
+
+Data Source: [URA No of Dwelling Units](https://data.gov.sg/datasets/d_be71daeab5930f96b90ad2857454d876/view)
+
+<div align="center">
+  <figure>
+    <a href="https://data.gov.sg/datasets/d_be71daeab5930f96b90ad2857454d876/view" target="_blank">
+      <img src="imgs/data_cleaning/data_page.jpg" width="40%">
+    </a>
+  </figure>
+</div>
+
+Data embedded in HTML is often built for framing or display rather than straightforward data transfer and analysis.
+
+--
+
+<xL>In this case, we will conduct data wrangling to extract the relevant information from the HTML structure and convert it into a more usable format.</xL>
+
+---
+
+## Programming with QGIS Python Console
+
+The QGIS Python Console is a built-in tool that lets users automate workflows and perform advanced spatial data analysis. It allows users to write and execute Python scripts within the QGIS environment, giving access to QGIS’s API (PyQGIS) and all its geoprocessing capabilities.
+
+<div align="center">
+  <figure>
+    <img src="imgs/data_cleaning/python_console_qgis.jpg" width="60%">
+    <img src="imgs/data_cleaning/python_editor.jpg" width="60%">
+  </figure>
+</div>
+
+---
+
+## Issue of using QGIS Python Console
+
+However, running complex or large-scale tasks through the console can sometimes be slow and may cause the interface to become unresponsive.
+
+<div align="center">
+  <figure>
+    <img src="imgs/data_cleaning/whynotrunpython_directly_withqgis.jpg" width="90%">
+  </figure>
+</div>
+
+In such cases, executing the same scripts directly in a standalone Python environment (for example, using a script that imports qgis.core) is often more efficient and stable.
+
+</textarea>
+    <script src="src/template.js"></script>
+    </script>
+  </body>
+</html>

@@ -161,6 +161,7 @@ figcaption {
 }
 
 figsubcaption {
+  display: block;
   text-align: center;
   font-size:0.6em; 
   color: #777873;
@@ -332,30 +333,57 @@ a.md-logo img {
   border: none;
 }
 
-.zoom{
-  transition: transform ease-in-out 0.5s;
+/* Normal images */
+.zoomable {
   cursor: zoom-in;
+  max-width: 100%;
+  height: auto;
 }
 
-.image-zoom-large{
-  transform: scale(1.5);
-  cursor: zoom-out;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  z-index: 100;
-  position: relative;
+/* Overlay container */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;              /* hidden by default */
+  align-items: center;        /* centre vertically */
+  justify-content: center;    /* centre horizontally */
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+}
 
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+/* Show overlay */
+.lightbox.open {
+  display: flex;
+}
 
-  height: auto;
+/* Image inside overlay: never overflow */
+.lightbox img {
+  max-width: 95vw;            /* small margin from edges */
+  max-height: 95vh;
   width: auto;
-  border: 1px solid #ddd;
+  height: auto;
+  object-fit: contain;        /* always fully visible */
+  cursor: zoom-out;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   border-radius: 6px;
-  padding: 4px;
-  background-color: var(--md-default-bg-color);
+}
+
+/* Prevent page scrolling while open */
+body.lb-open {
+  overflow: hidden;
+}
+
+/* Optional close button (accessibility) */
+.lightbox .lb-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 28px;
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
 }
 
 #slideshow .slide .content { font-family: 'Consolas', monospace; font-size: 24px; }
