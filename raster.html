@@ -238,7 +238,7 @@ name: sa-raster
 
 ---
 
-## Data analysis environment
+### Data analysis environment
 
 - Specifying the area extent and output cell size
 
@@ -321,6 +321,214 @@ LST refers to Land Surface Temperature. It is a measure of the radiative skin te
 4. Click **OK** to apply the changes.
 
 <xL>Can you clip the raster to the extent of Singapore?</xL>
+
+---
+
+### Reclassifying
+
+- Reclassifying, or recoding, a dataset is commonly one of the first steps undertaken during raster analysis
+
+- Reclassification is the process of assigning a new class or range value to all pixels in the dataset based on their original values
+
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/reclassify.png" alt="scale_raster_analysis" class="zoomable" width="80%">
+  </figure>
+</div>
+
+---
+
+### Raster Overlays
+
+- Raster overlays are relatively simple compared to vector overlays and require much less computational power
+
+- Mathematical raster overlay (Map algebra): Pixel or grid cell values in each map are combined using mathematical operators to produce a new value in the composite map.
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/raster_overlay.png" alt="scale_raster_analysis" class="zoomable" width="80%">
+  </figure>
+</div>
+
+---
+
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/slope_analysis.png" alt="clip_raster_vector" width="100%">
+  </figure>
+]
+
+### Map algebra
+
+A set of primitive operations in a GIS allowing two or more raster layers of similar dimensions to produce a new raster layer using algebraic operations.
+
+Can be run from a raster calculator or by scripting.
+
+Example: measuring slopes from and elevation model
+
+```python
+slope_d = Slope(“emidalat”, “degree”)
+
+“slope_d”, a slope raster measured in degree
+“emidalat” an elevation raster
+
+ExtractByAttributes(“slope_d”, “Value < 20”)
+
+ExtractByAttributes(Slope(“emidalat”, “DEGREE”), “Value < 20”)
+```
+
+---
+
+name: example-analysis
+
+### Application of raster analysis
+
+#### Calculate NDVI (Normalized Difference Vegetation Index)
+
+NDVI uses the Near Infrared (NIR) and Red bands from sensors like Landsat 8’s OLI because vegetation strongly reflects **NIR light** and absorbs **red light**. 
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/landsat8.png" alt="scale_raster_analysis" class="zoomable" width="80%">
+  </figure>
+</div>
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/ndvi_comparison.jpg" alt="clip_raster_vector"class="zoomable"  width="100%">
+  </figure>
+]
+
+### Application of raster analysis
+
+#### Calculate NVDI
+
+NDVI is used to quantify vegetation greenness and is useful in understanding vegetation density and assessing changes in plant health.
+
+<figure>
+  <img src="imgs/raster/ndvi_eq.jpg" width="25%">
+</figure>
+
+In Landsat 4-7, NDVI = (Band 4 – Band 3) / (Band 4 + Band 3).
+
+In Landsat 8-9, NDVI = (Band 5 – Band 4) / (Band 5 + Band 4).
+
+Healthy vegetation (chlorophyll) reflects more near-infrared (NIR) and green light compared to other wavelengths. But it absorbs more red and blue light.
+
+---
+
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/ndvi_results.png" alt="clip_raster_vector"class="zoomable"  width="100%">
+  </figure>
+]
+
+### Application of raster analysis
+
+#### Calculate NVDI
+
+By comparing these two, NDVI measures vegetation health:
+
+- Values close to +1 → dense, healthy vegetation.
+
+- Values near 0 → bare soil or sparse vegetation.
+
+- Negative values → water or non-vegetated surfaces.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/ndvi_reclassification.png" alt="clip_raster_vector"class="zoomable"  width="100%">
+  </figure>
+]
+
+### Application of raster analysis
+
+#### Calculate NVDI
+
+Reclassification turns NDVI from a continuous index into actionable categories for interpretation, mapping, and modeling.
+
+| **Class**            | **NDVI Range**      | **Interpretation**            |
+|----------------------|----------------------|--------------------------------|
+| **1**         | < 0.0              | Water / Non-vegetated         |
+| **2**         | 0.0 – 0.2          | Bare soil / Built-up areas    |
+| **3**         | 0.2 – 0.4          | Sparse vegetation             |
+| **4**         | 0.4 – 0.6          | Moderate vegetation           |
+| **5**         | > 0.6              | Dense, healthy vegetation     |
+
+---
+
+### Application of raster analysis
+
+#### Calculate NDVI
+
+Zonal Statistics
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/ndvi_zonalanalysis.png" alt="scale_raster_analysis" class="zoomable" width="80%">
+  </figure>
+</div>
+
+---
+
+<xL>Can you apply zonal statistics to LST data for Singapore to calculate the average temperature across all planning zones?</xL>
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/zonal_statistics_lst_singapore.jpg" alt="zonal_statistics_lst_singapore" class="zoomable" width="60%">
+  </figure>
+</div>
+
+---
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/extension_ndvi_analysis.png" alt="zonal_statistics_lst_singapore" width="100%">
+  </figure>
+</div>
+
+---
+
+## Nighttime Light Data
+
+The **nighttime light (NTL)** data is a kind of remote sensing data to detect the lights from human settlement, gas flares and fires, which is derived from the Defense Meteorological Satellite Programs Operational Linescan System (DMSP/OLS).
+
+NTL data is powerful because it provides consistent, global coverage and is often available at high temporal resolution, making it ideal for tracking changes over time.
+
+It can be used for urbanization and growth monitoring, as a proxy for socioeconomic indicators, and for studying light pollution, among other applications.
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/ntl.jpg" width="80%">
+  </figure>
+</div>
+
+---
+
+### Example of NTL in Urban Clusters Identification
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/ntl_urbanclusters.png" width="100%">
+  </figure>
+</div>
+
+---
+
+### Example of NTL in Urban Clusters Identification
+
+<div align="center">
+  <figure>
+      <img src="imgs/raster/ntl_urban_clusters_changes.gif" width="100%">
+  </figure>
+</div>
 
 ---
 
