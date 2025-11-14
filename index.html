@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chapters of Spatial Analysis of Urban Data</title>
-    <link href="imgs/logo.svg" rel="icon" type="image/svg"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="src/custom.css" />
-  </head>
+        <title>Lecture: Network Data Analysis</title>
+        <link href="../images/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="src/remark-latest.min.js"></script>
+        <script src="src/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+    </head>
   <body>
 
+    <div id="site-header"></div>
     <textarea id="source">
 
 class: center
@@ -323,26 +326,17 @@ Different spatial analysis projects have different aims, so the framework must a
 
 <xL>Start from vector first: </xL><button onclick="window.location.href='vector.html'">Go to Lecture of Vector Data Analysis</button>
 
-    </textarea>
-    <script src="src/remark-latest.min.js" type="text/javascript">
-    </script>
-    <!-- Uncomment this if there is no internet -->
-
-    <!-- <script src="remark-0.6.3.min.js" type="text/javascript"> -->
-    <!--   </script> -->
-
-    <script type="text/javascript">
-      var slideshow = remark.create(      {
-        ratio: "16:9",
-        // Navigation options
-        navigation: {
-          // Enable or disable navigating using scroll
-          // Default: true
-          // Alternatives: false
-          scroll: false,
-        }
-      }
-      );
+</textarea>
+    <script src="src/template.js"></script>
+    <script>
+      fetch('src/header.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
     </script>
   </body>
 </html>

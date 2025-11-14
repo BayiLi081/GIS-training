@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Raster Data Analysis</title>
-        <script>
-            fetch('src/header.html')
-            .then(res => res.text())
-            .then(html => document.head.insertAdjacentHTML('beforeend', html));
-        </script>
+        <title>Lecture: Network Data Analysis</title>
+        <link href="../images/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script src="src/remark-latest.min.js"></script>
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
     </head>
   <body>
 
+    <div id="site-header"></div>
     <textarea id="source">
 
 class: center
@@ -122,7 +120,7 @@ A raster that typically represents phenomena that have clear boundaries with att
 <div align="center">
   <figure>
       <img src="imgs/raster/corine_landcover_raster.jpg" alt="corine_landcover_raster" width="30%">
-      <figcaption>Example raster: Digital Elevation Models.</figcaption>
+      <figcaption>Example raster: Corine Land Cover 2018 LAEA-raster 100m.</figcaption>
       <figsubcaption>Source: https://land.copernicus.eu/en/map-viewer?product=130299ac96e54c30a12edd575eff80f7/</figsubcaption>
   </figure>
 </div>
@@ -627,6 +625,15 @@ For those already familiar with Python, this package simplifies working with GEE
 
 </textarea>
     <script src="src/template.js"></script>
+    <script>
+      fetch('src/header.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
     </script>
   </body>
 </html>
