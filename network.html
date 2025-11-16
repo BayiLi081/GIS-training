@@ -36,52 +36,235 @@ class: center
 
 <div align="center">
   <figure>
-      <img src="imgs/network/install_network_analysis_plugin.jpg" alt="install_QNEAT3" width="50%">
-      <figcaption>Installation of QNEAT3 Plugin (QGIS Network Analysis Toolbox 3).</figcaption>
+      <img src="imgs/network/install_network_analysis_plugin.jpg" alt="install_QNEAT3" width="95%">
+      <figcaption>Installation of QNEAT3 Plugin (QGIS Network Analysis Toolbox).</figcaption>
       <figsubcaption>Source: https://root676.github.io/</figsubcaption>
   </figure>
 </div>
 
 ---
 
-<xL></xL>
+The open-source and community-driven nature of QGIS leads to multiple plugins for similar functions.
 
 <div align="center">
   <figure>
-      <img src="imgs/network/install_network_analysis_plugin.jpg" alt="install_QNEAT3" width="50%">
+      <img src="imgs/network/multi_network_plugins.jpeg" alt="install_QNEAT3" width="50%">
       <figcaption>Installation of QNEAT3 Plugin (QGIS Network Analysis Toolbox 3).</figcaption>
-      <figsubcaption>Source: https://root676.github.io/</figsubcaption>
   </figure>
 </div>
-multi_network_plugins.jpeg
+
+No single **“best”** plugin exists for all cases: Each plugin is designed with different goals, data assumptions, and workflows.
+
+<xL>Having substitutes is practical</xL>
+
+Sometimes a plugin fails. In such cases, switching to an alternative plugin keeps your workflow moving.
+
 
 ---
 
 .right_half[
   <figure>
     <img src="imgs/distance/different_type_distances.jpg" class="zoomable" width="100%">
-    <figcaption>Different Type of Distance.</figcaption>
+    <figcaption>List of available pulgins for network analysis in QGIS.</figcaption>
     <figsubcaption>Source: 10.1186/1476-072X-7-7</figsubcaption>
   </figure>
 ]
 
 ## Different Types of Distance
 
-- Manhattan Distance
+- **Euclidean Distance**
 
-- Euclidean Distance
+  The straight-line distance between two points in space.
 
-- Network-based Distance
+- **Network-based Distance**
+
+  Can be divided into:
+
+  - **Shortest network distance**
+
+    The smallest physical length along the network.
+
+  - **Shortest network time**
+
+    Considers realistic factors such as speed limits, traffic conditions, and other attributes to estimate travel time.
+
+- **Manhattan Distance**
+
+  The sum of absolute differences in coordinates (L1 norm). Common in grid-based systems and certain analytical contexts, though less used for real-world road routing.
 
 ---
 
-## Spatial Network Analysis
+### Euclidean Distance
 
-Data wrangling is the process of cleaning and transforming raw data into a format suitable for analysis. In the context of GIS, this often involves manipulating spatial data to ensure it is accurate, complete, and in the right format for analysis.
+<div align="center">
+  <figure>
+      <img src="imgs/network/formula_euclidean_dist.png" alt="install_QNEAT3" width="30%">
+  </figure>
+</div>
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/Euclidean_distance_2d_image.svg" alt="install_QNEAT3" width="50%">
+</div>
+
+<xL>Always check the CRS.</xL> If the layer uses a geographic CRS, distances will be measured in **degrees, not meters**.
 
 ---
 
-## Social Network Analysis
+.right_half[
+  <figure>
+    <img src="imgs/network/calculation_euclidean_dist.png" class="zoomable" width="100%">
+    <figcaption>The Euclidean distance calculation tool of QGIS.</figcaption>
+  </figure>
+]
+
+### Euclidean Distance: Practice
+
+<xL>What is the nearest hawker centre from SUTD?</xL>
+
+Data:
+
+1. Hawker centre dataset
+
+2. Location of SUTD
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/network/calculation_euclidean_dist.png" class="zoomable" width="100%">
+    <figcaption>The Euclidean distance calculation tool of QGIS.</figcaption>
+  </figure>
+]
+
+### Euclidean Distance: Practice
+
+<xL>Which MRT station has the best access to hawker centre?</xL>
+
+--
+
+1. **Distance-based solution:** How close is the nearest hawker centre?
+
+2. **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
+
+<xL>Depending on how you approach the research question, you can even aggregate two solutions to have a more comprehensive evaluation.</xL>
+
+---
+
+### Composite Accessibility index
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/composite_accessibility_index.png" alt="cai_formula" width="30%">
+  </figure>
+</div>
+
+two metrics per station:
+
+1. sd(i): Nearest distance to a hawker centre (inverted so smaller distance → higher score).
+
+2. sc(i): Hawker count within a fixed walking radius (e.g., 500 m; larger is better).
+
+Assign weights:
+
+1. w_d​ = weight for distance score (e.g., 0.5)
+
+2. w_c​ = weight for count score (e.g., 0.5)
+
+<xL>Based on the Composite Accessibility Index (CAI), which MRT stations have the lowest hawker centre accessibility, and how can this inform future hawker centre allocation?</xL>
+
+---
+
+### Using Network Distance to improve the accuracy
+
+<xL>Using `Tampines planning area` as an example, extract the road network data using the QuickOSM plyugin of QGIS.</xL>
+
+Be aware of the **Boundary Issue**:
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/buffer_enquiry.png" alt="buffer2data" width="100%">
+      <figcaption>Download street network data after buffer the boundary geometry of place name.</figcaption>
+      <figsubcaption>Source: https://arxiv.org/pdf/1611.01890</figsubcaption>
+  </figure>
+</div>
+
+---
+
+Prepare a network layer by downloading OSM roads using Quick OSM plugin:
+
+1. Key: `highway`  *(This is the OSM tag for roads.)*
+
+2.  Value: Leave blank to get all roads.
+
+3.  In: *Choose Singapore Boundary layer*
+
+4.  **Geometry type:** `Line`.
+
+QuickOSM will download the data and add it as a new layer in your QGIS project.
+
+---
+
+### Network Data Cleaning
+
+OSM data includes many attributes (tags such as name, surface, lanes, maxspeed, etc.), which can make the dataset quite bulky. Keeping only the relevant fields helps to:
+
+1. Reduces file size
+
+2. Speeds up processing
+
+3. Makes attribute tables cleaner
+
+Let's keep the four fields:
+
+1. highway (road type)
+
+2. length (geometry length)
+
+3. maxspeed (if available, for time-based cost)
+
+4. oneway (for directionality)
+
+You should also keep the OSM ID (usually osm_id or id) when exporting or cleaning your road data.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/network/different_types_network.jpg
+" class="zoomable" width="100%">
+    <figcaption>A fully connected vs. an unconnected graph.</figcaption>
+    <figsubcaption>Source: walkenho.github.io/graph-theory-and-networkX-part2/</figsubcaption>
+  </figure>
+]
+
+Network analysis has relatively high requirements for data quality.
+
+1. Not snapped at intersections or minor gaps between roads might cause fail or unrealistic paths.
+
+2. Shortest network time requires more detailed informtion on fields like oneway, maxspeed, and length.
+
+3. Disconnected subgraphs make some hubs **unreachable**
+
+---
+
+<xL>Could you work on the network data cleaning of Tampines as an example?</xL>
+
+---
+
+.right_half[
+  <figure>
+      <img src="imgs/network/social_network_analysis_example.png" alt="Singapore Biographical Database" class="zoomable" width="90%">
+      <figcaption>Community Identification through social network analysis.</figcaption>
+      <figsubcaption>Source: https://www.social-life.co/media/files/PrioryCourt_Final.pdf.</figsubcaption>
+  </figure>
+]
+
+## Social Network Analysis - Community Identification
+
+---
+
+## Social Network Analysis - Family Tree
 
 Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
 
@@ -90,6 +273,18 @@ Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
       <img src="imgs/network/sg_bio_database.gif" alt="Singapore Biographical Database" width="50%">
       <figcaption>Interactive visualisation of Singapore's biographical data.</figcaption>
       <figsubcaption>Source: https://sbdb.nus.edu.sg/Network20Selected/index.html.</figsubcaption>
+  </figure>
+</div>
+
+---
+
+## Bibliometric Network Analysis
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/co-keyword_network_analysis.png" alt="Singapore Biographical Database" class="zoomable" width="80%">
+      <figcaption>Co-keyword network visualization on smart cities research. Note: (a) co-keyword network visualization was based on occurrences; (b) co-keyword overlay visualization was based on the occurrences and average publication per year scores.</figcaption>
+      <figsubcaption>Source: https://doi.org/10.3390/su11133606.</figsubcaption>
   </figure>
 </div>
 
