@@ -339,10 +339,11 @@ name: topo
 
 ## Main Topological Measurements of a Network
 
-### 1. Density
+### Density (Global)
 
-*   **Definition:** The ratio of actual connections to all possible connections in the network.
-*   **Interpretation:** Higher density means a more interconnected network.
+- Definition: The ratio of actual connections to all possible connections in the network.
+
+- Interpretation: Higher density means a more interconnected network.
 
 <div align="center">
   <figure>
@@ -360,38 +361,128 @@ name: topo
 
 ## Main Topological Measurements of a Network
 
-### 2. Connectivity
+.right_half[
+  <figure>
+    <img src="imgs/network/beta_index.webp" width="100%">
+    <figcaption>Beta Index in Graph.</figcaption>
+    <figsubcaption>Source: https://transportgeography.org/contents/methods/graph-theory-measures-indices/beta-index-graph/</figsubcaption>
+  </figure>
+]
 
-*   **Definition:** The extent to which nodes are directly or indirectly connected in the network.
-*   **Interpretation:** Indicates how easily one can move through the network; higher connectivity means more alternative routes.
+### Connectivity (Beta Index, Global)
+
+- Definition: It expresses the average number of links (edges) per node (vertex) in a network.
+
+- Interpretation: Indicates the average number of links per node. Values above 1 suggest a more connected network.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/beta_index_formula.png" width="40%">
+</div>
 
 ---
 
 ## Main Topological Measurements of a Network
 
-### 3. Degree (Node Degree)
+### Average Path Length (Global)
 
-*   **Definition:** The number of edges (connections) attached to a node (intersection).
-*   **Interpretation:** High-degree nodes are major junctions or hubs; low-degree nodes are dead-ends or simple intersections.
+- Definition: The mean lengths between the shortest paths of all pairs of vertices in the network.
+
+- Interpretation: Indicates the overall efficiency of movement in the network.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/avg_path_len.png" width="70%">
+      <figsubcaption>Source: https://rpubs.com/odenipinedo/network-analysis-in-R</figsubcaption>
+</div>
 
 ---
 
 ## Main Topological Measurements of a Network
 
-### 4. Average Path Length
+### Node Degree (Local)
 
-*   **Definition:** The average number of steps along the shortest paths for all possible pairs of nodes.
-*   **Interpretation:** Indicates the overall efficiency of movement in the network.
+- Definition: It quantifies the number of direct connections, or edges, a node (vertex) has within a graph or network. It is the number of edges attached to a node.
 
-### 5. Closeness Centrality
+- Interpretation: High-degree nodes are major junctions or hubs; low-degree nodes are dead-ends or simple intersections.
 
-*   **Definition:** The inverse of the sum of the shortest path distances from a node to all other nodes.
-*   **Interpretation:** Nodes with high closeness are centrally located and can reach all others quickly.
+<div align="center">
+  <figure>
+      <img src="imgs/network/node_degree.png" width="90%">
+</div>
 
-### 6. Betweenness Centrality
+---
 
-*   **Definition:** The number of shortest paths that pass through a node or edge.
-*   **Interpretation:** Nodes/edges with high betweenness are critical for movement and act as “bridges” or bottlenecks.
+.right_half[
+  <figure>
+    <img src="imgs/network/closeness_centrality.png" width="100%">
+    <figsubcaption>Source: https://www.jsums.edu/nmeghanathan/files/2015/08/CSC641-Fall2015-Module-2-Centrality-Measures.pdf.</figsubcaption>
+  </figure>
+]
+
+## Main Topological Measurements of a Network
+
+### Closeness Centrality (Local)
+
+- Definition: The inverse of the sum of the shortest path distances from a node to all other nodes.
+
+- Interpretation: Nodes with high closeness are centrally located and can reach all others quickly.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/closeness_centrality_eq.png" width="50%">
+  </figure>
+</div>
+
+
+---
+
+## Main Topological Measurements of a Network
+
+### Betweenness Centrality (Local)
+
+- Definition: The number of shortest paths that pass through a node or edge.
+
+- Interpretation: Nodes/edges with high betweenness are critical for movement and act as “bridges” or bottlenecks.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/betweeness_centrality.png" width="55%">
+      <figsubcaption>Source: https://www.jsums.edu/nmeghanathan/files/2015/08/CSC641-Fall2015-Module-2-Centrality-Measures.pdf</figsubcaption>
+  </figure>
+</div>
+
+---
+
+| **Measure**                   | **What It Describes**                                                            | **What It Tells You**                                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| **Density**                   | How full the network is compared with the maximum number of links it could have. | Shows **how connected the network is**. A dense network has many alternative routes.      |
+| === | ===  | === |
+| **Connectivity (Beta Index)** | The ratio of edges to nodes. | Indicates general network connectedness. Higher values show **more links for each node**. |
+| === | ===  | === |
+| **Average Path Length**       | The average number of steps needed to travel between all pairs of nodes.         | Reflects network efficiency. Lower values mean **shorter, more direct routes**.           |
+| === | ===  | === |
+| **Node Degree**               | The number of edges linked to a node.                                            | Highlights local importance. High-degree nodes act as **local hubs**.                     |
+| === | ===  | === |
+| **Closeness Centrality**      | How close a node is to all other nodes.                                          | Measures **accessibility**. High values mean a node can reach others with few steps.      |
+| === | ===  | === |
+| **Betweenness Centrality**    | How often a node lies on shortest paths between other nodes.                    | Shows control over flow. High-betweenness nodes act as **bridges or bottlenecks**.        |
+
+---
+
+| Measure | Example Research Question |
+| ----------------------------- | -------------------------------------------------------------------------------- |
+| **Density**                   | How does street-network density vary across neighbourhoods, and how does this variation relate to differences in walking rates? |
+| === | ===  |
+| **Connectivity (Beta Index)** | How does the beta index of local street networks influence route choice for short urban trips? |
+| === | ===  |
+| **Average Path Length**       | How does the average path length of a city’s street network affect travel times between key public facilities?         |
+| === | ===  |
+| **Node Degree**               | How do high-degree junctions shape traffic flow and local congestion patterns in dense urban areas? |
+| === | ===  |
+| **Closeness Centrality**      | How does the closeness centrality of street junctions relate to access to shops, parks, and public transport stops? |
+| === | ===  |
+| **Betweenness Centrality**    | How do nodes with high betweenness centrality contribute to bottlenecks and vulnerability in the urban street network? |
 
 
 ---
