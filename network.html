@@ -20,12 +20,13 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture: Network Data Analysis
+## Lecture and Tutorial: Network Data Analysis
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
-<br>
-<button onclick="window.location.href='network_tutorial.html'">Go to Tutorial</button>
+[1. Distance Measurements](#dist)
+
+[2. Topological Measurements](#topo)
 
 <br>
 <button onclick="window.location.href='index.html'">Go Back to Menu</button>
@@ -44,7 +45,7 @@ class: center
 
 ---
 
-The open-source and community-driven nature of QGIS leads to multiple plugins for similar functions.
+The open-source and community-driven nature of QGIS leads to <u>multiple plugins for similar functions</u>.
 
 <div align="center">
   <figure>
@@ -62,6 +63,8 @@ Sometimes a plugin fails. In such cases, switching to an alternative plugin keep
 
 ---
 
+name: dist
+
 .right_half[
   <figure>
     <img src="imgs/distance/different_type_distances.jpg" class="zoomable" width="100%">
@@ -74,23 +77,19 @@ Sometimes a plugin fails. In such cases, switching to an alternative plugin keep
 
 - **Euclidean Distance**
 
-  The straight-line distance between two points in space.
+  The <u>straight-line</u> distance between two points.
 
 - **Network-based Distance**
 
-  Can be divided into:
+  - **Shortest network distance**: The smallest physical length <u>along the network</u>.
 
-  - **Shortest network distance**
-
-    The smallest physical length along the network.
-
-  - **Shortest network time**
-
-    Considers realistic factors such as speed limits, traffic conditions, and other attributes to estimate travel time.
+  - **Shortest network time**: Considers <u>realistic factors</u> such as speed limits, traffic conditions, and other attributes to estimate travel time.
 
 - **Manhattan Distance**
 
-  The sum of absolute differences in coordinates (L1 norm). Common in grid-based systems and certain analytical contexts, though less used for real-world road routing.
+  The sum of absolute differences in coordinates. 
+  
+  Common in <u>grid-based systems and certain analytical contexts</u>, though less used for real-world road routing.
 
 ---
 
@@ -113,22 +112,57 @@ Sometimes a plugin fails. In such cases, switching to an alternative plugin keep
 
 .right_half[
   <figure>
-    <img src="imgs/network/calculation_euclidean_dist.png" class="zoomable" width="100%">
-    <figcaption>The Euclidean distance calculation tool of QGIS.</figcaption>
+    <img src="imgs/network/practice_data_viz.png" class="zoomable" width="100%">
   </figure>
 ]
 
 ### Euclidean Distance: Practice
 
-<xL>What is the nearest hawker centre from SUTD?</xL>
+<xL>What is the spatial accessibility of hawker centres relative to MRT stations in Tampines?</xL>
 
 Data:
 
 1. Hawker centre dataset
 
-2. Location of SUTD
+2. MRT stations (Including LRT as well)
+
+3. Tampines Planning Boundary
+
+--
+
+<xL>Given that we are only focusing on Tampines area? Should we crop out the data that outside the Tampines area?</xL>
 
 ---
+
+.right_half[
+  <figure>
+    <img src="imgs/network/practice_data_viz_edge_effect.jpg" class="zoomable" width="100%">
+  </figure>
+]
+
+### Edge Effect
+
+Distortions or inaccuracies that occur at the boundaries of your study area when performing spatial or network analyses.
+
+**How to Manage Edge Effects?**
+
+1. Buffer Your Study Area:
+
+  Instead of cropping exactly to the Tampines boundary, <u>create a buffer</u> (in this case, we choose a buffer size of 1000 metre) around it.
+
+2. Interpret Results Carefully:
+
+  Be cautious when interpreting results near the boundary. Highlight in your report or map legend that edge effects may influence these areas.
+
+3. Document Your Method:
+
+  Always state in your methodology <u>how you handled the edge effect</u> (e.g., “A 1 km buffer was applied to the Tampines boundary to minimise edge effects in the analysis”).
+
+---
+
+### Euclidean Distance: Practice
+
+<xL>What is the spatial accessibility of hawker centres relative to MRT stations in Tampines?</xL>
 
 .right_half[
   <figure>
@@ -137,17 +171,30 @@ Data:
   </figure>
 ]
 
+- **Distance-based solution:** How close is the nearest hawker centre?
+
+- **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
+
+---
+
 ### Euclidean Distance: Practice
 
-<xL>Which MRT station has the best access to hawker centre?</xL>
+<xL>What is the spatial accessibility of hawker centres relative to MRT stations in Tampines?</xL>
+
+.right_half[
+  <figure>
+    <img src="imgs/network/euclidean_distance_calculation.png" class="zoomable" width="100%">
+    <figcaption>The Euclidean distance calculated output table of QGIS.</figcaption>
+  </figure>
+]
+
+- **Distance-based solution:** How close is the nearest hawker centre?
+
+- **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
 
 --
 
-1. **Distance-based solution:** How close is the nearest hawker centre?
-
-2. **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
-
-<xL>Depending on how you approach the research question, you can even aggregate two solutions to have a more comprehensive evaluation.</xL>
+<xL>Depending on how you approach the research question, you can even aggregate distance-based and buffer-based solutions to have a more comprehensive evaluation.</xL>
 
 ---
 
@@ -179,7 +226,7 @@ Assign weights:
 
 <xL>Using `Tampines planning area` as an example, extract the road network data using the QuickOSM plyugin of QGIS.</xL>
 
-Be aware of the **Boundary Issue**:
+Be aware of the **Edge Effect**:
 
 <div align="center">
   <figure>
@@ -191,15 +238,15 @@ Be aware of the **Boundary Issue**:
 
 ---
 
-Prepare a network layer by downloading OSM roads using Quick OSM plugin:
+Prepare a network layer by downloading OSM roads using Quick OSM plugin -> Quick Query:
 
 1. Key: `highway`  *(This is the OSM tag for roads.)*
 
 2.  Value: Leave blank to get all roads.
 
-3.  In: *Choose Singapore Boundary layer*
+3.  Layer Extent: *Choose the Buffered Tampines Boundary layer*
 
-4.  **Geometry type:** `Line`.
+4.  **Keep the Geometry type:** `Line`.
 
 QuickOSM will download the data and add it as a new layer in your QGIS project.
 
@@ -215,17 +262,137 @@ OSM data includes many attributes (tags such as name, surface, lanes, maxspeed, 
 
 3. Makes attribute tables cleaner
 
+.right_half[
+  <figure>
+    <img src="imgs/network/reduce_network_size.png" width="100%">
+    <figcaption>A significant size reduction after reduce the unneccesary fields.</figcaption>
+  </figure>
+]
+
 Let's keep the four fields:
 
 1. highway (road type)
 
-2. length (geometry length)
+2. oneway (for directionality)
 
 3. maxspeed (if available, for time-based cost)
 
-4. oneway (for directionality)
+4. lanes (capacity?)
 
-You should also keep the OSM ID (usually osm_id or id) when exporting or cleaning your road data.
+You should also keep the OSM ID (usually osm_id) when exporting or cleaning your road data.
+
+---
+
+### Network Distance: Practice
+
+From `Tampines MRT` to `The Hawker Centre @ Our Tampines Hub`
+
+Red line: Straight-Line Route
+
+Blue line: Network Route
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/network_distance_example.png" class="zoomable" width="100%">
+</div>
+
+---
+
+### Network Distance: Practice
+
+From `Tampines MRT` to `The Hawker Centre @ Our Tampines Hub`
+
+Red line: Straight-Line Route
+
+Blue line: Network Route
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/network_distance_example.png" class="zoomable" width="100%">
+</div>
+
+---
+
+### Network Distance: Practice
+
+To calculate distances from each MRT station to each hawker centre in Tampines
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/m2n_networkdist_matrix.png" class="zoomable" width="50%">
+</div>
+
+---
+
+### Network Distance: Compared with Euclidean Distance
+
+The Euclidean (straight-line) distance almost always underestimates the real-world (network) distance, and the size of this underestimation—the “distance decay” or “detour index”—can vary significantly from one point pair to another.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/measurement_in_difference.png" class="zoomable" width="50%">
+</div>
+
+---
+
+name: topo
+
+## Main Topological Measurements of a Network
+
+### 1. Density
+
+*   **Definition:** The ratio of actual connections to all possible connections in the network.
+*   **Interpretation:** Higher density means a more interconnected network.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/network_density_calculation.png" width="50%">
+      <figsubcaption>Source: https://www.numberanalytics.com/blog/mastering-network-density-in-social-network-analysis</figsubcaption>
+</div>
+
+| Density Range | Interpretation                              |
+|---------------|---------------------------------------------|
+| 0 - 0.3       | Low density, sparse |
+| 0.3 - 0.6     | Moderate density, relatively connected |
+| 0.6 - 1     | High density, highly connected |
+
+---
+
+## Main Topological Measurements of a Network
+
+### 2. Connectivity
+
+*   **Definition:** The extent to which nodes are directly or indirectly connected in the network.
+*   **Interpretation:** Indicates how easily one can move through the network; higher connectivity means more alternative routes.
+
+---
+
+## Main Topological Measurements of a Network
+
+### 3. Degree (Node Degree)
+
+*   **Definition:** The number of edges (connections) attached to a node (intersection).
+*   **Interpretation:** High-degree nodes are major junctions or hubs; low-degree nodes are dead-ends or simple intersections.
+
+---
+
+## Main Topological Measurements of a Network
+
+### 4. Average Path Length
+
+*   **Definition:** The average number of steps along the shortest paths for all possible pairs of nodes.
+*   **Interpretation:** Indicates the overall efficiency of movement in the network.
+
+### 5. Closeness Centrality
+
+*   **Definition:** The inverse of the sum of the shortest path distances from a node to all other nodes.
+*   **Interpretation:** Nodes with high closeness are centrally located and can reach all others quickly.
+
+### 6. Betweenness Centrality
+
+*   **Definition:** The number of shortest paths that pass through a node or edge.
+*   **Interpretation:** Nodes/edges with high betweenness are critical for movement and act as “bridges” or bottlenecks.
+
 
 ---
 
@@ -248,7 +415,76 @@ Network analysis has relatively high requirements for data quality.
 
 ---
 
-<xL>Could you work on the network data cleaning of Tampines as an example?</xL>
+.right_half[
+  <figure>
+    <img src="imgs/network/vclean_topolpgychecker.png
+" class="zoomable" width="100%">
+    <figcaption>v.clean tool interface.</figcaption>
+    <figsubcaption>Source: https://grass.osgeo.org/grass-stable/manuals/v.clean.html</figsubcaption>
+  </figure>
+]
+
+### v.clean: Toolset for cleaning topology
+
+v.clean is a GRASS GIS tool designed to clean and correct vector data, especially line such as road networks.
+
+It helps ensure your data is topologically correct—meaning <u>all lines connect properly, there are no unwanted overlaps, gaps, or duplicates, and the geometry is suitable</u> for network analysis.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/network/break_comparison.gif
+" width="40%">
+    <figcaption>Comparison of before and after using the break function.</figcaption>
+  </figure>
+]
+
+### v.clean: Toolset for cleaning topology
+
+You can apply one or more of these common cleaning operations in sequence:
+
+| Function | What it does                       | Typical Use Case                 |
+| -------- | ---------------------------------- | -------------------------------- |
+| break    | Splits lines at intersections      | Ensuring all roads connect       |
+| snap     | Connects nearly-touching endpoints | Fixing small misalignments       |
+| rmdupl   | Removes duplicate lines            | Cleaning up overlapping features |
+| rmdangle | Removes small, unconnected stubs   | Removing accidental “tails”      |
+| prune    | Removes small bends/spikes         | Smoothing geometry               |
+
+Cleaning OSM roads is not always mandatory. It depends on your research questions and the intended analysis. 
+
+The choice of cleaning functions should be tailored to your specific needs.
+
+---
+
+### Further Cleaning
+
+OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
+
+For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
+      <figcaption>Segmented OSM Roads.</figcaption>
+  </figure>
+</div>
+
+---
+
+### Further Cleaning
+
+OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
+
+For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
+      <figcaption>Segmented OSM Roads.</figcaption>
+  </figure>
+</div>
 
 ---
 
@@ -287,20 +523,6 @@ Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
       <figsubcaption>Source: https://doi.org/10.3390/su11133606.</figsubcaption>
   </figure>
 </div>
-
----
-
-## Other Types of Network Analysis
-
-However, running complex or large-scale tasks through the console can sometimes be slow and may cause the interface to become unresponsive.
-
-<div align="center">
-  <figure>
-    <img src="imgs/data_cleaning/whynotrunpython_directly_withqgis.jpg" width="90%">
-  </figure>
-</div>
-
-In such cases, executing the same scripts directly in a standalone Python environment (for example, using a script that imports qgis.core) is often more efficient and stable.
 
 </textarea>
     <script src="src/template.js"></script>
