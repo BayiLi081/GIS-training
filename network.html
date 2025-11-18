@@ -337,6 +337,29 @@ The Euclidean (straight-line) distance almost always underestimates the real-wor
 
 name: topo
 
+.right_half[
+  <figure>
+    <img src="imgs/network/topological_measures.png" width="100%">
+    <figsubcaption>Source: 10.21035/ijcnmh.2017.4(Suppl.3).S03</figsubcaption>
+  </figure>
+]
+
+## Topological Measurements
+
+### Definition
+
+Topological measurements are **quantitative metrics** used to describe the structure, connectivity, and properties of a network (such as a road network, social network, or utility grid) based solely on how nodes (points) and edges (connections) are arranged—regardless of their physical distances or geographic positions.
+
+These measurements help us understand:
+
+1. How well connected the network is
+
+2. Which nodes or links are most important
+
+3. The efficiency and robustness of the network
+
+---
+
 ## Main Topological Measurements of a Network
 
 ### Density (Global)
@@ -484,8 +507,31 @@ name: topo
 | === | ===  |
 | **Betweenness Centrality**    | How do nodes with high betweenness centrality contribute to bottlenecks and vulnerability in the urban street network? |
 
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/network/available_tools_in_QGIS.png
+" width="50%">
+  </figure>
+]
+
+### Network Topological Measuring Tools in QGIS
+
+There are multiple tools provided by GRASS built into QGIS
+
+| **Tool**              | **Description**                                                             |
+|-----------------------|-------------------------------------------------------------------------------|
+| `d.path`              | Finds shortest path for selected starting and ending node.                   |
+| `v.net.alloc`         | Allocates subnets for nearest centres.                                       |
+| `v.net.centrality`    | Computes degree, centrality, betweenness, closeness and eigenvector metrics. |
+| `v.net.connectivity`  | Computes vertex connectivity between two sets of nodes in the network.       |
+
+**You may refer https://grass.osgeo.org/grass-stable/manuals/topic_network.html for more detailed instructions for more tools**
 
 ---
+
+### Addition: How to get a clean network
 
 .right_half[
   <figure>
@@ -503,6 +549,21 @@ Network analysis has relatively high requirements for data quality.
 2. Shortest network time requires more detailed informtion on fields like oneway, maxspeed, and length.
 
 3. Disconnected subgraphs make some hubs **unreachable**
+
+---
+
+### Further Cleaning: Understand OSM Roads
+
+OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
+
+For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
+
+<div align="center">
+  <figure>
+      <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
+      <figcaption>Segmented OSM Roads.</figcaption>
+  </figure>
+</div>
 
 ---
 
@@ -549,33 +610,25 @@ The choice of cleaning functions should be tailored to your specific needs.
 
 ---
 
-### Further Cleaning
-
-OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
-
-For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
-
-<div align="center">
+.right_half[
   <figure>
-      <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
-      <figcaption>Segmented OSM Roads.</figcaption>
+    <img src="imgs/network/cleaning_process.gif" width="100%">
   </figure>
-</div>
+]
 
----
+### Workflow to get a clean typological network
 
-### Further Cleaning
+1. Dissolve all lines into a single multipart geometry
+(Vector → Geoprocessing Tools → Dissolve, no dissolve field)
 
-OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
+2. v.clean → break
+(Splits at intersections to produce true nodes)
 
-For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
+3. Continue with v.net.* tools.
 
-<div align="center">
-  <figure>
-      <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
-      <figcaption>Segmented OSM Roads.</figcaption>
-  </figure>
-</div>
+<xL>It will lose the attributes. If you wish to maintain the attributes, it requires extra cleanning process.</xL>
+
+Use `v.to.points` to generate nodes.
 
 ---
 
@@ -614,6 +667,12 @@ Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
       <figsubcaption>Source: https://doi.org/10.3390/su11133606.</figsubcaption>
   </figure>
 </div>
+
+---
+
+## Practice: Topological Measurement Analysis
+
+<xL>Could you give a comprehensive assessment on the network connectivity and efficiency on public transportation network of Singapore?</xL>
 
 </textarea>
     <script src="src/template.js"></script>
