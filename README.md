@@ -18,6 +18,7 @@
         <img src="https://img.shields.io/github/forks/BayiLi081/GIS-training" alt="GitHub forks">
     </a>
 </div>
+
 This repository supports two courses: **Spatial Data Analysis** and **Geospatial Analysis with Python**. The materials sit in separate branches (`spatial-data-analysis` and `py-bootcamp`). Lecture decks, accessible from [GIS Training](https://spatialuminous.top/GIS-training/#1), built with JavaScript using [remark](https://github.com/gnab/remark) are stored in the `gh-pages` branch.
 
 My background sits at the intersection of urban research and GIS. Both courses are designed for students in the [SUTD MSc Urban Science, Policy and Planning](https://urbanscience.sutd.edu.sg/curriculum/). The material, therefore, focuses on applied work rather than theory or software engineering.
@@ -31,4 +32,5 @@ The repository aims to:
 * explain what geospatial analysis is and how to carry it out with QGIS and Python
 * show how QGIS and Python work as complementary tools within **urban data science**
 * provide the basics of geospatial data visualisation
+
 
