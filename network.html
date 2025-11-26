@@ -24,12 +24,12 @@ class: center
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
-[1. Distance Measurements](#dist)
-
-[2. Topological Measurements](#topo)
-
-<br>
-<button onclick="window.location.href='index.html'">Go Back to Menu</button>
+.toc-wrapper[
+  <div class="toc">
+    <a href="#dist" class="toc-item">Distance Measurements</a>
+    <a href="#topo" class="toc-item">Topological Measurements</a>
+  </div>
+]
 
 ---
 
@@ -662,7 +662,7 @@ Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
 </textarea>
     <script src="src/template.js"></script>
     <script>
-      fetch('src/header.html')
+      fetch('src/nav.html')
         .then(function (res) { return res.text(); })
         .then(function (html) {
           document.getElementById('site-header').innerHTML = html;

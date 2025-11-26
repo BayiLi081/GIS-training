@@ -11,7 +11,6 @@
   <body>
 
     <div id="site-header"></div>
-
     <textarea id="source">
 
 class: center
@@ -24,18 +23,76 @@ class: center
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
-[1. Comprehensive Urban Research](#urbanres)
+.toc-wrapper[
+  <div class="toc">
+    <a href="#urbanda" class="toc-item">Understanding the City Through Geospatial Data</a>
+    <a href="#urbanres" class="toc-item">Comprehensive Urban Research</a>
+    <a href="#vis" class="toc-item">Advanced Visualisation and Mapping</a>
+  </div>
+]
 
-[2. Data and Urban Data](#urbanda)
+---
 
-[3. Advanced Visualisation and Mapping](#vis)
+name: urbanda
 
-<br>
-<button onclick="window.location.href='index.html'">Go Back to Menu</button>
+## Data-driven Urbanism
+
+From <u>data analytics</u> to <u>modelling and simulation</u>, Singapore has built its urban planning practice around geospatial data.
+
+<div align="center">
+  <figure>
+      <img src="imgs/applygis/informing-planning-decisions.jpg" width="80%">
+      <figcaption>Urban Redevelopment Authority: Informing planning decisions with analytic insights.</figcaption>
+      <figsubcaption>Source: https://www.ura.gov.sg/Corporate/Planning/Our-Planning-Process/Smart-Planning</figsubcaption>
+  </figure>
+</div>
+
+Recommended reading: https://www.ura.gov.sg/-/media/Corporate/Resources/Ideas/MS-technologies/Research--Innovation-Strategy-Working-Paper_for-publish.pdf
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/smart-city-system.jpg" alt="clip_raster_vector" width="100%">
+    <figcaption>Smart City: Model</figcaption>
+    <figsubcaption>Source: https://www.kdevelopedia.org/Resources/view/04201702080147173.do</figsubcaption>
+  </figure>
+]
+
+## Data-driven Urbanism
+
+> Computation is now routinely being embedded into the fabric and infrastructure of cities producing a deluge of contextual and actionable data whichcan be processed and acted upon in real-time.
+
+> -- Rob Kitchin
+
+---
+
+### New Data
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/geotagged_tweets.webp" alt="clip_raster_vector" class="zoomable" width="95%">
+    <figcaption>Spatial distribution of georeferenced posts</figcaption>
+    <figsubcaption>Source: https://link.springer.com/article/10.1007/s13278-025-01494-z</figsubcaption>
+  </figure>
+]
+
+New urban datas are emerging
+
+---
+
+Beyond GIS itself, urban data science is a more comprehensive concept.
+
+<figure>
+  <img src="imgs/DIKW_Pyramid.jpg" width="50%">
+  <figcaption>Data, Information, Knowledge, Wisdom (DIKW) Pyramid.</figcaption>
+  <figsubcaption>Source: R. Ackoff (1989) and https://www.jeffwinterinsights.com/insights/dikw-pyramid</figsubcaption>
+</figure>
 
 ---
 
 name: urbanres
+
 
 ## Comprehensive Urban Research
 
@@ -116,7 +173,7 @@ name: vis
 </textarea>
     <script src="src/template.js"></script>
     <script>
-      fetch('src/header.html')
+      fetch('src/nav.html')
         .then(function (res) { return res.text(); })
         .then(function (html) {
           document.getElementById('site-header').innerHTML = html;
@@ -125,5 +182,5 @@ name: vis
           console.error('Failed to load header:', err);
         });
     </script>
-    </body>
+  </body>
 </html>
