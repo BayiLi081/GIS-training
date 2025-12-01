@@ -28,6 +28,7 @@ class: center
     <a href="#urbanda" class="toc-item">Understanding the City Through Geospatial Data</a>
     <a href="#urbanres" class="toc-item">Comprehensive Urban Research</a>
     <a href="#vis" class="toc-item">Advanced Visualisation and Mapping</a>
+    <a href="#maup" class="toc-item">Modifiable Areal Unit Problem</a>
   </div>
 ]
 
@@ -164,11 +165,149 @@ name: vis
 
 ## Advanced Visualisation and Mapping
 
-<div align="center">
-  <figure>
-      <img src="imgs/network/formula_euclidean_dist.png" alt="install_QNEAT3" width="30%">
-  </figure>
+### Choropleth, Cartogram and Grid Map
+
+
+
+---
+
+name: maup
+
+## Modifiable Areal Unit Problem
+
+> A problem arising from the imposition of artificial units of spatial reporting on continuous geographical phenomena resulting in the generation of artificial spatial patterns
+
+> -- Heywood (1998)
+
+--
+
+<div style="display: flex; justify-content: center; gap: 40px; align-items: flex-start;">
+  <!-- Scale effect -->
+  <div>
+    <p><b>Scale effect</b></p>
+    <p>Zonal values change when the number of zones used to report the data changes.</p>
+    <p>Variation seen at a finer scale (for example, enumeration districts) often decreases when the same data are aggregated into fewer, larger zones at a coarser scale (such as wards or counties).</p>
+    <img src="imgs/applygis/maup_scale_effect.jpg"
+         alt="maup_scale_effect"
+         style="width: 300px;">
+    <figcaption>at different aggregation levels</figcaption>
+    <figsubcaption>Source: https://gisgeography.com/maup-modifiable-areal-unit-problem/</figsubcaption>
+  </div>
+
+  <!-- Zonation effect -->
+  <div>
+    <p><b>Zonation effect</b></p>
+    <p>Zonal values change because the geography of the zoning scheme shapes how data are aggregated. The same number of zones can be drawn in many different ways.</p>
+    <img src="imgs/applygis/maup_zonation_effect.png"
+         alt="maup_zonation_effect"
+         style="width: 400px;">
+    <figcaption>under different zoning schemes</figcaption>
+    <figsubcaption>Source: https://gisgeography.com/maup-modifiable-areal-unit-problem/</figsubcaption>
+  </div>
+
 </div>
+
+---
+
+### Addressing MAUP
+
+**Regular grid (tessellation) systems**
+
+Using grids (square or hexagon) avoids arbitrary administrative shapes and gives full control over the level of aggregation.
+
+Why it addresses both:
+
+Scale effect: you can vary grid size to test sensitivity.
+
+Zonation effect: grid geometry stays consistent, so shapes do not shift across areas.
+
+---
+
+### Addressing MAUP
+
+**Multi-scale, multi-zonation sensitivity analysis**
+
+Run the same model under:
+
+several grid sizes
+
+several boundary systems (grids, administrative units, neighbourhood clusters)
+
+several randomised zonations
+
+Why it works:
+
+It exposes how much results depend on both scale and boundary layout.
+
+If patterns remain stable across many configurations, findings are robust to MAUP.
+
+---
+
+### Addressing MAUP
+
+**Areal interpolation to a common fine-resolution grid**
+
+Convert all data from their original zones to a single fine grid before analysis using:
+
+pycnophylactic interpolation
+
+dasymetric mapping
+
+population-weighted or land-use–weighted interpolation
+
+Why it addresses both:
+
+Removes dependence on original scale.
+
+Removes dependence on original zonation.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/continuous_surface_modelling.png" class="zoomable" width="100%">
+    <figcaption>Choropleth map, graduated symbols map, and isoline map.</figcaption>
+    <figsubcaption>Source: 10.3390/ijgi10020069</figsubcaption>
+  </figure>
+]
+
+### Addressing MAUP
+
+**Continuous-surface modelling**
+
+KDE (Kernel Density Estimation)
+
+KDE surface can be visualised using isolines (right bottom).
+
+- Treats the phenomenon as continuous over space rather than forced into zones.
+
+- Reduces reliance on boundaries and zone sizes altogether.
+
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/zonedesign_azp.jpg" class="zoomable" width="100%">
+    <figcaption>Result of Zone Design by spatial clustering with AZP algorithm.</figcaption>
+    <figsubcaption>Source: 10.22034/soc.2019.84451</figsubcaption>
+  </figure>
+]
+
+### Addressing MAUP
+
+**Optimised regionalisation (zone design algorithms)**
+
+AZP (Automatic Zoning Procedure)
+
+AZP is a heuristic method that searches for the best way to group contiguous spatial units into regions. It aims to minimise the within-region sum of squares, producing zones that are more homogeneous.
+
+- Produces zones that minimise internal heterogeneity and maximise external differences.
+
+- Works across different scales and reduces artefacts from arbitrary shapes.
+
+**Reference:** [Openshaw (1977)](https://lanselin.github.io/introbook_vol2/automatic-zoning-procedure-azp.html)
+
 
 </textarea>
     <script src="src/template.js"></script>
