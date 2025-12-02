@@ -484,11 +484,69 @@ The data creator configures a pop-up window for each feature: when you click on 
 
 ---
 
+.right_half[
+  <figure>
+    <img src="imgs/applygis/upload_notebook2colab.png" class="zoomable" width="100%">
+  </figure>
+]
+
 ## Data Preprocessing
 
 ### Geospatial data with HTML table
 
 https://colab.research.google.com/
+
+
+import the Python libraries:
+
+```python
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+```
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/upload_data_2colab.png" width="100%">
+  </figure>
+]
+
+### Upload data to Google colab
+
+Downloading the geojson from https://data.gov.sg/collections/2104/view and then upload it to colab
+
+```python
+data_gdf = gpd.read_file("/content/MasterPlan2019PlanningAreaBoundaryNoSea.geojson")
+
+data_gdf.head()
+```
+
+---
+
+### Parsing the HTML value
+
+```python
+def html_to_dict(html_text):
+    t = pd.read_html(StringIO(f"<html>{html_text}</html>"))[0]
+    t.columns = ["Attribute", "Value"]
+    return dict(zip(t["Attribute"], t["Value"]))
+
+expanded = data_gdf["Description"].apply(html_to_dict).apply(pd.Series)
+
+clean_gdf = pd.concat([data_gdf.drop(columns=["Description"]), expanded], axis=1)
+
+clean_gdf.head()
+```
+
+---
+
+### Export it as cleaned GeoJSON
+
+```python
+clean_gdf.to_file("/content/clean_MasterPlan2019PlanningAreaBoundaryNoSea.geojson", driver='GeoJSON')
+```
 
 
 </textarea>
