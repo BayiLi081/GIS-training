@@ -26,7 +26,6 @@ class: center
 .toc-wrapper[
   <div class="toc">
     <a href="#urbanda" class="toc-item">Understanding the City Through Geospatial Data</a>
-    <a href="#urbanres" class="toc-item">Comprehensive Urban Research</a>
     <a href="#vis" class="toc-item">Advanced Visualisation and Mapping</a>
     <a href="#maup" class="toc-item">Modifiable Areal Unit Problem</a>
   </div>
@@ -35,6 +34,18 @@ class: center
 ---
 
 name: urbanda
+
+### Computational urban science approaches
+
+<div align="center">
+  <figure>
+      <img src="imgs/applygis/overall_framework.webp" alt="urban data science" class="zoomable" width="95%">
+      <figcaption>Approach for analysing trends of computational urban science and data science approaches.</figcaption>
+      <figsubcaption>Source: doi.org/10.1007/s43762-024-00142-0</figsubcaption>
+  </figure>
+</div>
+
+---
 
 ## Data-driven Urbanism
 
@@ -68,7 +79,70 @@ Recommended reading: https://www.ura.gov.sg/-/media/Corporate/Resources/Ideas/MS
 
 ---
 
-### New Data
+.right_half[
+  <figure>
+    <img src="imgs/applygis/gps_pts_in_park.png" width="100%">
+    <figcaption>Using mobile GPS data in the NYC public parks.</figcaption>
+    <figsubcaption>Source: https://carto.com/a-million-walks-in-the-park/</figsubcaption>
+  </figure>
+]
+
+### GPS Data
+
+GPS data shows how people move and where they spend time. It helps planners see which public spaces attract visitors, how people travel to them, and where gaps in access or design may exist.
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/gps_trajectory_reconstruction.png" class="zoomable" width="50%">
+    <figcaption>The process of trajectory reconstruction in a complex urban road scenario.</figcaption>
+    <figsubcaption>Source: 10.3390/app142311340</figsubcaption>
+  </figure>
+</div>
+
+
+---
+
+### Street-level / Eye-level Visual Data
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/svi_nus.webp" width="80%">
+    <figcaption>NUS Global Streetscapes.</figcaption>
+    <figsubcaption>Source: https://ual.sg/project/global-streetscapes/</figsubcaption>
+  </figure>
+</div>
+
+---
+
+### Visual Data Processing
+
+**Deep Learning Model**
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/gvi_segmentation_model.webp" width="80%">
+    <figcaption>Street view images sampling and semantic segmentation.</figcaption>
+    <figsubcaption>Source: 10.1038/s41598-024-81451-6</figsubcaption>
+  </figure>
+</div>
+
+---
+
+### Visual Data Processing
+
+**Vision-Language Model**
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/vlm_understanding.png" width="80%">
+    <figcaption>An example of the capabilities of a vision language model.</figcaption>
+    <figsubcaption>Source: https://www.ultralytics.com/blog/understanding-vision-language-models-and-their-applications</figsubcaption>
+  </figure>
+</div>
+
+---
+
+### Social Media Data
 
 .right_half[
   <figure>
@@ -78,86 +152,26 @@ Recommended reading: https://www.ura.gov.sg/-/media/Corporate/Resources/Ideas/MS
   </figure>
 ]
 
-New urban datas are emerging
-
----
-
-Beyond GIS itself, urban data science is a more comprehensive concept.
-
-<figure>
-  <img src="imgs/DIKW_Pyramid.jpg" width="50%">
-  <figcaption>Data, Information, Knowledge, Wisdom (DIKW) Pyramid.</figcaption>
-  <figsubcaption>Source: R. Ackoff (1989) and https://www.jeffwinterinsights.com/insights/dikw-pyramid</figsubcaption>
-</figure>
-
----
-
-name: urbanres
-
-
-## Comprehensive Urban Research
-
-### Computational urban science approaches
-
 <div align="center">
   <figure>
-      <img src="imgs/applygis/overall_framework.webp" alt="urban data science" class="zoomable" width="95%">
-      <figcaption>Approach for analysing trends of computational urban science and data science approaches.</figcaption>
-      <figsubcaption>Source: doi.org/10.1007/s43762-024-00142-0</figsubcaption>
+    <img src="imgs/applygis/tweets_singapore.webp" class="zoomable" width="30%">
+    <figcaption>Kernel density of tweets during the entire study period.</figcaption>
+    <figsubcaption>Source: 10.1007/978-981-16-7649-9_5</figsubcaption>
   </figure>
 </div>
 
 ---
 
-## Data Collection
+### Social Media Data - Social Network Minning
 
----
-
-## Data Preprocessing
-
-### Geospatial data with HTML table
-
-https://colab.research.google.com/
-
----
-
-## Data Analytics
-
----
-
-## Data Interpretation and Visualisation
-
----
-
-- **Euclidean Distance**
-
-  The <u>straight-line</u> distance between two points.
-
-- **Network-based Distance**
-
-  - **Shortest network distance**: The smallest physical length <u>along the network</u>.
-
-  - **Shortest network time**: Considers <u>realistic factors</u> such as speed limits, traffic conditions, and other attributes to estimate travel time.
-
-- **Manhattan Distance**
-
-  The sum of absolute differences in coordinates. 
-  
-  Common in <u>grid-based systems and certain analytical contexts</u>, though less used for real-world road routing.
-
----
-
-name: urbanda
-
-## Data and Urban Data
-
-### Open-source and closed-source
-
-#### GIS Softwares
-
-#### Urban Data
-
-#### Tools
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/network_social_media_data.jpg" width="80%">
+    <figcaption>Visual exploration of human interactions in spatial-social dimensions.</figcaption>
+    <figcaption>"Constructing and analyzing spatial-social networks from location-based social media data"</figcaption>
+    <figsubcaption>Source: 10.1080/15230406.2021.1891974</figsubcaption>
+  </figure>
+</div>
 
 ---
 
@@ -165,9 +179,84 @@ name: vis
 
 ## Advanced Visualisation and Mapping
 
-### Choropleth, Cartogram and Grid Map
+### Choropleth and Cartogram
 
+  Cartogram is to reshape geographic units so they emphasise a specific logic rather than their exact physical form.
 
+  It tries to keep adjacency and neighbourhoods, though some distortions still appear.
+
+  <div align="center">
+  <figure>
+    <img src="imgs/applygis/cartogram_example.jpg" width="50%">
+    <figcaption>Countries by GDP PPP - Biggest Economies in the World - Data 1950-2022 | Cartogram.</figcaption>
+    <figsubcaption>Source: https://www.youtube.com/watch?v=pvXrGgpBqSs</figsubcaption>
+  </figure>
+</div>
+
+---
+
+## Advanced Visualisation and Mapping
+
+### Choropleth and Cartogram
+
+  The biggest advantage of using a cartogram is that it **removes the visual bias created by the actual size and shape of geographic areas**, allowing the reader to focus on the underlying data rather than the geography.
+
+  Cartograms are used far more often in newspapers than in academic papers for better communication than spatial fidelity.
+
+  <div align="center">
+    <figure>
+      <img src="imgs/applygis/cartogram_example2.png" class="zoomable" width="45%">
+      <figcaption>US Presidential Election 2020 visualised by Choropleth and cartogram.</figcaption>
+      <figsubcaption>Source: https://worldmapper.org/us-presidential-election-2020/</figsubcaption>
+    </figure>
+  </div>
+
+---
+
+### Tile map
+
+A tile map is <u>a variant of a cartogram</u>. Every unit takes on a simplified, standardised shape, often a square or a hexagon. 
+
+Each tile has equal size, so visual weight is uniform across all units. 
+
+This removes differences caused by actual land area and shifts attention to relationships, patterns and comparisons.
+
+  <div align="center">
+    <figure>
+      <img src="imgs/applygis/HexGridCartograms.jpg" class="zoomable" width="80%">
+      <figcaption>The same data visualized using a grid and hexagonal cartogram with slightly different arrangements of states.</figcaption>
+      <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-online/mapping/how-to-build-a-cartogram-in-microsoft-office-and-arcgis-online</figsubcaption>
+    </figure>
+  </div>
+
+---
+
+### Dorling Cartogram
+
+It is a type of cartogram in which each geographic region is replaced by a circle. The size of the circle represents a chosen variable, and the circles are positioned so they roughly reflect the regions’ locations.
+
+  <div align="center">
+    <figure>
+      <img src="imgs/applygis/dorlingcartogram.jpg" class="zoomable" width="70%">
+      <figcaption>Congressional seats awarded to each state from the 2020 census.</figcaption>
+      <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/graphical-cartograms-in-arcgis-pro</figsubcaption>
+    </figure>
+  </div>
+
+---
+
+### Examples
+
+  <div align="center">
+    <figure>
+      <img src="imgs/applygis/tile_map_cartogram.webp" class="zoomable" width="45%">
+      <figcaption>Congressional seats awarded to each state from the 2020 census.</figcaption>
+      <figsubcaption>Source: https://www.nytimes.com/2021/10/21/learning/whats-going-on-in-this-graph-oct-27-2021.html</figsubcaption>
+    </figure>
+  </div>
+
+For example, 
+[git@github.com:BayiLi081/Tile-map-cartogram.git](https://github.com/BayiLi081/Tile-map-cartogram)
 
 ---
 
@@ -209,6 +298,13 @@ name: maup
 
 ---
 
+.right_half[
+  <figure>
+    <img src="imgs/applygis/tessellation_systems.png" class="zoomable" width="70%">
+    <figsubcaption>Source: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/generatetesellation.htm</figsubcaption>
+  </figure>
+]
+
 ### Addressing MAUP
 
 **Regular grid (tessellation) systems**
@@ -223,43 +319,69 @@ Zonation effect: grid geometry stays consistent, so shapes do not shift across a
 
 ---
 
+.right_half[
+  <figure>
+    <img src="imgs/applygis/tessellation_systems.png" class="zoomable" width="70%">
+    <figsubcaption>Source: https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/generatetesellation.htm</figsubcaption>
+  </figure>
+]
+
+### Addressing MAUP
+
+**Generating Regular grid with QGIS**
+
+Youtube tutorial: https://www.youtube.com/watch?v=ETk1pbGTen0
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/create_grids.jpg" width="40%">
+  </figure>
+</div>
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/H3_Hex_nested.png" class="zoomable" width="70%">
+    <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-online/analytics/use-h3-hexagons-for-spatial-analysis-in-arcgis-online</figsubcaption>
+  </figure>
+]
+
+**H3 Hexagon**
+
+H3 is a geospatial indexing system that **partitions the world** into hexagonal cells.
+
+Hierarchal hexagons are sized such that every larger polygon is divided into seven equal-sized smaller hexagons that all have an equal distance to the center of their neighbors.
+
+H3 is useful for **both visualisation and analysis**: reproducible workflows and scalable spatial processing.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/maup_sensitivity.png" class="zoomable" width="100%">
+    <figcaption>Examples of an ecosystem service gradient aggregated to different scales.</figcaption>
+    <figsubcaption>Source: 10.3390/land11030399</figsubcaption>
+  </figure>
+]
+
 ### Addressing MAUP
 
 **Multi-scale, multi-zonation sensitivity analysis**
 
 Run the same model under:
 
-several grid sizes
+`several grid sizes`
 
-several boundary systems (grids, administrative units, neighbourhood clusters)
+`several boundary systems (grids, administrative units, neighbourhood clusters)` 
 
-several randomised zonations
+`several randomised zonations`
 
 Why it works:
 
 It exposes how much results depend on both scale and boundary layout.
 
 If patterns remain stable across many configurations, findings are robust to MAUP.
-
----
-
-### Addressing MAUP
-
-**Areal interpolation to a common fine-resolution grid**
-
-Convert all data from their original zones to a single fine grid before analysis using:
-
-pycnophylactic interpolation
-
-dasymetric mapping
-
-population-weighted or land-use–weighted interpolation
-
-Why it addresses both:
-
-Removes dependence on original scale.
-
-Removes dependence on original zonation.
 
 ---
 
@@ -307,6 +429,66 @@ AZP is a heuristic method that searches for the best way to group contiguous spa
 - Works across different scales and reduces artefacts from arbitrary shapes.
 
 **Reference:** [Openshaw (1977)](https://lanselin.github.io/introbook_vol2/automatic-zoning-procedure-azp.html)
+
+---
+
+## Additional information for the final presentation
+
+**15 mins presentation + 5 mins Q&A**
+
+Key elements included:
+
+- Explain your main research question and why it matters.
+
+- Show your work process (from data to methodology).
+
+- Present the key spatial analyses, maps, and insights you developed.
+
+- Demonstrate how the group worked as a team.
+
+---
+
+## Additional information for the final report
+
+**Follow research paper format**
+
+**No need to include screenshots**
+
+Key elements included:
+
+- Explain your main research question and why it matters.
+
+- Show your work process from Week 10 to Week 14.
+
+- Present the key spatial analyses, maps, and insights you developed.
+
+- Demonstrate how the group worked as a team.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/html_geojson_clean.jpg" class="zoomable" width="100%">
+  </figure>
+]
+
+## Data Preprocessing
+
+### Geospatial data with HTML table
+
+The data creator configures a pop-up window for each feature: when you click on a polygon, a small HTML table appears showing key fields (PLN_AREA_N, REGION_N, etc.) in a nice formatted way.
+
+```html
+<center><table><tr><th colspan='2' align='center'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3"> <th>PLN_AREA_N</th> <td>BEDOK</td> </tr><tr bgcolor=""> <th>PLN_AREA_C</th> <td>BD</td> </tr><tr bgcolor="#E3E3F3"> <th>CA_IND</th> <td>N</td> </tr><tr bgcolor=""> <th>REGION_N</th> <td>EAST REGION</td> </tr><tr bgcolor="#E3E3F3"> <th>REGION_C</th> <td>ER</td> </tr><tr bgcolor=""> <th>INC_CRC</th> <td>5F00E6FF084F3364</td> </tr><tr bgcolor="#E3E3F3"> <th>FMEL_UPD_D</th> <td>20191223152014</td> </tr></table></center>
+```
+
+---
+
+## Data Preprocessing
+
+### Geospatial data with HTML table
+
+https://colab.research.google.com/
 
 
 </textarea>
