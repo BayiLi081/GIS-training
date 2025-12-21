@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-        <title>Spatial Analysis of Urban Data</title>
+        <title>Geospatial Analysis with Python</title>
         <link href="../images/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script src="src/remark-latest.min.js"></script>
@@ -17,7 +17,7 @@ class: center
 
 <br>
 
-# Spatial Analysis of Urban Data
+# Geospatial Analysis with Python
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
@@ -25,10 +25,9 @@ class: center
 
 .toc-wrapper[
   <div class="toc">
-    <a href="vector.html" class="toc-item">Spatial Analysis of Vector Data</a>
-    <a href="raster.html" class="toc-item">Spatial Analysis of Raster Data</a>
-    <a href="network.html" class="toc-item">Spatial Network Analysis</a>
-    <a href="appliedgis.html" class="toc-item">Urban Studies and Applied GIS</a>
+    <a href="intro2py.html" class="toc-item">Section I: Introduction to Python</a>
+    <a href="sdp.html" class="toc-item">Section II: Spatial Data Processing</a>
+    <a href="aav.html" class="toc-item">Section III: Advanced Analysis and Visualisation</a>
   </div>
 ]
 
@@ -41,9 +40,37 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ---
 
-# Definition of Spatial Analysis
+# GIS tools vs Python
 
---
+How does **Python-based geospatial analysis** compare with **GUI-based GIS software** such as QGIS and Esri ArcGIS in terms of advantages and disadvantages?
+
+## When to use each?
+
+We use QGIS (open sourced free to use software) as an example to compare with Python
+
+| Aspect                          | QGIS                                                          | Python                      |
+| ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Ease of learning**            | Easy to start. Visual interface lowers the entry barrier.                     | Steeper learning curve. Requires coding skills and debugging.   |
+| **Transparency of workflow**    | Lower. Many steps are hidden behind tools and dialogs.                        | High. Every step is explicit in code and fully traceable.       |
+| **Reproducibility**             | Limited. Workflows rely on manual clicks unless models are saved.             | Strong. Scripts can be rerun exactly and shared easily.         |
+| **Automation**                  | Weak by default. Repetitive tasks require manual repetition or Model Builder. | Strong. Loops and functions make large-scale automation simple. |
+| **Scalability**                 | Best for small to medium datasets and one-off analyses.                       | Better for large datasets and repeated processing.              |
+
+---
+
+# GIS tools vs Python
+
+| Aspect                          | QGIS                                                         | Python                       |
+| ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Exploratory analysis**        | Very strong. Immediate visual feedback supports exploration.                  | Weaker at first. Requires plotting and inspection steps.        |
+| **Spatial operations**          | Rich built-in tools for vector and raster analysis.                           | Powerful but library-dependent (GeoPandas, Shapely, Rasterio).  |
+| **Integration with other data** | Limited. Non-spatial data integration is less flexible.                       | Strong. Easy to combine spatial, tabular, API, and sensor data. |
+| **Custom methods**              | Hard. Custom logic is constrained by available tools.                         | Easy. Users can design new methods and workflows.               |
+| **Performance control**         | Limited control over optimisation.                                            | High control. Users can optimise logic and memory use.          |
+| **Collaboration**               | Project files can be shared, but changes are hard to track.                   | Code works well with version control such as Git.               |
+| **Typical use cases**           | Teaching basics, map production, quick spatial analysis.                      | Research, automation, pipelines, advanced analysis.             |
+
+---
 
 **Quantitative analysis** of **spatial data**
 
@@ -53,12 +80,9 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ???
 
-Spatial analysis can be easily defined as quantitative analysis of spatial data.
+---
 
-It can be disaggregated into two key components: quantitative analysis and spatial data. The former describes a general approach, while the latter
-specifies the type of data being analyzed.
-
---
+## Why Python
 
 **Quantitative analysis**:
 
@@ -146,16 +170,7 @@ Rule of Thumb:
 
 - Use raster for **continuous data** or when performing spatial modeling that requires **grid-based calculations**.
 
-|             |         | Raster                                      |         |Vector |
-|-------------|---------|---------------------------------------------|---------|------------------------------------------------------|
-|Advantages   | *  | Simple Data Structure                       | *  | More compact                                         |
-|             | *  | Efficiency in overlay operations            | *  | Efficiency in topology-based operations              |
-|             | *  | Better representing high spatial variability| *  | Better map visualisation                             |
-|             | *  | Widely used in remote sensing and image data|      |                                                      |
-|Disadvantages| *  | Less compact                                | *  | More complex                                         |                                         
-|             | *  | Underrepresented topological relationship   | *  | Inefficient representation of high spatial variablity|
-|             | *  | Disadvantages in visualisation              | *  | Unable to handle image data                          |
-|             | *  | Less compact                                |      |                                                      |
+
 ---
 
 ## Interconversion between Vector and Raster Data
@@ -310,7 +325,7 @@ Different spatial analysis projects have different aims, so the framework must a
 </textarea>
     <script src="src/template.js"></script>
     <script>
-      fetch('src/nav.html')
+      fetch('src/nav2.html')
         .then(function (res) { return res.text(); })
         .then(function (html) {
           document.getElementById('site-header').innerHTML = html;
