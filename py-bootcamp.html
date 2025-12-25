@@ -104,98 +104,60 @@ In general, quantitative analysis of spatial data involves two main aspects: des
 
 ---
 
-## Vector and Raster Data
+## Data Types and Structures
 
-Spatial data is primarily represented using two major models:
+We will begin by introducing some of the most commonly used data types in Python, such as **number (integers, floats)**, and ** text (strings**, which form the foundation for handling different kinds of information in programming.
 
-<div align="center">
-  <figure>
-    <img src="imgs/vector_n_raster_presentation.png" width="60%">
-    <figcaption>Raster and vector representation of real world entities.</figcaption>
-    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
-  </figure>
-</div>
+Understanding these data types is essential for performing calculations, managing text, and working with various types of data.
+
+In addition to these fundamental data types, we will explore two versatile and widely used data structures: lists and dictionaries.
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/vector/create_vector_qgis.png" width="100%">
-  </figure>
-]
+### List
 
-## Vector with QGIS
-
-QGIS can create spatially-referenced vector data:
+Lists allow you to store and manage collections of items in an ordered sequence, making it easier to perform operations like iteration and indexing.
 
 ---
 
-## Vector with QGIS
+### Dictionary
 
-It can also be used to produce drawings that are not spatially meaningful:
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/vector_drawing_qgis.jpg" class="zoomable" id="ZoomableImage" alt="Data Structure Issue" width="60%">
-    <figcaption>Using QGIS to produce non-spatial drawings.</figcaption>
-    <figsubcaption>Source: https://www.xiaohongshu.com/discovery/item/6904d0d600000000030377eb?source=webshare&xhsshare=pc_web&xsec_token=CBGXxowpqIt_s8GpdYLDW6OcD31ABfaSln-8xkjALawQE=&xsec_source=pc_share</figsubcaption>
-  </figure>
-</div>
+Dictionaries enable you to store data in a key-value format, offering a flexible way to organise and retrieve information efficiently.
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/raster/raster_creation_qgis.png" width="100%">
-  </figure>
-]
+## Functions and Libraries
 
-## Raster with QGIS
+[The advantages of using a function instead of write the code directly]
 
-Raster layers need more parameters and structure, so QGIS uses specialized tools to ensure they’re correctly set up.
-
-You need to define resolution, extent, data type (e.g., integer, float), and sometimes initial values.
-
---
-
-<xL>You can also create drawing using raster layer if you want.</xL>
+[The definition of library]
 
 ---
 
-## Comparison: Vector and Raster Data Model
+### Define a simple function
 
-Rule of Thumb:
+[A simple mathematical function: multiply 5 and minus 10 for every input]
 
-- Use vector for objects with **clear boundaries and relationships**.
+```python
+def myfunction(input):
+  output = input * 5 - 10
 
-- Use raster for **continuous data** or when performing spatial modeling that requires **grid-based calculations**.
+  return output
+```
 
+```python
+myfuction(input = 10)
+```
 
----
+<xL>What if you choose a **wrong** input?</xL>
 
-## Interconversion between Vector and Raster Data
-
-### Vector to Raster Conversion (Rasterisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/rasterize_qgis.png" width="30%">
-  </figure>
-</div>
-
-### Raster to Vector Conversion (Vectorisation/Polygonisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/polygonize_qgis.png" width="30%">
-  </figure>
-</div>
+```python
+myfuction(input = "Hello SUTD!")
+```
 
 ---
 
-## Spatial Patterns
 
-Patterns turn raw spatial data into meaningful geographic insight.
 
 <div align="center">
   <figure>
@@ -211,116 +173,6 @@ Taking this spatial points as an example, we can observe different types of spat
 
 It is a way to describe how spatial phenomena are distributed in space.
 
----
-
-## Spatial Relationships
-
-Topological spatial relations are fundamental constructs that describe how two or more geometric objects relate to each other.
-
-<div align="center">
-  <figure>
-    <img src="imgs/spatial_relations.png" width="50%">
-    <figcaption>Different types of spatial relations based on two Polygon geometries.</figcaption>
-    <figsubcaption>Source: Egenhofer et al. (1992) and https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html</figsubcaption>
-  </figure>
-</div>
-
-???
-
-What is spatial analysis?
-
----
-
-## Extended Definition of Spatial Analysis
-
-### Spatial data analysis
-
-Understanding the **spatial distribution, patterns, and relationships** within the data.
-
-<br>
-
-### Spatial statistical analysis
-
-To test whether the spatial dataset exhibits **significant patterns or relationships**.
-
-Location is analysed as an attribute on top of conventional data analysis.
-
-<br>
-
-### Spatial modelling
-
-Models to **explain or predict spatial phenomena** by simulating real-world processes or evaluating different scenarios
-
-<br>
-
-### Spatial data manipulation
-
-**Creation, transformation, and management** of spatial data
-
-???
-
-Spatial analysis can be interpreted with different weights based on specfic context. 
-
----
-
-## Spatial Analysis: From Data to Wisdom
-
-.right_half[
-  <figure>
-    <img src="imgs/DIKW_Pyramid.jpg" width="100%">
-    <figcaption>Data, Information, Knowledge, Wisdom (DIKW) Pyramid.</figcaption>
-    <figsubcaption>Source: R. Ackoff (1989) and https://www.jeffwinterinsights.com/insights/dikw-pyramid</figsubcaption>
-  </figure>
-]
-
-Spatial analysis can reveal things that might otherwise be invisible – it can **make what is implicit explicit**
-
-<br>
-
-Spatial analysis adds to the value of geographic data and can **turn data into useful information**
-
-<br>
-
-Effective spatial analysis requires **an intelligent user**, not just a powerful computer
-
-<br>
-
---
-
-<xL>How can we compose a full process for acquiring wisdom through spatial analysis?</xL>
-
----
-
-## From Exploration to Explanation
-
-Different spatial analysis projects have different aims, so the framework must align the aim with the methods. 
-
-| | **Exploratory**                                    | | **Descriptive**                                     | | **Explanatory**                                     |
-|-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |
-|*| Aim -> |*| Aim -> |*| Aim -> |
-| | To discover patterns, trends, or anomalies in spatial data without starting from a clear hypothesis. | | To characterise and summarise spatial phenomena, often through quantification and comparison. | | To understand causation or association between spatial variables and to test hypotheses. |
-|*| Example -> |*| Example -> |*| Example -> |
-| | “What spatial patterns emerge from mapping daily pedestrian movement across Singapore's park network?” | | “How does accessibility to hawker centres vary across housing types in Singapore?” | | “To what extent do covered linkways influence the frequency of pedestrian movement across urban neighbourhoods?" |
-
-<br>
-
---
-
-<xL>Thinking of the spatial data you have collected, what kind of research questions can you extract from them?</xL>
-
----
-
-<xL>Is your data sufficient to answer your research question?</xL>
-
-<br>
-
-<xL>Identify an appropriate spatial analysis method that aligns with both your data and research question.</xL>
-
-<br>
-
---
-
-<xL>Start from vector first: </xL><button onclick="window.location.href='vector.html'">Go to Lecture of Vector Data Analysis</button>
 
 </textarea>
     <script src="src/template.js"></script>
