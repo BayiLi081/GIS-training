@@ -72,13 +72,19 @@ We use QGIS (open sourced free to use software) as an example to compare with Py
 
 ---
 
-**Quantitative analysis** of **spatial data**
+## Why Python
 
-1. **Quantitative analysis**
+![The TIOBE Programming Language Rank](C:\Users\LiBayi\Desktop\markdowns\images\programminglanguagerank_tiobe.png)  
 
-2. **spatial data**
+1. **Easy to learn and use:** Python's syntax is relatively simple because it closely resembles natural language.  
+2. **Large community and support:** Python is the most popular programming language (TIOBE Index, January 2025). This means extensive libraries, frameworks, and tutorials are readily available.  
+3. **Versatile and powerful:** Python can be used for a wide range of applications, including web development, data analysis, artificial intelligence, scientific computing, and more.
 
-???
+It offers general benefits. Regarding geospatial analysis itself, it also have great integrations:
+
+1. **Integration with GIS software:** Python is preinstalled in popular graphical interfaced GIS tools such as [QGIS: PyQGIS](https://qgis.org/pyqgis/master/) and [ArcGIS: ArcPy](https://www.esri.com/en-us/arcgis/products/arcgis-python-libraries/libraries/arcpy).  
+2. **Extensive libraries for geospatial analysis:** In addition to general data science libraries, Python offers a growing range of geospatial analysis tools. 
+
 
 ---
 
@@ -101,6 +107,54 @@ specifies the type of data being analyzed.
 
 Let's first focus on quantitative analysis. 
 In general, quantitative analysis of spatial data involves two main aspects: describing patterns and understanding relationships.
+
+---
+
+## Organising Scripts, Data and Files  
+
+Organising all the files for a Python project can be challenging, especially when project grows. It is, therefore, crucial to establish a systematic file structure. A recommended project file structure could be:  
+
+```bash
+project/
+├── README.md
+├── data/
+│   ├── raw_data/
+│   │   ├── [raw_dataset1].csv
+│   │   └── [raw_dataset2].csv
+│   ├── intermedia_data/
+│   │   ├── [intermedia_dataset1].csv
+│   │   └── [intermedia_dataset2].csv
+│   ├── processed_data/
+│   │   ├── [processed_dataset1].csv
+│   │   └── [processed_dataset2].csv
+│   └── README.md
+├── scripts/
+│   ├── data_processing.py
+│   └── analysis.ipynb
+└── results/
+    ├── figures/
+    └── summary_report.pdf
+```
+
+---
+
+### Naming and File Path Guidelines  
+
+- Ensure that file paths do **not contain spaces or non-ASCII characters** (e.g., Chinese characters).
+
+- **Use underscores _ in naming:** This is recommended in the [PEP 8 style guide](https://peps.python.org/pep-0008/#function-and-variable-names).  
+
+**Why follow these guidelines?**  
+
+1. **Spaces in names:** Variable names cannot contain spaces, and spaces in file names can cause issues, particularly in command-line environments.  
+
+2. **Non-ASCII characters:** Different operating systems and file systems handle non-ASCII characters inconsistently, which can lead to problems when sharing files across platforms.  
+
+---
+
+## Parent directory
+
+How Python read files from different directory: absolute directory and relative directory
 
 ---
 
@@ -157,7 +211,46 @@ myfuction(input = "Hello SUTD!")
 
 ---
 
+### Import library
 
+```python
+import time
+```
+
+### Import library and give it alias
+
+```python
+import pandas as pd
+```
+
+### Import certain function from certain library
+
+```python
+from shapely.geometry import Point
+```
+
+There is no set rules of import packages, normally, 
+
+---
+
+### Python libraries in Urban Data Science  
+
+Representative libraries include:  
+   - **[GeoPandas](https://geopandas.org/en/stable/getting_started.html):** Extends pandas to support spatial operations on geometric types.  
+   - **[NetworkX](https://networkx.org/):** Models and analyses the structure of networks. 
+   - **[PySAL](https://pysal.org/explore/):** A library for spatial data analysis.  
+   - **[Geopy](https://geopy.readthedocs.io/en/stable/):** Enables geocoding and geospatial calculations.  
+   - **[Folium](https://python-visualization.github.io/folium/latest/):** Creates interactive maps using Leaflet.  
+   - **[Cartopy](https://scitools.org.uk/cartopy/docs/latest/):** Focuses on cartographic projections and geospatial data visualisation.  
+   - **[Shapely](https://shapely.readthedocs.io/en/stable/):** Enables manipulation and analysis of planar geometric objects.  
+   - **[PyProj](https://pyproj4.github.io/pyproj/stable/):** Provides cartographic projections and coordinate transformations.  
+   - **[Fiona](https://fiona.readthedocs.io/en/stable/):** Facilitates reading and writing vector data.  
+   - **[Rasterio](https://rasterio.readthedocs.io/en/stable/):** Supports reading and writing geospatial raster data.  
+   - **[GDAL](https://gdal.org/en/stable/):** Handles raster and vector geospatial data formats.  
+
+We will cover use cases of some of these libraries. More importantly, we will explore how to utilise them to address research questions encountered in urban research.  
+
+---
 
 <div align="center">
   <figure>
