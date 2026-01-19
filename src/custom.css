@@ -263,25 +263,31 @@ keyword {
 
 .left_half {
   float: left;
-  width: 50%;
-  /* position: fixed; */
-  /* left: 10px; */
-  /* margin-left: 1em; */
+  width: 45%;
+  margin-right: 2%;
 }
 
 .right_half {
   float: right;
-  width: 50%;
-  /* position: fixed; */
-  /* right: 10px; */
-  /* margin-left: 1em; */
+  width: 45%;
+}
+
+.clear {
+  clear: both;
 }
 
 .pushdown {
   margin-top: 12em;
 }
 
-.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+.remark-code { 
+  font-family: 'Ubuntu Mono'; 
+  margin-right: 0.1em;
+}
+
+.remark-inline-code { 
+  font-family: 'Ubuntu Mono'; 
+}
 
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {

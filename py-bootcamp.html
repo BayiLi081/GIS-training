@@ -25,7 +25,7 @@ class: center
 
 .toc-wrapper[
   <div class="toc">
-    <a href="intro2py.html" class="toc-item">Section I: Introduction to Python</a>
+    <a href="./py-bootcamp.html#2" class="toc-item">Section I: Introduction to Python</a>
     <a href="sdp.html" class="toc-item">Section II: Spatial Data Processing</a>
     <a href="aav.html" class="toc-item">Section III: Advanced Analysis and Visualisation</a>
   </div>
@@ -40,6 +40,40 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ---
 
+## Why Python
+
+It offers general benefits:
+
+**Easy to learn and use:**
+
+  For example, takes a number x and returns its square (that number multiplied by itself):
+
+.left_half[
+Python:
+
+```python
+def square(x):
+  return x * x
+```
+]
+
+.right_half[
+R:
+
+```r
+square <- function(x) {
+  x * x
+}
+```
+]
+
+.clear[
+]
+
+Python's syntax is relatively simple because it **closely resembles natural language**.
+
+---
+
 .right_half[
   <figure>
     <img src="imgs\programminglanguagerank_tiobe.png" width="100%">
@@ -48,19 +82,17 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ## Why Python
 
-It offers general benefits:
-
-1. **Easy to learn and use:**
-
-  Python's syntax is relatively simple because it closely resembles natural language.  
-
 2. **Large community and support:** 
 
-  Python is the most popular programming language (TIOBE Index, 2025 and 2026). This means extensive libraries, frameworks, and tutorials are readily available.  
+  Python is the most popular programming language (TIOBE Index, 2025 and 2026). 
+  
+  This means extensive libraries, frameworks, and tutorials are readily available.  
 
 3. **Versatile and powerful:** 
 
-  Python can be used for a wide range of applications, including web development, data analysis, artificial intelligence, scientific computing, and more. 
+  Python can be used for a wide range of applications:
+  
+  Web development, data analysis, artificial intelligence, scientific computing, and more. 
 
 ---
 
@@ -98,21 +130,38 @@ We use QGIS (open sourced free to use software) as an example to compare with Py
 
 # GIS tools vs Python
 
-| Aspect                          | QGIS                                                         | Python                       |
-| ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| **Exploratory analysis**        | Very strong. Immediate visual feedback supports exploration.                  | Weaker at first. Requires plotting and inspection steps.        |
-| **Spatial operations**          | Rich built-in tools for vector and raster analysis.                           | Powerful but library-dependent (GeoPandas, Shapely, Rasterio).  |
-| **Integration with other data** | Limited. Non-spatial data integration is less flexible.                       | Strong. Easy to combine spatial, tabular, API, and sensor data. |
-| **Custom methods**              | Hard. Custom logic is constrained by available tools.                         | Easy. Users can design new methods and workflows.               |
-| **Performance control**         | Limited control over optimisation.                                            | High control. Users can optimise logic and memory use.          |
-| **Collaboration**               | Project files can be shared, but changes are hard to track.                   | Code works well with version control such as Git.               |
-| **Typical use cases**           | Teaching basics, map production, quick spatial analysis.                      | Research, automation, pipelines, advanced analysis.             |
+.left_half[
+Python turns geospatial analysis from a manual, click-based process into **a reproducible, automated, and scalable workflow**.
+]
+
+.right_half[
+Python gives you **finer, programmatic control** over geospatial logic, data structures, and algorithms than a GUI GIS.
+]
+
+.clear[
+]
+
+For example, creating a 500 metre buffer from the Upper Changi MRT:
+
+.left_half[
+  <figure>
+    <img src="imgs/jupyter/buffer-qgis.jpg" class="zoomable" width="100%">
+  </figure>
+]
+
+.right_half[
+```python
+buffer_500m = upper_changi_pt.buffer(500)
+```
+]
 
 ---
 
 ## Organising Scripts, Data and Files  
 
-Organising all the files for a Python project can be challenging, especially when project grows. It is, therefore, crucial to establish a systematic file structure. A recommended project file structure could be:  
+It is crucial to establish a systematic file structure for a coding project.
+
+A recommended project file structure could be:  
 
 ```bash
 project/
@@ -138,6 +187,13 @@ project/
 
 ---
 
+.right_half[
+  <figure>
+    <img src="imgs/non-ascii_characters.jpg">
+    <figcaption>Gibberish Chinese characters appearing in a computer system.</figcaption>
+  </figure>
+]
+
 ### Naming and File Path Guidelines  
 
 - Ensure that file paths do **not contain spaces or non-ASCII characters** (e.g., Chinese characters).
@@ -148,45 +204,118 @@ project/
 
 1. **Spaces in names:** Variable names cannot contain spaces, and spaces in file names can cause issues, particularly in command-line environments.  
 
-2. **Non-ASCII characters:** Different operating systems and file systems handle non-ASCII characters inconsistently, which can lead to problems when sharing files across platforms.  
+2. **Non-ASCII characters:** Different operating systems and file systems handle non-ASCII characters inconsistently, which can lead to problems when sharing files across platforms.
 
 ---
 
-## Parent directory
+.right_half[
+  <figure>
+    <img src="imgs\jupyter\google_colab_interface.jpg" class="zoomable" width="100%">
+  </figure>
+]
 
-How Python read files from different directory: absolute directory and relative directory
+
+## Jupyter Notebook
+
+[Google Colab](https://colab.research.google.com/), a cloud service built on Jupyter Notebook, provides free access in a web broswer without local setup.
+
+You only need a few basics:
+
+1. A Google account
+
+2. A web browser
+
+3. Internet access
+
+Limitations:
+
+1. Sessions disconnect after inactivity.
+
+2. Files stored on the runtime reset when the session ends.
+
+3. Computing resource is shared and time-limited.
+
+We will continue with [environment.ipynb]() on [Google Colab](https://colab.research.google.com/) for further illustration.
+
+---
+
+## File path
+
+When Python reads files from another directory, it uses paths. There are two main types: absolute paths and relative paths. Understanding the parent directory helps avoid file not found errors.
+
+### Absolute directory/path
+
+An absolute path gives the full location of a file, starting from the root of the system.
+
+```bash
+# Windows
+"C:/Users/<UserName>/project/data/input.csv"
+
+# Linux / macOS
+"/home/<UserName>/project/data/input.csv"
+```
+
+---
+
+### Relative directory/path
+
+```bash
+"data/input.csv"
+```
+
+This means:
+
+Look for data/ inside the current working directory.
+
+Example folder structure:
+
+```css
+project/
+├─ data/
+│  └─ input.csv
+└─ scripts/
+   └─ analysis.ipynb
+```
+
+If `analysis.ipynb` is inside `scripts/` and needs `input.csv`:
+
+```python
+"../data/input.csv"
+```
 
 ---
 
 ## Data Types and Structures
 
-We will begin by introducing some of the most commonly used data types in Python, such as **number (integers, floats)**, and ** text (strings**, which form the foundation for handling different kinds of information in programming.
+We will begin by introducing some of the most commonly used data types in Python, 
+
+1. **number** (integers, floats);
+
+2. ** text** (strings).
 
 Understanding these data types is essential for performing calculations, managing text, and working with various types of data.
 
-In addition to these fundamental data types, we will explore two versatile and widely used data structures: lists and dictionaries.
+In addition to these fundamental data types, we will explore two versatile and widely used data structures: 
+
+1. **lists**
+
+  ```python
+    ['ASD', 'EPD', 'LKYCIC']
+  ```
+
+2. **dictionaries**
+
+  ```python
+    {'LKYCIC': 'SUTD', 'HASS': 'SUTD', 'ISEAS': 'NUS'}
+  ```
+
+Open [1-01_data.ipynb]() with Google Colab.
 
 ---
 
-### List
+## Functions
 
-Lists allow you to store and manage collections of items in an ordered sequence, making it easier to perform operations like iteration and indexing.
-
----
-
-### Dictionary
-
-Dictionaries enable you to store data in a key-value format, offering a flexible way to organise and retrieve information efficiently.
-
----
-
-## Functions and Libraries
-
-[The advantages of using a function instead of write the code directly]
-
-[The definition of library]
-
----
+A named block of **reusable code** that performs a specific task and only runs when it is called.
 
 ### Define a simple function
 
@@ -209,12 +338,26 @@ myfuction(input = 10)
 myfuction(input = "Hello SUTD!")
 ```
 
+Open [1-02_function.ipynb]() with Google Colab.
+
 ---
 
+## Libraries
+
+A library is a group of modules that contain functions, classes and methods to perform common tasks.
+
+.left_half[
 ### Import library
 
 ```python
 import time
+```
+
+```python
+# Get the current time in hours:minutes:seconds
+current_time = time.strftime("%H:%M:%S")
+
+print("Current Time:", current_time)
 ```
 
 ### Import library and give it alias
@@ -222,14 +365,88 @@ import time
 ```python
 import pandas as pd
 ```
+]
 
-### Import certain function from certain library
+.right_half[
+### Import a module from a library
+
+```python
+from matplotlib import pyplot
+```
+
+### Import a function from a library
+
+```python
+from matplotlib.pyplot import plot, show
+```
+
+### Import a function from a library and give it alias
+
+```python
+from matplotlib import pyplot as plt
+```
+]
+
+.clear[
+]
+
+### Importing class from a module of a package
+
+importing the Point class from the geometry module of the shapely package
 
 ```python
 from shapely.geometry import Point
 ```
 
-There is no set rules of import packages, normally, 
+---
+
+### Libraries: Numpy
+
+**[Numpy](https://numpy.org/)**: core library for **numerical computing** in Python. It provides fast, efficient array operations, mathematical functions, and tools for linear algebra and random number generation.
+
+Imagine a city divided into a 5x5 grid of zones. And each value represents the population in that zone
+
+.right_half[
+  <figure>
+    <img src="imgs/numpy/numpy_simple_example.jpg" width="100%">
+  </figure>
+]
+  ```python
+  import numpy as np
+  population_grid = np.array([
+      [1200, 1500, 1300, 1600, 1400],
+      [1100, 1700, 1250, 1550, 1350],
+      [1000, 1400, 1200, 1500, 1300],
+      [900, 1300, 1150, 1450, 1250],
+      [800, 1200, 1100, 1400, 1200]
+  ])
+
+  zone_area_km2 = 2
+
+  # Calculate population density per zone
+  density_grid = population_grid / zone_area_km2
+  print("Population density per zone (people/km²):\n", density_grid)
+  ```
+
+---
+
+### Libraries: Pandas
+
+**[Pandas](https://pandas.pydata.org/)**: **data manipulation and analysis**. It offers powerful data structures like Series and DataFrames, making it easy to clean, transform, and analyze structured data.
+
+  ```python
+    import pandas as pd
+
+    # Create a DataFrame
+    data = {'Pillar': ['ASD', 'HASS', 'LKYCIC'],
+            'Staff Pop': [100, 80, 50],
+            'Student Pop': ['200', '50', '70']}
+
+    df = pd.DataFrame(data)
+
+    # Display first few rows
+    print(df.head())
+  ``` 
 
 ---
 
@@ -248,23 +465,27 @@ Representative libraries include:
    - **[Rasterio](https://rasterio.readthedocs.io/en/stable/):** Supports reading and writing geospatial raster data.  
    - **[GDAL](https://gdal.org/en/stable/):** Handles raster and vector geospatial data formats.  
 
-We will cover use cases of some of these libraries. More importantly, we will explore how to utilise them to address research questions encountered in urban research.  
+We will cover use cases of some of these libraries. More importantly, we will explore how to utilise them to address research questions encountered in urban research. 
 
 ---
 
-<div align="center">
-  <figure>
-    <img src="imgs/spatial_patterns.jpg" width="50%">
-    <figcaption>Different types of spatial patterns of points.</figcaption>
-    <figsubcaption>Source: https://gisgeography.com/spatial-patterns/</figsubcaption>
-  </figure>
-</div>
+## DataFrame
 
-???
+A Pandas DataFrame is a two-dimensional, tabular data structure in Python that stores data in rows and columns, similar to a spreadsheet or SQL table.
 
-Taking this spatial points as an example, we can observe different types of spatial patterns, including random, clustered and uniform patterns.
+Download **Resident Households by Type of Dwelling and Age Group of Head of Household (General Household Survey 2005)** from https://data.gov.sg/datasets/d_7ca9e115fafaee611e99f6fea947c1a1/view.
 
-It is a way to describe how spatial phenomena are distributed in space.
+<figure>
+  <img src="imgs/pandas/example_pandas.jpg" width="80%">
+</figure>
+
+<xL>How to import a CSV file as a Pandas DataFrame into Python using pandas？</xL>
+
+Open [1-03_dataframe.ipynb]() with Google Colab.
+
+---
+
+## GeoDataFrame: DataFrame with a geometry column
 
 
 </textarea>
