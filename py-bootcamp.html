@@ -132,10 +132,12 @@ We use QGIS (open sourced free to use software) as an example to compare with Py
 
 | Aspect                          | QGIS                                                          | Python                      |
 | ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| **Ease of learning**            | Easy to start. Visual interface lowers the entry barrier.                     | Steeper learning curve. Requires coding skills and debugging.   |
-| **Transparency of workflow**    | Lower. Many steps are hidden behind tools and dialogs.                        | High. Every step is explicit in code and fully traceable.       |
-| **Reproducibility**             | Limited. Workflows rely on manual clicks unless models are saved.             | Strong. Scripts can be rerun exactly and shared easily.         |
-| **Automation**                  | Weak by default. Repetitive tasks require manual repetition or Model Builder. | Strong. Loops and functions make large-scale automation simple. |
+| **Learning Curve**            | Easy to start | Steeper |
+| | Visual interface lowers the entry barrier.                     | Requires coding skills and debugging.   |
+| **Transparency**    | Lower. | High. |
+| | Many steps are hidden behind tools and dialogs.                        | Every step is explicit in code and fully traceable.       |
+| **Automation**                  | Weak by default. | Strong. |
+| | Repetitive tasks require manual repetition or Model Builder. | Loops and functions make large-scale automation simple. |
 | **Scalability**                 | Best for small to medium datasets and one-off analyses.                       | Better for large datasets and repeated processing.              |
 
 ---
@@ -247,7 +249,7 @@ Limitations:
 
 3. Computing resource is shared and time-limited.
 
-We will continue with [environment.ipynb]() on [Google Colab](https://colab.research.google.com/) for further illustration.
+We will continue with [environment.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/environment.ipynb) on [Google Colab](https://colab.research.google.com/) for further illustration.
 
 ---
 
@@ -321,7 +323,7 @@ In addition to these fundamental data types, we will explore two versatile and w
     {'LKYCIC': 'SUTD', 'HASS': 'SUTD', 'ISEAS': 'NUS'}
   ```
 
-Open [1-01_data.ipynb]() with Google Colab.
+Open [1-01_data.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/1-01_data.ipynb) with Google Colab.
 
 ---
 
@@ -350,7 +352,54 @@ myfuction(input = 10)
 myfuction(input = "Hello SUTD!")
 ```
 
-Open [1-02_function.ipynb]() with Google Colab.
+Open [1-02_function.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/1-02_operation_function.ipynb) with Google Colab.
+
+---
+
+## Looping and Conditionals
+
+Looping and conditionals let Python **make decisions** and **repeat actions**.
+
+### Loops
+
+1. For Loops
+  
+  ```python
+  for variable in sequence:
+    # Code to execute
+  ```
+
+2. Nested Loops
+
+  ```python
+  for variable1 in sequence1:
+    for variable2 in sequence2:
+        # Code to execute
+  ```
+
+3. While Loops
+
+  ```python
+  while condition:
+    # Code to execute
+  ```
+
+---
+
+### Conditionals
+
+Conditionals control **whether code runs**.
+
+```python
+if condition:
+    code_runs_if_true
+elif another_condition:
+    code_runs_if_true
+else:
+    code_runs_if_all_conditions_false
+```
+
+Open [1-03_looping_conditionals.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/1-03_looping_conditionals.ipynb) with Google Colab.
 
 ---
 
@@ -493,7 +542,7 @@ Download **Resident Households by Type of Dwelling and Age Group of Head of Hous
 
 <xL>How to import a CSV file as a Pandas DataFrame into Python using pandas？</xL>
 
-Open [1-03_dataframe.ipynb]() with Google Colab.
+Open [1-04_dataframe_geodataframe.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/1-04_dataframe_geodataframe.ipynb) with Google Colab.
 
 ---
 
@@ -506,8 +555,6 @@ GeoDataFrame looks like a normal pandas DataFrame, but it includes geometry.
   <figcaption>GeoPandas-GeoDataFrame.</figcaption>
   <figsubcaption>Source: https://www.analyticsvidhya.com/blog/2021/09/how-to-visualise-data-in-maps-using-geopandas/</figsubcaption>
 </figure>
-
-Open [1-04_geodataframe.ipynb]() with Google Colab.
 
 </textarea>
     <script src="src/template.js"></script>
