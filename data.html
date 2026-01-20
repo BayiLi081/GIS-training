@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>II: Data</title>
+        <link href="../images/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script src="src/remark-latest.min.js"></script>
+        <script src="src/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+    </head>
+  <body>
+
+    <div id="site-header"></div>
+    <textarea id="source">
+
+class: center
+
+<br>
+
+# Section II: Data Acquiring and Processing
+
+## Data Acquiring, Processing and Visualisation with Python
+
+[Bayi Li](mailto:barryli081@gmail.com)
+
+.toc-wrapper[
+  <div class="toc">
+    <a href="./py-bootcamp.html#3" class="toc-item">Section I: Introduction to Python</a>
+    <a href="data.html#2" class="toc-item">Section II: Data Acquiring and Processing</a>
+    <a href="sdp.html#2" class="toc-item">Section III: Spatial Data Processing</a>
+  </div>
+]
+
+---
+
+## Data Acquiring
+
+### OneMap API call
+
+step 1: <xL>https://www.onemap.gov.sg/apidocs/register</xL>
+
+step 2: [Get your access token](https://www.onemap.gov.sg/apidocs/authentication)
+
+```python
+import requests
+import os
+            
+url = "https://www.onemap.gov.sg/api/auth/post/getToken"
+            
+payload = {
+              "email": os.environ['ONEMAP_EMAIL'],
+              "password": os.environ['ONEMAP_EMAIL_PASSWORD']
+            }
+            
+response = requests.request("POST", url, json=payload)
+            
+print(response.text)
+```
+
+Open [2-01_data_acquiring.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-01_data_acquiring.ipynb) with Google Colab.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/onemap/protect_api_key.jpg" width="100%">
+  </figure>
+  <figcaption>[Source: reddit](https://www.reddit.com/r/googlecloud/comments/1noctxi/student_hit_with_a_5544478_google_cloud_bill/)</figcaption>
+]
+
+# !Protecting your secret credential!
+
+# !Protecting your secret credential!
+
+# !Protecting your secret credential!
+
+An API key / access token is a **secret credential**.  
+
+Anyone with access to it can use your account and incur costs.
+
+You must treat it like a password.
+
+---
+
+[Example: Query of Nearby Transport](https://www.onemap.gov.sg/apidocs/nearbytransport)
+
+```Python
+import requests
+    
+url = "https://www.onemap.gov.sg/api/public/nearbysvc/getNearestMrtStops?latitude=1.4044693603639506&longitude=103.90083627504391&radius_in_meters=1000"
+    
+headers = {"Authorization": "**********************"}
+    
+response = requests.get(url, headers=headers)
+    
+print(response.text)
+```
+
+---
+
+## Data.gov.sg
+
+https://data.gov.sg/datasets?formats=CSV&resultId=d_8b84c4ee58e3cfc0ece0d773c8ca6abc
+
+.left_half[
+```python
+import requests
+          
+dataset_id = "d_8b84c4ee58e3cfc0ece0d773c8ca6abc"
+url = "https://data.gov.sg/api/action/datastore_search?resource_id="  + dataset_id 
+        
+response = requests.get(url)
+print(response.json())
+```
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/data_gov_sg/csv_data.jpg" class="zoomable" width="100%">
+  </figure>
+]
+
+.clear[
+]
+
+---
+
+name: tables
+
+## Tabular Data 
+
+csv: most recommended and common tabular data format because it is simple, reliable, and widely supported
+
+```python
+import pandas as pd
+
+df = pd.read_csv("data.csv")
+```
+
+```python
+pd.read_csv("data.csv", sep=";")        # custom separator
+pd.read_csv("data.csv", header=0)       # header row
+pd.read_csv("data.csv", encoding="utf-8")
+```
+
+excel: an external excel engine (openpyxl for .xlsx or xlrd for .xls)
+
+```python
+import pandas as pd
+
+df = pd.read_excel("data.xlsx")
+```
+
+```python
+pd.read_excel("data.xlsx", sheet_name="Sheet1")
+```
+
+Open [2-02_tabular_data.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-02_tabular_data.ipynb) with Google Colab.
+
+---
+
+### Table Join
+
+.left_half[
+**(INNER) JOIN**: Returns records that have matching values in both tables
+
+<img src="imgs/pandas/img_inner_join.png" width="40%">
+
+**LEFT (OUTER) JOIN**: Returns all records from the left table, and the matched records from the right table
+
+<img src="imgs/pandas/img_left_join.png" width="40%">
+]
+
+.right_half[
+**FULL (OUTER) JOIN**: Returns all records when there is a match in either left or right table
+
+<img src="imgs/pandas/img_full_outer_join.png" width="40%">
+
+**RIGHT (OUTER) JOIN**: Returns all records from the right table, and the matched records from the left table
+
+<img src="imgs/pandas/img_right_join.png" width="40%">
+]
+
+.clear[
+]
+
+<figcaption>Source: https://www.w3schools.com/sql/sql_join.asp</figcaption>
+
+Reference: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.join.html
+
+---
+
+name: vis
+
+.right_half[
+  <figure>
+    <img src="imgs/vis/seaborn_gallery_homepage.jpg" class="zoomable" width="100%">
+  </figure>
+  <figcaption>The homepage of Seaborn Gallery.</figcaption>
+  <figsubcaption>Source: https://seaborn.pydata.org</figsubcaption>
+]
+
+## Visualisation
+
+### Seaborn: statistical data visualisation
+
+1. **[Matplotlib](https://matplotlib.org/)**: foundation library
+
+2. **[Seaborn](https://seaborn.pydata.org/index.html)**: Uses Matplotlib under the hood
+
+3. **[Plotly](https://plotly.com/python/getting-started/)**: interactive visualisation
+
+Seaborn is selected for this bootcamp because it lets learners make solid statistical plots fast, with less code and fewer traps than raw Matplotlib.
+
+Open [2-03_data_vis.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-03_data_vis.ipynb) with Google Colab.
+
+</textarea>
+    <script src="src/template.js"></script>
+    <script>
+      fetch('src/nav2.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
+    </script>
+  </body>
+</html>
