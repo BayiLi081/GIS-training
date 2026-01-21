@@ -33,7 +33,32 @@ class: center
 
 ---
 
+name: api
+
+.right_half[
+  <figure>
+    <img src="imgs/onemap/services.jpg" width="100%">
+  </figure>
+  <figcaption>https://www.onemap.gov.sg/apidocs/</figcaption>
+]
+
 ## Data Acquiring
+
+API (Application Programming Interface)
+
+
+  <figure>
+    <img src="imgs/how-a-web-api-works.jpg" width="45%">
+    <figcaption>Source: https://www.akamai.com/glossary/how-do-apis-work</figcaption>
+  </figure>
+
+### OneMap API call
+
+OneMap is the authoritative national map of Singapore developed by the Singapore Land Authority (SLA).
+
+It provides a wide array of location-based information, geospatial services, and APIs.
+
+---
 
 ### OneMap API call
 
@@ -79,6 +104,81 @@ An API key / access token is a **secret credential**.
 Anyone with access to it can use your account and incur costs.
 
 You must treat it like a password.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/onemap/geocoding_001.jpg" class="zoomable" width="100%">
+  </figure>
+  <figcaption>[Geocoding Service - Google for Developers](https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple)</figcaption>
+]
+
+### Geocoding
+
+Geocoding is the process where it converts address into spatial data and associates the exact geographical coordinates for that address.
+
+OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/apidocs/search
+
+### Other Useful tools
+
+- [Google Maps Platform](https://developers.google.com/maps): Provides APIs for map, including for geocoding and reverse geocoding
+- [Mapbox](https://mapbox.com): An alternative to Google Maps
+- [Esri ArcGIS Platform or ArcGIS pro](https://esri.com): Design for Esri User, but with limitation of quota
+- [Nominatum](https://nominatim.openstreetmap.org): An open source geocoding services
+- [geopy](https://github.com/geopy/geopy): A Python library to use geocoding services
+
+---
+
+### Notes on the Geocoding
+
+- Street names/Postcodes are not unique to a specific country. A postcode could refer to multiple locations in different countries.
+
+  <xL>it is better always to specify the country name.</xL>
+
+- A postcode may represent a small area unit or branches of the same facilities, which cannot be used to identify an accurate location by postcode alone.
+
+  **Example of Indonesia's Postcode system**
+
+  Indonesia's postcode system, known locally as "Kode Pos," is a five-digit numerical code used to simplify the sorting and delivery of mail.
+
+  The first two digits represent the province or metropolitan area, while the subsequent digits further refine the location to specific districts and sub-districts. A postcode generally cannot be used to identify a specific house. 
+  
+  While postcodes help narrow down locations, they typically cover multiple houses, buildings, or even entire neighborhoods. To pinpoint a specific house, you would need additional address details such as the street name and house number.
+
+---
+
+.right_half[
+```json
+{
+  "found": 1,
+  "totalNumPages": 1,
+  "pageNum": 1,
+  "results": [
+    {
+      "SEARCHVAL": "640 ROWELL ROAD SINGAPORE 200640",
+      "BLK_NO": "640",
+      "ROAD_NAME": "ROWELL ROAD",
+      "BUILDING": "NIL",
+      "ADDRESS": "640 ROWELL ROAD SINGAPORE 200640",
+      "POSTAL": "200640",
+      "X": "30381.1007417506",
+      "Y": "32195.1006872542",
+      "LATITUDE": "1.30743547948389",
+      "LONGITUDE": "103.854713903431",
+      "LONGTITUDE": "103.854713903431"
+    }
+  ]
+}
+```
+<figcaption>[Example of queried json by OneMap](https://www.onemap.gov.sg/apidocs/search)</figcaption>
+]
+
+### Json File
+
+A JSON file as **nested tabular data** means representing hierarchical (nested) JSON structures in a way that resembles tables while preserving parent–child relationships.
+
+We can use [a JSON viewer/formatter website](https://jsonformatter.org/json-viewer) to understand and explore data structures
 
 ---
 
