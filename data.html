@@ -149,6 +149,7 @@ OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/ap
 ---
 
 .right_half[
+[Example of queried json by OneMap](https://www.onemap.gov.sg/apidocs/search):
 ```json
 {
   "found": 1,
@@ -165,13 +166,11 @@ OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/ap
       "X": "30381.1007417506",
       "Y": "32195.1006872542",
       "LATITUDE": "1.30743547948389",
-      "LONGITUDE": "103.854713903431",
-      "LONGTITUDE": "103.854713903431"
+      "LONGITUDE": "103.854713903431"
     }
   ]
 }
 ```
-<figcaption>[Example of queried json by OneMap](https://www.onemap.gov.sg/apidocs/search)</figcaption>
 ]
 
 ### Json File
@@ -259,6 +258,8 @@ Open [2-02_tabular_data.ipynb](https://github.com/BayiLi081/GIS-training/blob/py
 
 ---
 
+name: join
+
 ### Table Join
 
 .left_half[
@@ -290,7 +291,118 @@ Reference: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.join.ht
 
 ---
 
+### Survey Data Processing
+
+Surveys, a common method of collecting opinions, often produce rich yet complex datasets.  
+
+In survey responses, these datasets typically include **categorical, textual, and numerical variables**.  
+
+We will address tasks such as **recoding categorical variables** and summarising the characteristics of **categorical variables** and **textual variables**.
+
+In this practice, we will be using a dataset of survey responses from London Assembly Cycle Survey Responses.
+
+References:
+
+None (2023). london-assembly-cycle-survey-responses (from London Assembly Cycle Survey Responses) [Data set resource]. University of Glasgow. https://data.ubdc.ac.uk/dataset/london-assembly-cycle-survey-responses/resource/bd0aed6f-f5f8-4143-9200-ee26e13e6525
+
+---
+
+### Categorical variables
+
+| R                                                            | Python                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Factors                                                      | Categorical Data                                             |
+| Factors are used for categorical variables, storing levels as integers internally. | Pandas `Categorical` data type is the equivalent.            |
+| factor_var <- factor(c("low", "medium", "high"))            | import pandas as pd<br/>cat_var = pd.Categorical(["low", "medium", "high"]) |
+
+Both optimize memory usage for categorical data and simplify group-based operations.
+
+---
+
+### Categorical variables
+
+.left_half[
+**Nominal**
+
+A categorical variable with **unordered categories**.
+]
+
+.right_half[
+**Ordinal**
+
+A categorical variable with ordered categories.
+]
+
+.clear[
+]
+
+<img src="imgs/Nominal_versus_Ordinal.png" width="80%">
+<figcaption>Source: https://en.wikipedia.org/wiki/Nominal_category</figcaption>
+
+
+
+---
+
 name: vis
+
+## Visualisation
+
+.left_half[
+Exploratory Data Analysis (EDA) is an approach to analysing datasets to summarise their main characteristics, often using visual methods. 
+
+**A quick way to understand the data.**
+
+For datasets with multiple variables, **Exploratory Data Analysis (EDA)** is an essential method for understanding **data distributions and intercorrelations**.
+
+  <figure>
+    <img src="imgs/vis/eda.jpg" class="zoomable" width="60%">
+  </figure>
+  <figcaption>Exploratory Data Analysis.</figcaption>
+  <figsubcaption>Source: https://medium.com/@WenxinZhang98/exploratory-data-analysis-83bfb1f17dc5</figsubcaption>
+]
+
+.right_half[
+We will create high-quality visualisations using Python libraries like **Matplotlib** and **Seaborn**, enabling clear communication of insights.
+
+1. **[Matplotlib](https://matplotlib.org/)**: foundation library
+
+2. **[Seaborn](https://seaborn.pydata.org/index.html)**: Uses Matplotlib under the hood
+
+3. **[Plotly](https://plotly.com/python/getting-started/)**: interactive visualisation
+]
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vis/matplotlib_axes_figure.jpg" width="80%">
+  </figure>
+  <figcaption>A figure created using matplotlib can contain one or many plots, or axis objects.</figcaption>
+  <figsubcaption>Source: [Earth Lab, Alana Faller](https://earthdatascience.org/courses/scientists-guide-to-plotting-data-in-python/plot-with-matplotlib/introduction-to-matplotlib-plots/)</figsubcaption>
+]
+
+### Matplotlib
+
+Matplotlib is one of the most popular visualisation packages in Python.
+
+It can be thought of as the **Python equivalent of ggplot in R**.
+
+Many advanced visualisation packages are built on top of it.
+
+#### Figure and Axes
+
+- **Figure**: The overall container for all plot elements. It can contain multiple Axes.
+
+- **Axes**: It is a component of the Figure that defines a subplot.
+
+  It manages all the details within the subplot. We can customize the x-axis and y-axis limits, labels, and the type of graph.
+
+.clear[
+]
+
+Open [2-03_data_vis.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-03_data_vis.ipynb) with Google Colab.
+
+---
 
 .right_half[
   <figure>
@@ -300,19 +412,26 @@ name: vis
   <figsubcaption>Source: https://seaborn.pydata.org</figsubcaption>
 ]
 
-## Visualisation
-
 ### Seaborn: statistical data visualisation
 
-1. **[Matplotlib](https://matplotlib.org/)**: foundation library
+Seaborn is a visualisation library that is **built on top of Matplotlib**.
 
-2. **[Seaborn](https://seaborn.pydata.org/index.html)**: Uses Matplotlib under the hood
+The key feature is to simplify the creation of publication-quality figures with **minimal code**.
 
-3. **[Plotly](https://plotly.com/python/getting-started/)**: interactive visualisation
+---
 
 Seaborn is selected for this bootcamp because it lets learners make solid statistical plots fast, with less code and fewer traps than raw Matplotlib.
 
-Open [2-03_data_vis.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-03_data_vis.ipynb) with Google Colab.
+| | **[Seaborn Gallery](https://seaborn.pydata.org/examples/index.html)   **                                                                 | **[Matplotlib Gallery](https://matplotlib.org/stable/gallery/)**                                                                 |
+|------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| |<img src="imgs/vis/seaborn_gallery.jpg" class="zoomable" width="45%">| <img src="imgs/vis/matplotlib_gallery.jpg" class="zoomable" width="45%">|
+|   | Minimal code. | Steeper learning curve |
+| ------- | ------- | ------- |
+| **Customisation**| Limited customisation | Extremely customisable |
+| | relying on Matplotlib's underlying support. | with nearly all visual elements adjustable. |
+| ------- | ------- | ------- |
+| **Aesthetics**   | Modern default themes | Basic default styles |  
+| | appealing styles, and diverse color palettes. | but offers complete control to achieve aesthetic goals with extra configuration. | 
 
 </textarea>
     <script src="src/template.js"></script>
