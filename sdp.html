@@ -49,6 +49,35 @@ Spatial data is primarily represented using two major models:
 
 ---
 
+**Geographic and Projected** Coordinate Referece Systerm (CRS)
+
+It is important that you are working with **the correct CRS**.
+
+<div align="center">
+    <img src="imgs/vector/gcs_pcs.png">
+    <br>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/
+</div>
+
+Anyway, with **projected CRS**, we can express the location in the **unit: metres**.
+
+*Note:* You can go to this website: [Interactive Album of Map Projections 2.0 (psu.edu)](https://projections.mgis.psu.edu/), check the difference of projected CRSs. Different CRS may introduce bias. For example, you can go to [How big the world actually is: The true size](https://www.thetruesize.com/) to check the distortion it gives to real size.
+
+---
+
+EPSG is the unique ID linked to a specific coordinate reference system.
+
+The common coordinate systems and their EPSG codes
+
+- EPSG: 4326
+- EPSG: 3857
+- EPSG: 7789
+
+Recommended EPSG codes for Singapore:
+
+[Coordinate reference systems for "Singapore" (epsg.io)](https://epsg.io/?q=Singapore)
+
+---
+
 ## Vector Data
 
 There are three main types:
@@ -188,7 +217,7 @@ river_buff_50km = river.buffer(50000)
 ```
 
   <figure>
-    <img src="imgs/vector/buffer_with_Python.jpg" width="70%">
+    <img src="imgs/vector/buffer_with_python.jpg" width="70%">
   </figure>
   <figcaption>Source: https://py.geocompx.org/04-geometry-operations</figcaption>
 
