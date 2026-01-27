@@ -1,7 +1,14 @@
 .DS_Store
 .Rhistory
 *donttrack_googlemapapi
+donttrack_mapapi
+*omemap_logins.json
+*access_token.json
 cache/
-data/
-jupyters/
-other_files/
+.ipynb_checkpoints/
+*.qmd
+*.code-workspace
+*.geojson
+*/cache*
+*.py
+*.ipynb
