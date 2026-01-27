@@ -1,5 +1,6 @@
 .ipynb_checkpoints/
 *.qmd
+*.png
 donttrack_googlemapapi
 cache/
 *.code-workspace

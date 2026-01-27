@@ -19,7 +19,13 @@
     </a>
 </div>
 
-This repository supports two courses: **Spatial Data Analysis** and **Geospatial Analysis with Python**. The materials sit in separate branches (`spatial-data-analysis` and `py-bootcamp`). Lecture decks, accessible from [GIS Training](https://spatialuminous.top/GIS-training/#1), built with JavaScript using [remark](https://github.com/gnab/remark) are stored in the `gh-pages` branch.
+This repository supports two courses: **Spatial Data Analysis** and **Geospatial Analysis with Python**. Lecture decks, accessible from [GIS Training](https://spatialuminous.top/GIS-training/#1), built with JavaScript using [remark](https://github.com/gnab/remark) are stored in the `gh-pages` branch.
+
+GIS Course: https://spatialuminous.top/GIS-training
+
+Python for Geospatial Analysis Bootcamp: https://spatialuminous.top/GIS-training/py-bootcamp.html
+
+For practical exercises, Jupyter Notebooks and datasets are stored in separate respository as [GIS-Training-Practicals](https://github.com/BayiLi081/GIS-Training-Practicals).
 
 My background sits at the intersection of urban research and GIS. Both courses are designed for students in the [SUTD MSc Urban Science, Policy and Planning](https://urbanscience.sutd.edu.sg/curriculum/). The material, therefore, focuses on applied work rather than theory or software engineering.
 
