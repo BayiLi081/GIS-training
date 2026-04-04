@@ -24,6 +24,18 @@
 
 **!!! Important !!! Perquisites:** Before the bootcamp, please go to the **[preparation section](./0-01_intro.md)** to make sure you have correctly set up the developing environment for Python.
 
+## Run Locally
+
+To use the slide website properly, serve it through a local Python web server.
+
+Opening the HTML files directly as `file://...` can break shared navigation and some interactive browser features.
+
+```bash
+python -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser.
+
 ## Prerequisites:
 
 1. Laptop to use in hands-on session
@@ -42,14 +54,6 @@ The main objectives of this bootcamp are:
 - Basic visualisation of geospatial data
 
 All contents will be delivered in a hybrid manner of **Lecture and Practice**. 
-
-## Local Test
-
-```bash
-python3 -m http.server 8000
-```
-
-Then open http://localhost:8000 in your web browser.
 
 ## View Online
 

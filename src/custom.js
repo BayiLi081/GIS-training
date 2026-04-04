@@ -175,9 +175,16 @@ function initSiteHeader() {
 
     header.dataset.enhanced = "true";
     const toggle = header.querySelector(".site-header__toggle");
+    const closeHeader = () => {
+      header.classList.remove("is-open");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    };
 
     if (toggle) {
-      toggle.addEventListener("click", () => {
+      toggle.addEventListener("click", (event) => {
+        event.stopPropagation();
         const isOpen = header.classList.toggle("is-open");
         toggle.setAttribute("aria-expanded", String(isOpen));
       });
@@ -185,11 +192,20 @@ function initSiteHeader() {
 
     header.querySelectorAll(".main-nav a").forEach((link) => {
       link.addEventListener("click", () => {
-        header.classList.remove("is-open");
-        if (toggle) {
-          toggle.setAttribute("aria-expanded", "false");
-        }
+        closeHeader();
       });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!header.contains(event.target)) {
+        closeHeader();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeHeader();
+      }
     });
   };
 
