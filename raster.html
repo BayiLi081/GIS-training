@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Network Data Analysis</title>
-        <link href="../images/logo.svg" rel="icon" type="image/svg+xml"/>
+        <title>Lecture: Raster Data Analysis in GIS</title>
+        <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <script src="src/remark-latest.min.js"></script>
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
@@ -72,8 +73,6 @@ Conversely, raster data is better suited for modeling continuous surfaces.
 
 These themes involve **continuous surfaces or grid-based measurements**, which raster handles better than vector:
 
-<br>
-
 | | Elevation and Terrain | | Climate and Weather | | Remote Sensing Imagery | | Soil and Geology |
 |-|-----|-|-----|-|-----|-|-----|
 |*| Digital Elevation Models (DEM) |*| Temperature distribution |*| Satellite images (multiband) |*| Soil moisture |
@@ -127,8 +126,6 @@ A raster that typically represents phenomena that have clear boundaries with att
 ---
 
 <xL>Why does Singapore use the vector data model for land use, while some global land use/land cover datasets use the raster data model?</xL>
-
-<br>
 
 --
 
@@ -277,21 +274,26 @@ name: sa-raster
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/raster/clip_raster_e1.png" alt="clip_raster_vector" width="90%">
-  </figure>
-]
-
+.left_half[
 ### Clipping a Raster
 
 Clipping a raster with a vector in GIS (including QGIS) works by using the geometry of the vector layer as a mask to extract only the portion of the raster that falls within the vector’s boundaries.
 
 <div align="center">
   <figure>
-      <img src="imgs/raster/clip_raster_e2.png" alt="scale_raster_analysis" class="zoomable" width="50%">
+      <img src="imgs/raster/clip_raster_e2.png" alt="scale_raster_analysis" class="zoomable" width="88%">
   </figure>
 </div>
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/clip_raster_e1.png" alt="clip_raster_vector" width="90%">
+  </figure>
+]
+
+.clear[
+]
 
 ---
 

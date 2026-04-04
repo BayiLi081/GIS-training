@@ -20,7 +20,7 @@
 </div>
 
 
-**Course Hours:** 3 hours x 3 sessions
+**Course Hours:** 3 hours x 3 *sessions*
 
 **!!! Important !!! Perquisites:** Before the bootcamp, please go to the **[preparation section](./0-01_intro.md)** to make sure you have correctly set up the developing environment for Python.
 

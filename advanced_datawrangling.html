@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Vector Data Analysis in GIS</title>
-        <script>
-            fetch('src/header.html')
-            .then(res => res.text())
-            .then(html => document.head.insertAdjacentHTML('beforeend', html));
-        </script>
+        <title>Bonus: Advanced Data Wrangling Techniques</title>
+        <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <script src="src/remark-latest.min.js"></script>
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
     </head>
   <body>
 
-    <textarea id="source">
+    <div id="site-header"></div>
 
-class: center
+    <textarea id="source">class: center
 
 <br>
 
@@ -63,7 +61,7 @@ Data embedded in HTML is often built for framing or display rather than straight
 
 ## Programming with QGIS Python Console
 
-The QGIS Python Console is a built-in tool that lets users automate workflows and perform advanced spatial data analysis. It allows users to write and execute Python scripts within the QGIS environment, giving access to QGIS’s API (PyQGIS) and all its geoprocessing capabilities.
+The QGIS Python Console is a built-in tool that lets users automate workflows and perform advanced spatial data analysis. It allows users to write and execute Python scripts within the QGIS environment, giving access to QGIS's API (PyQGIS) and all its geoprocessing capabilities.
 
 <div align="center">
   <figure>
@@ -71,6 +69,7 @@ The QGIS Python Console is a built-in tool that lets users automate workflows an
     <img src="imgs/data_cleaning/python_editor.jpg" width="60%">
   </figure>
 </div>
+
 
 ---
 
@@ -84,10 +83,18 @@ However, running complex or large-scale tasks through the console can sometimes 
   </figure>
 </div>
 
-In such cases, executing the same scripts directly in a standalone Python environment (for example, using a script that imports qgis.core) is often more efficient and stable.
-
+In such cases, executing the same scripts directly in a standalone Python environment (for example, using a script that imports `qgis.core`) is often more efficient and stable.
 </textarea>
     <script src="src/template.js"></script>
+    <script>
+      fetch('src/nav.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
     </script>
   </body>
 </html>
