@@ -522,7 +522,7 @@ img.icon {
 
 .toc {
   display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
   gap: 0.72rem;
   width: min(780px, 100%);
   padding: 0.2rem;
@@ -530,12 +530,13 @@ img.icon {
 }
 
 .toc-item {
+  font-size: 0.72em;
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 100px;
+  min-height: 60px;
   padding: 0.85rem 0.9rem 0.85rem 3.9rem;
-  border-radius: 24px;
+  border-radius: 0px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(247, 251, 252, 0.8)),
     linear-gradient(135deg, rgba(11, 140, 171, 0.1), transparent);

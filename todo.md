@@ -1,5 +1,15 @@
 ## To do list
 
+### New course content
+
+- [ ] Introduction to Urban Data Analytics
+- [ ] Cartographic Design
+- [ ] Spatial Data Integration and Feature Engineering
+- [ ] Computer Vision and Urban Case Study
+- [ ] Web-Based Spatial Visualisation
+
+---
+
 - [ ] The MAUP problem is underexplored, can move to early week with vector data analysis
 - [ ] Add more information on the urban new data, and possibly, more cases studies
 - [x] Add a nav bar at the bootom of each page to easier navigate to each section of slide.
