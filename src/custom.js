@@ -254,7 +254,10 @@ function initDeckEnhancements(initialSlides) {
     "</div>",
     '<div class="deck-controls__counter" aria-live="polite"></div>',
     '<button class="deck-button" type="button" data-action="next" aria-label="Next slide">Next</button>',
-    '<div class="deck-controls__progress"><div class="deck-controls__progress-fill"></div></div>'
+    '<div class="deck-controls__progress">',
+    '  <div class="deck-controls__progress-fill"></div>',
+    '  <img class="deck-controls__progress-pig" src="src/pig.svg" alt="" aria-hidden="true">',
+    '</div>'
   ].join("");
 
   const backdrop = document.createElement("div");
@@ -354,6 +357,7 @@ function initDeckEnhancements(initialSlides) {
     titleEl.textContent = current.title;
     counterEl.textContent = `${currentIndex + 1} / ${slideData.length}`;
     progressFill.style.width = `${progress}%`;
+    controls.style.setProperty("--deck-progress", `${progress}%`);
 
     prevButton.disabled = currentIndex <= 0;
     nextButton.disabled = currentIndex >= slideData.length - 1;

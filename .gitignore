@@ -12,3 +12,4 @@ cache/
 */cache*
 *.py
 *.ipynb
+.codex
