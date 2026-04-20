@@ -256,7 +256,9 @@ function initDeckEnhancements(initialSlides) {
     '<button class="deck-button" type="button" data-action="next" aria-label="Next slide">Next</button>',
     '<div class="deck-controls__progress">',
     '  <div class="deck-controls__progress-fill"></div>',
-    '  <img class="deck-controls__progress-pig" src="src/pig.svg" alt="" aria-hidden="true">',
+    '  <span class="deck-controls__progress-pig" aria-hidden="true">',
+    '    <img src="src/pig.svg" alt="">',
+    '  </span>',
     '</div>'
   ].join("");
 
@@ -290,6 +292,9 @@ function initDeckEnhancements(initialSlides) {
   const overviewToggle = controls.querySelector('[data-action="toggle-overview"]');
   const prevButton = controls.querySelector('[data-action="prev"]');
   const nextButton = controls.querySelector('[data-action="next"]');
+  const progressPig = controls.querySelector(".deck-controls__progress-pig img");
+
+  startProgressPigSwing(progressPig);
 
   const renderOverview = () => {
     overviewList.innerHTML = slideData
@@ -487,6 +492,36 @@ function buildSlideData(slides) {
     const meta = metaCandidates.length ? metaCandidates[0].slice(0, 96) : "";
     return { index, title, meta };
   });
+}
+
+function startProgressPigSwing(pig) {
+  if (!pig || typeof window.requestAnimationFrame !== "function") {
+    return;
+  }
+
+  const cycleMs = 900;
+  const sidePx = 8;
+  const liftPx = 2;
+  const rotateDeg = 16;
+  let startTime = null;
+
+  const swing = (timestamp) => {
+    if (startTime === null) {
+      startTime = timestamp;
+    }
+
+    const elapsed = timestamp - startTime;
+    const phase = (elapsed % cycleMs) / cycleMs;
+    const sway = Math.sin(phase * Math.PI * 2);
+    const x = sway * sidePx;
+    const y = -Math.abs(sway) * liftPx;
+    const rotation = sway * rotateDeg;
+
+    pig.style.transform = `translateX(${x.toFixed(2)}px) rotate(${rotation.toFixed(2)}deg) translateY(${y.toFixed(2)}px)`;
+    window.requestAnimationFrame(swing);
+  };
+
+  window.requestAnimationFrame(swing);
 }
 
 function clamp(value, min, max) {
