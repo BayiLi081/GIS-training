@@ -565,6 +565,17 @@ img.icon {
   width: 45%;
 }
 
+.long_trunk pre {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.long_trunk .remark-code {
+    font-size: 0.72em;
+    line-height: 1.35;
+}
+
 .left_half figure,
 .right_half figure {
   max-width: 100%;

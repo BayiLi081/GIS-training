@@ -61,16 +61,6 @@ Scan the QR code below to visit the online version of this project:
 
 ![QR Code](imgs/qr_site.jpg)
 
-### Python Bootcamp
-
-#### I: Introduction
-
-http://localhost:8000/sdp.html#1
-
-#### II: Spatial Data
-
-http://localhost:8000/sdp.html#1
-
 # References and Additional Resources
 
 1. [dlab-berkeley/Python-Geospatial-Fundamentals](https://github.com/dlab-berkeley/Python-Geospatial-Fundamentals)

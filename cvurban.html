@@ -26,6 +26,14 @@
                 font-size: 0.82em;
                 line-height: 1.42;
             }
+
+            .cv-source-examples table {
+                font-size: 0.68em;
+            }
+
+            .cv-source-examples td {
+                vertical-align: top;
+            }
         </style>
     </head>
   <body>
@@ -115,6 +123,147 @@ In urban analytics, the goal is not just to label images. The goal is to transfo
 
 ---
 
+## Example Open Visual Data Sources
+
+.cv-source-examples[
+
+| Source Type | Example Open Sources | Useful For | Check Before Use |
+|---|---|---|---|
+| Satellite imagery | [USGS Landsat](https://www.usgs.gov/landsat-missions/landsat-data-access)<br>[Copernicus Sentinel](https://dataspace.copernicus.eu/) | land cover, NDVI, surface temperature, urban expansion | resolution, clouds, revisit interval |
+| Aerial imagery | [USDA NAIP](https://www.usgs.gov/centers/eros/science/usgs-eros-archive-aerial-photography-national-agriculture-imagery-program-naip)<br>[OpenAerialMap](https://openaerialmap.org/) | roofs, roads, tree canopy, fine-scale land cover | country coverage, capture date, license |
+| Street-view imagery | [Mapillary](https://www.mapillary.com/)<br>[Global Streetscapes](https://huggingface.co/datasets/NUS-UAL/global-streetscapes) | greenery, sidewalks, signs, facades, street quality | uneven coverage, privacy, API terms |
+| Traffic cameras | [Singapore LTA Traffic Images](https://data.gov.sg/collections/traffic-images/view)<br>[511NY Cameras API](https://511ny.org/developers/help) | live congestion, events, corridor monitoring | live-only data, key access, privacy |
+| Social or volunteered images | [Flickr API](https://www.flickr.com/services/api/flickr.photos.search.html)<br>[Wikimedia Commons geocoded media](https://commons.wikimedia.org/wiki/Commons:Geocoding) | place perception, activity, tourism, landmark visibility | sampling bias, consent, content license |
+
+]
+
+<xL>Open data still needs metadata checks: license, time, location accuracy, coverage, and privacy.</xL>
+
+
+
+---
+
+## Practice: Acquire traffic images from data.gov.sg (data source: LTA Datamall)
+
+<button onclick="window.location.href='#image-raster'">Skip the practice</button>
+
+.right_half[
+  <figure>
+    <img src="imgs/urbanCV/data_gov_sg_code_example.jpg" width="100%">
+    <figcaption>The official code example to make API call with Python Request.</figcaption>
+  </figure>
+]
+
+step 1: [Register your data.gov.sg account](https://guide.data.gov.sg/developer-guide/api-overview/how-to-request-an-api-key)
+
+step 2: Identify your dataset from data.gov.sg (search traffic images)
+
+step 3: Run based on the code example
+
+---
+
+## Example output of api call
+
+```
+root
+├── api_info        → API status info
+└── items           → list of data snapshots
+      └── cameras   → list of camera records
+      └── timestamp → Time when this batch of camera data was collected
+```
+
+.long_trunk[
+```json
+{
+    "api_info": {
+        "status": "healthy"
+    },
+    "items": [
+        {
+            "cameras": [
+                {
+                    "camera_id": "1001",
+                    "image": "https://images.data.gov.sg/api/traffic-images/2026/04/ff1cf74d-f5c8-4ee2-9bba-f063ea4df48b.jpg",
+                    "image_metadata": {
+                        "height": 240,
+                        "md5": "e2ca972b3b48673437c64b8aa73fe6c2",
+                        "width": 320
+                    },
+                    "location": {
+                        "latitude": 1.29531332,
+                        "longitude": 103.871146
+                    },
+                    "timestamp": "2026-04-22T16:01:26+08:00"
+                },
+                {
+                    "camera_id": "9705",
+                    "image": "https://images.data.gov.sg/api/traffic-images/2026/04/d0d28373-8fee-4e57-9128-561c4ac6d5e2.jpg",
+                    "image_metadata": {
+                        "height": 1080,
+                        "md5": "f07e7c6dc7d7a820082ded5dea213bd0",
+                        "width": 1920
+                    },
+                    "location": {
+                        "latitude": 1.42627712,
+                        "longitude": 103.78716637
+                    },
+                    "timestamp": "2026-04-22T16:01:26+08:00"
+                },
+                {
+                    "camera_id": "1111",
+                    "image": "https://images.data.gov.sg/api/traffic-images/2026/04/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg",
+                    "image_metadata": {
+                        "height": 1080,
+                        "md5": "9c3132f8e03d2a5112520a66a39dde3a",
+                        "width": 1920
+                    },
+                    "location": {
+                        "latitude": 1.365434,
+                        "longitude": 103.953997
+                    },
+                    "timestamp": "2026-04-22T03:01:32+08:00"
+                }
+            ],
+            "timestamp": "2026-04-22T16:04:46+08:00"
+        }
+    ]
+}
+```
+]
+
+---
+
+## Example output of api call
+
+.left_half[
+<div align="center">
+  <figure>
+    <img src="imgs/urbanCV/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg" alt="Street view semantic segmentation workflow" class="zoomable" width="100%">
+    <figcaption>Example of the downloaded traffic camera image.</figcaption>
+  </figure>
+</div>
+]
+
+.right_half.long_trunk[
+```json
+"camera_id": "1111",
+"image": "https://images.data.gov.sg/api/traffic-images/2026/04/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg",
+"image_metadata": {
+    "height": 1080,
+    "md5": "9c3132f8e03d2a5112520a66a39dde3a",
+    "width": 1920
+},
+"location": {
+    "latitude": 1.365434,
+    "longitude": 103.953997
+},
+"timestamp": "2026-04-22T03:01:32+08:00"
+```
+]
+---
+
+name: image-raster
+
 ## Images as Raster Data
 
 An image is a raster: a grid of pixels with values.
@@ -184,7 +333,7 @@ The output can be measured directly: percentage of vegetation pixels, sky pixels
 
 <iframe
     class="segmentation-example-frame"
-    src="/GIS-training/html_snippets/panoramic-segmentation/index.html"
+    src="html_snippets/panoramic-segmentation/index.html"
     title="Interactive panoramic image segmentation comparison"
     loading="lazy"
     allowfullscreen>
@@ -193,6 +342,8 @@ The output can be measured directly: percentage of vegetation pixels, sky pixels
 <em>Drag the vertical divider to compare the original panorama with its segmented version.</em>
 
 ---
+
+name: svi-indexs
 
 ## What the Segmented Image Gives Us
 
