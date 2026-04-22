@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>360 Curtain Compare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Photo Sphere Viewer -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.14.1/index.css"
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+
+    #viewer-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .viewer-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Top layer will be clipped */
+    #viewer-top {
+      z-index: 2;
+      overflow: hidden;
+      clip-path: inset(0 50% 0 0);
+      -webkit-clip-path: inset(0 50% 0 0);
+    }
+
+    #viewer-bottom {
+      z-index: 1;
+    }
+
+    /* Curtain divider */
+    #divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 44px;
+      z-index: 20;
+      cursor: ew-resize;
+      pointer-events: auto;
+      touch-action: none;
+      transform: translateX(-50%);
+    }
+
+    #divider::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 1.5px);
+      width: 3px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+    }
+
+    #divider-handle {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      margin-top: -22px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      cursor: ew-resize;
+      touch-action: none;
+      color: #fff;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    #divider-handle::before {
+      content: "⇆";
+    }
+
+    /* Labels */
+    .label {
+      position: absolute;
+      top: 16px;
+      z-index: 25;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(20, 20, 20, 0.75);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      pointer-events: none;
+    }
+
+    #label-left {
+      left: 16px;
+    }
+
+    #label-right {
+      right: 16px;
+    }
+
+    /* Optional helper text */
+    #hint {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 25;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(20, 20, 20, 0.7);
+      color: #fff;
+      font-size: 13px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .label {
+        top: 12px;
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+
+      #label-left {
+        left: 12px;
+      }
+
+      #label-right {
+        right: 12px;
+      }
+
+      #divider {
+        width: 48px;
+      }
+
+      #divider-handle {
+        width: 48px;
+        height: 48px;
+        margin-top: -24px;
+        left: 0;
+        font-size: 20px;
+      }
+
+      #hint {
+        bottom: 12px;
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer-wrapper">
+    <div id="viewer-bottom" class="viewer-layer"></div>
+    <div id="viewer-top" class="viewer-layer"></div>
+
+    <div id="divider">
+      <div id="divider-handle"></div>
+    </div>
+
+    <div id="label-left" class="label">Original</div>
+    <div id="label-right" class="label">Segmented</div>
+    <div id="hint">Drag the vertical bar to compare</div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.179.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { Viewer } from 'https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.14.1/index.module.js';
+
+    const originalPanorama = 'assets/test_fov206.jpg';
+    const segmentedPanorama = 'assets/test_fov206_seg_color.png';
+
+    const wrapper = document.getElementById('viewer-wrapper');
+    const topLayer = document.getElementById('viewer-top');
+    const divider = document.getElementById('divider');
+    const handle = document.getElementById('divider-handle');
+
+    let split = 0.5;       // 0 to 1
+    let isDragging = false;
+    let syncing = false;
+
+    function applySplit(value) {
+      split = Math.max(0, Math.min(1, value));
+      const percent = split * 100;
+
+      divider.style.left = `${percent}%`;
+
+      /* Show top image on the left, bottom image on the right */
+      topLayer.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      topLayer.style.webkitClipPath = `inset(0 ${100 - percent}% 0 0)`;
+    }
+
+    const commonOptions = {
+      defaultYaw: Math.PI,
+      defaultPitch: 0,
+      defaultZoomLvl: 50,
+      navbar: [
+        'zoom',
+        'move',
+        'caption',
+        'fullscreen',
+      ],
+      mousewheel: true,
+      touchmoveTwoFingers: false,
+    };
+
+    const viewerBottom = new Viewer({
+      container: document.getElementById('viewer-bottom'),
+      panorama: segmentedPanorama,
+      caption: 'Segmented',
+      ...commonOptions,
+    });
+
+    const viewerTop = new Viewer({
+      container: document.getElementById('viewer-top'),
+      panorama: originalPanorama,
+      caption: 'Original',
+      ...commonOptions,
+    });
+
+    function syncView(source, target) {
+      if (syncing) return;
+      syncing = true;
+
+      const position = source.getPosition();
+      const zoom = source.getZoomLevel();
+
+      target.rotate(position);
+      target.zoom(zoom);
+
+      syncing = false;
+    }
+
+    viewerTop.addEventListener('position-updated', () => {
+      syncView(viewerTop, viewerBottom);
+    });
+
+    viewerBottom.addEventListener('position-updated', () => {
+      syncView(viewerBottom, viewerTop);
+    });
+
+    viewerTop.addEventListener('zoom-updated', () => {
+      syncView(viewerTop, viewerBottom);
+    });
+
+    viewerBottom.addEventListener('zoom-updated', () => {
+      syncView(viewerBottom, viewerTop);
+    });
+
+    function updateFromClientX(clientX) {
+      const rect = wrapper.getBoundingClientRect();
+      const x = clientX - rect.left;
+      applySplit(x / rect.width);
+    }
+
+    handle.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      handle.setPointerCapture(e.pointerId);
+      updateFromClientX(e.clientX);
+    });
+
+    handle.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      updateFromClientX(e.clientX);
+    });
+
+    handle.addEventListener('pointerup', (e) => {
+      isDragging = false;
+      handle.releasePointerCapture(e.pointerId);
+    });
+
+    handle.addEventListener('pointercancel', () => {
+      isDragging = false;
+    });
+
+    /* Also allow dragging anywhere on the divider line */
+    divider.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      updateFromClientX(e.clientX);
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      updateFromClientX(e.clientX);
+    });
+
+    window.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+
+    window.addEventListener('resize', () => {
+      applySplit(split);
+    });
+
+    applySplit(0.5);
+  </script>
+</body>
+</html>
