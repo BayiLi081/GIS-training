@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Raster Data Analysis in GIS</title>
+        <title>Lecture: Computer Vision and Urban Case Study</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <script src="src/remark-latest.min.js"></script>
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+        <style>
+            .segmentation-example-frame {
+                width: 100%;
+                height: 430px;
+                border: 1px solid rgba(143, 57, 95, 0.22);
+                border-radius: 12px;
+                background: #000;
+                box-shadow: 0 18px 48px rgba(130, 34, 83, 0.18);
+            }
+
+            .cv-compact-table table {
+                font-size: 0.78em;
+            }
+
+            .cv-small {
+                font-size: 0.82em;
+                line-height: 1.42;
+            }
+        </style>
     </head>
   <body>
 
@@ -20,7 +39,7 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture: Raster Data Analysis in GIS
+## Lecture: Computer Vision and Urban Case Study
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
@@ -29,10 +48,321 @@ class: center
 
 ---
 
+## Computer Vision and Urban Case Study
+
+### Today's Questions
+
+- What can visual data reveal about cities?
+
+- How does computer vision convert images into structured urban data?
+
+- How can image segmentation support urban environmental analysis?
+
+- What should we be careful about when using AI-derived visual indicators?
+
+---
+
+## Why Visual Data Matters in Cities
+
+.right_half[
+  <figure>
+    <img src="imgs/applygis/svi_nus.webp" alt="Street-level visual data" class="zoomable" width="100%">
+    <figcaption>Street-level imagery as eye-level urban data.</figcaption>
+    <figsubcaption>Source: NUS Global Streetscapes, https://ual.sg/project/global-streetscapes/</figsubcaption>
+  </figure>
+]
+
+Urban experience is not only captured by census tables, parcels, or road networks.
+
+Visual data records what people see from the street:
+
+- greenery and shade
+- road space and sidewalks
+- building frontage
+- street furniture
+- enclosure and openness
+- signs of maintenance or disorder
+
+---
+
+## What Is Computer Vision?
+
+Computer vision is the use of algorithms to extract information from images or videos.
+
+<div align="center">
+  <figure>
+    <img src="imgs/urbanCV/AI%26cv.jpeg" alt="AI and computer vision" class="zoomable" width="64%">
+  </figure>
+</div>
+
+In urban analytics, the goal is not just to label images. The goal is to transform pixels into spatial variables that can be mapped, compared, and modeled.
+
+---
+
+## Visual Data Sources for Urban Analysis
+
+.cv-compact-table[
+
+| Source | Spatial Unit | What It Can Capture | Common Limitation |
+|---|---|---|---|
+| Satellite imagery | pixel, grid, parcel | land cover, vegetation, heat, urban expansion | top-down view, cloud cover |
+| Aerial imagery | building, parcel, block | rooftops, roads, tree canopy | cost, update frequency |
+| Street-view imagery | street point, road segment | eye-level environment, walkability, greenery | uneven coverage |
+| Traffic cameras | intersection, corridor | flows, events, congestion | privacy, access |
+| Social media images | place, venue, neighborhood | perception, activity, events | sampling bias |
+
+]
+
+---
+
+## Images as Raster Data
+
+An image is a raster: a grid of pixels with values.
+
+Each pixel may store:
+
+- one value in grayscale imagery
+- three values in RGB images
+- many values in multispectral imagery
+- a class label after segmentation or classification
+
+<xL>Computer vision turns raster values into semantic information.</xL>
+
+---
+
+## From Image to Urban Indicator
+
+.cv-compact-table[
+
+| Step | Input | Output | Urban Interpretation |
+|---|---|---|---|
+| Capture | street-view or remote image | geotagged image | observed location |
+| Preprocess | raw image | aligned, resized image | comparable samples |
+| Inference | image + model | classes, objects, masks | scene composition |
+| Measurement | model output | counts, area share, score | quantitative indicator |
+| GIS analysis | indicator + location | map, statistics, model | spatial pattern |
+
+]
+
+The critical move is to keep the spatial reference attached to every image and every derived measurement.
+
+---
+
+## Three Common Computer Vision Tasks
+
+.cv-compact-table[
+
+| Task | Question | Output | Urban Example |
+|---|---|---|---|
+| Image classification | What is in this image? | one or more labels | residential vs commercial street scene |
+| Object detection | Where are specific objects? | bounding boxes | vehicles, pedestrians, traffic signs |
+| Semantic segmentation | What class is each pixel? | pixel-level class map | road, sky, building, tree, sidewalk |
+
+]
+
+Segmentation is especially useful when the quantity of interest is a visible proportion, such as greenery, sky openness, or road space allocation.
+
+---
+
+## Semantic Segmentation
+
+Semantic segmentation assigns a class label to every pixel.
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/gvi_segmentation_model.webp" alt="Street view semantic segmentation workflow" class="zoomable" width="78%">
+    <figcaption>Street view image sampling and semantic segmentation.</figcaption>
+    <figsubcaption>Source: 10.1038/s41598-024-81451-6</figsubcaption>
+  </figure>
+</div>
+
+The output can be measured directly: percentage of vegetation pixels, sky pixels, building facade pixels, and other visible classes.
+
+---
+
+## Example: Image Segmentation
+
+<iframe
+    class="segmentation-example-frame"
+    src="http://localhost:8000/html_snippets/panoramic-segmentation/index.html"
+    title="Interactive panoramic image segmentation comparison"
+    loading="lazy"
+    allowfullscreen>
+</iframe>
+
+<em>Drag the vertical divider to compare the original panorama with its segmented version.</em>
+
+---
+
+## What the Segmented Image Gives Us
+
+.cv-compact-table[
+
+| Class | Possible Measurement | Urban Meaning |
+|---|---|---|
+| Vegetation | share of pixels | eye-level greenery, shade potential |
+| Sky | share of pixels | openness, enclosure, street canyon effect |
+| Road | share of pixels | vehicle-oriented public realm |
+| Sidewalk | share of pixels | pedestrian space |
+| Building | share of pixels | frontage, density, enclosure |
+
+]
+
+The model output is not the final answer. It is an intermediate data layer that needs spatial aggregation and interpretation.
+
+---
+
+## Green View Index
+
+Green View Index (GVI) estimates the visible proportion of greenery from a street-level viewpoint.
+
+```text
+GVI = green pixels / all valid pixels
+```
+
+It is different from NDVI:
+
+- NDVI measures vegetation from spectral bands, usually from above.
+- GVI measures greenery as seen by pedestrians at eye level.
+
+<xL>These two indicators answer related but not identical urban questions.</xL>
+
+---
+
+## Sampling Street-View Images
+
+For urban analysis, image locations should be sampled systematically.
+
+Common strategies:
+
+- points along every road segment
+- fixed spacing along walkable networks
+- intersections and transit stops
+- stratified samples by land use or neighborhood
+- repeated samples across time for change detection
+
+<xL>The sampling design controls what the final map can legitimately claim.</xL>
+
+---
+
+## Spatial Aggregation
+
+After extracting image-level indicators, we often aggregate them to GIS units.
+
+.cv-compact-table[
+
+| Image-Level Value | Aggregation Unit | Output |
+|---|---|---|
+| GVI per panorama | road segment | average visible greenery |
+| sidewalk pixels | street block | pedestrian-space score |
+| building pixels | planning area | enclosure indicator |
+| object counts | intersection | traffic activity proxy |
+| scene labels | neighborhood | dominant street character |
+
+]
+
+Aggregation makes the output easier to map, but it can also hide local variation.
+
+---
+
+## Case Study Questions
+
+Computer vision can support urban studies questions such as:
+
+- Which streets provide the most visible greenery?
+
+- Do greener streets align with walking and cycling infrastructure?
+
+- Are high-density districts visually enclosed or open?
+
+- Which neighborhoods have low pedestrian amenities?
+
+- How does the street environment differ across socioeconomic areas?
+
+---
+
+## From Visual Features to Urban Models
+
+CV-derived indicators can be combined with other spatial data:
+
+- road networks and accessibility
+- land use and zoning
+- population and demographic variables
+- public transport access
+- heat, air quality, and noise data
+- real estate and business activity
+
+This allows visual environment variables to become explanatory or outcome variables in urban models.
+
+---
+
+## Vision-Language Models
+
+<div align="center">
+  <figure>
+    <img src="imgs/applygis/vlm_understanding.png" alt="Vision-language model example" class="zoomable" width="76%">
+    <figcaption>An example of the capabilities of a vision-language model.</figcaption>
+    <figsubcaption>Source: https://www.ultralytics.com/blog/understanding-vision-language-models-and-their-applications</figsubcaption>
+  </figure>
+</div>
+
+Vision-language models can describe scenes, answer questions, or classify images using natural language prompts.
+
+---
+
+## Validation, Bias, and Ethics
+
+.cv-compact-table[
+
+| Risk | Why It Matters | Check |
+|---|---|---|
+| model error | classes may be confused | manual labels, accuracy metrics |
+| domain shift | model trained elsewhere may fail locally | local validation sample |
+| temporal mismatch | image date may not match other data | metadata check |
+| sampling bias | coverage may favor some roads or districts | coverage map |
+| privacy concerns | people, plates, interiors may appear | blur, aggregate, minimize storage |
+
+]
+
+AI-derived indicators should report uncertainty, image sources, dates, coverage, and licensing constraints.
+
+---
+
+## Mini Exercise
+
+Use the segmentation example and answer:
+
+1. Which visual classes are easiest to distinguish?
+
+2. Which classes may be confused in dense urban scenes?
+
+3. If you computed GVI from this image, what would the numerator and denominator be?
+
+4. What GIS layer would you join the result to?
+
+5. What urban planning question could this indicator help answer?
+
+---
+
+## Key Takeaways and Reading
+
+- Images are raster data with rich semantic information.
+
+- Computer vision converts pixels into labels, objects, masks, and indicators.
+
+- Segmentation is useful for measuring visible proportions in street scenes.
+
+- Spatial sampling, aggregation, validation, and ethics determine the quality of the urban conclusion.
+
+.cv-small[
+Suggested reading: Long and Liu (2017), "How green are the streets?"; Zhang et al. (2018), "Measuring human perceptions of a large-scale urban region using machine learning"; NUS Global Streetscapes: https://ual.sg/project/global-streetscapes/
+]
+
+<br>
 
 --
 
-<xL>Continue with Tutorial: </xL><button onclick="window.location.href='raster_tutorial.html'">Go to Tutorial of Raster Data Analysis</button>
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='webmap.html'">Go to Web-Based Spatial Visualisation</button>
 
 </textarea>
     <script src="src/template.js"></script>
