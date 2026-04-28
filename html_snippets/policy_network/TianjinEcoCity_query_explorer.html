@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TianjinEcoCity Query Explorer</title>
+  <link rel="stylesheet" href="query_styles.css" />
+  <script defer src="https://unpkg.com/vis-network@9.1.9/dist/vis-network.min.js"></script>
+  <script defer src="TianjinEcoCity_query_data.js"></script>
+  <script defer src="query_app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Knowledge Network Explorer</h1>
+    <p id="cityLabel" class="subtle">City: loading...</p>
+  </header>
+
+  <section class="controls">
+    <div class="group">
+      <label for="actorA">Actor Query</label>
+      <select id="actorA"></select>
+      <button id="querySingle">Highlight Direct Relations</button>
+    </div>
+
+    <div class="group">
+      <label for="actorB">Pair Relation Query</label>
+      <select id="actorB"></select>
+      <label for="pairMode">Path Mode</label>
+      <select id="pairMode">
+        <option value="directed" selected>Directed (A -> B)</option>
+        <option value="undirected">Undirected (A - B)</option>
+      </select>
+      <button id="queryPair">Find Path A -> B</button>
+    </div>
+
+    <div class="group">
+      <label>Edge Type Filters</label>
+      <div class="check-grid" role="group" aria-label="Edge type filters">
+        <label class="check-item"><input type="checkbox" name="etypeFilter" value="PP" checked> policy-policy</label>
+        <label class="check-item"><input type="checkbox" name="etypeFilter" value="AA" checked> activity-activity</label>
+        <label class="check-item"><input type="checkbox" name="etypeFilter" value="RR" checked> actor-actor</label>
+        <label class="check-item"><input type="checkbox" name="etypeFilter" value="PA" checked> policy-activity</label>
+        <label class="check-item"><input type="checkbox" name="etypeFilter" value="AR" checked> activity-actor</label>
+      </div>
+    </div>
+
+    <div class="group compact snippet-box" aria-label="Original text snippets">
+      <div class="snippet-panel-head">
+        <h2 id="snippetTitle">Original Text Snippets</h2>
+        <button id="clearQuery" class="secondary">Reset</button>
+      </div>
+      <p id="snippetHint" class="subtle">Run a query to view supporting text snippets from matched relations.</p>
+      <div id="snippetList" class="snippet-list"></div>
+    </div>
+  </section>
+
+  <section class="legend" aria-label="Legend">
+    <span class="pill policy">Policy</span>
+    <span class="pill activity">Activity</span>
+    <span class="pill actor">Actor</span>
+    <span class="pill semantic">Semantic edges (policy-policy, activity-activity, actor-actor)</span>
+    <span class="pill nesting">Nesting edges (policy-activity, activity-actor)</span>
+  </section>
+
+  <section class="status-panel"><p id="status">Load complete graph, then run a query.</p></section>
+  <main><div id="network"></div></main>
+</body>
+</html>
