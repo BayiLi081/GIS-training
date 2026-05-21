@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initSiteHeader();
-  waitForSlides(initDeckEnhancements);
+  waitForSlides((slides) => {
+    initDeckEnhancements(slides);
+    initReferencesPanel(slides);
+  });
 });
 
 function initLightbox() {
@@ -474,6 +477,183 @@ function initDeckEnhancements(initialSlides) {
 
   renderOverview();
   syncUi();
+}
+
+function initReferencesPanel(initialSlides) {
+  if (document.querySelector(".references-popover")) {
+    return;
+  }
+
+  let slides = initialSlides.length ? initialSlides : getSlides();
+  const referencesBySlide = new Map();
+  slides.forEach((slide) => {
+    const references = collectSlideReferences(slide);
+    if (references.length) {
+      referencesBySlide.set(slide, references);
+    }
+  });
+
+  if (!referencesBySlide.size) {
+    return;
+  }
+
+  const popover = document.createElement("aside");
+  popover.className = "references-popover";
+  popover.hidden = true;
+  popover.setAttribute("aria-label", "References");
+
+  const toggle = document.createElement("button");
+  toggle.className = "references-toggle";
+  toggle.type = "button";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-controls", "references-panel");
+  toggle.setAttribute("aria-label", "Toggle references panel");
+  toggle.innerHTML = [
+    '<span class="references-toggle__icon" aria-hidden="true"></span>',
+    '<span class="references-toggle__text">References</span>'
+  ].join("");
+
+  const panel = document.createElement("div");
+  panel.className = "references-panel";
+  panel.id = "references-panel";
+  panel.setAttribute("aria-labelledby", "references-panel-title");
+  panel.innerHTML = [
+    '<div class="references-panel__header">',
+    "  <div>",
+    '    <div class="references-panel__eyebrow">References</div>',
+    '    <h2 class="references-panel__title" id="references-panel-title">Recommended Reading List for This Page</h2>',
+    "  </div>",
+    "</div>",
+    '<ul class="references-panel__list"></ul>'
+  ].join("");
+
+  const list = panel.querySelector(".references-panel__list");
+
+  popover.appendChild(toggle);
+  popover.appendChild(panel);
+  document.body.appendChild(popover);
+
+  const setReferencesOpen = (shouldOpen) => {
+    popover.classList.toggle("is-open", shouldOpen);
+    toggle.setAttribute("aria-expanded", String(shouldOpen));
+  };
+
+  const renderReferences = (references) => {
+    list.innerHTML = "";
+    references.forEach((reference) => {
+      const item = document.createElement("li");
+      item.innerHTML = reference.html;
+      item.querySelectorAll("a[href]").forEach((link) => {
+        if (/^https?:\/\//i.test(link.getAttribute("href"))) {
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+      });
+      list.appendChild(item);
+    });
+  };
+
+  const currentSlide = () => {
+    const visible = document.querySelector(".remark-slides-area > .remark-slide-container.remark-visible .remark-slide-content");
+    return visible || slides[0] || null;
+  };
+
+  const syncReferencesUi = () => {
+    const latestSlides = getSlides();
+    if (latestSlides.length && latestSlides.length !== slides.length) {
+      slides = latestSlides;
+    }
+
+    const references = referencesBySlide.get(currentSlide()) || [];
+    popover.hidden = !references.length;
+    if (!references.length) {
+      setReferencesOpen(false);
+      return;
+    }
+
+    renderReferences(references);
+  };
+
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setReferencesOpen(!popover.classList.contains("is-open"));
+  });
+
+  panel.addEventListener("click", (event) => {
+    if (event.target.closest("a[href]")) {
+      setReferencesOpen(false);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!popover.contains(event.target)) {
+      setReferencesOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && popover.classList.contains("is-open")) {
+      setReferencesOpen(false);
+    }
+  });
+
+  const slidesArea = document.querySelector(".remark-slides-area");
+  if (slidesArea) {
+    const observer = new MutationObserver(syncReferencesUi);
+    observer.observe(slidesArea, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class"]
+    });
+  }
+
+  if (window.slideshow && typeof window.slideshow.on === "function") {
+    try {
+      window.slideshow.on("showSlide", syncReferencesUi);
+    } catch (error) {
+      // Ignore event binding failures from older Remark builds.
+    }
+  }
+
+  window.addEventListener("hashchange", syncReferencesUi);
+  syncReferencesUi();
+}
+
+function collectSlideReferences(slide) {
+  const seen = new Set();
+  const references = [];
+
+  slide.querySelectorAll(".references").forEach((source) => {
+    source.classList.add("references-source");
+    source.setAttribute("aria-hidden", "true");
+
+    const items = source.querySelectorAll("li");
+    if (items.length) {
+      items.forEach((item) => {
+        addReferenceItem(references, seen, item.innerHTML, item.textContent);
+      });
+      return;
+    }
+
+    source.querySelectorAll("a[href]").forEach((link) => {
+      addReferenceItem(references, seen, link.outerHTML, link.textContent);
+    });
+  });
+
+  return references;
+}
+
+function addReferenceItem(references, seen, html, text) {
+  const normalizedText = normalizeText(text);
+  const normalizedHtml = normalizeText(html);
+  const key = `${normalizedText}|${normalizedHtml}`;
+
+  if (!normalizedText || seen.has(key)) {
+    return;
+  }
+
+  seen.add(key);
+  references.push({ html });
 }
 
 function getSlides() {

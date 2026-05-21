@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>360 Segmentation Viewer</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
+
+    #panorama {
+      width: 100%;
+      height: 100%;
+    }
+
+    #panel {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 3000;
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(20, 20, 20, 0.82);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      flex-wrap: wrap;
+      max-width: min(92vw, 720px);
+    }
+
+    .view-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .view-btn.active {
+      background: #13b88a;
+    }
+
+    #inspector {
+      width: 100%;
+      margin-top: 2px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #f3f6f7;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    #inspector .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #b9f4dd;
+    }
+
+    @media (max-width: 768px) {
+      #panel {
+        top: auto;
+        right: 10px;
+        bottom: 12px;
+        left: 10px;
+      }
+
+      .view-btn {
+        flex: 1 1 30%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="panel">
+    <button class="view-btn active" data-scene="original">Original</button>
+    <button class="view-btn" data-scene="segcolor">Seg Color</button>
+    <button class="view-btn" data-scene="segoverlay">Seg Overlay</button>
+    <div id="inspector">Hover on segmented area to inspect class and coverage.</div>
+  </div>
+
+  <div id="panorama"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <script>
+    const originalPanorama = "selected_example.jpg";
+    const segColorPanorama = "selected_example_seg_color.png";
+    const segOverlayPanorama = "selected_example_seg_overlay.png";
+    const segIdmapPath = "selected_example_seg_idmap.png";
+    const segMeta = {"image": "selected_example", "image_path": "selected_example.jpg", "width": 8000, "height": 4000, "seg_color_path": "selected_example_seg_color.png", "seg_overlay_path": "selected_example_seg_overlay.png", "seg_idmap_path": "selected_example_seg_idmap.png", "class_stats": [{"class_id": 9, "class_name": "grass", "pixels": 11153825, "coverage_pct": 34.8557, "color_rgb": [125, 88, 127]}, {"class_id": 2, "class_name": "sky", "pixels": 10789908, "coverage_pct": 33.7185, "color_rgb": [72, 94, 239]}, {"class_id": 4, "class_name": "tree", "pixels": 3819426, "coverage_pct": 11.9357, "color_rgb": [203, 67, 35]}, {"class_id": 1, "class_name": "building", "pixels": 2966664, "coverage_pct": 9.2708, "color_rgb": [76, 240, 173]}, {"class_id": 12, "class_name": "person", "pixels": 659333, "coverage_pct": 2.0604, "color_rgb": [78, 134, 229]}, {"class_id": 11, "class_name": "sidewalk, pavement", "pixels": 615695, "coverage_pct": 1.924, "color_rgb": [124, 58, 186]}, {"class_id": 53, "class_name": "stairs", "pixels": 513145, "coverage_pct": 1.6036, "color_rgb": [125, 227, 29]}, {"class_id": 17, "class_name": "plant", "pixels": 481096, "coverage_pct": 1.5034, "color_rgb": [189, 229, 21]}, {"class_id": 13, "class_name": "earth, ground", "pixels": 331453, "coverage_pct": 1.0358, "color_rgb": [113, 251, 87]}, {"class_id": 38, "class_name": "rail", "pixels": 279866, "coverage_pct": 0.8746, "color_rgb": [235, 184, 195]}, {"class_id": 69, "class_name": "bench", "pixels": 122254, "coverage_pct": 0.382, "color_rgb": [118, 190, 133]}, {"class_id": 34, "class_name": "rock, stone", "pixels": 99457, "coverage_pct": 0.3108, "color_rgb": [197, 26, 114]}, {"class_id": 20, "class_name": "car", "pixels": 79850, "coverage_pct": 0.2495, "color_rgb": [4, 66, 100]}, {"class_id": 32, "class_name": "fence", "pixels": 36781, "coverage_pct": 0.1149, "color_rgb": [219, 78, 141]}, {"class_id": 6, "class_name": "road, route", "pixels": 36414, "coverage_pct": 0.1138, "color_rgb": [51, 104, 178]}, {"class_id": 86, "class_name": "awning, sunshade, sunblind", "pixels": 8133, "coverage_pct": 0.0254, "color_rgb": [202, 115, 216]}, {"class_id": 59, "class_name": "stairway, staircase", "pixels": 3698, "coverage_pct": 0.0116, "color_rgb": [91, 121, 164]}, {"class_id": 0, "class_name": "wall", "pixels": 3002, "coverage_pct": 0.0094, "color_rgb": [148, 201, 58]}]};
+
+    const classById = new Map((segMeta.class_stats || []).map((item) => [Number(item.class_id), item]));
+
+    const inspector = document.getElementById("inspector");
+    const idMapCanvas = document.createElement("canvas");
+    const idMapCtx = idMapCanvas.getContext("2d", { willReadFrequently: true });
+    let idMapReady = false;
+
+    function setInspector(text) {
+      inspector.innerHTML = text;
+    }
+
+    function loadIdMap() {
+      if (!segIdmapPath) {
+        setInspector("No id-map path set. Hover inspect is disabled.");
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        idMapCanvas.width = img.width;
+        idMapCanvas.height = img.height;
+        idMapCtx.drawImage(img, 0, 0);
+        idMapReady = true;
+        setInspector("Hover on segmented area to inspect class and coverage.");
+      };
+      img.onerror = () => {
+        setInspector("Could not load id-map image. Make sure seg_idmap file exists.");
+      };
+      img.src = segIdmapPath;
+    }
+
+    function yawPitchToPixel(yaw, pitch, width, height) {
+      let wrappedYaw = yaw;
+      while (wrappedYaw < -180) wrappedYaw += 360;
+      while (wrappedYaw >= 180) wrappedYaw -= 360;
+      const x = Math.floor(((wrappedYaw + 180) / 360) * width);
+      const y = Math.floor(((90 - pitch) / 180) * height);
+      return [
+        Math.min(width - 1, Math.max(0, x)),
+        Math.min(height - 1, Math.max(0, y)),
+      ];
+    }
+
+    const viewer = pannellum.viewer("panorama", {
+      default: {
+        firstScene: "original",
+        sceneFadeDuration: 450
+      },
+      scenes: {
+        original: { type: "equirectangular", panorama: originalPanorama, yaw: 180, pitch: 0, hfov: 100, compass: true },
+        segcolor: { type: "equirectangular", panorama: segColorPanorama, yaw: 180, pitch: 0, hfov: 100, compass: true },
+        segoverlay: { type: "equirectangular", panorama: segOverlayPanorama, yaw: 180, pitch: 0, hfov: 100, compass: true }
+      },
+      autoLoad: true,
+      showControls: true
+    });
+
+    const buttons = Array.from(document.querySelectorAll(".view-btn"));
+    const panoContainer = document.getElementById("panorama");
+
+    function activateButton(scene) {
+      buttons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.scene === scene);
+      });
+    }
+
+    function setScene(scene) {
+      const pitch = viewer.getPitch();
+      const yaw = viewer.getYaw();
+      const hfov = viewer.getHfov();
+      viewer.loadScene(scene, pitch, yaw, hfov);
+      activateButton(scene);
+      if (scene === "original") {
+        setInspector("Original view selected. Switch to segmented view and hover to inspect.");
+      }
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => setScene(btn.dataset.scene));
+    });
+
+    let hoverRaf = null;
+    let pendingHoverEvent = null;
+
+    function inspectFromEvent(event) {
+      const scene = viewer.getScene();
+      if (scene === "original") return;
+      if (!idMapReady) {
+        setInspector("Id-map not ready yet.");
+        return;
+      }
+
+      const coords = viewer.mouseEventToCoords(event);
+      if (!coords || coords.length < 2) return;
+
+      const pitch = coords[0];
+      const yaw = coords[1];
+      const [px, py] = yawPitchToPixel(yaw, pitch, idMapCanvas.width, idMapCanvas.height);
+      const pixel = idMapCtx.getImageData(px, py, 1, 1).data;
+      const classId = (pixel[0] << 16) + (pixel[1] << 8) + pixel[2];
+      const info = classById.get(classId);
+
+      if (!info) {
+        setInspector(`Unknown class at <span class="mono">(${px}, ${py})</span>. class_id=<span class="mono">${classId}</span>`);
+        return;
+      }
+
+      const pct = Number(info.coverage_pct).toFixed(4);
+      setInspector(
+        `Class: <span class="mono">${info.class_name}</span> (id=${info.class_id}) | Coverage: <span class="mono">${pct}%</span> | Pixels: <span class="mono">${info.pixels}</span>`
+      );
+    }
+
+    panoContainer.addEventListener("mousemove", (event) => {
+      pendingHoverEvent = event;
+      if (hoverRaf !== null) return;
+      hoverRaf = window.requestAnimationFrame(() => {
+        hoverRaf = null;
+        if (pendingHoverEvent) inspectFromEvent(pendingHoverEvent);
+      });
+    });
+
+    panoContainer.addEventListener("touchmove", (event) => {
+      if (!event.touches || event.touches.length === 0) return;
+      inspectFromEvent(event.touches[0]);
+    }, { passive: true });
+
+    if ((segMeta.class_stats || []).length === 0) {
+      setInspector("No class metadata found. Generate *_seg_meta.json first.");
+    }
+
+    loadIdMap();
+  </script>
+</body>
+</html>
