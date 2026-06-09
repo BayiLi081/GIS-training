@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indoor Public Space Collector</title>
+  <meta name="description" content="A mobile-first fieldwork platform for capturing human activities, pedestrian flows, and spatial quality in indoor public buildings.">
+  <meta property="og:title" content="Indoor Public Space Collector">
+  <meta property="og:description" content="A mobile-first fieldwork platform for urban researchers studying indoor public space.">
+  <meta property="og:type" content="website">
+  <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg: #fff7fb;
+      --bg-alt: #fff0f7;
+      --panel: #ffffff;
+      --text: #6f3050;
+      --muted: #9a5f7a;
+      --line: rgba(143,57,95,.14);
+      --accent: #d81b74;
+      --accent-s: #9f1454;
+      --accent-bg: rgba(216,27,116,.1);
+      --accent-li: rgba(255,194,221,.28);
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --amber: #d97706;
+      --amber-bg: #fffbeb;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --teal: #0891b2;
+      --teal-bg: #ecfeff;
+      --rose: #e11d48;
+      --rose-bg: #fff1f2;
+      --r: 0.75rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Aptos", "Trebuchet MS", "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fff7fb 0%, #fff0f7 100%);
+      line-height: 1.65;
+      min-height: 100%;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Rockwell", "Georgia", serif;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; height: 3.25rem; padding: 0 1.5rem;
+      background: rgba(255,247,251,0.94);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(159,20,84,.06);
+    }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 0.45rem;
+      font-size: 0.9rem; font-weight: 800; letter-spacing: -.02em;
+      font-family: "Rockwell", "Georgia", serif;
+      color: var(--text); text-decoration: none;
+    }
+    .brand-dot {
+      width: 0.55rem; height: 0.55rem; background: var(--accent);
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 0.5rem; }
+    .btn-sm {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.4rem 0.85rem; border-radius: 0.45rem;
+      font-size: 0.8rem; font-weight: 600; text-decoration: none;
+      white-space: nowrap; transition: background .15s, color .15s;
+    }
+    .btn-sm.ghost {
+      color: var(--muted); border: 1px solid var(--line); background: transparent;
+    }
+    .btn-sm.ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm.solid { background: var(--accent); color: #fff; border: 1px solid transparent; }
+    .btn-sm.solid:hover { background: var(--accent-s); }
+    .btn-sm svg { flex-shrink: 0; }
+
+    /* ── Anchor nav ── */
+    .anav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; padding: 0 1.5rem;
+      background: var(--panel); border-bottom: 1px solid var(--line);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .anav::-webkit-scrollbar { display: none; }
+    .alink {
+      padding: 0.7rem 1rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .alink:hover { color: var(--accent); border-color: var(--accent-li); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 5.5rem 1.5rem 4.5rem;
+      text-align: center;
+      background: linear-gradient(160deg, rgba(255,95,162,.16) 0%, rgba(255,194,221,.22) 35%, var(--bg) 70%);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-bottom: 1.5rem; padding: 0.3rem 0.9rem;
+      background: var(--panel); border: 1px solid var(--accent-li);
+      color: var(--accent); border-radius: 99px;
+      font-size: 0.73rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+      box-shadow: 0 1px 4px rgba(216,27,116,.12);
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2.1rem, 6vw, 3.5rem);
+      font-weight: 900; letter-spacing: -.04em; line-height: 1.05;
+      color: var(--accent-s);
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      margin: 0 auto 2.25rem; max-width: 38rem;
+      font-size: 1.05rem; color: var(--muted); line-height: 1.7;
+    }
+    .hero-btns {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-lg {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.85rem 1.9rem; border-radius: 0.6rem;
+      font-size: 0.95rem; font-weight: 700; text-decoration: none;
+      transition: background .15s, transform .1s, box-shadow .15s;
+    }
+    .btn-lg.primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 3px 12px rgba(216,27,116,.32);
+    }
+    .btn-lg.primary:hover { background: var(--accent-s); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(216,27,116,.35); }
+    .btn-lg.outline {
+      background: var(--panel); color: var(--text);
+      border: 1.5px solid var(--line);
+    }
+    .btn-lg.outline:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-li); }
+    .btn-lg svg { flex-shrink: 0; }
+
+    /* ── Stats strip ── */
+    .stats-wrap { padding: 2rem 1.5rem; }
+    .stats-grid {
+      display: flex; max-width: 52rem; margin: 0 auto;
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--r); overflow: hidden;
+      box-shadow: 0 2px 12px rgba(159,20,84,.06);
+    }
+    .stat { flex: 1; padding: 1.25rem 1rem; text-align: center; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: none; }
+    .stat-v { display: block; font-size: 1.6rem; font-weight: 900; letter-spacing: -.03em; color: var(--accent); line-height: 1.1; font-family: "Rockwell", "Georgia", serif; }
+    .stat-l { display: block; font-size: 0.7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-top: .2rem; }
+
+    /* ── Abstract ── */
+    .abstract {
+      background: linear-gradient(135deg, #6f1748 0%, #8e215e 56%, #c13c80 100%);
+      color: #fff; padding: 4rem 1.5rem; text-align: center;
+    }
+    .abstract h2 { margin: 0 0 .75rem; font-size: clamp(1.25rem, 3vw, 1.65rem); font-weight: 800; letter-spacing: -.03em; color: #fff; }
+    .abstract p { margin: 0 auto; max-width: 46rem; font-size: .95rem; line-height: 1.8; opacity: .88; color: rgba(255,255,255,.9); }
+
+    /* ── Section layout ── */
+    .section { max-width: 64rem; margin: 0 auto; padding: 4rem 1.5rem 3.5rem; }
+    .section + hr { border: none; border-top: 1px solid var(--line); margin: 0; }
+
+    .s-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .55rem;
+    }
+    .s-label::before { content: ''; display: block; width: 1.75rem; height: 2px; background: var(--accent); border-radius: 1px; }
+    .s-title { margin: 0 0 .5rem; font-size: clamp(1.35rem, 2.5vw, 1.8rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.15; color: var(--accent-s); }
+    .s-desc { margin: 0 0 2.5rem; font-size: .93rem; color: var(--muted); max-width: 44rem; line-height: 1.7; }
+
+    /* ── Cards ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 900px) {
+      .card-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .card-grid.cols-4 { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--r); padding: 1.5rem;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: box-shadow .2s, transform .15s, border-color .15s;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--c, var(--accent));
+      border-radius: var(--r) var(--r) 0 0;
+    }
+    .card:hover { box-shadow: 0 8px 28px rgba(159,20,84,.1); transform: translateY(-2px); border-color: var(--c, var(--accent)); }
+
+    .card.blue   { --c: #2563eb; --ci: #eff6ff; --ct: #2563eb; }
+    .card.green  { --c: #059669; --ci: #ecfdf5; --ct: #059669; }
+    .card.amber  { --c: #d97706; --ci: #fffbeb; --ct: #d97706; }
+    .card.purple { --c: #7c3aed; --ci: #f5f3ff; --ct: #7c3aed; }
+    .card.teal   { --c: #0891b2; --ci: #ecfeff; --ct: #0891b2; }
+    .card.rose   { --c: #e11d48; --ci: #fff1f2; --ct: #e11d48; }
+
+    .card-icon {
+      width: 2.6rem; height: 2.6rem; border-radius: .65rem;
+      background: var(--ci, var(--accent-bg));
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+    }
+    .card-icon svg { width: 1.25rem; height: 1.25rem; stroke: var(--ct, var(--accent)); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .card h3 { margin: 0 0 .4rem; font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
+    .card p  { margin: 0 0 1rem; font-size: .84rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .card-tag {
+      display: inline-block; padding: .2rem .6rem;
+      background: var(--ci, var(--accent-bg)); color: var(--ct, var(--accent));
+      border-radius: 99px; font-size: .7rem; font-weight: 700; align-self: flex-start;
+    }
+
+    /* ── Feature list inside card ── */
+    .feat-list { list-style: none; margin: 0 0 1rem; padding: 0; font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .feat-list li { display: flex; align-items: flex-start; gap: .4rem; margin-bottom: .25rem; }
+    .feat-list li::before { content: '›'; color: var(--ct, var(--accent)); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── How-to workflow ── */
+    .workflow {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--line);
+      border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
+    }
+    @media (max-width: 720px) {
+      .workflow { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .workflow { grid-template-columns: 1fr; }
+    }
+    .wstep {
+      background: var(--panel); padding: 1.5rem 1.25rem;
+    }
+    .wnum {
+      width: 2rem; height: 2rem; background: var(--accent); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 800; margin-bottom: .85rem;
+    }
+    .wstep h4 { margin: 0 0 .35rem; font-size: .88rem; font-weight: 700; }
+    .wstep p  { margin: 0; font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── Module guide cards ── */
+    .guide-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    @media (max-width: 640px) {
+      .guide-grid { grid-template-columns: 1fr; }
+    }
+    .guide-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 1.75rem 1.5rem; transition: box-shadow .2s;
+    }
+    .guide-card:hover { box-shadow: 0 4px 18px rgba(159,20,84,.08); }
+    .guide-head { display: flex; align-items: center; gap: .65rem; margin-bottom: 1rem; }
+    .guide-dot { width: .65rem; height: .65rem; border-radius: 50%; flex-shrink: 0; }
+    .guide-card h3 { margin: 0; font-size: .95rem; font-weight: 700; }
+    .guide-steps { list-style: none; margin: 0; padding: 0; counter-reset: g; }
+    .guide-steps li {
+      counter-increment: g; display: flex; gap: .7rem;
+      font-size: .83rem; color: var(--text); line-height: 1.5; margin-bottom: .6rem;
+    }
+    .guide-steps li::before {
+      content: counter(g); flex-shrink: 0;
+      width: 1.4rem; height: 1.4rem; background: var(--bg-alt);
+      border-radius: 50%; font-size: .7rem; font-weight: 700; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; margin-top: .05rem;
+    }
+
+    /* ── Code block ── */
+    .code-block {
+      background: linear-gradient(180deg, rgba(110,26,70,.96) 0%, rgba(79,18,54,.98) 100%);
+      color: #eef8fb; border-radius: var(--r);
+      padding: 1.25rem 1.5rem; font-family: ui-monospace, "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: .82rem; line-height: 1.7; overflow-x: auto;
+      box-shadow: 0 16px 36px rgba(8,29,39,.16);
+    }
+    .code-block .cm { color: rgba(255,194,221,.6); }
+    .code-block .ck { color: #ffc2dd; }
+    .code-block .cv { color: #ffd9ea; }
+    .code-block .cs { color: #86efac; }
+
+    /* ── Mobile section ── */
+    .mobile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; }
+    .mobile-step {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
+      padding: 1.25rem; display: flex; gap: .9rem; align-items: flex-start;
+    }
+    .mobile-num {
+      flex-shrink: 0; width: 1.8rem; height: 1.8rem; background: var(--accent-bg);
+      color: var(--accent); border-radius: .45rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 800; margin-top: .05rem;
+    }
+    .mobile-step h4 { margin: 0 0 .2rem; font-size: .88rem; font-weight: 700; }
+    .mobile-step p  { margin: 0; font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── GitHub callout ── */
+    .gh-callout {
+      background: linear-gradient(180deg, rgba(110,26,70,.96) 0%, rgba(79,18,54,.98) 100%);
+      color: #f1f9fa; border-radius: var(--r);
+      padding: 2rem 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      box-shadow: 0 16px 36px rgba(8,29,39,.12);
+    }
+    .gh-callout svg { flex-shrink: 0; }
+    .gh-callout-body { flex: 1; }
+    .gh-callout h3 { margin: 0 0 .35rem; font-size: 1rem; font-weight: 700; color: #f1f9fa; }
+    .gh-callout p  { margin: 0; font-size: .84rem; color: rgba(241,249,250,.72); line-height: 1.55; }
+    .btn-gh {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: .45rem;
+      padding: .6rem 1.25rem; background: rgba(255,255,255,.08); color: #f1f9fa; border: 1px solid rgba(255,255,255,.14);
+      border-radius: .5rem; font-size: .85rem; font-weight: 600; text-decoration: none;
+      white-space: nowrap; transition: background .15s, border-color .15s;
+    }
+    .btn-gh:hover { background: rgba(255,255,255,.16); border-color: rgba(255,194,221,.3); }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 2.5rem 1.5rem; text-align: center;
+      border-top: 1px solid var(--line); background: var(--panel);
+    }
+    .footer-inst { font-size: .82rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; font-family: "Rockwell", "Georgia", serif; }
+    .footer-sub  { font-size: .76rem; color: var(--muted); }
+
+    hr.div { border: none; border-top: 1px solid var(--line); margin: 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .brand-long { display: none; }
+      .hero { padding: 3.5rem 1rem 3rem; }
+      .stats-grid { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--line); }
+      .stat:last-child { border-bottom: none; }
+      .anav { justify-content: flex-start; }
+      .gh-callout { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ── Warmup status pill ── */
+    .warmup-pill {
+      display: inline-flex; align-items: center; gap: .45rem;
+      margin-top: 1.1rem; padding: .3rem .85rem;
+      border-radius: 99px; font-size: .76rem; font-weight: 600;
+      border: 1px solid transparent;
+      transition: background .4s, color .4s, border-color .4s;
+    }
+    .warmup-pill[data-state="warming"] {
+      background: #fffbeb; color: #92400e; border-color: #fde68a;
+    }
+    .warmup-pill[data-state="ready"] {
+      background: #ecfdf5; color: #065f46; border-color: #6ee7b7;
+    }
+    .warmup-pill[data-state="slow"] {
+      background: var(--bg-alt); color: var(--muted); border-color: var(--line);
+    }
+    .warmup-dot {
+      width: .5rem; height: .5rem; border-radius: 50%; flex-shrink: 0;
+    }
+    .warmup-pill[data-state="warming"] .warmup-dot {
+      background: #f59e0b;
+      animation: pulse-amber 1.4s ease-in-out infinite;
+    }
+    .warmup-pill[data-state="ready"] .warmup-dot { background: #10b981; }
+    .warmup-pill[data-state="slow"]  .warmup-dot { background: #94a3b8; }
+    @keyframes pulse-amber {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(.7); }
+    }
+
+    /* ── Site header (from custom.css) ── */
+    .site-header {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      width: 3.35rem;
+      height: 3.35rem;
+      color: #f2fbfc;
+      z-index: 1150;
+    }
+    .site-header__panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(320px, calc(100vw - 1.4rem));
+      padding: 4rem 0.95rem 0.95rem;
+      border-radius: 24px;
+      background: rgba(96,24,60,.88);
+      border: 1px solid rgba(255,230,241,.24);
+      box-shadow: 0 22px 48px rgba(7,24,34,.22);
+      backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-0.2rem) scale(0.98);
+      transform-origin: top right;
+      transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+      overflow: hidden;
+    }
+    .site-header__brand {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+      margin-bottom: 0.8rem;
+    }
+    .site-header__eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(242,251,252,.62);
+    }
+    .site-header__title {
+      font-family: "Rockwell", "Georgia", serif;
+      font-size: 0.9rem;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    .site-header__subtitle {
+      font-size: 0.72rem;
+      line-height: 1.3;
+      color: rgba(242,251,252,.72);
+    }
+    .site-header__toggle {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border-radius: 999px;
+      background: rgba(116,29,72,.9);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 14px 28px rgba(7,24,34,.2);
+      backdrop-filter: blur(18px);
+      display: grid;
+      place-items: center;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .site-header__toggle:hover,
+    .site-header__toggle:focus-visible {
+      background: rgba(146,40,90,.94);
+      box-shadow: none;
+    }
+    .site-header.is-open .site-header__toggle,
+    .site-header:focus-within .site-header__toggle {
+      background: linear-gradient(135deg, rgba(255,95,162,.26), rgba(255,194,221,.3));
+    }
+    .site-header__toggle-icon {
+      position: relative;
+      width: 1rem;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 -0.32rem 0 currentColor, 0 0.32rem 0 currentColor;
+    }
+    .site-header__toggle-text {
+      position: absolute;
+      width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    .site-header.is-open .site-header__panel,
+    .site-header:focus-within .site-header__panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .site-header:hover .site-header__panel {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+      }
+      .site-header:hover .site-header__toggle {
+        background: linear-gradient(135deg, rgba(255,95,162,.26), rgba(255,194,221,.3));
+      }
+    }
+    .main-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.62rem;
+    }
+    .main-nav a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      min-height: 44px;
+      padding: 0.74rem 0.82rem;
+      border-radius: 16px;
+      text-decoration: none;
+      color: #eef8fb;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+    .main-nav a:hover,
+    .main-nav a:focus-visible {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.14);
+      color: #ffffff;
+    }
+    .main-nav a.is-active {
+      background: linear-gradient(135deg, rgba(255,95,162,.24), rgba(255,194,221,.24));
+      border-color: rgba(255,194,221,.28);
+      color: #ffffff;
+    }
+    @media (max-width: 640px) {
+      .site-header {
+        top: 0.65rem;
+        right: 0.65rem;
+        width: 3rem;
+        height: 3rem;
+      }
+      .site-header__panel {
+        width: min(320px, calc(100vw - 1rem));
+        padding: 3.6rem 0.8rem 0.8rem;
+        border-radius: 22px;
+      }
+      .main-nav { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ Site navigation ══ -->
+<div id="site-header"></div>
+
+<!-- ══ Topbar ══ -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <span class="brand-dot"></span>
+    Indoor<span class="brand-long"> Space Collector</span>
+  </a>
+  <div class="topbar-actions">
+    <a class="btn-sm ghost" href="https://github.com/BayiLi081/indoor-activities-collector" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.031 1.532 1.031.891 1.527 2.341 1.086 2.912.83.09-.645.349-1.086.635-1.336-2.22-.252-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.104-.253-.447-1.27.097-2.645 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.202 2.392.099 2.645.641.698 1.028 1.59 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.742 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      GitHub
+    </a>
+    <a class="btn-sm solid" href="https://humanactivitysensing-fmfvd8byanbyfbc2.southeastasia-01.azurewebsites.net" target="_blank" rel="noopener">Open App →</a>
+  </div>
+</header>
+
+<!-- ══ Anchor nav ══ -->
+<nav class="anav" aria-label="Page sections">
+  <a class="alink" href="#overview">Overview</a>
+  <a class="alink" href="#modules">Modules</a>
+  <a class="alink" href="#field-tools">Field Tools</a>
+  <a class="alink" href="#how-to-use">How to Use</a>
+  <a class="alink" href="#mobile">Mobile Access</a>
+  <a class="alink" href="#code">Source Code</a>
+</nav>
+
+<!-- ══ Hero ══ -->
+<section class="hero" id="top">
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Urban Research Toolkit
+  </div>
+  <h1>Indoor <em>Public Space</em><br>Collector</h1>
+  <p class="hero-sub">
+    A mobile-first fieldwork platform for capturing human activities, pedestrian flows, and spatial quality in indoor public buildings — purpose-built for urban researchers.
+  </p>
+  <div class="hero-btns">
+    <a class="btn-lg primary" href="https://humanactivitysensing-fmfvd8byanbyfbc2.southeastasia-01.azurewebsites.net" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Open the App
+    </a>
+    <a class="btn-lg outline" href="https://github.com/BayiLi081/indoor-activities-collector" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.031 1.532 1.031.891 1.527 2.341 1.086 2.912.83.09-.645.349-1.086.635-1.336-2.22-.252-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.104-.253-.447-1.27.097-2.645 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.202 2.392.099 2.645.641.698 1.028 1.59 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.742 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      View Source
+    </a>
+  </div>
+  <div>
+    <span class="warmup-pill" id="warmupPill" data-state="warming">
+      <span class="warmup-dot"></span>
+      <span id="warmupText">Warming up app…</span>
+    </span>
+  </div>
+</section>
+
+<!-- ══ Stats ══ -->
+<div class="stats-wrap">
+  <div class="stats-grid">
+    <div class="stat"><span class="stat-v">4</span><span class="stat-l">Research Modules</span></div>
+    <div class="stat"><span class="stat-v">5</span><span class="stat-l">Field Tools</span></div>
+    <div class="stat"><span class="stat-v">&lt;1 min</span><span class="stat-l">Per Activity Record</span></div>
+    <div class="stat"><span class="stat-v">Mobile‑First</span><span class="stat-l">Phone &amp; Tablet Ready</span></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ══ Overview ══ -->
+<section class="abstract" id="overview">
+  <h2>Research Context</h2>
+  <p>
+    Indoor public spaces — libraries, transit concourses, civic halls, shopping atria — are critical sites of urban social life, yet systematic fieldwork tools for studying them remain scarce. This platform was developed to support structured behavioral observation, pedestrian flow counting, spatial concept mapping, and route-based environmental quality scoring, all from a researcher's mobile phone on site.
+  </p>
+</section>
+
+<hr class="div">
+
+<!-- ══ Modules ══ -->
+<section id="modules">
+  <div class="section">
+    <div class="s-label">Research Modules</div>
+    <h2 class="s-title">Four dimensions of indoor space</h2>
+    <p class="s-desc">Each module targets a distinct layer of how people inhabit and move through public indoor space. Use them independently or in combination during a single fieldwork session.</p>
+
+    <div class="card-grid cols-4">
+
+      <div class="card blue">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l1.5-2h3L15 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3Z"/><circle cx="12" cy="13" r="3"/></svg>
+        </div>
+        <h3>Capture</h3>
+        <p>Pin individual or group activities on an indoor floor plan. The most comprehensive data-collection module.</p>
+        <ul class="feat-list">
+          <li>Individual or group records; group size counter up to large-group mode</li>
+          <li>Activity category: Moving (walking, cycling…) or Lingering (sitting, standing…)</li>
+          <li>Demographic attributes: gender, age group, ethnic group</li>
+          <li>Facial expression coding</li>
+          <li>Group interaction flag (interacting vs. solitary activities)</li>
+        </ul>
+        <span class="card-tag">Activity Mapping</span>
+      </div>
+
+      <div class="card green">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l4-4 4 4M5 15l4 4 4-4M17 5l2 2-2 2M17 15l2 2-2 2"/><path d="M9 5v14M19 7v10"/></svg>
+        </div>
+        <h3>Flowing</h3>
+        <p>Count bidirectional pedestrian flow at corridors and entrances. Draw a counting line on the floor plan and tally each pass in real time.</p>
+        <ul class="feat-list">
+          <li>Draw a crossline on any floor plan position</li>
+          <li>Countdown timer (default 5 minutes) with Start / Reset controls</li>
+          <li>Separate A→B and B→A counters with large-tap buttons</li>
+          <li>Multiple sessions per floor plan supported</li>
+        </ul>
+        <span class="card-tag">Pedestrian Flow</span>
+      </div>
+
+      <div class="card amber">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+        </div>
+        <h3>MyHub</h3>
+        <p>Drop categorized idea pins on the floor plan to annotate spatial concepts during or after fieldwork.</p>
+        <ul class="feat-list">
+          <li>Configurable category palette (colors + labels)</li>
+          <li>Tap the map to place a pin in the selected category</li>
+          <li>Review and manage all placed ideas in the side panel</li>
+          <li>Designed for post-session synthesis and team workshops</li>
+        </ul>
+        <span class="card-tag">Concept Planning</span>
+      </div>
+
+      <div class="card purple">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/></svg>
+        </div>
+        <h3>MyRating</h3>
+        <p>Walk and rate a predefined route through the space. Score environmental qualities at each waypoint to build a spatial quality profile.</p>
+        <ul class="feat-list">
+          <li>Free Audit mode: tap any map location to rate it</li>
+          <li>Guided Route mode: follow a pre-configured waypoint sequence</li>
+          <li>Multi-criteria quality scoring per waypoint</li>
+          <li>Visualise the rated route overlaid on the floor plan</li>
+        </ul>
+        <span class="card-tag">Route Quality</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ Field Tools ══ -->
+<section id="field-tools">
+  <div class="section">
+    <div class="s-label">Field Tools</div>
+    <h2 class="s-title">Built-in tools for the field</h2>
+    <p class="s-desc">These tools are accessible from the Capture screen toolbar during any session. They let researchers attach richer context without leaving the map view.</p>
+
+    <div class="card-grid">
+
+      <div class="card teal">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.8"/></svg>
+        </div>
+        <h3>Site Observation</h3>
+        <p>Capture a quick photo or typed note about anything on site. Stored separately from structured activity records for later qualitative analysis.</p>
+        <span class="card-tag">Quick Capture</span>
+      </div>
+
+      <div class="card rose">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7.2L18 7.3V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/><path d="M14 3.8V8h4M9 11h6M9 14.5h6M9 18h3"/></svg>
+        </div>
+        <h3>Intercept Survey</h3>
+        <p>Launch a structured multi-step questionnaire for a visitor you intercept on site. The response is automatically linked to recently saved activity records.</p>
+        <span class="card-tag">Person Questionnaire</span>
+      </div>
+
+      <div class="card blue">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3>GPS Location</h3>
+        <p>Uses the device's GPS to auto-place your current position on the indoor floor plan. Requires a GPS-to-map calibration file configured per building.</p>
+        <span class="card-tag">Auto-Locate</span>
+      </div>
+
+      <div class="card green">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Z"/><circle cx="12" cy="9" r="2.5"/><path d="M3 20h18"/></svg>
+        </div>
+        <h3>POI Location</h3>
+        <p>Overlay named Points of Interest on the floor plan. POIs with associated photos open an image preview — useful for contextualising key spatial features.</p>
+        <span class="card-tag">Points of Interest</span>
+      </div>
+
+      <div class="card purple">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>Environmental Audit</h3>
+        <p>Score spatial quality attributes at any location on the floor plan. Rate dimensions such as comfort, safety, legibility, and activity support in real time.</p>
+        <span class="card-tag">Quality Scoring</span>
+      </div>
+
+      <div class="card amber">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-9 4 18 3-9h4"/><circle cx="3" cy="12" r="1.2"/><circle cx="21" cy="12" r="1.2"/></svg>
+        </div>
+        <h3>Guided Observation</h3>
+        <p>Follow a pre-defined route through the space with sequenced waypoints. The app guides the researcher stop by stop, prompting observations at each designated location.</p>
+        <ul class="feat-list">
+          <li>Pre-configured waypoint sequences per building</li>
+          <li>Step-by-step navigation overlaid on the floor plan</li>
+          <li>Observation prompts triggered at each waypoint</li>
+          <li>Progress tracker shows completed and remaining stops</li>
+        </ul>
+        <span class="card-tag">Route Guidance</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ How to Use ══ -->
+<section id="how-to-use">
+  <div class="section">
+    <div class="s-label">Workflow</div>
+    <h2 class="s-title">How to use each module</h2>
+    <p class="s-desc">Each module shares the same map-based interface. The Capture module is the most common starting point — a full session takes under a minute per record.</p>
+
+    <!-- Capture workflow -->
+    <h3 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 1rem;font-family:'Aptos','Trebuchet MS',sans-serif;">Capture — step by step</h3>
+    <div class="workflow" style="margin-bottom: 2.5rem;">
+      <div class="wstep"><div class="wnum">1</div><h4>Select a building &amp; floor</h4><p>Choose the site from the dropdowns at the top of the screen to load the floor plan.</p></div>
+      <div class="wstep"><div class="wnum">2</div><h4>Start a capture session</h4><p>Tap <strong>End Capture</strong> (toggle) to begin — the button turns active and the map becomes tappable.</p></div>
+      <div class="wstep"><div class="wnum">3</div><h4>Tap a point on the map</h4><p>Touch the floor plan where the activity is taking place to drop a pin and open the form.</p></div>
+      <div class="wstep"><div class="wnum">4</div><h4>Fill in observee details</h4><p>Set individual/group, activity category &amp; type, gender, age, ethnic group, and facial expression.</p></div>
+      <div class="wstep"><div class="wnum">5</div><h4>Optionally attach context</h4><p>Add a site observation photo or note via the toolbar for richer qualitative data.</p></div>
+      <div class="wstep"><div class="wnum">6</div><h4>Save the record</h4><p>Tap <strong>Save Record</strong>. The pin appears on the map and data is immediately stored on the server.</p></div>
+    </div>
+
+    <!-- Per-module guides -->
+    <h3 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 1rem;font-family:'Aptos','Trebuchet MS',sans-serif;">Quick guide — all modules</h3>
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <div class="guide-head">
+          <span class="guide-dot" style="background:#2563eb;"></span>
+          <h3>Flowing (Pedestrian Count)</h3>
+        </div>
+        <ol class="guide-steps">
+          <li>Select building and floor to load the map.</li>
+          <li>Tap <strong>Draw Line</strong> and click two points on the floor plan to draw a counting crossline.</li>
+          <li>Tap <strong>Start</strong> to begin the 5-minute countdown.</li>
+          <li>Tap the <strong>A→B</strong> or <strong>B→A</strong> counter buttons each time a person passes in that direction.</li>
+          <li>The session ends when the timer reaches zero. Tap <strong>Reset</strong> to start a new count.</li>
+        </ol>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-head">
+          <span class="guide-dot" style="background:#d97706;"></span>
+          <h3>MyHub (Concept Planning)</h3>
+        </div>
+        <ol class="guide-steps">
+          <li>Select building and floor to load the map.</li>
+          <li>Choose a category from the colour palette (e.g. Issue, Opportunity, Note).</li>
+          <li>Tap any location on the floor plan to drop a pin in that category.</li>
+          <li>Tap an existing pin to view or edit the attached note.</li>
+          <li>Open the Ideas panel to see all pins listed by category.</li>
+        </ol>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-head">
+          <span class="guide-dot" style="background:#7c3aed;"></span>
+          <h3>MyRating (Environmental Audit)</h3>
+        </div>
+        <ol class="guide-steps">
+          <li>Select building and floor to load the map and route.</li>
+          <li>Choose <strong>Free Audit</strong> to rate any point, or <strong>Guided Route</strong> to follow waypoints in sequence.</li>
+          <li>Tap the next waypoint marker on the map.</li>
+          <li>Complete the quality rating form for that waypoint (multiple criteria).</li>
+          <li>Proceed along the route until all waypoints are rated.</li>
+        </ol>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-head">
+          <span class="guide-dot" style="background:#0891b2;"></span>
+          <h3>Map Navigation (all modules)</h3>
+        </div>
+        <ol class="guide-steps">
+          <li>Use <strong>Pan Mode</strong> to drag and scroll the floor plan freely.</li>
+          <li>Pinch-to-zoom (or scroll wheel on desktop) to zoom in/out.</li>
+          <li>Tap <strong>Fit</strong> to reset the view to the full floor plan.</li>
+          <li>Use the compass button to reset the map rotation after free-rotation.</li>
+          <li>Tap <strong>GPS Location</strong> or <strong>POI Location</strong> to overlay your position or points of interest.</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ══ Source Code ══ -->
+<section id="code">
+  <div class="section">
+    <div class="s-label">Open Source</div>
+    <h2 class="s-title">Source code &amp; contributions</h2>
+    <p class="s-desc">The app is built with Django (Python) and plain HTML/CSS/JavaScript — no heavy frontend framework. The codebase will be publicly available on GitHub.</p>
+
+    <div class="gh-callout">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(241,249,250,0.88)" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.031 1.532 1.031.891 1.527 2.341 1.086 2.912.83.09-.645.349-1.086.635-1.336-2.22-.252-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.104-.253-.447-1.27.097-2.645 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.202 2.392.099 2.645.641.698 1.028 1.59 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.742 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      <div class="gh-callout-body">
+        <h3>BayiLi081 / indoor-activities-collector</h3>
+        <p>Django · Python · Mobile-first HTML/CSS · Azure Web App · PostgreSQL · Azure Blob Storage</p>
+      </div>
+      <a class="btn-gh" href="https://github.com/BayiLi081/indoor-activities-collector" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.031 1.532 1.031.891 1.527 2.341 1.086 2.912.83.09-.645.349-1.086.635-1.336-2.22-.252-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.104-.253-.447-1.27.097-2.645 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.202 2.392.099 2.645.641.698 1.028 1.59 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.742 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Footer ══ -->
+<footer class="footer">
+  <p class="footer-inst">LKYCIC Team</p>
+  <p class="footer-sub">Indoor Public Space Collector &bull; Research Data Collection Platform &bull; <a href="https://github.com/BayiLi081/indoor-activities-collector" style="color:var(--muted);">GitHub</a></p>
+</footer>
+
+<script>
+  /* ── App warmup probe ── */
+  (function () {
+    var APP_URL  = 'https://humanactivitysensing-fmfvd8byanbyfbc2.southeastasia-01.azurewebsites.net';
+    var BLOB_URL = 'https://hubhumanactivities.blob.core.windows.net/assets/WismaGeylangSerai/normal/93e8387c7a7e41c2898d2baa60938b36.jpg';
+    var TIMEOUT_MS = 45000;
+
+    fetch(BLOB_URL, { mode: 'no-cors' }).catch(function () {});
+
+    var pill = document.getElementById('warmupPill');
+    var text = document.getElementById('warmupText');
+
+    function setReady() {
+      pill.dataset.state = 'ready';
+      text.textContent = 'App is ready';
+    }
+    function setSlow() {
+      pill.dataset.state = 'slow';
+      text.textContent = 'App may be slow to load';
+    }
+
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); setSlow(); }, TIMEOUT_MS);
+
+    fetch(APP_URL, { mode: 'no-cors', signal: ctrl.signal })
+      .then(function () {
+        clearTimeout(timer);
+        setReady();
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        if (err.name !== 'AbortError') setSlow();
+      });
+  })();
+
+  /* ── Site nav ── */
+  fetch('src/nav.html')
+    .then(function (res) { return res.text(); })
+    .then(function (html) {
+      document.getElementById('site-header').innerHTML = html;
+      var toggle = document.querySelector('.site-header__toggle');
+      var header = document.querySelector('.site-header');
+      if (toggle && header) {
+        toggle.addEventListener('click', function () {
+          var open = header.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open);
+        });
+      }
+    })
+    .catch(function (err) { console.error('Failed to load header:', err); });
+</script>
+</body>
+</html>
