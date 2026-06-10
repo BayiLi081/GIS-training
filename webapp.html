@@ -171,7 +171,7 @@
     .abstract p { margin: 0 auto; max-width: 46rem; font-size: .95rem; line-height: 1.8; opacity: .88; color: rgba(255,255,255,.9); }
 
     /* ── Section layout ── */
-    .section { max-width: 64rem; margin: 0 auto; padding: 4rem 1.5rem 3.5rem; }
+    .section { width: 100%; padding: 4rem 1.5rem 3.5rem; }
     .section + hr { border: none; border-top: 1px solid var(--line); margin: 0; }
 
     .s-label {
@@ -185,6 +185,7 @@
 
     /* ── Cards ── */
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+    #field-tools .card-grid { grid-template-columns: 1fr; }
     .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
     @media (max-width: 900px) {
       .card-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
@@ -221,6 +222,7 @@
     .card-icon svg { width: 1.25rem; height: 1.25rem; stroke: var(--ct, var(--accent)); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .card h3 { margin: 0 0 .4rem; font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
     .card p  { margin: 0 0 1rem; font-size: .84rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .card img { width: 100%; height: auto; border-radius: .6rem; margin: 0 0 1rem; }
     .card-tag {
       display: inline-block; padding: .2rem .6rem;
       background: var(--ci, var(--accent-bg)); color: var(--ct, var(--accent));
@@ -231,6 +233,11 @@
     .feat-list { list-style: none; margin: 0 0 1rem; padding: 0; font-size: .82rem; color: var(--muted); line-height: 1.6; }
     .feat-list li { display: flex; align-items: flex-start; gap: .4rem; margin-bottom: .25rem; }
     .feat-list li::before { content: '›'; color: var(--ct, var(--accent)); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+    .audit-layout { display: grid; gap: 1.25rem; align-items: start; margin-bottom: 1rem; }
+    .audit-layout img { margin: 0; }
+    @media (min-width: 720px) {
+      .audit-layout { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr); }
+    }
 
     /* ── How-to workflow ── */
     .workflow {
@@ -379,167 +386,9 @@
       50%       { opacity: .5; transform: scale(.7); }
     }
 
-    /* ── Site header (from custom.css) ── */
-    .site-header {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      width: 3.35rem;
-      height: 3.35rem;
-      color: #f2fbfc;
-      z-index: 1150;
-    }
-    .site-header__panel {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: min(320px, calc(100vw - 1.4rem));
-      padding: 4rem 0.95rem 0.95rem;
-      border-radius: 24px;
-      background: rgba(96,24,60,.88);
-      border: 1px solid rgba(255,230,241,.24);
-      box-shadow: 0 22px 48px rgba(7,24,34,.22);
-      backdrop-filter: blur(18px);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(-0.2rem) scale(0.98);
-      transform-origin: top right;
-      transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
-      overflow: hidden;
-    }
-    .site-header__brand {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.18rem;
-      margin-bottom: 0.8rem;
-    }
-    .site-header__eyebrow {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(242,251,252,.62);
-    }
-    .site-header__title {
-      font-family: "Rockwell", "Georgia", serif;
-      font-size: 0.9rem;
-      line-height: 1.15;
-      color: #ffffff;
-    }
-    .site-header__subtitle {
-      font-size: 0.72rem;
-      line-height: 1.3;
-      color: rgba(242,251,252,.72);
-    }
-    .site-header__toggle {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      border-radius: 999px;
-      background: rgba(116,29,72,.9);
-      border: 1px solid rgba(255,255,255,.16);
-      box-shadow: 0 14px 28px rgba(7,24,34,.2);
-      backdrop-filter: blur(18px);
-      display: grid;
-      place-items: center;
-      z-index: 2;
-      cursor: pointer;
-    }
-    .site-header__toggle:hover,
-    .site-header__toggle:focus-visible {
-      background: rgba(146,40,90,.94);
-      box-shadow: none;
-    }
-    .site-header.is-open .site-header__toggle,
-    .site-header:focus-within .site-header__toggle {
-      background: linear-gradient(135deg, rgba(255,95,162,.26), rgba(255,194,221,.3));
-    }
-    .site-header__toggle-icon {
-      position: relative;
-      width: 1rem;
-      height: 2px;
-      border-radius: 999px;
-      background: currentColor;
-      box-shadow: 0 -0.32rem 0 currentColor, 0 0.32rem 0 currentColor;
-    }
-    .site-header__toggle-text {
-      position: absolute;
-      width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-    .site-header.is-open .site-header__panel,
-    .site-header:focus-within .site-header__panel {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .site-header:hover .site-header__panel {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0) scale(1);
-      }
-      .site-header:hover .site-header__toggle {
-        background: linear-gradient(135deg, rgba(255,95,162,.26), rgba(255,194,221,.3));
-      }
-    }
-    .main-nav {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.62rem;
-    }
-    .main-nav a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.65rem;
-      min-height: 44px;
-      padding: 0.74rem 0.82rem;
-      border-radius: 16px;
-      text-decoration: none;
-      color: #eef8fb;
-      font-size: 0.78rem;
-      line-height: 1.25;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.08);
-      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-    }
-    .main-nav a:hover,
-    .main-nav a:focus-visible {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.14);
-      color: #ffffff;
-    }
-    .main-nav a.is-active {
-      background: linear-gradient(135deg, rgba(255,95,162,.24), rgba(255,194,221,.24));
-      border-color: rgba(255,194,221,.28);
-      color: #ffffff;
-    }
-    @media (max-width: 640px) {
-      .site-header {
-        top: 0.65rem;
-        right: 0.65rem;
-        width: 3rem;
-        height: 3rem;
-      }
-      .site-header__panel {
-        width: min(320px, calc(100vw - 1rem));
-        padding: 3.6rem 0.8rem 0.8rem;
-        border-radius: 22px;
-      }
-      .main-nav { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
-
-<!-- ══ Site navigation ══ -->
-<div id="site-header"></div>
 
 <!-- ══ Topbar ══ -->
 <header class="topbar">
@@ -742,7 +591,16 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         </div>
         <h3>Environmental Audit</h3>
-        <p>Score spatial quality attributes at any location on the floor plan. Rate dimensions such as comfort, safety, legibility, and activity support in real time.</p>
+        <div class="audit-layout">
+          <div>
+            <p>Score spatial quality attributes at any location on the floor plan. Rate dimensions such as comfort, safety, legibility, and activity support in real time.</p>
+            <ul class="feat-list">
+              <li>Auditors take photos from four angles around the audit point to capture as much of the surrounding environment as possible.</li>
+              <li>The photos are processed with computer vision analysis to assess environmental conditions by identifying visible objects and spatial features.</li>
+            </ul>
+          </div>
+          <img src="imgs/webapp/surrounding_images.jpg" alt="Four surrounding-view photos for environmental audit">
+        </div>
         <span class="card-tag">Quality Scoring</span>
       </div>
 
@@ -913,21 +771,6 @@
       });
   })();
 
-  /* ── Site nav ── */
-  fetch('src/nav.html')
-    .then(function (res) { return res.text(); })
-    .then(function (html) {
-      document.getElementById('site-header').innerHTML = html;
-      var toggle = document.querySelector('.site-header__toggle');
-      var header = document.querySelector('.site-header');
-      if (toggle && header) {
-        toggle.addEventListener('click', function () {
-          var open = header.classList.toggle('is-open');
-          toggle.setAttribute('aria-expanded', open);
-        });
-      }
-    })
-    .catch(function (err) { console.error('Failed to load header:', err); });
 </script>
 </body>
 </html>
