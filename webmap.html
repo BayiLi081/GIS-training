@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Raster Data Analysis in GIS</title>
+        <title>Lecture: Web-Based Spatial Visualisation</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <script src="src/remark-latest.min.js"></script>
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+        <style>
+          .interactive-frame {
+            width: 100%;
+            height: 470px;
+            border: 0;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.78);
+            box-shadow: var(--shadow-soft);
+          }
+
+          .webmap-table table {
+            font-size: 0.74em;
+          }
+
+          .webmap-table th,
+          .webmap-table td {
+            padding: 0.35rem 0.5rem;
+          }
+
+          .webmap-note {
+            font-size: 0.78em;
+            color: var(--ink-soft);
+          }
+        </style>
     </head>
   <body>
 
@@ -20,19 +44,437 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture: Raster Data Analysis in GIS
-
+## Lecture and Tutorial: Web-Based Spatial Visualisation
 [Bayi Li](mailto:barryli081@gmail.com)
 
 <br>
 <button onclick="window.location.href='index.html'">Go Back to Menu</button>
-
+.toc-wrapper[
+  <div class="toc">
+    <a href="#overview" class="toc-item">Why Web Maps Matter</a>
+    <a href="#scale" class="toc-item">Scale, Zoom and Resolution</a>
+    <a href="#query" class="toc-item">Map-Based Spatial Query</a>
+    <a href="#spotlight" class="toc-item">SVG Feature Spotlight</a>
+    <a href="#tutorial" class="toc-item">Tutorial Workflow</a>
+  </div>
+]
 ---
 
 
+name: overview
+
+## Week 12 Focus
+
+In this lecture, students will learn how to communicate spatial patterns through interactive maps and how to adapt map design to different viewing scales.
+
+- Use web maps to present spatial data to a non-specialist audience
+- Design symbology and labelling for overview, city, and local scales
+- Understand how zoom level, spatial resolution, and screen resolution shape what should be shown
+- Build simple map-based query interactions such as click, filter, and search
+
+---
+
+## Intended Learning Outcomes
+
+By the end of this session, students should be able to:
+
+1. Explain the difference between map scale, zoom level, spatial resolution, and display resolution
+2. Match map design choices to different levels of spatial detail
+3. Describe common patterns for map-based spatial query in web applications
+4. Build a simple interactive web map with popups, styling, and attribute-based filtering
+
+---
+
+## Lecture Structure
+
+1. Why web-based spatial visualisation matters
+2. Designing maps for different scales and resolutions
+3. Spatial query patterns in interactive maps
+4. A practical tutorial workflow with Leaflet and GeoJSON
+
+---
+
+## Why Web Maps?
+
+.right_half[
+  <figure>
+    <img src="imgs/webapp/surrounding_images.jpg" width="100%">
+    <figcaption>Web maps sit inside a broader interactive information environment.</figcaption>
+  </figure>
+]
+
+Web maps are useful because they combine three tasks in a single interface:
+
+- **Visualisation**: see patterns, clusters, gaps, and contrasts
+- **Navigation**: pan and zoom between regional and local context
+- **Query**: click on features and ask what is located where
+
+The main difference from a printed map is that the reader becomes an active user.
+
+---
+
+## From Static Cartography to Interactive Cartography
+
+Printed maps optimise a single view.
+
+Web maps must support a sequence of views:
+
+- an overview at small scale
+- an exploratory city view at medium scale
+- a detailed inspection view at large scale
+
+This means the map should not show the same amount of information at every zoom level.
+
+---
+
+name: scale
+
+## Scale, Zoom and Resolution
+
+These terms are related, but they are not identical.
+
+- **Map scale**: relationship between map distance and ground distance
+- **Zoom level**: a discrete level in a web map interface
+- **Spatial resolution**: the smallest ground unit that the data can meaningfully represent
+- **Display resolution**: how many pixels the screen can draw
+
+Poor maps often fail because these four elements are treated as if they were the same thing.
+
+---
+
+## Practical Interpretation
+
+.webmap-table[
+
+| Concept | Main Question | Typical Design Consequence |
+|---|---|---|
+| Scale | How much area do we show? | Reduce clutter at small scales |
+| Zoom level | What view is the user currently at? | Change visibility and line widths dynamically |
+| Spatial resolution | How detailed is the dataset itself? | Avoid over-claiming precision |
+| Screen resolution | How sharp is the display? | Ensure symbols and labels remain legible |
+
+]
+
+<div class="webmap-note">A dataset can look detailed on screen but still be analytically coarse if its original spatial resolution is low.</div>
+
+---
+
+## Designing for Different Scales
+
+.webmap-table[
+
+| View | Typical User Goal | Recommended Design |
+|---|---|---|
+| Regional overview | Understand broad distribution | simplified polygons, few labels, restrained colour palette |
+| City scale | Compare districts or corridors | medium detail, thematic symbology, selected labels |
+| Street or site scale | Inspect individual features | precise points/lines, popups, search, measurement |
+
+]
+
+The rule is simple: as the user zooms in, the map can reveal more detail, but only when that detail is meaningful.
+
+---
+
+## Scale-Dependent Styling Rules
+
+- Use fewer categories and larger generalized units at small scales
+- Increase line width and symbol size only when features become spatially separable
+- Delay dense labels until medium or large scale
+- Avoid basemaps with too much texture when thematic layers are the main message
+- Hide low-priority layers until the user reaches an appropriate zoom level
+
+---
+
+## Data Resolution Should Constrain Design
+
+If your raster is 30 m resolution, the map should not imply building-level accuracy.
+
+If your point data is geocoded only to a postcode or planning zone, do not symbolise it as if it were exact door-level location.
+
+Design should represent what the data can actually support, not what the interface makes possible.
+
+---
+
+## A Good Web Map Balances Four Layers of Design
+
+1. **Basemap**: the contextual background
+2. **Thematic data**: the main message
+3. **Interaction**: the actions available to the user
+4. **Interface**: legend, filters, search, and explanatory text
+
+If one layer dominates the others, the map becomes harder to read.
+
+---
+
+name: query
+
+## What Is Map-Based Spatial Query?
+
+Map-based query means using the map interface itself to ask questions about spatial data.
+
+Typical user questions include:
+
+- What is this feature?
+- Which features are near this location?
+- Which areas satisfy a condition?
+- What changes when I switch layer, time, or category?
+
+---
+
+## Common Query Patterns
+
+.webmap-table[
+
+| Query Pattern | User Action | Typical Output |
+|---|---|---|
+| Identify | click a feature | popup or side panel |
+| Filter | choose a category | subset of visible features |
+| Search | type a place or ID | map zooms to target |
+| Spatial selection | draw area or buffer | selected set of records |
+| Nearest feature | click a point | closest object and distance |
+
+]
+
+---
+
+## Query Design Principles
+
+- The map should respond quickly and clearly to each action
+- The interface should show what has been selected and why
+- Query results should preserve spatial context instead of replacing it entirely
+- Filters should be reversible and easy to reset
+- Popups should answer the likely question first, not dump the full attribute table
+
+---
+
+## Simple Example: Identify Query on a Map
+
+Clicking a point feature is the most basic query interaction.
+
+The interaction chain is:
+
+1. user clicks a feature
+2. the application matches the click to a spatial object
+3. the object attributes are retrieved
+4. a popup or side panel displays selected information
+
+This is often enough for introductory teaching because it links geometry, attributes, and user interaction directly.
+
+---
+
+## Demo Example: Interactive Metro Map
+
+<iframe
+    class="interactive-frame"
+    src="map.html"
+    title="Interactive metro map example"
+    loading="lazy"
+    allowfullscreen>
+</iframe>
+
+---
+
+## What This Demo Already Teaches
+
+- point layers can be styled to communicate importance
+- popups support basic identify query
+- a basemap provides urban context
+- colour, symbol size, and popup text together form the user experience
+
+This is a simple map, but it already demonstrates the core logic of map-based spatial query.
+
+---
+
+name: spotlight
+
+## Highlighting One Feature, Dimming the Rest
+
+A common interaction is to **spotlight a selected feature** while the rest of the diagram fades into the background.
+
+The trick works because an **inline SVG is live DOM**: every component is a real element you can target with a CSS class.
+
+- dim all components to low opacity
+- relight only the one marked `.active`
+- optionally push the rest back with `grayscale` + `blur`, or lift the active one with a `drop-shadow` glow
+
+An `<img src="diagram.svg">` is an opaque image — you cannot reach inside it, so the SVG must be **inlined**.
+
+---
+
+## Demo Example: SVG Feature Spotlight
+
+<div align="center">
+<div class="spotlight-svg" data-src="imgs/pump-system.svg" style="max-width: 70%"></div>
+</div>
+
+<div class="webmap-note">Click any component to spotlight it; click empty space to clear. The SVG is loaded from an external file — `data-src="imgs/pump-system.svg"` — and each top-level group becomes clickable automatically.</div>
+
+---
+
+## Why This Matters for Web Maps
+
+The same pattern powers feature selection in a real web map:
+
+- highlight the clicked polygon, dim its neighbours to give it focus
+- fade unselected layers when a filter is applied
+- guide attention through a diagram or legend, one part at a time
+
+Whether the geometry lives in an SVG diagram or a Leaflet layer, the logic is identical: **mark one element as active, and let CSS express the rest as context.**
+
+---
+
+name: tutorial
+
+## Tutorial Roadmap
+
+In the tutorial, we will build a basic interactive map in four stages:
+
+1. prepare spatial data in GeoJSON format
+2. create a Leaflet map with a suitable basemap
+3. style features and bind popups
+4. add a simple query control for filtering and zooming
+
+---
+
+## Step 1: Prepare the Data
+
+For a simple web map, the easiest starting format is **GeoJSON**.
+
+Each feature should have:
+
+- geometry
+- a small set of clear attributes
+- a field that can be used for styling or filtering
+
+Example attributes for a station layer:
+
+- `name`
+- `line`
+- `status`
+- `ridership_class`
+
+---
+
+## Step 2: Create the Base Map
+
+```html
+<div id="map" style="height: 520px;"></div>
+<script>
+  const map = L.map('map').setView([1.3521, 103.8198], 11);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+</script>
+```
+
+This gives you an interactive canvas with pan and zoom controls.
+
+---
+
+## Step 3: Add a Thematic Layer
+
+```javascript
+function stationStyle(feature) {
+  return {
+    radius: feature.properties.line === 'Circle Line' ? 8 : 6,
+    color: '#ffffff',
+    weight: 1,
+    fillColor: feature.properties.status === 'Interchange' ? '#d81b74' : '#ff8fbc',
+    fillOpacity: 0.85
+  };
+}
+
+function onEachFeature(feature, layer) {
+  layer.bindPopup(
+    `<strong>${feature.properties.name}</strong><br>` +
+    `Line: ${feature.properties.line}<br>` +
+    `Status: ${feature.properties.status}`
+  );
+}
+
+const stationLayer = L.geoJSON(stationsGeoJson, {
+  pointToLayer: (feature, latlng) => L.circleMarker(latlng, stationStyle(feature)),
+  onEachFeature
+}).addTo(map);
+```
+
+Now the map supports a basic identify query through popups.
+
+---
+
+## Step 4: Add a Simple Filter Query
+
+```javascript
+function filterByLine(selectedLine) {
+  stationLayer.clearLayers();
+
+  const filtered = {
+    type: 'FeatureCollection',
+    features: stationsGeoJson.features.filter((feature) => {
+      return selectedLine === 'All' || feature.properties.line === selectedLine;
+    })
+  };
+
+  stationLayer.addData(filtered);
+
+  if (filtered.features.length > 0) {
+    map.fitBounds(stationLayer.getBounds(), { padding: [20, 20] });
+  }
+}
+```
+
+This turns the map into a query interface rather than a static display.
+
+---
+
+## Step 5: Design the Interface Around the Query
+
+The control panel should help the user understand the map rather than compete with it.
+
+- put the most common query first
+- label controls with user questions, not technical field names
+- keep the legend visible
+- provide a reset button
+- show empty-state feedback when no result matches the query
+
+---
+
+## Recommended Classroom Workflow
+
+1. Prepare data in QGIS and export a small GeoJSON layer
+2. Test symbology in QGIS before moving to the browser
+3. Build a simple Leaflet map locally
+4. Add one query at a time: popup, filter, then search
+5. Evaluate whether the map reads clearly at overview and local zoom levels
+
+---
+
+## Mini Exercise
+
+Choose one urban dataset and sketch a web map design for it.
+
+Your design should specify:
+
+- the target user
+- the smallest and largest useful zoom levels
+- which layers appear at each scale
+- one identify query and one filter query
+- one risk of misinterpretation caused by scale or resolution
+
+---
+
+## Key Takeaways
+
+- Web-based spatial visualisation is not only about showing data, but about guiding exploration.
+- Scale, zoom, and resolution should determine what is visible and how it is symbolised.
+- Map-based query connects geometry, attributes, and user interaction.
+- A good beginner workflow is: clean data, export GeoJSON, design symbology, then add one interaction at a time.
 --
 
-<xL>Continue with Tutorial: </xL><button onclick="window.location.href='raster_tutorial.html'">Go to Tutorial of Raster Data Analysis</button>
+<xL>Continue exploring: </xL><button onclick="window.location.href='webapp.html'">Open Example Web Application</button>
+
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
 </textarea>
     <script src="src/template.js"></script>

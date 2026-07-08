@@ -1,11 +1,120 @@
 document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initSiteHeader();
+  initSvgSpotlight();
+  initExternalSpotlightSvgs();
   waitForSlides((slides) => {
     initDeckEnhancements(slides);
     initReferencesPanel(slides);
   });
 });
+
+// Load an external .svg file and make it a spotlight target, e.g.:
+//   <div class="spotlight-svg" data-src="imgs/diagram.svg"></div>
+// The file is fetched and inlined (so its groups become real DOM), the root
+// <svg> gets class="spotlight", and each top-level <g> becomes a clickable
+// `.part`. Spotlight interaction is then handled by initSvgSpotlight().
+function initExternalSpotlightSvgs() {
+  const hosts = Array.from(document.querySelectorAll(".spotlight-svg[data-src]"));
+  hosts.forEach((host) => {
+    if (host.dataset.loaded === "true") {
+      return;
+    }
+    host.dataset.loaded = "true";
+
+    fetch(host.dataset.src)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return res.text();
+      })
+      .then((markup) => {
+        const doc = new DOMParser().parseFromString(markup, "image/svg+xml");
+        const svg = doc.querySelector("svg");
+        if (!svg || doc.querySelector("parsererror")) {
+          throw new Error("not valid SVG");
+        }
+
+        svg.classList.add("spotlight");
+
+        // Auto-detect parts: every top-level <g>. If the author already marked
+        // parts with class="part", respect those instead.
+        if (!svg.querySelector(".part")) {
+          Array.from(svg.children)
+            .filter((node) => node.tagName && node.tagName.toLowerCase() === "g")
+            .forEach((group) => {
+              group.classList.add("part");
+              if (!group.hasAttribute("tabindex")) {
+                group.setAttribute("tabindex", "0");
+              }
+              if (!group.hasAttribute("role")) {
+                group.setAttribute("role", "button");
+              }
+            });
+        }
+
+        host.replaceChildren(document.importNode(svg, true));
+      })
+      .catch((err) => {
+        host.dataset.loaded = "error";
+        host.textContent = `Could not load SVG: ${host.dataset.src} (${err.message})`;
+        host.style.color = "var(--ink-soft)";
+        host.style.fontSize = "0.7em";
+      });
+  });
+}
+
+// SVG feature spotlight: click a `.part` inside an inline `<svg class="spotlight">`
+// to focus it (the rest dim). Click empty space, or the focused part again, to clear.
+// Uses document-level delegation so it keeps working across Remark slide clones.
+function initSvgSpotlight() {
+  const focusPart = (svg, part) => {
+    const alreadySole =
+      part.classList.contains("is-active") &&
+      svg.querySelectorAll(".part.is-active").length === 1;
+
+    svg.querySelectorAll(".part").forEach((p) => p.classList.remove("is-active"));
+
+    if (alreadySole) {
+      svg.classList.remove("is-focused"); // clicking the sole active part clears
+      return;
+    }
+
+    svg.classList.add("is-focused");
+    part.classList.add("is-active");
+  };
+
+  const clear = (svg) => {
+    svg.classList.remove("is-focused");
+    svg.querySelectorAll(".part.is-active").forEach((p) => p.classList.remove("is-active"));
+  };
+
+  document.addEventListener("click", (event) => {
+    const part = event.target.closest("svg.spotlight .part");
+    if (part) {
+      focusPart(part.closest("svg.spotlight"), part);
+      return;
+    }
+
+    // Click on the spotlight SVG but not on a part -> clear that SVG.
+    const svg = event.target.closest("svg.spotlight");
+    if (svg) {
+      clear(svg);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    const part = event.target.closest && event.target.closest("svg.spotlight .part");
+    if (part) {
+      event.preventDefault();
+      focusPart(part.closest("svg.spotlight"), part);
+    }
+  });
+}
 
 function initLightbox() {
   const zoomables = Array.from(document.querySelectorAll(".zoomable"));

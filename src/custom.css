@@ -1533,3 +1533,27 @@ body.overview-open {
     left: 5.3rem;
   }
 }
+
+/* ── SVG feature spotlight ──────────────────────────────────────────────
+   Put class="spotlight" on an inline <svg>, and class="part" on each
+   group/shape you want to be independently clickable. Clicking a part
+   dims the rest; clicking empty space (or the active part again) clears.
+   Driven by src/custom.js -> initSvgSpotlight(). */
+svg.spotlight .part {
+  cursor: pointer;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+svg.spotlight.is-focused .part {
+  opacity: 0.14;
+}
+
+svg.spotlight.is-focused .part.is-active {
+  opacity: 1;
+}
+
+/* Keyboard focus ring for tabbable parts (add tabindex="0" on the part). */
+svg.spotlight .part:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}

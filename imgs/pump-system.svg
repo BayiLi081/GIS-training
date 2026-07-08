@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 190" role="group" aria-label="Pumped water system">
+  <g id="wires">
+    <path fill="none" stroke="#2a9db8" stroke-width="2.4" stroke-dasharray="5 5" d="M92 66 H150 M242 66 H300 M330 88 V150 H150" />
+  </g>
+  <g id="tank" aria-label="Storage tank">
+    <rect x="30" y="26" width="60" height="80" rx="6" fill="#fff" stroke="#b06a8c" stroke-width="2.4" />
+    <text x="60" y="128" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#6f3050">TANK</text>
+  </g>
+  <g id="pump" aria-label="Pump">
+    <circle cx="196" cy="66" r="30" fill="#fff" stroke="#b06a8c" stroke-width="2.4" />
+    <path d="M196 48 L212 76 H180 Z" fill="none" stroke="#b06a8c" stroke-width="2.4" />
+    <text x="196" y="128" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#6f3050">PUMP</text>
+  </g>
+  <g id="valve" aria-label="Control valve">
+    <path d="M304 48 L332 66 L304 84 L332 84 L304 66 L332 48 Z" fill="#fff" stroke="#b06a8c" stroke-width="2.4" />
+    <text x="318" y="128" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#6f3050">VALVE</text>
+  </g>
+  <g id="outlet" aria-label="Outlet basin">
+    <path d="M120 150 h60 v26 a6 6 0 0 1 -6 6 h-48 a6 6 0 0 1 -6 -6 z" fill="#fff" stroke="#b06a8c" stroke-width="2.4" />
+    <text x="150" y="150" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#6f3050">OUTLET</text>
+  </g>
+</svg>

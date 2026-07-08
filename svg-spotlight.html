@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SVG Feature Spotlight</title>
+<link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+<style>
+  :root {
+    --ground: #fff5fa;
+    --panel: #ffffff;
+    --ink: #6f3050;
+    --ink-strong: #9f1454;
+    --ink-soft: #9a5f7a;
+    --line: rgba(143, 57, 95, 0.16);
+    --schematic: #b06a8c;      /* structural line colour on paper */
+    --accent: #ff5fa2;         /* the "spotlight" */
+    --accent-strong: #d81b74;
+    --cyan: #2a9db8;
+    --code-bg: #3a0f27;
+    --code-ink: #ffe4f0;
+    --dim-opacity: 0.14;
+    --radius: 16px;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 14px;
+  }
+
+  .stage {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(166, 55, 110, 0.12);
+  }
+
+  /* Mode toolbar */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    align-items: center;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .toolbar .grouplabel {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-right: 2px;
+  }
+  .mode-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .mode-btn:hover { border-color: var(--accent); }
+  .mode-btn[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .mode-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+  /* Diagram + legend split */
+  .split { display: grid; grid-template-columns: 1.55fr 1fr; }
+  @media (max-width: 640px) {
+    .split { grid-template-columns: 1fr; }
+    .legend { border-left: none !important; border-top: 1px solid var(--line); }
+  }
+
+  .diagram-pane {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 24px;
+    background-color: var(--panel);
+  }
+  svg#diagram { width: 100%; height: auto; max-width: 380px; }
+
+  /* ── THE CORE MECHANIC ─────────────────────── */
+  .component { cursor: pointer; }
+  .component, .component * { transition: opacity 0.35s ease, filter 0.35s ease; }
+  svg.focus-mode .component { opacity: var(--dim-opacity); }        /* dim all      */
+  svg.focus-mode .component.active { opacity: 1; }                  /* relight one  */
+  svg.recede.focus-mode .component:not(.active) { filter: grayscale(1) blur(0.6px); }
+  svg.glow .component.active .glowable { filter: drop-shadow(0 0 6px var(--accent)); }
+  svg.hovermode:hover .component { opacity: var(--dim-opacity); }   /* pure-CSS     */
+  svg.hovermode .component:hover { opacity: 1; }
+
+  /* schematic styling */
+  .stroke  { fill: none; stroke: var(--schematic); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+  .fillbox { fill: var(--panel); stroke: var(--schematic); stroke-width: 2.4; }
+  .accentfill { fill: var(--schematic); opacity: 0.14; }
+  .plabel  { font-family: var(--mono); font-size: 13px; fill: var(--ink); font-weight: 600; }
+  .flow    { stroke: var(--cyan); stroke-width: 2.4; fill: none; stroke-dasharray: 5 5; }
+  .component.active .stroke,
+  .component.active .fillbox { stroke: var(--accent-strong); }
+  .component.active .accentfill { fill: var(--accent); opacity: 0.22; }
+  .component.active .plabel { fill: var(--accent-strong); }
+
+  /* Legend */
+  .legend {
+    padding: 16px;
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .legend h2 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    text-align: left;
+    transition: all 0.18s ease;
+  }
+  .leg-item:hover { border-color: var(--accent); }
+  .leg-item.active { border-color: var(--accent); background: var(--accent-soft, rgba(255,95,162,0.12)); }
+  .leg-item:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; background: var(--schematic); }
+  .leg-item.active .swatch { background: var(--accent); }
+  .hint { margin-top: 4px; font-size: 11px; color: var(--ink-soft); line-height: 1.45; }
+
+  /* Code panel */
+  .code-panel {
+    margin-top: 12px;
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .code-head {
+    display: flex; align-items: center; gap: 7px;
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .code-title { margin-left: 5px; font-family: var(--mono); font-size: 11px; color: #c58fa9; }
+  pre {
+    margin: 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--code-ink);
+    tab-size: 2;
+  }
+  pre .c   { color: #a56682; font-style: italic; }
+  pre .k   { color: #ffb0d4; }
+  pre .s   { color: #8fe3d3; }
+  pre .sel { color: #ffd27f; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toolbar" id="toolbar">
+      <span class="grouplabel">Mode</span>
+      <button class="mode-btn" data-mode="click" aria-pressed="true">Click to focus</button>
+      <button class="mode-btn" data-mode="hover" aria-pressed="false">Pure-CSS hover</button>
+      <button class="mode-btn" data-mode="recede" aria-pressed="false">Recede</button>
+      <button class="mode-btn" data-mode="glow" aria-pressed="false">Glow</button>
+      <button class="mode-btn" data-mode="clear" aria-pressed="false">Clear</button>
+    </div>
+
+    <div class="split">
+      <div class="diagram-pane">
+        <!-- Each logical component = one <g class="component" id="…">. That grouping is the whole game. -->
+        <svg id="diagram" class="focus-mode" viewBox="0 0 400 320" role="img" aria-label="Schematic of a pumped water system">
+          <path class="flow" d="M92 96 H150" />
+          <path class="flow" d="M242 96 H300" />
+          <path class="flow" d="M330 118 V210 H150" />
+
+          <g class="component" id="tank" tabindex="0" role="button" aria-label="Storage tank">
+            <rect class="fillbox glowable" x="30" y="52" width="60" height="90" rx="6" />
+            <path class="accentfill" d="M30 100 h60 v36 a6 6 0 0 1 -6 6 h-48 a6 6 0 0 1 -6 -6 z" />
+            <text class="plabel" x="60" y="164" text-anchor="middle">TANK</text>
+          </g>
+
+          <g class="component" id="pump" tabindex="0" role="button" aria-label="Pump">
+            <circle class="fillbox glowable" cx="196" cy="96" r="34" />
+            <path class="stroke" d="M196 74 L214 106 H178 Z" />
+            <text class="plabel" x="196" y="164" text-anchor="middle">PUMP</text>
+          </g>
+
+          <g class="component" id="valve" tabindex="0" role="button" aria-label="Control valve">
+            <path class="fillbox glowable" d="M304 74 L336 96 L304 118 L336 118 L304 96 L336 74 Z" />
+            <circle class="stroke" cx="320" cy="60" r="8" />
+            <text class="plabel" x="320" y="164" text-anchor="middle">VALVE</text>
+          </g>
+
+          <g class="component" id="outlet" tabindex="0" role="button" aria-label="Outlet basin">
+            <path class="fillbox glowable" d="M120 210 h60 v40 a6 6 0 0 1 -6 6 h-48 a6 6 0 0 1 -6 -6 z" />
+            <path class="stroke" d="M150 190 v20 M138 198 l12 12 l12 -12" />
+            <text class="plabel" x="150" y="284" text-anchor="middle">OUTLET</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="legend" id="legend">
+        <h2>Components</h2>
+        <button class="leg-item active" data-target="tank"><span class="swatch"></span>Storage tank</button>
+        <button class="leg-item" data-target="pump"><span class="swatch"></span>Pump</button>
+        <button class="leg-item" data-target="valve"><span class="swatch"></span>Control valve</button>
+        <button class="leg-item" data-target="outlet"><span class="swatch"></span>Outlet basin</button>
+        <p class="hint" id="hint">Click a component or a row. Hold Shift to spotlight several at once.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-panel">
+    <div class="code-head">
+      <span class="dot" style="background:#ff5f57"></span>
+      <span class="dot" style="background:#febc2e"></span>
+      <span class="dot" style="background:#28c840"></span>
+      <span class="code-title" id="code-title">the whole mechanic — CSS</span>
+    </div>
+    <pre id="code"></pre>
+  </div>
+
+<script>
+  const svg = document.getElementById('diagram');
+  const legendItems = [...document.querySelectorAll('.leg-item')];
+  const modeBtns = [...document.querySelectorAll('.mode-btn')];
+  const components = [...svg.querySelectorAll('.component')];
+  const hint = document.getElementById('hint');
+  const codeTitle = document.getElementById('code-title');
+  const codeEl = document.getElementById('code');
+
+  const snippets = {
+    click: {title: 'Click to focus — CSS + JS', code:
+`<span class="c">/* dim everything, relight the active part */</span>
+<span class="sel">svg.focus-mode .component</span>        { <span class="k">opacity</span>: <span class="s">0.14</span>; }
+<span class="sel">svg.focus-mode .component.active</span> { <span class="k">opacity</span>: <span class="s">1</span>; }
+
+<span class="c">// on click, mark one component .active</span>
+<span class="k">function</span> focus(id) {
+  svg.classList.add(<span class="s">'focus-mode'</span>);
+  components.forEach(c =&gt; c.classList.remove(<span class="s">'active'</span>));
+  document.getElementById(id).classList.add(<span class="s">'active'</span>);
+}`},
+    hover: {title: 'Pure-CSS hover — zero JavaScript', code:
+`<span class="c">/* no JS at all — hover the svg dims all,</span>
+<span class="c">   hovering one part relights just that one */</span>
+<span class="sel">svg:hover .component</span>   { <span class="k">opacity</span>: <span class="s">0.14</span>; }
+<span class="sel">svg .component:hover</span>  { <span class="k">opacity</span>: <span class="s">1</span>; }`},
+    recede: {title: 'Recede — push dimmed parts back', code:
+`<span class="c">/* opacity alone reads flat; add a filter</span>
+<span class="c">   so unselected parts truly sink back */</span>
+<span class="sel">svg.focus-mode .component:not(.active)</span> {
+  <span class="k">opacity</span>: <span class="s">0.14</span>;
+  <span class="k">filter</span>: grayscale(1) blur(0.6px);
+}`},
+    glow: {title: 'Glow — lift the active part forward', code:
+`<span class="c">/* SVG has no z-index (paint = document order).</span>
+<span class="c">   A drop-shadow glow lifts the active part… */</span>
+<span class="sel">svg .component.active .glowable</span> {
+  <span class="k">filter</span>: drop-shadow(0 0 6px deeppink);
+}
+
+<span class="c">// …or re-append it so it paints last (on top):</span>
+el.parentNode.appendChild(el);`},
+    clear: {title: 'Clear — restore the whole diagram', code:
+`<span class="c">/* drop focus-mode and every part returns */</span>
+<span class="k">function</span> clear() {
+  svg.classList.remove(<span class="s">'focus-mode'</span>);
+  components.forEach(c =&gt; c.classList.remove(<span class="s">'active'</span>));
+}`}
+  };
+
+  let currentMode = 'click';
+
+  function setCode(mode) {
+    codeTitle.textContent = snippets[mode].title;
+    codeEl.innerHTML = snippets[mode].code;
+  }
+
+  function syncLegend() {
+    legendItems.forEach(li =>
+      li.classList.toggle('active', document.getElementById(li.dataset.target).classList.contains('active')));
+  }
+
+  function setMode(mode) {
+    if (mode === 'hover') {
+      svg.classList.remove('focus-mode', 'recede', 'glow');
+      svg.classList.add('hovermode');
+      components.forEach(c => c.classList.remove('active'));
+      hint.textContent = 'Now hover the diagram directly — no clicks, no JS. Move off to reset.';
+    } else if (mode === 'clear') {
+      svg.classList.remove('focus-mode', 'hovermode', 'recede', 'glow');
+      components.forEach(c => c.classList.remove('active'));
+      hint.textContent = 'Diagram fully restored. Pick a focus mode, then click a component.';
+    } else {
+      svg.classList.remove('hovermode');
+      svg.classList.add('focus-mode');
+      svg.classList.toggle('recede', mode === 'recede');
+      svg.classList.toggle('glow', mode === 'glow');
+      if (!svg.querySelector('.component.active')) components[0].classList.add('active');
+      hint.textContent = 'Click a component or a row. Hold Shift to spotlight several at once.';
+    }
+    currentMode = mode;
+    modeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    setCode(mode);
+    syncLegend();
+  }
+
+  function focusComponent(id, additive) {
+    if (currentMode === 'hover') setMode('click');
+    svg.classList.add('focus-mode');
+    const target = document.getElementById(id);
+    if (!additive) components.forEach(c => c.classList.remove('active'));
+    if (additive && target.classList.contains('active')) {
+      target.classList.remove('active');
+    } else {
+      target.classList.add('active');
+      if (svg.classList.contains('glow')) target.parentNode.appendChild(target);
+    }
+    if (!svg.querySelector('.component.active')) target.classList.add('active');
+    syncLegend();
+  }
+
+  modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  components.forEach(c => {
+    c.addEventListener('click', e => focusComponent(c.id, e.shiftKey));
+    c.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); focusComponent(c.id, e.shiftKey); }
+    });
+  });
+  legendItems.forEach(li =>
+    li.addEventListener('click', e => focusComponent(li.dataset.target, e.shiftKey)));
+
+  setMode('click');
+</script>
+</body>
+</html>
