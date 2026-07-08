@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Network Data Analysis</title>
+        <title>Lecture and Tutorial: Python Network Analysis for Urban Systems</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -21,76 +21,112 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture and Tutorial: Network Data Analysis
+## Lecture and Tutorial: Python Network Analysis for Urban Systems
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
 .toc-wrapper[
   <div class="toc">
-    <a href="#dist" class="toc-item">Distance Measurements</a>
-    <a href="#topo" class="toc-item">Topological Measurements</a>
+    <a href="#week10-focus" class="toc-item">Week 10 Focus</a>
+    <a href="#distance" class="toc-item">Distance and Routing</a>
+    <a href="#topo" class="toc-item">Topological Measures</a>
+    <a href="#workflow" class="toc-item">Python Workflow</a>
   </div>
 ]
 
 ---
 
-## Prerequisites of Plugins for Network Analysis
+name: week10-focus
 
-<div align="center">
-  <figure>
-      <img src="imgs/network/install_network_analysis_plugin.jpg" alt="install_QNEAT3" width="95%">
-      <figcaption>Installation of QNEAT3 Plugin (QGIS Network Analysis Toolbox).</figcaption>
-      <figsubcaption>Source: https://root676.github.io/</figsubcaption>
-  </figure>
-</div>
+## Week 10 Focus
 
----
+This lecture introduces Python-based network analysis for urban systems, with an emphasis on reproducible routing, accessibility, and graph metrics.
 
-The open-source and community-driven nature of QGIS leads to <u>multiple plugins for similar functions</u>.
-
-<div align="center">
-  <figure>
-      <img src="imgs/network/multi_network_plugins.jpeg" alt="install_QNEAT3" width="50%">
-      <figcaption>Installation of QNEAT3 Plugin (QGIS Network Analysis Toolbox 3).</figcaption>
-  </figure>
-</div>
-
-No single **“best”** plugin exists for all cases: Each plugin is designed with different goals, data assumptions, and workflows.
-
-<xL>Having substitutes is practical</xL>
-
-Sometimes a plugin fails. In such cases, switching to an alternative plugin keeps your workflow moving.
-
+- model street systems as graphs of nodes and edges
+- compare straight-line and network-constrained distance
+- use Python libraries to calculate routes and metrics
+- interpret connectivity and centrality in urban context
 
 ---
 
-name: dist
+## Learning Objectives
+
+By the end of this session, students should be able to:
+
+1. explain how urban networks are represented as graphs
+2. distinguish Euclidean distance from network distance
+3. describe how OSMnx and NetworkX support routing and accessibility analysis
+4. interpret major topological measures for urban networks
+5. follow a basic Python workflow for extracting, cleaning, and analysing street networks
+
+---
+
+## Lecture Outline
+
+1. Why network analysis matters in urban studies
+2. Distance, routing, and accessibility
+3. Building and cleaning network graphs
+4. Topological measures in Python
+5. Tutorial workflow and reading material
+
+---
+
+## Why Python for Network Analysis?
+
+Python is useful for network analysis because it supports:
+
+- reproducible graph workflows
+- repeated routing across many origins and destinations
+- custom cost variables such as distance, time, or impedance
+- direct computation of centrality and accessibility metrics
+- clean export of results into tables, maps, and reports
+
+---
+
+## Core Python Libraries
+
+- **NetworkX**: graph structures and algorithms
+- **OSMnx**: street-network download, construction, and visualisation
+- **GeoPandas**: spatial tables for nodes, edges, and outputs
+- **Pandas**: summaries, joins, and comparison tables
+- **Shapely**: geometric operations used around network workflows
+
+---
+
+## Python vs GUI-Based Workflow
+
+QGIS tools are still useful for visual checking and exploratory analysis.
+
+Python becomes stronger when you need:
+
+- reproducibility
+- automation
+- batch routing
+- custom metrics
+- clear documentation of each analytical step
+
+---
+
+name: distance
 
 .right_half[
   <figure>
     <img src="imgs/distance/different_type_distances.jpg" class="zoomable" width="100%">
-    <figcaption>List of available pulgins for network analysis in QGIS.</figcaption>
+    <figcaption>Different distance concepts answer different urban questions.</figcaption>
     <figsubcaption>Source: 10.1186/1476-072X-7-7</figsubcaption>
   </figure>
 ]
 
-## Different Types of Distance
+## Distance in Urban Networks
 
-- **Euclidean Distance**
+Urban movement can be measured in different ways.
 
-  The <u>straight-line</u> distance between two points.
+The most important distinction is between:
 
-- **Network-based Distance**
+- **Euclidean distance**: straight-line distance between two points
+- **Network distance**: travel constrained by the available street or transport network
 
-  - **Shortest network distance**: The smallest physical length <u>along the network</u>.
-
-  - **Shortest network time**: Considers <u>realistic factors</u> such as speed limits, traffic conditions, and other attributes to estimate travel time.
-
-- **Manhattan Distance**
-
-  The sum of absolute differences in coordinates. 
-  
-  Common in <u>grid-based systems and certain analytical contexts</u>, though less used for real-world road routing.
+For accessibility analysis, network distance is usually more realistic.
 
 ---
 
@@ -98,16 +134,17 @@ name: dist
 
 <div align="center">
   <figure>
-      <img src="imgs/network/formula_euclidean_dist.png" alt="install_QNEAT3" width="30%">
+      <img src="imgs/network/formula_euclidean_dist.png" alt="euclidean_formula" width="30%">
   </figure>
 </div>
 
 <div align="center">
   <figure>
-      <img src="imgs/network/Euclidean_distance_2d_image.svg" alt="install_QNEAT3" width="50%">
+      <img src="imgs/network/Euclidean_distance_2d_image.svg" alt="euclidean_diagram" width="50%">
+  </figure>
 </div>
 
-<xL>Always check the CRS.</xL> If the layer uses a geographic CRS, distances will be measured in **degrees, not meters**.
+<xL>Always check the CRS.</xL> If the layer uses a geographic CRS, distances will be measured in degrees rather than meters.
 
 ---
 
@@ -124,14 +161,8 @@ name: dist
 Data:
 
 1. Hawker centre dataset
-
-2. MRT stations (Including LRT as well)
-
-3. Tampines Planning Boundary
-
---
-
-<xL>Given that we are only focusing on Tampines area? Should we crop out the data that outside the Tampines area?</xL>
+2. MRT stations, including LRT
+3. Tampines planning boundary
 
 ---
 
@@ -143,63 +174,31 @@ Data:
 
 ### Edge Effect
 
-Distortions or inaccuracies that occur at the boundaries of your study area when performing spatial or network analyses.
+Boundary effects can distort spatial or network analysis.
 
-**How to Manage Edge Effects?**
+To manage edge effects:
 
-1. Buffer Your Study Area:
-
-  Instead of cropping exactly to the Tampines boundary, <u>create a buffer</u> (in this case, we choose a buffer size of 1000 metre) around it.
-
-2. Interpret Results Carefully:
-
-  Be cautious when interpreting results near the boundary. Highlight in your report or map legend that edge effects may influence these areas.
-
-3. Document Your Method:
-
-  Always state in your methodology <u>how you handled the edge effect</u> (e.g., “A 1 km buffer was applied to the Tampines boundary to minimise edge effects in the analysis”).
+1. buffer the study area
+2. interpret boundary results carefully
+3. state the handling method clearly in the workflow
 
 ---
 
 ### Euclidean Distance: Practice
-
-<xL>What is the spatial accessibility of hawker centres relative to MRT stations in Tampines?</xL>
 
 .right_half[
   <figure>
     <img src="imgs/network/calculation_euclidean_dist.png" class="zoomable" width="100%">
-    <figcaption>The Euclidean distance calculation tool of QGIS.</figcaption>
+    <figcaption>Example Euclidean distance calculation workflow.</figcaption>
   </figure>
 ]
 
-- **Distance-based solution:** How close is the nearest hawker centre?
-
-- **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
-
----
-
-### Euclidean Distance: Practice
-
-<xL>What is the spatial accessibility of hawker centres relative to MRT stations in Tampines?</xL>
-
-.right_half[
-  <figure>
-    <img src="imgs/network/euclidean_distance_calculation.png" class="zoomable" width="100%">
-    <figcaption>The Euclidean distance calculated output table of QGIS.</figcaption>
-  </figure>
-]
-
-- **Distance-based solution:** How close is the nearest hawker centre?
-
-- **Buffer-based solution:** How many hawker centres are accessible within a certain radius?
-
---
-
-<xL>Depending on how you approach the research question, you can even aggregate distance-based and buffer-based solutions to have a more comprehensive evaluation.</xL>
+- **Distance-based question:** how close is the nearest hawker centre?
+- **Buffer-based question:** how many hawker centres are accessible within a chosen radius?
 
 ---
 
-### Composite Accessibility index
+### Composite Accessibility Index
 
 <div align="center">
   <figure>
@@ -207,80 +206,97 @@ Distortions or inaccuracies that occur at the boundaries of your study area when
   </figure>
 </div>
 
-two metrics per station:
+Two metrics per station:
 
-1. sd(i): Nearest distance to a hawker centre (inverted so smaller distance → higher score).
+1. `sd(i)`: nearest distance to a hawker centre
+2. `sc(i)`: hawker count within a fixed walking radius
 
-2. sc(i): Hawker count within a fixed walking radius (e.g., 500 m; larger is better).
+Weights allow both indicators to contribute to one accessibility score.
 
-Assign weights:
-
-1. w_d​ = weight for distance score (e.g., 0.5)
-
-2. w_c​ = weight for count score (e.g., 0.5)
-
-<xL>Based on the Composite Accessibility Index (CAI), which MRT stations have the lowest hawker centre accessibility, and how can this inform future hawker centre allocation?</xL>
+<xL>Which MRT stations have the lowest hawker-centre accessibility, and how can this inform future allocation?</xL>
 
 ---
 
-### Using Network Distance to improve the accuracy
+### Why Use Network Distance?
 
-<xL>Using `Tampines planning area` as an example, extract the road network data using the QuickOSM plyugin of QGIS.</xL>
+Straight-line measurement usually underestimates real travel effort.
 
-Be aware of the **Edge Effect**:
+Urban accessibility is shaped by:
+
+- street layout
+- barriers and detours
+- one-way rules
+- travel-cost assumptions such as time instead of distance
+
+---
+
+### From Study Area to Street Graph
+
+<xL>Using Tampines as an example, we can buffer the study area, download roads, and turn them into a graph for routing and accessibility analysis.</xL>
 
 <div align="center">
   <figure>
       <img src="imgs/network/buffer_enquiry.png" alt="buffer2data" width="100%">
-      <figcaption>Download street network data after buffer the boundary geometry of place name.</figcaption>
+      <figcaption>Download street-network data after buffering the study area.</figcaption>
       <figsubcaption>Source: https://arxiv.org/pdf/1611.01890</figsubcaption>
   </figure>
 </div>
 
 ---
 
-Prepare a network layer by downloading OSM roads using Quick OSM plugin -> Quick Query:
+## From OSM Roads to a Python Graph
 
-1. Key: `highway`  *(This is the OSM tag for roads.)*
+Typical workflow:
 
-2.  Value: Leave blank to get all roads.
-
-3.  Layer Extent: *Choose the Buffered Tampines Boundary layer*
-
-4.  **Keep the Geometry type:** `Line`.
-
-QuickOSM will download the data and add it as a new layer in your QGIS project.
+1. define the study area and handle edge effects
+2. download a street network from OpenStreetMap with OSMnx
+3. inspect node and edge attributes
+4. simplify or filter the network if needed
+5. calculate shortest paths or accessibility with NetworkX
 
 ---
 
 ### Network Data Cleaning
 
-OSM data includes many attributes (tags such as name, surface, lanes, maxspeed, etc.), which can make the dataset quite bulky. Keeping only the relevant fields helps to:
+OSM data often includes many attributes such as name, surface, lanes, and speed. Keeping only relevant fields helps to:
 
-1. Reduces file size
-
-2. Speeds up processing
-
-3. Makes attribute tables cleaner
+1. reduce file size
+2. speed up processing
+3. simplify interpretation
 
 .right_half[
   <figure>
     <img src="imgs/network/reduce_network_size.png" width="100%">
-    <figcaption>A significant size reduction after reduce the unneccesary fields.</figcaption>
+    <figcaption>Reducing unnecessary fields can make network processing more efficient.</figcaption>
   </figure>
 ]
 
-Let's keep the four fields:
+Useful fields often include:
 
-1. highway (road type)
+1. `highway`
+2. `oneway`
+3. `maxspeed`
+4. `lanes`
+5. OSM ID
 
-2. oneway (for directionality)
+---
 
-3. maxspeed (if available, for time-based cost)
+## Typical Python Workflow Snippet
 
-4. lanes (capacity?)
+```python
+import osmnx as ox
+import networkx as nx
 
-You should also keep the OSM ID (usually osm_id) when exporting or cleaning your road data.
+place = "Tampines, Singapore"
+graph = ox.graph_from_place(place, network_type="walk")
+
+origin = ox.distance.nearest_nodes(graph, X=103.953, Y=1.353)
+destination = ox.distance.nearest_nodes(graph, X=103.940, Y=1.354)
+
+route = nx.shortest_path(graph, origin, destination, weight="length")
+```
+
+The key idea is that the street system becomes a graph and routing becomes a shortest-path problem.
 
 ---
 
@@ -288,35 +304,38 @@ You should also keep the OSM ID (usually osm_id) when exporting or cleaning your
 
 From `Tampines MRT` to `The Hawker Centre @ Our Tampines Hub`
 
-Red line: Straight-Line Route
+Red line: straight-line route
 
-Blue line: Network Route
+Blue line: network route
 
 <div align="center">
   <figure>
       <img src="imgs/network/network_distance_example.png" class="zoomable" width="100%">
+  </figure>
 </div>
 
 ---
 
-### Network Distance: Practice
+### Origin-Destination Matrix
 
-To calculate distances from each MRT station to each hawker centre in Tampines
+To calculate distances from each MRT station to each hawker centre in Tampines:
 
 <div align="center">
   <figure>
       <img src="imgs/network/m2n_networkdist_matrix.png" class="zoomable" width="50%">
+  </figure>
 </div>
 
 ---
 
-### Network Distance: Compared with Euclidean Distance
+### Euclidean vs Network Distance
 
-The Euclidean (straight-line) distance almost always underestimates the real-world (network) distance, and the size of this underestimation—the “distance decay” or “detour index”—can vary significantly from one point pair to another.
+The Euclidean distance almost always underestimates real-world network distance, and the gap varies across point pairs.
 
 <div align="center">
   <figure>
       <img src="imgs/network/measurement_in_difference.png" class="zoomable" width="50%">
+  </figure>
 </div>
 
 ---
@@ -332,39 +351,35 @@ name: topo
 
 ## Topological Measurements
 
-### Definition
+Topological measurements describe the structure, connectivity, and efficiency of a network based on how nodes and edges are arranged.
 
-Topological measurements are **quantitative metrics** used to describe the structure, connectivity, and properties of a network (such as a road network, social network, or utility grid) based solely on how nodes (points) and edges (connections) are arranged—regardless of their physical distances or geographic positions.
+They help us understand:
 
-These measurements help us understand:
-
-1. How well connected the network is
-
-2. Which nodes or links are most important
-
-3. The efficiency and robustness of the network
+1. how well connected the network is
+2. which nodes or links are most important
+3. how movement and vulnerability are distributed
 
 ---
 
 ## Main Topological Measurements of a Network
 
-### Density (Global)
+### Density
 
-- Definition: The ratio of actual connections to all possible connections in the network.
-
-- Interpretation: Higher density means a more interconnected network.
+- Definition: the ratio of actual connections to all possible connections
+- Interpretation: higher density suggests more alternative routes
 
 <div align="center">
   <figure>
       <img src="imgs/network/network_density_calculation.png" width="50%">
       <figsubcaption>Source: https://www.numberanalytics.com/blog/mastering-network-density-in-social-network-analysis</figsubcaption>
+  </figure>
 </div>
 
-| Density Range | Interpretation                              |
-|---------------|---------------------------------------------|
-| 0 - 0.3       | Low density, sparse |
-| 0.3 - 0.6     | Moderate density, relatively connected |
-| 0.6 - 1     | High density, highly connected |
+| Density Range | Interpretation |
+|---|---|
+| 0 - 0.3 | Low density, sparse |
+| 0.3 - 0.6 | Moderate density |
+| 0.6 - 1 | High density |
 
 ---
 
@@ -378,46 +393,46 @@ These measurements help us understand:
   </figure>
 ]
 
-### Connectivity (Beta Index, Global)
+### Connectivity (Beta Index)
 
-- Definition: It expresses the average number of links (edges) per node (vertex) in a network.
-
-- Interpretation: Indicates the average number of links per node. Values above 1 suggest a more connected network.
+- Definition: average number of links per node
+- Interpretation: values above 1 usually indicate a better connected network
 
 <div align="center">
   <figure>
       <img src="imgs/network/beta_index_formula.png" width="40%">
+  </figure>
 </div>
 
 ---
 
 ## Main Topological Measurements of a Network
 
-### Average Path Length (Global)
+### Average Path Length
 
-- Definition: The mean lengths between the shortest paths of all pairs of vertices in the network.
-
-- Interpretation: Indicates the overall efficiency of movement in the network.
+- Definition: mean shortest-path length between all node pairs
+- Interpretation: lower values suggest more efficient movement
 
 <div align="center">
   <figure>
       <img src="imgs/network/avg_path_len.png" width="70%">
       <figsubcaption>Source: https://rpubs.com/odenipinedo/network-analysis-in-R</figsubcaption>
+  </figure>
 </div>
 
 ---
 
 ## Main Topological Measurements of a Network
 
-### Node Degree (Local)
+### Node Degree
 
-- Definition: It quantifies the number of direct connections, or edges, a node (vertex) has within a graph or network. It is the number of edges attached to a node.
-
-- Interpretation: High-degree nodes are major junctions or hubs; low-degree nodes are dead-ends or simple intersections.
+- Definition: number of edges attached to a node
+- Interpretation: high-degree nodes often act as local hubs or major junctions
 
 <div align="center">
   <figure>
       <img src="imgs/network/node_degree.png" width="90%">
+  </figure>
 </div>
 
 ---
@@ -425,17 +440,16 @@ These measurements help us understand:
 .right_half[
   <figure>
     <img src="imgs/network/closeness_centrality.png" width="100%">
-    <figsubcaption>Source: https://www.jsums.edu/nmeghanathan/files/2015/08/CSC641-Fall2015-Module-2-Centrality-Measures.pdf.</figsubcaption>
+    <figsubcaption>Source: https://www.jsums.edu/nmeghanathan/files/2015/08/CSC641-Fall2015-Module-2-Centrality-Measures.pdf</figsubcaption>
   </figure>
 ]
 
 ## Main Topological Measurements of a Network
 
-### Closeness Centrality (Local)
+### Closeness Centrality
 
-- Definition: The inverse of the sum of the shortest path distances from a node to all other nodes.
-
-- Interpretation: Nodes with high closeness are centrally located and can reach all others quickly.
+- Definition: inverse of the total shortest-path distance from one node to all others
+- Interpretation: high closeness suggests strong accessibility
 
 <div align="center">
   <figure>
@@ -443,16 +457,14 @@ These measurements help us understand:
   </figure>
 </div>
 
-
 ---
 
 ## Main Topological Measurements of a Network
 
-### Betweenness Centrality (Local)
+### Betweenness Centrality
 
-- Definition: The number of shortest paths that pass through a node or edge.
-
-- Interpretation: Nodes/edges with high betweenness are critical for movement and act as “bridges” or bottlenecks.
+- Definition: number of shortest paths that pass through a node or edge
+- Interpretation: high betweenness often marks bridges or bottlenecks
 
 <div align="center">
   <figure>
@@ -463,91 +475,68 @@ These measurements help us understand:
 
 ---
 
-| **Measure**                   | **What It Describes**                                                            | **What It Tells You**                                                                 |
-| ----------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **Density**                   | How full the network is compared with the maximum number of links it could have. | Shows **how connected the network is**. A dense network has many alternative routes.      |
-| === | ===  | === |
-| **Connectivity (Beta Index)** | The ratio of edges to nodes. | Indicates general network connectedness. Higher values show **more links for each node**. |
-| === | ===  | === |
-| **Average Path Length**       | The average number of steps needed to travel between all pairs of nodes.         | Reflects network efficiency. Lower values mean **shorter, more direct routes**.           |
-| === | ===  | === |
-| **Node Degree**               | The number of edges linked to a node.                                            | Highlights local importance. High-degree nodes act as **local hubs**.                     |
-| === | ===  | === |
-| **Closeness Centrality**      | How close a node is to all other nodes.                                          | Measures **accessibility**. High values mean a node can reach others with few steps.      |
-| === | ===  | === |
-| **Betweenness Centrality**    | How often a node lies on shortest paths between other nodes.                    | Shows control over flow. High-betweenness nodes act as **bridges or bottlenecks**.        |
+| **Measure** | **What It Describes** | **What It Tells You** |
+|---|---|---|
+| **Density** | How full the network is compared with its maximum possible links. | Shows general connectedness and route redundancy. |
+| **Connectivity (Beta Index)** | The ratio of edges to nodes. | Indicates overall connectedness. |
+| **Average Path Length** | Average number of steps between all pairs of nodes. | Reflects efficiency. |
+| **Node Degree** | Number of edges linked to a node. | Highlights local hubs. |
+| **Closeness Centrality** | How close a node is to all others. | Measures accessibility. |
+| **Betweenness Centrality** | How often a node lies on shortest paths. | Shows bridge or bottleneck roles. |
 
 ---
 
 | Measure | Example Research Question |
-| ----------------------------- | -------------------------------------------------------------------------------- |
-| **Density**                   | How does street-network density vary across neighbourhoods, and how does this variation relate to differences in walking rates? |
-| === | ===  |
-| **Connectivity (Beta Index)** | How does the beta index of local street networks influence route choice for short urban trips? |
-| === | ===  |
-| **Average Path Length**       | How does the average path length of a city’s street network affect travel times between key public facilities?         |
-| === | ===  |
-| **Node Degree**               | How do high-degree junctions shape traffic flow and local congestion patterns in dense urban areas? |
-| === | ===  |
-| **Closeness Centrality**      | How does the closeness centrality of street junctions relate to access to shops, parks, and public transport stops? |
-| === | ===  |
-| **Betweenness Centrality**    | How do nodes with high betweenness centrality contribute to bottlenecks and vulnerability in the urban street network? |
+|---|---|
+| **Density** | How does street-network density vary across neighbourhoods, and how does this relate to walking rates? |
+| **Connectivity (Beta Index)** | How does local connectivity influence route choice for short urban trips? |
+| **Average Path Length** | How does average path length affect travel time between public facilities? |
+| **Node Degree** | How do high-degree junctions shape traffic flow and congestion? |
+| **Closeness Centrality** | How does centrality relate to access to shops, parks, and transit? |
+| **Betweenness Centrality** | Which streets or junctions operate as bottlenecks in the network? |
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/network/available_tools_in_QGIS.png
-" width="50%">
-  </figure>
-]
+## Network Metrics in Python
 
-### Network Topological Measuring Tools in QGIS
+With NetworkX, these measures can be computed directly in code.
 
-There are multiple tools provided by GRASS built into QGIS
+```python
+degree_dict = dict(graph.degree())
+closeness = nx.closeness_centrality(graph)
+betweenness = nx.betweenness_centrality(graph, weight="length")
+```
 
-| **Tool**              | **Description**                                                             |
-|-----------------------|-------------------------------------------------------------------------------|
-| `d.path`              | Finds shortest path for selected starting and ending node.                   |
-| `v.net.alloc`         | Allocates subnets for nearest centres.                                       |
-| `v.net.centrality`    | Computes degree, centrality, betweenness, closeness and eigenvector metrics. |
-| `v.net.connectivity`  | Computes vertex connectivity between two sets of nodes in the network.       |
-
-**You may refer https://grass.osgeo.org/grass-stable/manuals/topic_network.html for more detailed instructions for more tools**
+This makes it easier to compare areas, export results, and rerun the same workflow consistently.
 
 ---
 
-### Addition: How to get a clean network
+## How to Get a Clean Network
 
 .right_half[
   <figure>
-    <img src="imgs/network/different_types_network.jpg
-" class="zoomable" width="100%">
-    <figcaption>A fully connected vs. an unconnected graph.</figcaption>
+    <img src="imgs/network/different_types_network.jpg" class="zoomable" width="100%">
+    <figcaption>A fully connected versus an unconnected graph.</figcaption>
     <figsubcaption>Source: walkenho.github.io/graph-theory-and-networkX-part2/</figsubcaption>
   </figure>
 ]
 
-Network analysis has relatively high requirements for data quality.
+Network analysis has relatively high data-quality requirements.
 
-1. Not snapped at intersections or minor gaps between roads might cause fail or unrealistic paths.
-
-2. Shortest network time requires more detailed informtion on fields like oneway, maxspeed, and length.
-
-3. Disconnected subgraphs make some hubs **unreachable**
+1. roads not snapped at intersections may create unrealistic routes
+2. travel-time analysis needs usable attributes such as `oneway`, `maxspeed`, and `length`
+3. disconnected components make some destinations unreachable
 
 ---
 
 ### Further Cleaning: Understand OSM Roads
 
-OSM splits a road into separate “ways” (line features) <u>whenever any attribute (tag) changes</u>. 
-
-For example, if the road surface changes from asphalt to gravel, or the speed limit, number of lanes, lighting, or even the name changes, a new segment is created at that point.
+OSM splits roads into separate ways whenever a relevant attribute changes.
 
 <div align="center">
   <figure>
       <img src="imgs/network/broken_rd_segs.gif" alt="OSM_Roads" width="30%">
-      <figcaption>Segmented OSM Roads.</figcaption>
+      <figcaption>Segmented OSM roads.</figcaption>
   </figure>
 </div>
 
@@ -555,110 +544,59 @@ For example, if the road surface changes from asphalt to gravel, or the speed li
 
 .right_half[
   <figure>
-    <img src="imgs/network/vclean_topolpgychecker.png
-" class="zoomable" width="100%">
-    <figcaption>v.clean tool interface.</figcaption>
+    <img src="imgs/network/vclean_topolpgychecker.png" class="zoomable" width="100%">
+    <figcaption>Topology checking still matters even if the final analysis is coded in Python.</figcaption>
     <figsubcaption>Source: https://grass.osgeo.org/grass-stable/manuals/v.clean.html</figsubcaption>
   </figure>
 ]
 
-### v.clean: Toolset for cleaning topology
+## Why Cleaning Still Matters in Python
 
-v.clean is a GRASS GIS tool designed to clean and correct vector data, especially line such as road networks.
+You still need to check:
 
-It helps ensure your data is topologically correct—meaning <u>all lines connect properly, there are no unwanted overlaps, gaps, or duplicates, and the geometry is suitable</u> for network analysis.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/network/break_comparison.gif
-" width="40%">
-    <figcaption>Comparison of before and after using the break function.</figcaption>
-  </figure>
-]
-
-### v.clean: Toolset for cleaning topology
-
-You can apply one or more of these common cleaning operations in sequence:
-
-| Function | What it does                       | Typical Use Case                 |
-| -------- | ---------------------------------- | -------------------------------- |
-| break    | Splits lines at intersections      | Ensuring all roads connect       |
-| snap     | Connects nearly-touching endpoints | Fixing small misalignments       |
-| rmdupl   | Removes duplicate lines            | Cleaning up overlapping features |
-| rmdangle | Removes small, unconnected stubs   | Removing accidental “tails”      |
-| prune    | Removes small bends/spikes         | Smoothing geometry               |
-
-Cleaning OSM roads is not always mandatory. It depends on your research questions and the intended analysis. 
-
-The choice of cleaning functions should be tailored to your specific needs.
+- whether roads connect at intersections
+- whether directionality is encoded correctly
+- whether travel-cost attributes are interpretable
+- whether the graph is one connected system or multiple components
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/network/cleaning_process.gif" width="100%">
-  </figure>
-]
+name: workflow
 
-### Workflow to get a clean typological network
+## Tutorial Workflow
 
-1. Dissolve all lines into a single multipart geometry
-(Vector → Geoprocessing Tools → Dissolve, no dissolve field)
-
-2. v.clean → break
-(Splits at intersections to produce true nodes)
-
-3. Continue with v.net.* tools.
-
-<xL>It will lose the attributes. If you wish to maintain the attributes, it requires extra cleanning process.</xL>
-
-Use `v.to.points` to generate nodes.
+1. define a study area and consider edge effects
+2. download or prepare a street network
+3. inspect node and edge attributes
+4. build a graph and check connectivity
+5. calculate routes, matrices, or accessibility
+6. compute topology metrics such as degree, closeness, and betweenness
+7. interpret results against an urban question
 
 ---
 
-.right_half[
-  <figure>
-      <img src="imgs/network/social_network_analysis_example.png" alt="Singapore Biographical Database" class="zoomable" width="90%">
-      <figcaption>Community Identification through social network analysis.</figcaption>
-      <figsubcaption>Source: https://www.social-life.co/media/files/PrioryCourt_Final.pdf.</figsubcaption>
-  </figure>
-]
+## Reading Material
 
-## Social Network Analysis - Community Identification
+- OSMnx documentation: https://osmnx.readthedocs.io/
+- NetworkX documentation: https://networkx.org/
+- Boeing, G. (2017). OSMnx: New methods for acquiring, constructing, analyzing, and visualizing complex street networks.
+- Additional urban accessibility and graph-analysis readings used in class discussion
 
 ---
 
-## Social Network Analysis - Family Tree
+## Key Takeaways
 
-Data Source: https://github.com/chsshgis/Singapore-Biographical-Database
-
-<div align="center">
-  <figure>
-      <img src="imgs/network/sg_bio_database.gif" alt="Singapore Biographical Database" width="50%">
-      <figcaption>Interactive visualisation of Singapore's biographical data.</figcaption>
-      <figsubcaption>Source: https://sbdb.nus.edu.sg/Network20Selected/index.html.</figsubcaption>
-  </figure>
-</div>
+- Python network analysis treats urban systems as graphs of nodes and edges.
+- Network distance is more realistic than Euclidean distance for many accessibility questions.
+- OSMnx and NetworkX support reproducible routing, accessibility, and topology workflows.
+- Topological metrics help identify hubs, bottlenecks, and efficient or vulnerable structures.
+- Clean network data remains essential even in a fully coded workflow.
 
 ---
 
-## Bibliometric Network Analysis
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='cvurban.html'">Go to Computer Vision and Urban Case Study</button>
 
-<div align="center">
-  <figure>
-      <img src="imgs/network/co-keyword_network_analysis.png" alt="Singapore Biographical Database" class="zoomable" width="80%">
-      <figcaption>Co-keyword network visualization on smart cities research. Note: (a) co-keyword network visualization was based on occurrences; (b) co-keyword overlay visualization was based on the occurrences and average publication per year scores.</figcaption>
-      <figsubcaption>Source: https://doi.org/10.3390/su11133606.</figsubcaption>
-  </figure>
-</div>
-
----
-
-## Practice: Topological Measurement Analysis
-
-<xL>Could you give a comprehensive assessment on the network connectivity and efficiency on public transportation network of Singapore?</xL>
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
 </textarea>
     <script src="src/template.js"></script>

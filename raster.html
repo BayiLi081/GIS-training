@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Raster Data Analysis in GIS</title>
+    <title>Lecture and Tutorial: Spatial Analysis of Raster Data</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -21,57 +21,77 @@ class: center
 # Spatial Analysis of Urban Data
 
 ## Lecture: Raster Data Analysis in GIS
-
+## Lecture and Tutorial: Spatial Analysis of Raster Data
 [Bayi Li](mailto:barryli081@gmail.com)
 
 <br>
-<button onclick="window.location.href='index.html'">Go Back to Menu</button>
-
+.toc-wrapper[
+  <div class="toc">
+    <a href="#week8-focus" class="toc-item">Week 8 Focus</a>
+    <a href="#raster-general" class="toc-item">Raster Concepts</a>
+    <a href="#operations" class="toc-item">Raster Operations</a>
+    <a href="#example-analysis" class="toc-item">Applied Examples</a>
+  </div>
+]
 ---
 
 ## Raster Data
-
+name: week8-focus
 - [Raster Data Model](#raster-general)
+## Week 8 Focus
 
-- [Single-band Raster](#single-band-raster)
+This lecture introduces raster data as a major model for representing continuous spatial phenomena and remote sensing imagery.
 
-- [Multi-band Raster](#multi-band-raster)
+- understand when raster is more suitable than vector
+- distinguish between continuous, categorical, single-band, and multi-band rasters
+- learn the logic of clipping, reclassification, overlay, and zonal statistics
+- connect raster analysis to urban environmental and remote sensing questions
 
-- [Spatial Analysis of Raster Data](#sa-raster)
+---
 
-- [Examples of Raster Data Analysis](#example-analysis)
+## Learning Objectives
 
+By the end of this session, students should be able to:
+
+1. explain how raster data represents space as a grid of cells
+2. distinguish between common raster types and sources
+3. interpret raster bands, cell values, extent, and resolution
+4. describe core raster operations used in GIS and remote sensing
+5. apply raster analysis concepts to urban questions such as vegetation, temperature, and urban growth
+
+---
+
+## Lecture Outline
+
+1. Raster data model and raster types
+2. Bands, resolution, and interpretation
+3. Core raster operations in GIS
+4. Remote sensing indices and urban applications
+5. Tutorial workflow in QGIS and Python
 ---
 
 name: raster-general
 
 .right_half[
+.right_half[
+  <figure>
+    <img src="imgs/vector_n_raster_presentation.png" width="100%">
+    <figcaption>Raster and vector represent space differently and suit different kinds of phenomena.</figcaption>
+    <figsubcaption>Source: https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+  </figure>
+]
+
   <figure>
     <img src="imgs/vector_n_raster_presentation.png" width="100%">
     <figcaption>Raster and vector representation of real world entities.</figcaption>
     <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
-  </figure>
-]
 
-## Raster Data Model
+Urban features such as buildings, parcels, roads, parks, and zones often have clearly defined boundaries, making vector data more appropriate for those discrete elements.
 
-Raster represents geographic phenomena as a **continuous grid of cells with values**
-
---
-
-Urban features such as buildings, parcels, roads, parks, and zones have **clearly defined boundaries**, making vector data more appropriate for representing these discrete elements. 
-
-Conversely, raster data is better suited for modeling continuous surfaces.
-
---
-
-<xL>Can you think some themes that are more suitable for the raster data model?</xL>
+Raster is more appropriate when the phenomenon is continuous, gridded, image-based, or measured repeatedly across space.
 
 ---
-
-## Raster Data Model
-
-These themes involve **continuous surfaces or grid-based measurements**, which raster handles better than vector:
+]
 
 | | Elevation and Terrain | | Climate and Weather | | Remote Sensing Imagery | | Soil and Geology |
 |-|-----|-|-----|-|-----|-|-----|
@@ -218,7 +238,7 @@ You can click on any pixel to view its value.
 
 ---
 
-name: sa-raster
+name: operations
 
 ## Spatial Analysis of Raster Data
 
@@ -378,6 +398,20 @@ ExtractByAttributes(Slope(“emidalat”, “DEGREE”), “Value < 20”)
 
 ---
 
+## Why Raster Analysis Matters in Urban Studies
+
+Raster workflows are especially useful when the question concerns:
+
+- land surface temperature
+- vegetation condition
+- elevation and slope
+- broad environmental exposure surfaces
+- repeated satellite observations through time
+
+Raster analysis is central whenever the phenomenon is measured continuously or captured through imagery.
+
+---
+
 ### Landsat series
 
 The Landsat series is a long-running program of Earth observation satellites jointly managed by NASA and the U.S. Geological Survey (USGS). It’s one of the most important sources of continuous, high-resolution imagery of the Earth’s land surface, used for environmental monitoring, resource management, and scientific research.
@@ -414,7 +448,7 @@ In **Landsat 8-9 Operational Land Imager (OLI) and Thermal Infrared Sensor (TIRS
 
 name: example-analysis
 
-### Application of raster analysis
+## Application of Raster Analysis
 
 #### Calculate NDVI (Normalized Difference Vegetation Index)
 
@@ -520,6 +554,18 @@ Zonal Statistics
 
 ---
 
+## Urban Environmental Example: Land Surface Temperature
+
+Land Surface Temperature (LST) is a strong example of why raster matters in urban studies.
+
+- it varies continuously across space
+- it can be derived from thermal remote sensing
+- it supports questions about urban heat, vegetation, and built form
+
+Raster analysis allows these values to be clipped, reclassified, summarised by zones, and compared through time.
+
+---
+
 <div align="center">
   <figure>
       <img src="imgs/raster/extension_ndvi_analysis.png" alt="zonal_statistics_lst_singapore" width="100%">
@@ -610,17 +656,38 @@ For those already familiar with Python, this package simplifies working with GEE
 
 ---
 
-## Reading materials
+## Tutorial Workflow
+
+For week 8, a practical raster workflow is:
+
+1. inspect raster extent, CRS, resolution, and band structure
+2. choose suitable symbology to understand the values visually
+3. clip or mask the raster to the study area
+4. run a basic transformation such as reclassification or index calculation
+5. summarise the result with zonal statistics or visual comparison
+6. document the assumptions behind resolution, CRS, and thresholds
+
+---
+
+## Reading Materials
 
 - Kang-tsung Chang and Carl M. Chang (2019),  Introduction to Geographic Information Systems, 9th Edition, Chapter 12
 
-- Geospatial Analysis 7th Edition, 2024 - de Smith, Goodchild, Longley et al. https://spatialanalysisonline.com/HTML/index.html?introduction_and_terminology.htm 
-
 <br>
 
---
+## Key Takeaways
 
-<xL>Continue with Tutorial: </xL><button onclick="window.location.href='raster_tutorial.html'">Go to Tutorial of Raster Data Analysis</button>
+- Raster data represents space as a grid of cells and is especially useful for continuous surfaces and imagery.
+- Resolution, extent, band structure, and CRS strongly affect raster interpretation.
+- Core raster operations include clipping, reclassification, overlay, map algebra, and zonal statistics.
+- Remote sensing indices such as NDVI and datasets such as LST and nighttime lights are highly relevant to urban analysis.
+- Raster analysis becomes most powerful when students connect technical operations to environmental and urban questions.
+
+---
+
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='spdeng.html'">Go to Spatial Data Integration and Feature Engineering</button>
+
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
 </textarea>
     <script src="src/template.js"></script>

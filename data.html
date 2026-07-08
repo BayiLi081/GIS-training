@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-        <title>II: Data</title>
+  <title>Lecture and Tutorial: Urban Data Sources and Open Data in Singapore</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -18,23 +18,97 @@ class: center
 
 <br>
 
-# Section II: Data Acquiring and Processing
+# Spatial Analysis of Urban Data
 
-## Data Acquiring, Processing and Visualisation with Python
+## Lecture and Tutorial: Urban Data Sources and Open Data in Singapore
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
 .toc-wrapper[
   <div class="toc">
-    <a href="./py-bootcamp.html#3" class="toc-item">Section I: Introduction to Python</a>
-    <a href="data.html#2" class="toc-item">Section II: Data Acquiring and Processing</a>
-    <a href="sdp.html#2" class="toc-item">Section III: Spatial Data Processing</a>
+    <a href="#week2-focus" class="toc-item">Week 2 Focus</a>
+    <a href="#sources" class="toc-item">Main Data Sources</a>
+    <a href="#access" class="toc-item">Access and Data Formats</a>
+    <a href="#workflow" class="toc-item">Tutorial Workflow</a>
   </div>
 ]
 
 ---
 
-name: api
+name: week2-focus
+
+## Week 2 Focus
+
+This lecture introduces where urban spatial data comes from, how open data systems work in Singapore, and how students should evaluate data before analysis.
+
+- identify major urban data sources in Singapore
+- distinguish between downloadable datasets, APIs, and geospatial web services
+- understand the strengths and limits of open data for urban studies
+- prepare for later weeks in Python, QGIS, and spatial analysis
+
+---
+
+## Learning Objectives
+
+By the end of this session, students should be able to:
+
+1. describe the main categories of urban data used in GIS and urban analysis
+2. identify key open data platforms in Singapore, especially OneMap and data.gov.sg
+3. explain the difference between static downloads, APIs, and geocoding services
+4. assess whether a dataset is suitable for a particular research question
+5. follow a basic workflow for discovering, accessing, and documenting urban data
+
+---
+
+## Lecture Outline
+
+1. Why urban data sources matter
+2. Main open data portals and geospatial services in Singapore
+3. Common data formats for urban analysis
+4. Practical issues: metadata, access limits, and responsible use
+5. Tutorial workflow for discovering and retrieving data
+
+---
+
+## Why Urban Data Sources Matter
+
+Urban analysis is shaped by the data that is available.
+
+- Data sources determine what questions can be asked
+- Data quality affects how results should be interpreted
+- Data format affects how much cleaning and transformation is needed
+- Data governance affects what can be shared, reproduced, or published
+
+Before analysis begins, students need to know not only how to map data, but where the data comes from and what it can support.
+
+---
+
+name: sources
+
+## Main Categories of Urban Data
+
+Urban GIS commonly works with several broad sources of data:
+
+- government open data portals
+- official basemaps and geospatial services
+- survey and census-style administrative data
+- transport, land use, and built-environment datasets
+- environmental and remote sensing data
+- volunteered or platform-generated data
+
+Each source comes with different levels of resolution, coverage, update frequency, and reliability.
+
+---
+
+## Key Open Data Platforms in Singapore
+
+- **OneMap**: authoritative national map services and geospatial APIs
+- **data.gov.sg**: national open data portal covering many sectors
+- **Singapore Department and Agency portals**: thematic datasets, reports, and dashboards
+
+These are often used together rather than separately.
+
+---
 
 .right_half[
   <figure>
@@ -43,27 +117,71 @@ name: api
   <figcaption>https://www.onemap.gov.sg/apidocs/</figcaption>
 ]
 
-## Data Acquiring
+## OneMap
 
-API (Application Programming Interface)
+OneMap is the authoritative national map of Singapore developed by the Singapore Land Authority (SLA).
 
+It provides:
+
+- geospatial basemaps
+- address search and geocoding
+- nearby service queries
+- routing and location-based services
+- APIs for programmatic access
 
   <figure>
     <img src="imgs/how-a-web-api-works.jpg" width="45%">
     <figcaption>Source: https://www.akamai.com/glossary/how-do-apis-work</figcaption>
   </figure>
 
-### OneMap API call
+---
 
-OneMap is the authoritative national map of Singapore developed by the Singapore Land Authority (SLA).
+## data.gov.sg
 
-It provides a wide array of location-based information, geospatial services, and APIs.
+.right_half[
+  <figure>
+    <img src="imgs/data_gov_sg/csv_data.jpg" class="zoomable" width="100%">
+  </figure>
+]
+
+data.gov.sg is the national open data portal.
+
+It is useful for:
+
+- population and socio-economic statistics
+- transport and mobility records
+- environmental monitoring
+- housing and planning-related datasets
+- tabular datasets that can later be joined to spatial boundaries
+
+For urban analysis, this portal is often the starting point for non-spatial attributes.
 
 ---
 
-### Data.gov.sg API calculations
+## Other Useful Urban Data Sources
 
-step 1: <xL>https://guide.data.gov.sg/developer-guide/api-overview/how-to-request-an-api-key</xL>
+- census and statistical publications
+- planning and land-use resources from relevant agencies
+- remote sensing imagery from open international programs
+- OpenStreetMap for volunteered geographic information
+- academic or civic datasets released through project websites
+
+Students should always ask whether a dataset is official, derived, crowdsourced, or modelled.
+
+---
+
+name: access
+
+## Ways to Access Urban Data
+
+There are three common access patterns:
+
+1. **Direct download**: CSV, GeoJSON, Shapefile, GeoPackage, raster files
+2. **API request**: programmatic query through a URL and parameters
+3. **Web service**: interactive or tiled map service consumed by GIS software
+
+Different access methods support different workflows.
+
 ---
 
 ### OneMap API call
@@ -89,6 +207,24 @@ print(response.text)
 ```
 
 Open [2-01_data_acquiring.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-01_data_acquiring.ipynb) with Google Colab.
+
+---
+
+## Data.gov.sg API call
+
+step 1: <xL>https://guide.data.gov.sg/developer-guide/api-overview/how-to-request-an-api-key</xL>
+
+```python
+import requests
+
+dataset_id = "d_8b84c4ee58e3cfc0ece0d773c8ca6abc"
+url = "https://data.gov.sg/api/action/datastore_search?resource_id=" + dataset_id
+
+response = requests.get(url)
+print(response.json())
+```
+
+This is useful when a dataset is updated regularly and you want a reproducible way to retrieve it.
 
 ---
 
@@ -122,7 +258,7 @@ You must treat it like a password.
 
 ### Geocoding
 
-Geocoding is the process where it converts address into spatial data and associates the exact geographical coordinates for that address.
+Geocoding converts addresses or place descriptions into geographic coordinates.
 
 OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/apidocs/search
 
@@ -136,7 +272,7 @@ OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/ap
 
 ---
 
-### Notes on the Geocoding
+### Notes on Geocoding
 
 - Street names/Postcodes are not unique to a specific country. A postcode could refer to multiple locations in different countries.
 
@@ -179,9 +315,15 @@ OneMap provides Geocoding services as instructed in https://www.onemap.gov.sg/ap
 ```
 ]
 
-### Json File
+### JSON and Nested Data
 
-A JSON file as **nested tabular data** means representing hierarchical (nested) JSON structures in a way that resembles tables while preserving parent–child relationships.
+Many APIs return JSON rather than flat tables.
+
+JSON is useful because it can store nested structures such as:
+
+- metadata about the request
+- multiple records in a list
+- attributes grouped inside parent objects
 
 We can use [a JSON viewer/formatter website](https://jsonformatter.org/json-viewer) to understand and explore data structures
 
@@ -203,38 +345,23 @@ print(response.text)
 
 ---
 
-## Data.gov.sg
+## Common Data Formats
 
-https://data.gov.sg/datasets?formats=CSV&resultId=d_8b84c4ee58e3cfc0ece0d773c8ca6abc
+You will often encounter the following data formats in week 2:
 
-.left_half[
-```python
-import requests
-          
-dataset_id = "d_8b84c4ee58e3cfc0ece0d773c8ca6abc"
-url = "https://data.gov.sg/api/action/datastore_search?resource_id="  + dataset_id 
-        
-response = requests.get(url)
-print(response.json())
-```
-]
+- **CSV**: simple tabular data for analysis and joins
+- **Excel**: convenient but less reproducible than CSV
+- **JSON**: common for API responses
+- **GeoJSON / Shapefile / GeoPackage**: vector spatial data
+- **Raster formats**: imagery, environmental grids, elevation, land cover
 
-.right_half[
-  <figure>
-    <img src="imgs/data_gov_sg/csv_data.jpg" class="zoomable" width="100%">
-  </figure>
-]
-
-.clear[
-]
+Different formats are not just technical details. They shape how the data can be cleaned, joined, mapped, and shared.
 
 ---
 
-name: tables
+## Example: Reading Tabular Data in Python
 
-## Tabular Data 
-
-csv: most recommended and common tabular data format because it is simple, reliable, and widely supported
+CSV is often the most convenient format for first access because it is simple, reliable, and widely supported.
 
 ```python
 import pandas as pd
@@ -248,7 +375,7 @@ pd.read_csv("data.csv", header=0)       # header row
 pd.read_csv("data.csv", encoding="utf-8")
 ```
 
-excel: an external excel engine (openpyxl for .xlsx or xlrd for .xls)
+Excel is also common in government and administrative workflows.
 
 ```python
 import pandas as pd
@@ -264,7 +391,60 @@ Open [2-02_tabular_data.ipynb](https://github.com/BayiLi081/GIS-training/blob/py
 
 ---
 
-name: join
+## What to Check Before Using a Dataset
+
+Before analysis, ask:
+
+- Who produced the data?
+- What is the spatial unit?
+- What is the temporal coverage?
+- How often is it updated?
+- Are there missing values or access restrictions?
+- Does the data match the research question and scale?
+
+A technically accessible dataset may still be analytically inappropriate.
+
+---
+
+## Open Data Does Not Mean Friction-Free Data
+
+Even open datasets may require:
+
+- cleaning field names and encodings
+- joining non-spatial tables to boundaries
+- converting coordinates or file formats
+- interpreting metadata carefully
+- documenting assumptions and transformations
+
+Open data reduces access barriers, but it does not remove the need for critical judgement.
+
+---
+
+name: workflow
+
+## Tutorial Workflow
+
+For week 2, a practical data discovery workflow is:
+
+1. define a simple urban question
+2. search OneMap and data.gov.sg for relevant datasets
+3. inspect the metadata, fields, and update dates
+4. retrieve a small sample by download or API
+5. identify whether the data is spatial or needs geocoding/joining
+6. document the source and any access constraints
+
+---
+
+## Example Tutorial Questions
+
+- Which data source would you use for addresses, basemaps, and geocoding?
+- Which portal is better for tabular indicators such as counts or rates?
+- Which dataset is suitable for direct mapping, and which needs preprocessing first?
+- What are the risks of using postcode-level or area-level data as if it were point-precise?
+
+---
+
+## Simple Join Logic
 
 ### Table Join
 
@@ -297,147 +477,29 @@ Reference: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.join.ht
 
 ---
 
-### Survey Data Processing
+## Reading Material
 
-Surveys, a common method of collecting opinions, often produce rich yet complex datasets.  
-
-In survey responses, these datasets typically include **categorical, textual, and numerical variables**.  
-
-We will address tasks such as **recoding categorical variables** and summarising the characteristics of **categorical variables** and **textual variables**.
-
-In this practice, we will be using a dataset of survey responses from London Assembly Cycle Survey Responses.
-
-References:
-
-None (2023). london-assembly-cycle-survey-responses (from London Assembly Cycle Survey Responses) [Data set resource]. University of Glasgow. https://data.ubdc.ac.uk/dataset/london-assembly-cycle-survey-responses/resource/bd0aed6f-f5f8-4143-9200-ee26e13e6525
+- OneMap API Documentation: https://www.onemap.gov.sg/apidocs/
+- data.gov.sg Developer Guide: https://guide.data.gov.sg/
+- Singapore open datasets portal: https://data.gov.sg/
+- GeoPandas documentation for tabular-spatial joins: https://geopandas.org/
+- Python `requests` documentation for APIs: https://requests.readthedocs.io/
 
 ---
 
-### Categorical variables
+## Key Takeaways
 
-| R                                                            | Python                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Factors                                                      | Categorical Data                                             |
-| Factors are used for categorical variables, storing levels as integers internally. | Pandas `Categorical` data type is the equivalent.            |
-| factor_var <- factor(c("low", "medium", "high"))            | import pandas as pd<br/>cat_var = pd.Categorical(["low", "medium", "high"]) |
-
-Both optimize memory usage for categorical data and simplify group-based operations.
+- Urban analysis starts with understanding data sources, not just analysis methods.
+- In Singapore, OneMap and data.gov.sg are two essential platforms for urban GIS work.
+- APIs, downloads, and web services each support different workflows.
+- Metadata, scale, update frequency, and data structure all affect analytical quality.
+- A good analyst documents how data was discovered, retrieved, and transformed.
 
 ---
 
-### Categorical variables
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='intro2python.html'">Go to Introduction to Python in Urban Data Analytics</button>
 
-.left_half[
-**Nominal**
-
-A categorical variable with **unordered categories**.
-]
-
-.right_half[
-**Ordinal**
-
-A categorical variable with ordered categories.
-]
-
-.clear[
-]
-
-<img src="imgs/Nominal_versus_Ordinal.png" width="80%">
-<figcaption>Source: https://en.wikipedia.org/wiki/Nominal_category</figcaption>
-
-
-
----
-
-name: vis
-
-## Visualisation
-
-.left_half[
-Exploratory Data Analysis (EDA) is an approach to analysing datasets to summarise their main characteristics, often using visual methods. 
-
-**A quick way to understand the data.**
-
-For datasets with multiple variables, **Exploratory Data Analysis (EDA)** is an essential method for understanding **data distributions and intercorrelations**.
-
-  <figure>
-    <img src="imgs/vis/eda.jpg" class="zoomable" width="60%">
-  </figure>
-  <figcaption>Exploratory Data Analysis.</figcaption>
-  <figsubcaption>Source: https://medium.com/@WenxinZhang98/exploratory-data-analysis-83bfb1f17dc5</figsubcaption>
-]
-
-.right_half[
-We will create high-quality visualisations using Python libraries like **Matplotlib** and **Seaborn**, enabling clear communication of insights.
-
-1. **[Matplotlib](https://matplotlib.org/)**: foundation library
-
-2. **[Seaborn](https://seaborn.pydata.org/index.html)**: Uses Matplotlib under the hood
-
-3. **[Plotly](https://plotly.com/python/getting-started/)**: interactive visualisation
-]
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vis/matplotlib_axes_figure.jpg" width="80%">
-  </figure>
-  <figcaption>A figure created using matplotlib can contain one or many plots, or axis objects.</figcaption>
-  <figsubcaption>Source: [Earth Lab, Alana Faller](https://earthdatascience.org/courses/scientists-guide-to-plotting-data-in-python/plot-with-matplotlib/introduction-to-matplotlib-plots/)</figsubcaption>
-]
-
-### Matplotlib
-
-Matplotlib is one of the most popular visualisation packages in Python.
-
-It can be thought of as the **Python equivalent of ggplot in R**.
-
-Many advanced visualisation packages are built on top of it.
-
-#### Figure and Axes
-
-- **Figure**: The overall container for all plot elements. It can contain multiple Axes.
-
-- **Axes**: It is a component of the Figure that defines a subplot.
-
-  It manages all the details within the subplot. We can customize the x-axis and y-axis limits, labels, and the type of graph.
-
-.clear[
-]
-
-Open [2-03_data_vis.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/2-03_data_vis.ipynb) with Google Colab.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vis/seaborn_gallery_homepage.jpg" class="zoomable" width="100%">
-  </figure>
-  <figcaption>The homepage of Seaborn Gallery.</figcaption>
-  <figsubcaption>Source: https://seaborn.pydata.org</figsubcaption>
-]
-
-### Seaborn: statistical data visualisation
-
-Seaborn is a visualisation library that is **built on top of Matplotlib**.
-
-The key feature is to simplify the creation of publication-quality figures with **minimal code**.
-
----
-
-Seaborn is selected for this bootcamp because it lets learners make solid statistical plots fast, with less code and fewer traps than raw Matplotlib.
-
-| | **[Seaborn Gallery](https://seaborn.pydata.org/examples/index.html)   **                                                                 | **[Matplotlib Gallery](https://matplotlib.org/stable/gallery/)**                                                                 |
-|------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| |<img src="imgs/vis/seaborn_gallery.jpg" class="zoomable" width="45%">| <img src="imgs/vis/matplotlib_gallery.jpg" class="zoomable" width="45%">|
-|   | Minimal code. | Steeper learning curve |
-| ------- | ------- | ------- |
-| **Customisation**| Limited customisation | Extremely customisable |
-| | relying on Matplotlib's underlying support. | with nearly all visual elements adjustable. |
-| ------- | ------- | ------- |
-| **Aesthetics**   | Modern default themes | Basic default styles |  
-| | appealing styles, and diverse color palettes. | but offers complete control to achieve aesthetic goals with extra configuration. | 
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
 </textarea>
     <script src="src/template.js"></script>

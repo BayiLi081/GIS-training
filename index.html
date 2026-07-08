@@ -60,7 +60,7 @@ class: center
 .toc-wrapper[
   <div class="toc">
     <a href="#definition_uds" class="toc-item">Introduction to Urban Data Analytics</a>
-    <a href="mapdesign.html" class="toc-item">Cartographic Design</a>
+    <a href="week05_Cartography.html" class="toc-item">Cartographic Design</a>
     <a href="vector.html" class="toc-item">Spatial Analysis of Vector Data</a>
     <a href="raster.html" class="toc-item">Spatial Analysis of Raster Data</a>
     <a href="spdeng.html" class="toc-item">Spatial Data Integration and Feature Engineering</a>
@@ -81,6 +81,62 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ---
 
+## Course Overview
+
+This course focuses on GIS in the urban context.
+
+- Apply GIS tools to analyse, model, and visualise urban geospatial data
+- Build core skills in data collection, management, and visualisation
+- Work across vector, raster, and network-based spatial analysis
+- Use QGIS and Python-based workflows, with Python introduced through Google Colab
+
+---
+
+## GeoAI And Final Project
+
+GeoAI will be introduced as a practical extension of GIS workflows.
+
+- Support mapping, spatial analysis, and interpretation of urban patterns
+- Apply these methods in a group project on a real urban issue in Singapore
+- Work with geospatial datasets from publicly available government data sources
+- Publish a reusable workflow as an open-source project
+- Critically assess the assumptions, limitations, and risks of AI-assisted geospatial analysis
+
+---
+
+## Intended Learning Outcomes
+
+By the end of this course, students should be able to:
+
+1. Explain fundamental GIS concepts and distinguish between major types of spatial data
+2. Apply GIS methods to analyse vector, raster, and network-based geospatial data
+3. Create maps and visual outputs to communicate spatial information clearly
+4. Apply basic spatial statistical methods to interpret spatial patterns and relationships
+5. Design a reusable analytical workflow for investigating a real-world urban issue
+6. Use GeoAI critically and work in a group to publish a transparent and reproducible open-source workflow
+
+---
+
+## Week 1 Focus
+
+In this lecture, students will be introduced to the course structure, intended learning outcomes, and assessment methods.
+
+- What GIS is and why it matters in urban analysis
+- Core GIS concepts, including the history and components of GIS
+- Fundamentals of spatial data, including types, formats, and acquisition methods
+- A first light introduction to QGIS
+- An overview of how Python will be used later through Google Colab
+
+---
+
+## Week 1 Take-Home Tasks
+
+- Install QGIS
+- Explore the QGIS interface
+- Ensure access to a Google account for future Python exercises in Google Colab
+
+---
+
 ## Course Structure
 
 .course-structure[
@@ -89,9 +145,9 @@ In the following weeks, vector, raster, and network, three main types of spatial
 |---|---|
 | Week 1 | Introduction to Urban Data Analytics |
 | Week 2 | [Urban Data Sources and Open Data in Singapore](data.html) |
-| Week 3 | [Introduction to Python in Urban Data Analytics](py-bootcamp.html) |
+| Week 3 | [Introduction to Python in Urban Data Analytics (using Google Colab)](intro2python.html) |
 | Week 4 | [Spatial Data Processing and Cleaning](sdp.html) |
-| Week 5 | [Cartographic Design](mapdesign.html) |
+| Week 5 | [Cartographic Design](Cartographic Design.html) |
 | Week 6 | [Spatial statistics and analysis of vector data](vector.html) |
 | Week 7 | Recess week |
 | Week 8 | [Spatial analysis of raster data](raster.html) |
@@ -99,10 +155,57 @@ In the following weeks, vector, raster, and network, three main types of spatial
 | Week 10 | [Network Analysis for Urban Systems](network.html) |
 | Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
 | Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
-| Week 13 | Final Project Tutorial |
+| Week 13 | [Final Project Tutorial](final.html) |
 | Week 14 | Final Presentation |
 
 ]
+
+---
+
+## Assessment
+
+The course combines continuous and summative assessment across the term.
+
+| Component | Weight | Period |
+|---|---|---|
+| Participation | 10% | Throughout the term |
+| Individual Assignment (Spatial Data Processing, Part I & II) | 20% | Weeks 3–9 |
+| Final group project presentation | 20% | Week 14 |
+| Final group project code | 20% | Week 14 |
+| Final individual report | 30% | Week 14 |
+
+The final group project accounts for 70% of the overall grade.
+
+---
+
+## Final Project
+
+**Spatial Analysis for a real-world urban issue in Singapore** (70%, Weeks 9–14)
+
+Each group defines a focused Singapore-based urban question, justifies why it matters, and develops a spatial argument using open government datasets, appropriate methods, and critical interpretation.
+
+Possible themes:
+
+- Transport accessibility and daily mobility
+- Housing, land use, and neighbourhood change
+- Distribution of public amenities and services
+- Environmental quality, green space, and liveability
+- The role of data and AI-assisted interpretation in policy discussion
+
+Delivered as three outputs: a presentation slide deck, a 6–8 page report, and reproducible, open-source project code.
+
+---
+
+## Final Project Timeline
+
+| Week | Milestone |
+|---|---|
+| Week 9 | Understand the project, find literature, list candidate datasets |
+| Week 10 | Review studies, plan the project, begin the analytical workflow |
+| Week 11 | Collect and integrate the datasets for the workflow |
+| Week 12 | Conduct spatial analysis, produce and visualise results |
+| Week 13 | Prepare the presentation and report in tutorials |
+| Week 14 | 15-min presentation + 5-min Q&A |
 
 ---
 
@@ -110,23 +213,37 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ### Bayi Li
 
-<iframe
-    src="html_snippets/resume.html"
-    class="lecturer-frame"
-    title="Interactive panoramic image segmentation comparison">
-</iframe>
+Trained across urban planning and geographical information science, his work integrates spatial analytics, machine learning, computer vision, and urban theory to examine mobility, public space, and environmental exposure in contemporary cities. He also teaches spatial analysis and urban data methods, with an emphasis on Python, GIS, and open-source analytical tools.
 ]
 
 .left_half[
 
 ### Xiaohan Liu
 
-<iframe
-    src="html_snippets/resume.html"
-    class="lecturer-frame"
-    title="Interactive panoramic image segmentation comparison">
-</iframe>
+She is an urban researcher whose work combines urban planning, GIS, mobility and network analysis, and urban data science. Her research examines how built environments shape everyday mobility, public space use, health, environmental exposure, and social interaction, with a focus on creating more liveable and inclusive high-density cities.
 ]
+
+---
+
+name: geoai_data
+
+
+# Core data modalities in GeoAI
+
+1. **Geospatial vector data**
+
+2. **Images**
+
+3. Knowledge graphs
+
+4. Text
+
+5. Trajectory data
+
+.references[
+- [On the Opportunities and Challenges of Foundation Models for GeoAI](https://dl.acm.org/doi/10.1145/3653070)
+]
+
 
 ---
 
@@ -422,6 +539,12 @@ Effective spatial analysis requires **an intelligent user**, not just a powerful
 
 ---
 
+## Maps: A powerful tool of Storytelling
+
+
+
+---
+
 ## From Exploration to Explanation
 
 Different spatial analysis projects have different aims, so the framework must align the aim with the methods. 
@@ -448,10 +571,6 @@ Different spatial analysis projects have different aims, so the framework must a
 <xL>Identify an appropriate spatial analysis method that aligns with both your data and research question.</xL>
 
 <br>
-
----
-
-<xL>Start from vector first: </xL><button onclick="window.location.href='vector.html'">Go to Lecture of Vector Data Analysis</button>
 
 .references[
 - [QGIS Documentation](https://docs.qgis.org/latest/en/docs/)

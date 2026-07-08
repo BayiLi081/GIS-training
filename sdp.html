@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-        <title>III: Spatial Data</title>
+  <title>Lecture and Tutorial: Spatial Data Processing and Cleaning</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -18,58 +18,166 @@ class: center
 
 <br>
 
-# Section III: Spatial Data Processing
+# Spatial Analysis of Urban Data
 
-## Spatial Data with Python
+## Lecture and Tutorial: Spatial Data Processing and Cleaning
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
 .toc-wrapper[
   <div class="toc">
-    <a href="./py-bootcamp.html#3" class="toc-item">Section I: Introduction to Python</a>
-    <a href="data.html#2" class="toc-item">Section II: Data Acquiring and Processing</a>
-    <a href="sdp.html#2" class="toc-item">Section III: Spatial Data Processing</a>
+    <a href="#week4-focus" class="toc-item">Week 4 Focus</a>
+    <a href="#core-issues" class="toc-item">Common Data Problems</a>
+    <a href="#formats-crs" class="toc-item">Formats and CRS</a>
+    <a href="#workflow" class="toc-item">Cleaning Workflow</a>
   </div>
 ]
 
 ---
 
-## Spatial Data
+name: week4-focus
 
-Spatial data refers to data that contains location information.
+## Week 4 Focus
 
-Spatial data is primarily represented using two major models:
+This lecture introduces the practical work needed to turn raw spatial data into analysis-ready spatial data.
+
+- identify common problems in raw spatial data
+- understand why coordinate systems, formats, and attribute structures matter
+- compare QGIS-based cleaning with Python-based cleaning
+- prepare clean, documented spatial data for later mapping and analysis
+
+---
+
+## Learning Objectives
+
+By the end of this session, students should be able to:
+
+1. explain what spatial data cleaning and processing involve
+2. diagnose common issues in geometry, attributes, and coordinate reference systems
+3. distinguish between major spatial vector formats and their tradeoffs
+4. use QGIS and Python appropriately for cleaning tasks
+5. follow a reproducible workflow for preparing spatial data for analysis
+
+---
+
+## Lecture Outline
+
+1. Why spatial data cleaning matters
+2. Common problems in spatial datasets
+3. Coordinate reference systems and spatial file formats
+4. Cleaning and transformation in QGIS and Python
+5. Tutorial workflow for inspection, repair, export, and documentation
+
+---
+
+## Why Spatial Data Cleaning Matters
+
+Spatial analysis is only as reliable as the data that enters it.
+
+- Incorrect CRS can produce wrong distances and overlays
+- Broken geometries can make operations fail
+- Poor field structure makes joins and mapping harder
+- Messy source formats slow down later analysis
+
+Cleaning is not a minor preparation step. It is part of the analytical method.
+
+---
+
+## What Needs Cleaning in Spatial Data?
+
+Spatial data usually combines two parts:
+
+1. **geometry**: points, lines, polygons, or raster cells
+2. **attributes**: names, IDs, categories, counts, dates, or descriptions
+
+Problems may occur in either part, and often in both at once.
+
+---
+
+name: core-issues
+
+## Common Data Problems
+
+Typical issues include:
+
+- missing or incorrect CRS
+- invalid geometries
+- inconsistent attribute names or encodings
+- nested or badly structured attribute values
+- duplicated features
+- mismatched identifiers for joins
+- source data designed for display rather than analysis
+
+---
+
+.right_half[
+    <figure>
+        <img src="imgs/data_cleaning/data_structure_issue.jpg" class="zoomable" alt="Data structure issue">
+        <figcaption>Attributes may be embedded in HTML or other non-analysis-friendly formats.</figcaption>
+        <figsubcaption>Source: Screenshot from QGIS.</figsubcaption>
+    </figure>
+]
+
+## Example: Data Designed for Display
+
+Some public datasets are released in a structure that works well for viewing but poorly for analysis.
+
+In these cases, the challenge is not only obtaining the data, but converting it into:
+
+- clear fields
+- usable categories
+- analysis-ready spatial attributes
+
+---
+
+## Example Source for Wrangling
+
+Data Source: [URA No of Dwelling Units](https://data.gov.sg/datasets/d_be71daeab5930f96b90ad2857454d876/view)
 
 <div align="center">
   <figure>
-    <img src="imgs/vector_n_raster_presentation.png" width="60%">
-    <figcaption>Raster and vector representation of real world entities.</figcaption>
-    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+    <a href="https://data.gov.sg/datasets/d_be71daeab5930f96b90ad2857454d876/view" target="_blank">
+      <img src="imgs/data_cleaning/data_page.jpg" width="40%">
+    </a>
+  </figure>
+</div>
+
+This kind of dataset often requires data wrangling before the information can be joined, mapped, or summarised.
+
+---
+
+name: formats-crs
+
+## Coordinate Reference Systems (CRS)
+
+It is essential to work with the correct CRS before measuring, buffering, overlaying, or mapping.
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/gcs_pcs.png" width="70%">
+    <figcaption>Geographic and projected coordinate reference systems serve different purposes.</figcaption>
+    <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/</figsubcaption>
   </figure>
 </div>
 
 ---
 
-## **Geographic and Projected** Coordinate Referece Systerm (CRS)
+## Geographic vs Projected CRS
 
-It is important that you are working with **the correct CRS**.
+- **Geographic CRS** stores locations on the globe, often in latitude and longitude
+- **Projected CRS** converts the earth surface into planar coordinates, often in metres
 
-<div align="center">
-    <img src="imgs/vector/gcs_pcs.png">
-    <br>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/
-</div>
+With projected CRS, distances and areas can usually be handled in more appropriate linear units for analysis.
 
-Anyway, with **projected CRS**, we can express the location in the **unit: metres**.
-
-*Note:* You can go to this website: [Interactive Album of Map Projections 2.0 (psu.edu)](https://projections.mgis.psu.edu/), check the difference of projected CRSs. Different CRS may introduce bias. For example, you can go to [How big the world actually is: The true size](https://www.thetruesize.com/) to check the distortion it gives to real size.
+*Note:* Different projections introduce different distortions. A CRS suitable for display is not always the best CRS for analysis.
 
 ---
 
-## **Geographic and Projected** Coordinate Referece Systerm (CRS)
+## EPSG Codes and Singapore
 
-EPSG is the unique ID linked to a specific coordinate reference system.
+EPSG codes are unique identifiers linked to specific coordinate reference systems.
 
-The common coordinate systems and their EPSG codes
+Common examples include:
 
 - EPSG: 4326
 - EPSG: 3857
@@ -81,7 +189,21 @@ Recommended EPSG codes for Singapore:
 
 ---
 
-## Vector Data
+## Spatial Data Models
+
+Spatial data is primarily represented using two major models:
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector_n_raster_presentation.png" width="60%">
+    <figcaption>Raster and vector representation of real world entities.</figcaption>
+    <figsubcaption>Source: https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+  </figure>
+</div>
+
+---
+
+## Vector Data Basics
 
 There are three main types:
 
@@ -121,7 +243,7 @@ Open [3-01_vector.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootc
 | .xml      | Metadata       | No                |
 ]
 
-### Common spatial vector data formats
+## Common Spatial Vector Data Formats
 
 Esri Shapefile
 
@@ -154,9 +276,7 @@ A full Esri Shapefile is not one file. It is a set of files that must stay toget
   <figcaption>An example of GeoJSON.</figcaption>
 ]
 
-### Common spatial vector data formats
-
-GeoJSON
+## GeoJSON
 
 - A single text file: Easy to open, share, and inspect.
 
@@ -172,7 +292,7 @@ GeoJSON
 
 ---
 
-### Common spatial vector data formats
+## KML
 
 KML (Keyhole Markup Language)
 
@@ -188,7 +308,7 @@ KML (Keyhole Markup Language)
 
 ---
 
-### Read Local Files as GeoDataFrame
+## Read and Save Spatial Files in Python
 
 ```python
 file_path = "path_to_file/your_geospatial_data"
@@ -218,185 +338,110 @@ Refer to [Official Documentation: Write files](https://geopandas.org/en/stable/d
 
 ---
 
-name: buffering
+## QGIS Python Console and Editor
 
-## Buffering
-
-.left_half[
-Buffers are common vector analysis tools used to **address questions of proximity** in a GIS and can be used on points, lines, or polygons
+The QGIS Python Console is useful when cleaning tasks need direct access to a loaded layer inside QGIS.
 
 <div align="center">
   <figure>
-    <img src="imgs/vector/buffer.png" width="100%">
-    <figcaption>Different types of spatial relations based on two Polygon geometries.</figcaption>
-    <figsubcaption>Source: Egenhofer et al. (1992) and https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html</figsubcaption>
+    <img src="imgs/data_cleaning/python_console_qgis.jpg" width="60%">
+    <img src="imgs/data_cleaning/python_editor.jpg" width="60%">
   </figure>
 </div>
-]
 
-.right_half[
-### Buffering with Python
-
-```python
-river_buff_5km = river.buffer(5000)
-river_buff_50km = river.buffer(50000)
-```
-
-  <figure>
-    <img src="imgs/vector/buffer_with_python.jpg" width="100%">
-  </figure>
-  <figcaption>Source: https://py.geocompx.org/04-geometry-operations</figcaption>
-
-```python
-seine_buff_5km.plot(color='none', edgecolor=['c', 'm', 'y']);
-seine_buff_50km.plot(color='none', edgecolor=['c', 'm', 'y']);
-```
-]
+It lets you automate cleaning tasks while keeping the GIS interface visible.
 
 ---
 
-.right_half[
+## When Not to Run Everything Inside the QGIS Console
+
+Running complex or large-scale tasks in the QGIS console can sometimes slow down the interface or make the session hard to manage.
+
+<div align="center">
   <figure>
-    <img src="imgs/vector/overlay_bool.jpg" width="100%">
+    <img src="imgs/data_cleaning/whynotrunpython_directly_withqgis.jpg" width="90%">
   </figure>
-  <figcaption>Pairwise geometry-generating operations</figcaption>
-]
+</div>
 
-### Overlay with Python
-
-.left_half[
-
-[Table Join](data.html#join)
-
-- A and B (Inner Join)
-
-  ```python
-  x.intersection(y)
-  ```
-
-- A or B (Full Join)
-
-  ```python
-  x.union(y)
-  ```
-
-- A not B (Left Join)
-
-  ```python
-  x.difference(y)
-  ```
-
-- A xor B
-
-  ```python
-  x.symmetric_difference(y)
-  ```
-
-]
+For repeatable processing, a standalone Python script is often easier to debug, reuse, and share.
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/distance/different_type_distances.jpg" class="zoomable" width="100%">
-    <figcaption>Different Type of Distance.</figcaption>
-    <figsubcaption>Source: 10.1186/1476-072X-7-7</figsubcaption>
-  </figure>
-]
+## Example Cleaning Logic in Python
 
-## Distance
+Typical cleaning code might:
 
-- Manhattan Distance
+- inspect field names
+- parse nested text or HTML content
+- create new attribute columns
+- standardise values before export
 
-  rarely used: it only applies to a perfect grid street pattern
-
-- Euclidean Distance
-
-  simple and intuitive
-
-- Network-based Distance
-
-  follows real streets
-
-.clear[
-]
-
-Open [3-02_distance.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/3-02_distance.ipynb) with Google Colab.
+The detailed example script is in [qgis_py/clean_html.py](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/qgis_py/clean_html.py), which shows how HTML-like attribute content can be converted into usable fields.
 
 ---
 
-### Route Query using OneMap
+name: workflow
 
-OneMap has different routing options including public transport, drive, walk and cycle.
+## Recommended Cleaning Workflow
 
-.left_half[
-
-[Public Transport](https://www.onemap.gov.sg/apidocs/routing/#publicTransport)
-
-```python
-import requests
-    
-url = "https://www.onemap.gov.sg/api/public/routingsvc/route?date=11-10-2025&mode=TRANSIT&maxWalkDistance=1000&numItineraries=3&routeType=pt&time=11%3A19%3A47&start=1.3081592%2C103.8551479&end=1.2739864%2C103.8012642"
-    
-headers = {"Authorization": "**********************"}
-    
-response = requests.request("GET", url, headers=headers)
-    
-print(response.text)
-```
-]
-
-.right_half[
-
-[Walk/Drive/Cycle](https://www.onemap.gov.sg/apidocs/routing/#walkdrivecycle)
-
-```python
-import requests
-    
-url = "https://www.onemap.gov.sg/api/public/routingsvc/route?start=1.319728%2C103.8421&end=1.319728905%2C103.8421581&routeType=walk"
-    
-headers = {"Authorization": "**********************"}
-    
-response = requests.request("GET", url, headers=headers)
-    
-print(response.text)
-```
-]
+1. inspect the dataset and metadata
+2. confirm or repair CRS
+3. inspect geometry validity and field structure
+4. rename, recode, or extract attributes as needed
+5. remove duplicates or irrelevant fields
+6. export to a cleaner working format such as GeoPackage or GeoJSON
+7. document every transformation
 
 ---
 
-### Network-based Route V.S. OneMap Queries Route
+## Practical Workflow in QGIS and Python
 
-  <figure>
-    <img src="imgs/distance/routes_comparison.gif" width="80%">
-  </figure>
+- Use **QGIS** for quick inspection, geometry checks, field review, and visual verification
+- Use **Python** for repeatable parsing, field cleaning, batch conversion, and automation
+- Use **both together** when the dataset is spatial but the attribute issues are too complex for manual editing
+
+This combined workflow is often the most effective in urban GIS practice.
 
 ---
-## Mapping
 
-.left_half[
-### Static Maps (Optional)
+## Mini Exercise
 
-Static Mapping is best for scenarios where a fixed image is sufficient, such as reports, presentations, and printed materials.
+Choose one spatial dataset and assess it before analysis.
 
-  <figure>
-    <img src="imgs/vis/staticmapping_example.png" class="zoomable" width="100%">
-  </figure>
+Your checklist should include:
 
-Open [3-03-01_staticmapping.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/3-03-01_staticmapping.ipynb) with Google Colab.
+- file format
+- CRS
+- geometry type
+- important attribute fields
+- one likely cleaning problem
+- whether QGIS, Python, or both would be the best tool for fixing it
 
-]
+---
 
-.right_half[
-### Interactive Maps
+## Reading Material
 
-Interactive Mapping is best for scenarios where user engagement and interaction with the map are beneficial, such as web applications, dashboards, and exploratory data analysis. 
+- GeoPandas documentation: https://geopandas.org/
+- QGIS documentation on vector data and projections: https://docs.qgis.org/
+- Fiona documentation: https://fiona.readthedocs.io/
+- Shapely documentation: https://shapely.readthedocs.io/
+- EPSG registry and reference search: https://epsg.io/
 
-<iframe src="./map.html" width="100%" height="280"></iframe>
+---
 
-Open [3-03-02_interactivemapping.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootcamp/jupyters/3-03-02_interactivemapping.ipynb) with Google Colab.
+## Key Takeaways
 
-]
+- Spatial data cleaning is part of analysis, not a separate afterthought.
+- CRS, geometry validity, and attribute structure must be checked before spatial operations.
+- Shapefile, GeoJSON, and KML serve different purposes and carry different constraints.
+- QGIS is useful for inspection and repair, while Python is useful for reproducible transformation.
+- Clean, documented spatial data makes later cartography and spatial analysis more reliable.
+
+---
+
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='Cartographic Design.html'">Go to Cartographic Design</button>
+
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
 
 
