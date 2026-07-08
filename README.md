@@ -1,4 +1,4 @@
-# GIS Training: QGIS and Python
+# GIS and Urban Data Science Training
 
 <div align="center">
     <a href="https://lkycic.sutd.edu.sg/">
@@ -23,11 +23,9 @@ This repository supports two courses: **Spatial Data Analysis** and **Geospatial
 
 GIS Course: https://spatialuminous.top/GIS-training
 
-Python for Geospatial Analysis Bootcamp: https://spatialuminous.top/GIS-training/py-bootcamp.html
-
 For practical exercises, Jupyter Notebooks and datasets are stored in separate respository as [GIS-Training-Practicals](https://github.com/BayiLi081/GIS-Training-Practicals).
 
-My background sits at the intersection of urban research and GIS. Both courses are designed for students in the [SUTD MSc Urban Science, Policy and Planning](https://urbanscience.sutd.edu.sg/curriculum/). The material, therefore, focuses on applied work rather than theory or software engineering.
+My background sits at the intersection of urban research and GIS. The course is designed for students in the non-technical background (e.g., social scientists, planners). The material, therefore, focuses on applied work rather than theory or software engineering.
 
 The repository aims to:
 
@@ -38,5 +36,30 @@ The repository aims to:
 * explain what geospatial analysis is and how to carry it out with QGIS and Python
 * show how QGIS and Python work as complementary tools within **urban data science**
 * provide the basics of geospatial data visualisation
+* create interactive visualisations and maps to help with storytelling
+* give a light-touch introduction to **GeoAI** applications. Given the length of the course, this is not an in-depth study of machine learning or deep learning; the focus is on how to utilise existing pretrained models to support urban science
+
+## Tools
+
+The course is **Python-first**. Most analysis, from data processing to visualisation, is done in Python.
+
+* **Python** is the main tool and the backbone of the course.
+* **QGIS** plays a lightweight, supporting role, used mainly for generating and refining individual maps.
+* **Python libraries and standalone tools** are introduced on a need basis, as specific tasks call for them, rather than covered exhaustively up front.
+
+For running the analysis:
+
+* **Google Colab** is the default platform. It lets you run everything in the browser and avoids the complications of setting up a Python environment locally.
+* **A local setup is strongly recommended** for better processing performance and an offline-capable experience, once you are comfortable getting started.
+
+## Evolution of the Materials
+
+These materials have grown and been restructured in response to how the courses are taught and how the field is changing:
+
+* **From two tracks to one comprehensive course.** The standalone GIS course and the Python for Geospatial Analysis bootcamp were originally delivered separately. They have since been **merged into a single, comprehensive GIS course**, so that spatial concepts and their Python implementation are taught together rather than in isolation.
+* **Adding GeoAI.** New **GeoAI** content has been introduced to adapt to the shift towards AI in geospatial analysis, bringing modern machine-learning and AI-assisted workflows alongside the established QGIS and Python foundations.
+
+
+
 
 
