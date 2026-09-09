@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Introduction: GIS Training</title>
+    <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="src/remark-latest.min.js"></script>
+    <script src="src/custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+  </head>
+  <body>
+
+    <div id="site-header"></div>
+    <textarea id="source">
+
+class: center
+
+<br>
+
+# GIS Training
+
+## Project Introduction: Motivation, Methodology, and Outcomes
+
+[Bayi Li](mailto:barryli081@gmail.com)
+
+.toc-wrapper[
+  <div class="toc">
+    <a href="#what-is-this" class="toc-item">What Is This Project</a>
+    <a href="#methodology" class="toc-item">Methodology</a>
+    <a href="#final-project-methodology" class="toc-item">Final Project Methodology</a>
+    <a href="#outcomes" class="toc-item">Outcomes</a>
+    <a href="#try-it" class="toc-item">Try It Yourself</a>
+  </div>
+]
+
+???
+
+This deck introduces GIS Training as a project: why it exists, how it is designed and delivered, and what learners and readers walk away with.
+
+---
+
+name: what-is-this
+
+## What Is This Project?
+
+**GIS Training** is an open-source teaching project for **Spatial Analysis of Urban Data**, combining:
+
+- A **semester-long GIS course** — GIS concepts, vector, raster, and network analysis, cartographic design, GeoAI
+- A **stand-alone Python bootcamp** — a fast-track introduction to geospatial Python for learners without a full course
+- A small **demo web app** ("Indoor Public Space Collector") showing what a lightweight spatial data tool can look like
+
+Everything is published as a free, browser-based slide site — no installation needed to read the material.
+
+---
+
+## Why This Project Exists
+
+- Urban GIS teaching is often split between **proprietary GIS software** and **generic programming courses**, with little bridge between them
+- Students need to see **QGIS and Python used together**, not as competitors
+- Course material should be **open, versioned, and reusable**, not locked in slide decks that vanish after a term
+- AI-assisted and AI-generated workflows are now part of real practice, so the course treats **GeoAI critically** rather than ignoring it
+
+---
+
+## Audience
+
+- University students taking the urban GIS course as part of their programme
+- Self-learners doing the Python bootcamp independently
+- Instructors looking for a reusable, open-source teaching template
+
+---
+
+name: methodology
+
+## Methodology: How the Project Is Built
+
+Three design decisions shape everything else:
+
+1. **Dual-tool pedagogy** — QGIS for visual reasoning, Python for reproducibility
+2. **Open-source, browser-first delivery** — remark.js slide decks served as static HTML
+3. **Learn-by-building structure** — every module leads toward a real, data-driven output
+
+---
+
+.left_half[
+
+### QGIS
+
+- visual, interactive exploration
+- fast comparison of symbology and classification
+- best for design, layout, and communication
+]
+
+.right_half[
+
+### Python (Google Colab)
+
+- reproducible data cleaning and analysis
+- scriptable, version-controllable workflows
+- best for logic, automation, and scale
+]
+
+.clear[]
+
+Each week pairs the two: Python prepares and analyses the data, QGIS refines how it is seen and communicated.
+
+---
+
+## Content Architecture
+
+The project is organised as independent, linkable slide decks rather than one monolithic file:
+
+| Layer | Example | Purpose |
+|---|---|---|
+| Course modules | [`index.html`](index.html), [`vector.html`](vector.html), [`raster.html`](raster.html) | Weekly lecture + tutorial content |
+| Bootcamp track | [`py-bootcamp.html`](py-bootcamp.html), [`data.html`](data.html), [`sdp.html`](sdp.html) | Self-paced Python fundamentals |
+| Applied demo | [`webapp.html`](webapp.html) | A small working spatial data tool |
+
+Shared navigation (`src/nav.html`, `src/nav2.html`) links these layers so a reader can move between the course and the bootcamp at any point.
+
+---
+
+## Delivery: A Slide Site, Not a Slide Deck
+
+Built on **remark.js**, extended with a custom layer (`src/custom.js`, `src/custom.css`, `src/template.js`) that adds:
+
+- responsive slide scaling to the viewer's own screen ratio
+- a persistent bottom progress bar and slide overview panel
+- a floating references panel per deck
+- zoomable images and an SVG "feature spotlight" for diagrams
+- consistent cross-deck navigation
+
+The whole site is static HTML, hosted on **GitHub Pages**, and runs entirely in the browser.
+
+---
+
+## Open by Design
+
+Following **FOSS4G** principles (free and open-source software for geospatial):
+
+- course content is versioned in a public GitHub repository
+- QGIS and the Python geospatial stack are free and open-source
+- example workflows use **open government data** (e.g. Singapore's open data portals, OneMap API)
+- students are asked to publish their own final workflow as open-source code
+
+Openness is treated as a course value, not just a hosting choice.
+
+---
+
+name: final-project-methodology
+
+## Final Project: The Methodology Students Practice
+
+The capstone applies the same dual-tool, open-data methodology to a real question:
+
+1. **Define** a focused, Singapore-based urban question and justify why it matters
+2. **Collect** open government geospatial datasets relevant to the question
+3. **Integrate** and clean the data with reproducible Python workflows
+4. **Analyse** using appropriate spatial statistics or spatial methods
+5. **Visualise** results as maps designed for clarity and honesty (see Cartographic Design)
+6. **Critically assess** assumptions, limitations, and any GeoAI assistance used
+
+---
+
+## Example: A Real Analytical Pattern
+
+The [Hawker Centre accessibility example](project_practice.md) shows the pattern in practice:
+
+1. Define the research question (equity of access, via 2SFCA)
+2. Identify required data — facility locations/capacity, population, road network
+3. Collect from named sources — NEA, census, OpenStreetMap
+4. Load and process with Python (GeoDataFrames)
+5. Analyse and map the result
+
+The same five-step shape recurs across transport, housing, environment, and amenity questions.
+
+---
+
+## Final Project Timeline
+
+| Week | Milestone |
+|---|---|
+| 9 | Understand the brief, find literature, list candidate datasets |
+| 10 | Review studies, plan the project, begin the analytical workflow |
+| 11 | Collect and integrate datasets |
+| 12 | Conduct spatial analysis, produce and visualise results |
+| 13 | Prepare presentation and report |
+| 14 | 15-minute presentation + 5-minute Q&A |
+
+---
+
+name: outcomes
+
+## Outcomes: What Learners Can Do
+
+By working through the course and bootcamp, learners should be able to:
+
+1. explain core GIS concepts and distinguish major types of spatial data
+2. apply GIS methods to vector, raster, and network-based spatial data
+3. produce maps and visual outputs that communicate spatial information clearly
+4. apply basic spatial statistics to interpret spatial patterns and relationships
+5. design a reusable analytical workflow for a real urban question
+6. use GeoAI critically, and publish a transparent, reproducible open-source workflow
+
+---
+
+## Outcomes: What the Project Produces
+
+- A **public, versioned course website** covering the full urban GIS curriculum
+- A **self-contained Python bootcamp** usable independently of the course
+- A working **demo application** showing a minimal spatial data collection tool
+- Each student cohort's **final projects** — presentation, report, and open-source code — addressing real Singapore urban issues
+- A **reusable teaching template** (remark.js + custom navigation layer) other instructors can fork
+
+---
+
+## Outcomes: Project-Level Reflections
+
+- Pairing QGIS and Python keeps design and reproducibility in the same workflow, instead of trading one for the other
+- Publishing everything as static, open HTML keeps the material accessible with zero install cost
+- Framing the final project around real open data forces students to confront messy data early, not just clean textbook examples
+- Treating GeoAI as a topic to critique, not only a tool to use, keeps the course honest about current limitations
+
+---
+
+name: try-it
+
+## Try It Yourself
+
+.left_half[
+### Read the course
+Start at [`index.html`](index.html) for the full GIS course, or jump to a specific week such as [Cartographic Design](week05_Cartography.html).
+]
+
+.right_half[
+### Try the bootcamp
+Start at [`py-bootcamp.html`](py-bootcamp.html) for the self-paced Python track.
+]
+
+.clear[]
+
+Run locally with:
+
+```bash
+python -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000).
+
+.references[
+- [dlab-berkeley/Python-Geospatial-Fundamentals](https://github.com/dlab-berkeley/Python-Geospatial-Fundamentals)
+- [GEOG 160: Mapping our Changing World](https://www.e-education.psu.edu/geog160/)
+- [The Open Source Geospatial Foundation](https://www.osgeo.org/)
+]
+
+---
+
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go to Course Home</button>
+
+<xL>Go to bootcamp: </xL><button onclick="window.location.href='py-bootcamp.html'">Go to Python Bootcamp</button>
+
+</textarea>
+    <script src="src/template.js"></script>
+    <script>
+      fetch('src/nav.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
+    </script>
+  </body>
+</html>
