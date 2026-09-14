@@ -31,6 +31,47 @@
             text-decoration: none;
           }
 
+          .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2em;
+            margin-top: 1em;
+          }
+
+          .tool-card {
+            padding: 0.9em 1.1em;
+            border-radius: 14px;
+            border-top: 4px solid var(--accent);
+            background: var(--accent-warm-soft);
+            font-size: 0.82em;
+          }
+
+          .tool-card h3 {
+            margin: 0;
+            color: var(--accent-strong);
+          }
+
+          .tool-card .tool-tag {
+            margin: 0.2em 0 0.6em;
+            font-size: 0.85em;
+            opacity: 0.7;
+          }
+
+          .tool-card ul {
+            padding-left: 1.1em;
+            margin: 0;
+          }
+
+          .tool-card li {
+            margin-bottom: 0.5em;
+          }
+
+          @media (max-width: 768px) {
+            .tool-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
           .lecturer-frame {
             width: 100%;
             height: 500px;
@@ -80,6 +121,42 @@ class: center
 The session will cover the fundamental concepts of spatial analysis, types of spatial data, and the formulation of related research questions in urban studies.
 
 In the following weeks, vector, raster, and network, three main types of spatial data, will be introduced, along with their respective analysis techniques and applications in urban contexts.
+
+---
+
+name: tools
+
+## Why QGIS, Python and GitHub?
+
+<div class="tool-grid">
+  <div class="tool-card">
+    <h3>QGIS</h3>
+    <p class="tool-tag">Desktop GIS</p>
+    <ul>
+      <li>The leading <strong>open-source GIS software</strong>, free on Windows, macOS and Linux</li>
+      <li>Large community and plugin ecosystem, widely used in research, government and industry</li>
+      <li>Skills transfer directly to commercial tools such as ArcGIS</li>
+    </ul>
+  </div>
+  <div class="tool-card">
+    <h3>Python</h3>
+    <p class="tool-tag">Programming language</p>
+    <ul>
+      <li>The <strong>most widely used programming language</strong>, easy to learn and read</li>
+      <li>Rich geospatial and data science libraries (GeoPandas, Shapely, Rasterio, scikit-learn)</li>
+      <li>Makes analysis reproducible, automatable and scalable beyond point-and-click</li>
+    </ul>
+  </div>
+  <div class="tool-card">
+    <h3>GitHub</h3>
+    <p class="tool-tag">Code platform</p>
+    <ul>
+      <li>The <strong>most used platform for hosting and sharing code</strong></li>
+      <li>Built on <strong>Git</strong>, so you can track, version and manage every change to your code</li>
+      <li>Supports collaboration, portfolios and free web publishing via GitHub Pages</li>
+    </ul>
+  </div>
+</div>
 
 ---
 
@@ -358,8 +435,7 @@ Building a reusable, documented, open-source analytical workflow around a real S
 | Week 10 | [Network Analysis for Urban Systems](network.html) |
 | Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
 | Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
-| Week 13 | [Final Project Tutorial](final.html) |
-| Week 14 | Final Presentation |
+| Week 13 & 14 | Final Project |
 
 ]
 
@@ -375,21 +451,9 @@ The course combines continuous and summative assessment across the term.
 | Individual Assignment (Spatial Data Processing, Part I & II) | 20% | Weeks 3–9 |
 | Final group project presentation | 20% | Week 14 |
 | Final group project code | 20% | Week 14 |
-| Final individual report | 30% | Week 14 |
+| Final individual report | 30% | End of term |
 
 The final group project accounts for 70% of the overall grade.
-
----
-
-## Week 1 Focus
-
-In this lecture, students will be introduced to the course structure, intended learning outcomes, and assessment methods.
-
-- What GIS is and why it matters in urban analysis
-- Core GIS concepts, including the history and components of GIS
-- Fundamentals of spatial data, including types, formats, and acquisition methods
-- A first light introduction to QGIS
-- An overview of how Python will be used later through Google Colab
 
 ---
 
@@ -397,6 +461,8 @@ name: geoai_data
 
 
 # Core data modalities in GeoAI
+
+.left_half[
 
 1. **Geospatial vector data**
 
@@ -408,6 +474,28 @@ name: geoai_data
 
 5. Trajectory data
 
+...
+
+]
+
+--
+
+.right_half[
+
+Selected data for this course:
+
+- Geospatial data
+
+  - Vector data
+
+  - Raster data
+
+- Network data
+
+- Imagery data
+
+]
+
 .references[
 - [On the Opportunities and Challenges of Foundation Models for GeoAI](https://dl.acm.org/doi/10.1145/3653070)
 ]
@@ -418,8 +506,6 @@ name: geoai_data
 name: definition_uds
 
 # Definition of Spatial Analysis
-
---
 
 **Quantitative analysis** of **spatial data**
 
@@ -745,6 +831,169 @@ Different spatial analysis projects have different aims, so the framework must a
 - [PyGIS: Spatial Queries](https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html)
 - [GISGeography: Spatial Patterns](https://gisgeography.com/spatial-patterns/)
 - [GIS StackExchange: Raster and Vector Data in GIS](https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use)
+]
+
+---
+
+name: practice_resume
+
+## Practice: Your Personal Resume Page on GitHub
+
+.left_half[
+
+Build a simple online resume in **15 minutes**, with **no coding and no installation**, everything happens in your web browser.
+
+We will copy an open-source template: [modern-resume-theme](https://github.com/sproogen/modern-resume-theme) (MIT licence)
+
+<br>
+
+You will learn to:
+- **Fork** (copy) a repository to your own account
+- **Edit** a file and **commit** the change
+- **Publish** a website for free with **GitHub Pages**
+
+]
+
+.right_half[
+  <figure>
+    <img src="https://raw.githubusercontent.com/sproogen/modern-resume-theme/master/screenshot.png" width="100%">
+    <figcaption>The resume page you will create.</figcaption>
+    <figsubcaption>Source: https://github.com/sproogen/modern-resume-theme</figsubcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 1 — Fork:** open https://github.com/sproogen/modern-resume-theme and click **Fork** (top right)
+- Set the repository name to **`your-username.github.io`** (e.g., `Baxxxx0cc.github.io`), then click **Create fork**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/fork_a_repository.jpg" width="100%">
+    <figcaption>How to fork a repository.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 2 — Turn on the website:** in your new repository, go to **Settings → Pages**
+- Under *Build and deployment*, choose **Deploy from a branch**, select **`master`** and **`/ (root)`**, then **Save**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/deployment.jpg" width="100%">
+    <figcaption>How to turn on the website.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 3 — Add your information:** open the file **`_config.yml`** and click the ✏️ **pencil icon**
+- Replace `Your Name`, `Your job title`, `email`, `about_content`, `Experience`, `Education` with your own details
+- Delete the lines you do not need (e.g., social media accounts you do not have)
+- Click **Commit changes**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/commit_change.jpg" alt="Commit change" class="zoomable" id="ZoomableImage" width="100%">
+    <figcaption>How to commit a change.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 4 — View your page:** wait 1–2 minutes, then visit **`https://your-username.github.io`**
+- Check progress in the **Actions** tab (green ✔ = published)
+- Still **404**? A forked repository is only published **after your first commit** (Step 3). If Actions asks, click **"I understand my workflows, go ahead and enable them"**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/product_display.jpg" width="100%">
+    <figcaption>How the page looks.</figcaption>
+  </figure>
+]
+
+---
+
+## Practice: Tips and Submission
+
+.left_half[
+
+**Tips**
+- Keep the **indentation** (spaces) in `_config.yml` unchanged, a wrong space can break the page
+- Text after `#` is a comment and will not be shown
+- If the page does not update, check the **Actions** tab for a red ✘ error message
+- Profile photo (optional): upload your photo into the `images` folder and set `about_profile_image: images/your-photo.jpg`
+
+]
+
+.right_half[
+
+**Submission**
+- Post the link to your resume page (e.g., `https://Baxxxx0cc.github.io`) in the Microsoft Teams channel
+
+<br>
+
+**Going further (optional)**
+- Add a *Projects* section and link your **GIS-course** repository
+- Try `darkmode: true`
+
+]
+
+---
+
+name: appendix_git
+
+## Appendix: Install Git on Your Computer
+
+**Take-home task:** so far we edited files on the GitHub website. For real projects, keep your code on **your own computer** and use **Git** to track changes and send them to GitHub.
+
+**The everyday Git loop**:  `edit` → `commit` → `push`
+
+.left_half[
+
+1. **Install Git**
+  <br>
+  <a href="markdown.html?file=docs/Git_Setup.md" target="_blank">
+    View the step-by-step Git setup guide (macOS and Windows)
+  </a>
+  - macOS: run `git --version` in Terminal and click **Install** if prompted
+  - Windows: download from https://git-scm.com/downloads/win, keep default options
+
+]
+
+.right_half[
+
+2. **Tell Git who you are**
+  - `git config --global user.name "Your Name"`
+  - `git config --global user.email "you@example.com"`
+3. **Clone** your resume repository in VS Code (*Git: Clone → Clone from GitHub*)
+4. **Edit → Commit → Push** a small change and watch your page update
+
 ]
 
 </textarea>
