@@ -83,7 +83,7 @@ In the following weeks, vector, raster, and network, three main types of spatial
 
 ---
 
-name: installtion
+name: installation
 
 ## Week 0 Before the class
 
@@ -128,55 +128,159 @@ name: installtion
 
 ---
 
-## Course Overview
+.left_half[
 
-This course focuses on GIS in the urban context.
+### Bayi Li
 
-- Apply GIS tools to analyse, model, and visualise urban geospatial data
-- Build core skills in data collection, management, and visualisation
-- Work across vector, raster, and network-based spatial analysis
-- Use QGIS and Python-based geospatial analysis workflows
+[Online Profile](https://www.sutd.edu.sg/profile/li-bayi/)
 
----
+Trained across urban planning and geographical information science.
 
-## GeoAI And Final Project
+His work integrates spatial analytics, machine learning, computer vision, and urban theory to examine mobility, public space, and environmental exposure in contemporary cities.
+]
 
-GeoAI will be introduced as a practical extension of GIS workflows.
+.left_half[
 
-- Support mapping, spatial analysis, and interpretation of urban patterns
-- Apply these methods in a group project on a real urban issue in Singapore
-- Work with geospatial datasets from publicly available government data sources
-- Publish a reusable workflow as an open-source project
-- Critically assess the assumptions, limitations, and risks of AI-assisted geospatial analysis
+### Xiaohan Liu
 
----
+[Online Profile](https://www.sutd.edu.sg/profile/liu-xiaohan/)
 
-## Intended Learning Outcomes
+She is an urban researcher whose work combines urban planning, GIS, mobility and network analysis, and urban data science. 
 
-By the end of this course, students should be able to:
-
-1. Explain fundamental GIS concepts and distinguish between major types of spatial data
-2. Apply GIS methods to analyse vector, raster, and network-based geospatial data
-3. Create maps and visual outputs to communicate spatial information clearly
-4. Apply basic spatial statistical methods to interpret spatial patterns and relationships
-5. Design a reusable analytical workflow for investigating a real-world urban issue
-6. Use GeoAI critically and work in a group to publish a transparent and reproducible open-source workflow
+Her research examines how built environments shape everyday mobility, public space use, health, environmental exposure, and social interaction, with a focus on creating more liveable and inclusive high-density cities.
+]
 
 ---
 
-## Week 1 Focus
+name: before-survey
 
-In this lecture, students will be introduced to the course structure, intended learning outcomes, and assessment methods.
+## Short before-survey
 
-- What GIS is and why it matters in urban analysis
-- Core GIS concepts, including the history and components of GIS
-- Fundamentals of spatial data, including types, formats, and acquisition methods
-- A first light introduction to QGIS
-- An overview of how Python will be used later through Google Colab
+  <figure class="image-70">
+    <img src="imgs/precourse_survey.png">
+    <figsubcaption>Source: https://forms.cloud.microsoft/r/NwyC4irFdn</figsubcaption>
+  </figure>
 
 ---
 
-## Course Structure
+## Course policies
+
+### Office hours and communication
+
+Office: LKYCIC / Online
+
+Office Hours: by appointment
+
+---
+
+## Course policies
+
+### AI use policy
+
+This course teaches you to use AI alongside GIS.
+.left_half[
+
+Permitted:
+
+- Generating, explaining, and debugging code
+
+- Getting unstuck on technical problems
+
+- Explaining a concept from the readings
+
+- Brainstorming and suggesting
+
+- Improving the writing you have drafted
+
+- Drafting documentation and code comments
+
+- Getting critical feedback on your own argument
+
+]
+
+.right_half[
+**NOT** permitted:
+
+- Submitting unchecked AI output
+
+- Unverified citations, DOIs, or author 
+
+- Numbers, statistics, or findings that cannot be traced back to your data and code
+
+- Any AI-generated image as final delivery
+
+- Passing off generated prose as your own analysis in the individual report
+]
+
+
+---
+## Course policies
+
+.left_half[
+
+### Attendance and participation
+
+- If you cannot attend a class, please inform the instructor in advance where possible.
+
+- Repeated absence may affect your participation assessment (10%).
+
+]
+
+.right_half[
+
+### Late submission policy
+
+All assignments are to be submitted on time. 
+
+Late submissions are **graded down 10% per day**. 
+
+If something serious comes up, contact us before the deadline rather than after it.
+
+]
+
+---
+## Course policies
+
+### Assessment and grading
+
+**Two standards** govern everything you submit:
+
+(1) **Methodological transparency**
+
+Someone reading only your report and your repository should be able to tell exactly what you did and why, without asking you.
+
+- **Which data, exactly.  **  Name the dataset, the issuing agency, the version or vintage, the download date, and the licence.
+
+- **Unit of analysis.  ** Planning area, subzone, hexagonal grid, 200 m cell, or individual point. 
+
+- **Filtering and exclusions.  ** How many records you dropped, why, and what was left.
+
+- **Every parameter. **  Buffer distance, number of classes and classification scheme in a choropleth, confidence threshold on a model. 
+
+---
+## Course policies
+
+### Assessment and grading
+
+**Two standards** govern everything you submit:
+
+(2) **Reproducibility**
+
+Someone else, on a different machine, running your code, gets your numbers back.
+
+| Level | Meaning | Status in this course |
+| --- | --- | --- |
+| Re-runnable | Runs on your laptop, today | Bare minimum |
+| Reproducible | Runs on a clean machine, from raw data to final figures | **The course standard** |
+| Replicable | Another team could apply your method to a different dataset or city | What "reusable workflow" means |
+
+---
+
+## Course Structure and Focuses
+
+### Spatial data foundations
+
+What spatial data is, where Singapore's open data comes from (data.gov.sg, LTA DataMall, OpenStreetMap), and how to get it analysis-ready: formats, coordinate systems, cleaning, and integration across sources.
 
 .course-structure[
 
@@ -184,13 +288,73 @@ In this lecture, students will be introduced to the course structure, intended l
 |---|---|
 | Week 1 | Introduction to Urban Data Analytics |
 | Week 2 | [Urban Data Sources and Open Data in Singapore](data.html) |
-| Week 3 | [Introduction to Python in Urban Data Analytics (using Google Colab)](intro2python.html) |
+| Week 3 | [Introduction to Python in Urban Data Analytics](intro2python.html) |
 | Week 4 | [Spatial Data Processing and Cleaning](sdp.html) |
-| Week 5 | [Cartographic Design](Cartographic Design.html) |
-| Week 6 | [Spatial statistics and analysis of vector data](vector.html) |
-| Week 7 | Recess week |
-| Week 8 | [Spatial analysis of raster data](raster.html) |
 | Week 9 | [Spatial Data Integration and Feature Engineering](spdeng.html) |
+
+]
+
+---
+
+## Course Structure and Focuses
+
+### Core spatial analysis
+
+Vector operations and spatial statistics, raster analysis, and network analysis for accessibility and routing. The methodological backbone.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 6 | [Spatial statistics and analysis of vector data](vector.html) |
+| Week 8 | [Spatial analysis of raster data](raster.html) |
+| Week 10 | [Network Analysis for Urban Systems](network.html) |
+
+]
+
+<br>
+
+### Cartographic and visual communication
+
+Turning analysis into maps people can read, from thematic map design through to interactive web-based visualization.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 5 | [Cartographic Design](Cartographic Design.html) |
+| Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
+
+]
+
+---
+
+## Course Structure and Focuses
+
+### Critical use of GeoAI
+
+AI-assisted coding and computer vision on street-level and aerial imagery.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 3 | [Introduction to Python in Urban Data Analytics](intro2python.html) |
+| Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
+| Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
+
+]
+
+<br>
+
+### Reproducible workflow practice
+
+Building a reusable, documented, open-source analytical workflow around a real Singapore urban question, as a team.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
 | Week 10 | [Network Analysis for Urban Systems](network.html) |
 | Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
 | Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
@@ -217,50 +381,15 @@ The final group project accounts for 70% of the overall grade.
 
 ---
 
-## Final Project
+## Week 1 Focus
 
-**Spatial Analysis for a real-world urban issue in Singapore** (70%, Weeks 9–14)
+In this lecture, students will be introduced to the course structure, intended learning outcomes, and assessment methods.
 
-Each group defines a focused Singapore-based urban question, justifies why it matters, and develops a spatial argument using open government datasets, appropriate methods, and critical interpretation.
-
-Possible themes:
-
-- Transport accessibility and daily mobility
-- Housing, land use, and neighbourhood change
-- Distribution of public amenities and services
-- Environmental quality, green space, and liveability
-- The role of data and AI-assisted interpretation in policy discussion
-
-Delivered as three outputs: a presentation slide deck, a 6–8 page report, and reproducible, open-source project code.
-
----
-
-## Final Project Timeline
-
-| Week | Milestone |
-|---|---|
-| Week 9 | Understand the project, find literature, list candidate datasets |
-| Week 10 | Review studies, plan the project, begin the analytical workflow |
-| Week 11 | Collect and integrate the datasets for the workflow |
-| Week 12 | Conduct spatial analysis, produce and visualise results |
-| Week 13 | Prepare the presentation and report in tutorials |
-| Week 14 | 15-min presentation + 5-min Q&A |
-
----
-
-.left_half[
-
-### Bayi Li
-
-Trained across urban planning and geographical information science, his work integrates spatial analytics, machine learning, computer vision, and urban theory to examine mobility, public space, and environmental exposure in contemporary cities. He also teaches spatial analysis and urban data methods, with an emphasis on Python, GIS, and open-source analytical tools.
-]
-
-.left_half[
-
-### Xiaohan Liu
-
-She is an urban researcher whose work combines urban planning, GIS, mobility and network analysis, and urban data science. Her research examines how built environments shape everyday mobility, public space use, health, environmental exposure, and social interaction, with a focus on creating more liveable and inclusive high-density cities.
-]
+- What GIS is and why it matters in urban analysis
+- Core GIS concepts, including the history and components of GIS
+- Fundamentals of spatial data, including types, formats, and acquisition methods
+- A first light introduction to QGIS
+- An overview of how Python will be used later through Google Colab
 
 ---
 

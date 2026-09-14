@@ -42,14 +42,16 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 2. Internet connection
 3. Preferred to have basic knowledge in GIS
 
-## Objectives
+## Intended Learning Outcomes
 
-The main objectives of this bootcamp are: 
+By the end of this course, students should be able to:
 
-- A better understanding of Python as a programming language that enables **urban data science**
-- Write simple scripts to improve efficiency of geospatial processing
-  - Geospatial Data Manipulation
-  - Geospatial Data Analysis
+1. Explain fundamental GIS concepts and distinguish between major types of spatial data
+2. Apply GIS methods to analyse vector, raster, and network-based geospatial data
+3. Create maps and visual outputs to communicate spatial information clearly
+4. Apply basic spatial statistical methods to interpret spatial patterns and relationships
+5. Design a reusable analytical workflow for investigating a real-world urban issue
+6. Use GeoAI critically and work in a group to publish a transparent and reproducible open-source workflow
 
 - Basic visualisation of geospatial data
 
