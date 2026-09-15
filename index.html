@@ -160,6 +160,71 @@ name: tools
 
 ---
 
+## Open-source
+
+.left_half[
+
+### Transparency, Collaboration, and Decentralization
+
+[What is Open Source Software (OSS)?](https://github.com/resources/articles/what-is-open-source-software)
+
+**O**pen **S**cience **F**ramework
+
+https://www.cos.io/products/osf
+
+For Open source geospatial data science:
+
+
+
+- The Open Source Geospatial Foundation: https://www.osgeo.org/
+
+- [**F**ree and **O**pen-**S**ource **S**oftware for **G**eospatial (**FOSS4G**) workflows](https://foss4g.org/)
+
+- [Python Spatial Analysis Library (PySAL)](https://pysal.org/)
+
+]
+
+.right_half[
+
+  <figure>
+    <img src="https://www.cos.io/hs-fs/hubfs/LOS%20final%20for%20web%20v2.png?width=2000&height=2000&name=LOS%20final%20for%20web%20v2.png" width="60%">
+    <figsubcaption>Source: https://www.cos.io/lifecycle-open-science?</figsubcaption>
+  </figure>
+
+]
+
+---
+
+## Open-source
+
+.left_half[
+
+  #### Open source
+  
+  "Open source starts off with a license that provides royalty free (re)use of software. 
+  
+  Next, open source guarantees access to the source code for audit and modification and the ability to redistribute the software with no additional costs."
+]
+
+.right_half[
+
+  #### Open data
+
+  "Open Data applies the principles of free and open to geospatial data, allowing communities to collaborate on a data product."
+
+  In Singapore, most government data is released under the [Singapore Open Data Licence](https://www.sla.gov.sg/singapore-open-data-licence/).
+
+  Urban Analytics Lab: [Guide to open urban data in Singapore](https://ual.sg/project/open-urban-data-singapore/)
+
+]
+
+.references[
+- [What is Open Source?](https://www.osgeo.org/about/what-is-open-source/)
+- [What is Open Data?](https://www.osgeo.org/about/what-is-open-data/)
+]
+
+---
+
 name: installation
 
 ## Week 0 Before the class
@@ -542,165 +607,6 @@ In general, quantitative analysis of spatial data involves two main aspects: des
 
 ---
 
-## Vector and Raster Data
-
-Spatial data is primarily represented using two major models:
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector_n_raster_presentation.png" width="60%">
-    <figcaption>Raster and vector representation of real world entities.</figcaption>
-    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
-  </figure>
-</div>
-
----
-
-## Open-source
-
-### **F**ree and **O**pen-**S**ource **S**oftware for **G**eospatial (**FOSS4G**) workflows
-
-- The Open Source Geospatial Foundation: https://www.osgeo.org/
-
-- https://foss4g.org/
-
-.left_half[
-
-  #### Open source
-  
-  "Open source starts off with a license that provides royalty free (re)use of software. 
-  
-  Next, open source guarantees access to the source code for audit and modification and the ability to redistribute the software with no additional costs."
-]
-
-.right_half[
-
-  #### Open data
-
-  "Open Data applies the principles of free and open to geospatial data, allowing communities to collaborate on a data product."
-]
-
-.references[
-- [What is Open Source?](https://www.osgeo.org/about/what-is-open-source/)
-- [What is Open Data?](https://www.osgeo.org/about/what-is-open-data/)
-]
-
----
-
-## GIS Tools
-
-.left_half[
-
-  ### Open-source tools
-  
-  Flexibility
-]
-
-.right_half[
-
-  ### Proprietary softwares
-  <figure>
-    <img src="imgs/raster/raster_creation_qgis.png" width="100%">
-  </figure>
-]
-
-.references[
-- [Stephen Chege: 7 Essential Open-Source Python GIS Tools Dominating Geospatial Data Science in 2026](https://medium.com/tierra-insights/7-essential-open-source-python-gis-tools-dominating-geospatial-data-science-in-2025-1a4fba4d4921)
-]
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vector/create_vector_qgis.png" width="100%">
-  </figure>
-]
-
-## Vector with QGIS
-
-QGIS can create spatially-referenced vector data:
-
----
-
-## Vector with QGIS
-
-It can also be used to produce drawings that are not spatially meaningful:
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/vector_drawing_qgis.jpg" class="zoomable" id="ZoomableImage" alt="Data Structure Issue" width="60%">
-    <figcaption>Using QGIS to produce non-spatial drawings.</figcaption>
-    <figsubcaption>Source: https://www.xiaohongshu.com/discovery/item/6904d0d600000000030377eb?source=webshare&xhsshare=pc_web&xsec_token=CBGXxowpqIt_s8GpdYLDW6OcD31ABfaSln-8xkjALawQE=&xsec_source=pc_share</figsubcaption>
-  </figure>
-</div>
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/raster/raster_creation_qgis.png" width="100%">
-  </figure>
-]
-
-## Raster with QGIS
-
-Raster layers need more parameters and structure, so QGIS uses specialized tools to ensure they’re correctly set up.
-
-You need to define resolution, extent, data type (e.g., integer, float), and sometimes initial values.
-
---
-
-<xL>You can also create drawing using raster layer if you want.</xL>
-
----
-
-## Comparison: Vector and Raster Data Model
-
-Rule of Thumb:
-
-- Use vector for objects with **clear boundaries and relationships**.
-
-- Use raster for **continuous data** or when performing spatial modeling that requires **grid-based calculations**.
-
-|             |         | Raster                                      |         |Vector |
-|-------------|---------|---------------------------------------------|---------|------------------------------------------------------|
-|Advantages   | *  | Simple Data Structure                       | *  | More compact                                         |
-|             | *  | Efficiency in overlay operations            | *  | Efficiency in topology-based operations              |
-|             | *  | Better representing high spatial variability| *  | Better map visualisation                             |
-|             | *  | Widely used in remote sensing and image data|      |                                                      |
-|Disadvantages| *  | Less compact                                | *  | More complex                                         |                                         
-|             | *  | Underrepresented topological relationship   | *  | Inefficient representation of high spatial variablity|
-|             | *  | Disadvantages in visualisation              | *  | Unable to handle image data                          |
-|             | *  | Less compact                                |      |                                                      |
----
-
-## Interconversion between Vector and Raster Data
-
-.left_half[
-### Vector to Raster Conversion (Rasterisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/rasterize_qgis.png" width="72%">
-  </figure>
-</div>
-]
-
-.right_half[
-### Raster to Vector Conversion (Vectorisation/Polygonisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/polygonize_qgis.png" width="72%">
-  </figure>
-</div>
-]
-
-.clear[
-]
-
----
-
 ## Spatial Patterns
 
 Patterns turn raw spatial data into meaningful geographic insight.
@@ -739,32 +645,6 @@ What is spatial analysis?
 
 ---
 
-## Extended Definition of Spatial Analysis
-
-### Spatial data analysis
-
-Understanding the **spatial distribution, patterns, and relationships** within the data.
-
-### Spatial statistical analysis
-
-To test whether the spatial dataset exhibits **significant patterns or relationships**.
-
-Location is analysed as an attribute on top of conventional data analysis.
-
-### Spatial modelling
-
-Models to **explain or predict spatial phenomena** by simulating real-world processes or evaluating different scenarios
-
-### Spatial data manipulation
-
-**Creation, transformation, and management** of spatial data
-
-???
-
-Spatial analysis can be interpreted with different weights based on specfic context. 
-
----
-
 ## Spatial Analysis: From Data to Wisdom
 
 .right_half[
@@ -785,18 +665,6 @@ Spatial analysis adds to the value of geographic data and can **turn data into u
 
 Effective spatial analysis requires **an intelligent user**, not just a powerful computer
 
-<br>
-
---
-
-<xL>How can we compose a full process for acquiring wisdom through spatial analysis?</xL>
-
----
-
-## Maps: A powerful tool of Storytelling
-
-
-
 ---
 
 ## From Exploration to Explanation
@@ -810,28 +678,347 @@ Different spatial analysis projects have different aims, so the framework must a
 |*| Example -> |*| Example -> |*| Example -> |
 | | “What spatial patterns emerge from mapping daily pedestrian movement across Singapore's park network?” | | “How does accessibility to hawker centres vary across housing types in Singapore?” | | “To what extent do covered linkways influence the frequency of pedestrian movement across urban neighbourhoods?" |
 
-<br>
+---
 
---
+## Vector and Raster Data
 
-<xL>Thinking of the spatial data you have collected, what kind of research questions can you extract from them?</xL>
+Spatial data is primarily represented using two major models:
+
+.left_half[
+**Vector data** represents discrete features as geometries:
+
+- **Points**, **lines**, and **polygons**
+- e.g. bus stops, roads, buildings, planning areas
+
+**Raster data** represents space as a grid of cells:
+
+- Each cell (pixel) stores a value
+- e.g. satellite imagery, elevation, land surface temperature
+
+]
+
+.right_half[
+<div align="center">
+  <figure>
+    <img src="imgs/vector_n_raster_presentation.png" width="45%">
+    <figcaption>Raster and vector representation of real world entities.</figcaption>
+    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+  </figure>
+</div>
+]
+
+.clear[
+]
 
 ---
 
-<xL>Is your data sufficient to answer your research question?</xL>
+## Vector vs. Raster: The Key Difference
 
-<br>
+- **Vector** describes *where things are* using coordinates – best for objects with **clear boundaries** (e.g. parcels, roads).
 
-<xL>Identify an appropriate spatial analysis method that aligns with both your data and research question.</xL>
+- **Raster** describes *what value each location has* – best for **continuous phenomena** that vary across space (e.g. temperature, elevation).
 
-<br>
+The choice of data model affects how data is stored, visualised, and analysed. Both will be covered in detail in [Week 6 (vector)](vector.html) and [Week 8 (raster)](raster.html).
+
+---
+
+name: vector-formats
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/what_is_shp.jpg" width="50%">
+  </figure>
+  <figcaption>An example of Esri Shapefile.</figcaption>
+
+| File      | Purpose        | Required          |
+| --------- | -------------- | ----------------- |
+| .shp      | Geometry       | Yes               |
+| .shx      | Geometry index | Yes               |
+| .dbf      | Attributes     | Yes               |
+| .prj      | Projection     | No (but critical) |
+| .cpg      | Text encoding  | No                |
+| .sbn/.sbx | Spatial index  | No                |
+| .xml      | Metadata       | No                |
+]
+
+## Common Spatial Vector Data Formats
+
+Esri Shapefile
+
+A full Esri Shapefile is not one file. It is a set of files that must stay together in the same folder.
+
+**`.shp`:** Stores the geometry (points, lines, or polygons).
+
+**`.shx:`** Index file.
+
+**`.dbf:`** Attribute table which stores non-spatial data (names, IDs, values).
+
+**`.prj`**
+
+* Stores the coordinate reference system (CRS).
+* Without it, the data has no defined projection.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/what_is_geojson.jpg" width="100%">
+  </figure>
+  <figcaption>An example of GeoJSON.</figcaption>
+]
+
+## GeoJSON
+
+- A single text file: Easy to open, share, and inspect.
+
+- Human-readable (JSON format)
+
+- Designed for the web: 
+
+  Works well with JavaScript, Python, and web maps.
+
+- Slower and heavy for large datasets. 
+  
+  Best for small to medium data.
+
+---
+
+.right_half[
+<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1821_umakbckIqqQrcKP2bU-n7vkvGwA&ehbc=2E312F" width="100%" height="280"></iframe>
+]
+
+## KML
+
+KML (Keyhole Markup Language)
+
+- A single text file based on XML.
+
+- Designed for visualisation, not analysis.
+
+- Closely linked to Google Products.
+
+- Uses WGS84 (lat–lon) only
+
+---
+
+## GeoPackage
+
+.right_half[
+
+| | Shapefile | GeoPackage |
+|---|---|---|
+| Files | 3–7 files | **1 file** |
+| Layers per file | 1 | **Many** |
+| Field name length | 10 characters | Unlimited |
+| File size limit | 2 GB | Very large (SQLite) |
+| Raster support | No | Yes |
+
+]
+
+GeoPackage (`.gpkg`) is an open **OGC standard** built on an **SQLite** database.
+
+- A single file that can hold **multiple vector layers** (and rasters, tables, styles)
+
+- No field-name or 2 GB size limits of Shapefile
+
+- Stores the CRS inside the file
+
+- Default format in QGIS, well supported by GeoPandas
+
+- Not human-readable: open it in QGIS or Python rather than a text editor
 
 .references[
-- [QGIS Documentation](https://docs.qgis.org/latest/en/docs/)
-- [PyGIS: Spatial Queries](https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html)
-- [GISGeography: Spatial Patterns](https://gisgeography.com/spatial-patterns/)
-- [GIS StackExchange: Raster and Vector Data in GIS](https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use)
+- [GeoPackage (OGC)](https://www.geopackage.org/)
+- [Switch from Shapefile](http://switchfromshapefile.org/)
 ]
+
+---
+
+## Choosing a Vector Format
+
+| Format | Best for | Avoid when |
+|---|---|---|
+| **Shapefile** | Exchanging data with older software and agencies | Long field names, large data, non-ASCII text |
+| **GeoJSON** | Web maps, APIs, small to medium datasets | Very large datasets |
+| **KML** | Quick visualisation in Google Earth / My Maps | Analysis or projected CRS |
+| **GeoPackage** | Day-to-day GIS work in QGIS and Python | You need to read or edit the file as plain text |
+
+<xL>Rule of thumb:</xL> work in **GeoPackage**, share on the web as **GeoJSON**.
+
+We will read and write these formats in Python in [Week 4](sdp.html).
+
+---
+
+name: crs
+
+## Coordinate Reference Systems (CRS)
+
+Every spatial dataset, vector or raster, is tied to the Earth through a CRS.
+
+It is essential to work with the correct CRS before measuring, buffering, overlaying, or mapping.
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/gcs_pcs.png" width="60%">
+    <figcaption>Geographic and projected coordinate reference systems serve different purposes.</figcaption>
+    <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/</figsubcaption>
+  </figure>
+</div>
+
+---
+
+## Geographic vs Projected CRS
+
+- **Geographic CRS** stores locations on the globe, often in latitude and longitude (**degrees**)
+- **Projected CRS** converts the earth surface into planar coordinates, often in **metres**
+
+With projected CRS, distances and areas can usually be handled in more appropriate linear units for analysis.
+
+*Note:* Different projections introduce different distortions. A CRS suitable for display is not always the best CRS for analysis.
+
+--
+
+<xL>Always check the CRS.</xL> If a layer uses a geographic CRS, a 500 m buffer or a distance measurement will be calculated in degrees rather than metres.
+
+---
+
+## Map Distortion: Tissot's Indicatrix
+
+.right_half[
+  <figure>
+    <img src="imgs/crs/tissot_mercator.png" width="85%">
+    <figcaption>Mercator projection with Tissot's indicatrices: identical circles on the globe.</figcaption>
+    <figsubcaption>Source: Stefan Kühn, Wikimedia Commons (CC BY-SA 3.0)</figsubcaption>
+  </figure>
+]
+
+A flat map cannot preserve **area, shape, distance, and direction** all at once. Every projection trades some of them off.
+
+**Tissot's indicatrix** draws circles of the *same size* on the globe and shows how the projection deforms them:
+
+- Circles stay round → **shapes (angles)** are preserved locally
+- Circles change size → **areas** are distorted
+
+On Mercator (and Web Mercator, EPSG:3857), the scale grows by 1/cos(latitude):
+
+| Latitude | Length scale | Area scale |
+|---|---|---|
+| 0° (Singapore ≈ 1.3°) | ×1.00 | ×1.00 |
+| 45° | ×1.41 | ×2 |
+| 60° | ×2 | ×4 |
+
+.references[
+- [Tissot's Indicatrix: interactive explorer (M. Gimond)](https://mgimond.github.io/tissot/)
+- [Map Distortion with Tissot's Indicatrix (GIS Geography)](https://gisgeography.com/map-distortion-tissots-indicatrix/)
+]
+
+---
+
+## Map Distortion: The True Size of Countries
+
+.right_half[
+  <figure>
+    <img src="imgs/crs/worlds_animate.gif" width="85%">
+    <figcaption>Countries on the Mercator projection shrinking to their true relative size.</figcaption>
+    <figsubcaption>Source: Jakub Nowosad, Wikimedia Commons (CC BY-SA 4.0)</figsubcaption>
+  </figure>
+]
+
+On a Mercator map, Greenland looks as large as Africa, but **Africa is about 14 times larger**.
+
+High-latitude countries (Russia, Canada, Greenland) shrink the most, while countries near the equator barely change.
+
+<xL>What does this mean for measurement?</xL>
+
+- Measuring areas or distances in **EPSG:3857** at global scale gives wrong answers
+- For global analysis, use an **equal-area** projection for areas, or **geodesic** calculations for distances
+
+*Try it:* drag countries around on [The True Size Of](https://www.thetruesize.com/)
+
+.references[
+- [Mercator Misconceptions: The True Size of Countries (Visual Capitalist)](https://www.visualcapitalist.com/mercator-map-true-size-of-countries/)
+- [Animated map shows the true size of each country (Nature Index)](https://www.nature.com/nature-index/news-blog/data-visualisation-animated-map-mercater-projection-true-size-countries)
+]
+
+---
+
+## EPSG Codes and Singapore
+
+EPSG codes are unique identifiers linked to specific coordinate reference systems.
+
+| EPSG code | Name | Type | Typical use |
+|---|---|---|---|
+| **4326** | WGS 84 | Geographic (degrees) | GPS, GeoJSON, most APIs (e.g., LTA DataMall) |
+| **3857** | WGS 84 / Pseudo-Mercator | Projected (metres) | Web basemaps (OpenStreetMap, Google Maps) |
+| **3414** | SVY21 / Singapore TM | Projected (metres) | **Recommended for analysis in Singapore** |
+
+3857 looks right on a web map, but distorts distances and areas, so use **3414** for measurement in Singapore.
+
+.references[
+- [Coordinate reference systems for "Singapore" (epsg.io)](https://epsg.io/?q=Singapore)
+- [EPSG:3414 SVY21 / Singapore TM](https://epsg.io/3414)
+]
+
+---
+
+## Installing a QGIS Plugin: HCMGIS
+
+Plugins extend QGIS with extra tools. [HCMGIS](https://plugins.qgis.org/plugins/HCMGIS/) provides one-click basemaps (OpenStreetMap, Google, Esri, Carto, etc.) and other handy GIS tools.
+
+1. **Plugins → Manage and Install Plugins…**
+2. Go to the **All** tab and search for `HCMGIS`
+3. Select it and click **Install Plugin**
+4. A new **HCMGIS** menu appears in the menu bar
+5. Add a basemap: **HCMGIS → BaseMap →** choose a provider (e.g. **OpenStreetMap**)
+
+*Note:* Basemaps are loaded as online tiles (in EPSG:3857), so you need an internet connection. They are for reference only, not for analysis.
+
+---
+
+## Practice: Create a Point Layer in QGIS
+
+Create a layer with three Singapore landmarks in **EPSG:4326**.
+
+1. Add a basemap with the [HCMGIS](https://plugins.qgis.org/plugins/HCMGIS/) plugin: **HCMGIS → BaseMap → OpenStreetMap** (installed on the previous slide)
+2. **Layer → Create Layer → New GeoPackage Layer**
+   - File name: `sg_points.gpkg`, Geometry type: **Point**, CRS: **EPSG:4326 - WGS 84**
+   - Add a text field `name`, click **Add to Fields List**, then **OK**
+3. Select the layer, click **Toggle Editing** (pencil) → **Add Point Feature**
+4. Click on each location and type its `name`:
+   - **SUTD**, **Changi Airport**, **Merlion**
+5. Click **Save Layer Edits** and toggle editing off
+
+*Tip:* Zoom in on the basemap before clicking so each point lands in the right place.
+
+---
+
+## Practice: Reproject 4326 → 3857 → 3414
+
+1. **Processing Toolbox → Vector general → Reproject Layer**
+   - Input: `sg_points`, Target CRS: **EPSG:3857**, save as `sg_points_3857.gpkg`
+2. Run **Reproject Layer** again
+   - Input: `sg_points_3857`, Target CRS: **EPSG:3414**, save as `sg_points_3414.gpkg`
+3. Compare the layers: use **Identify Features** on the same point, or open **Layer Properties → Information** to confirm each CRS
+
+The points stay in the same place on the map, but their coordinates change (approximate values):
+
+| Point | EPSG:4326 (lon, lat) | EPSG:3857 (x, y) | EPSG:3414 (x, y) |
+|---|---|---|---|
+| SUTD | 103.964, 1.341 | 11573197, 149327 | 42521, 35940 |
+| Changi Airport | 103.992, 1.364 | 11576281, 151899 | 45604, 38495 |
+| Merlion | 103.855, 1.287 | 11561030, 143258 | 30357, 29913 |
+
+---
+
+## Checking and Reprojecting a CRS
+
+### QGIS
+
+- Check: **Layer Properties → Information** (or the CRS shown in the bottom-right status bar)
+- QGIS reprojects layers *on the fly* for display, which does **not** change the data
+- Reproject: **Processing Toolbox → Reproject Layer**, then save the output
+
+Make sure all layers share **one CRS** before overlaying, joining, or measuring.
 
 ---
 

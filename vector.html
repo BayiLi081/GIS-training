@@ -30,6 +30,7 @@ class: center
 .toc-wrapper[
   <div class="toc">
     <a href="#week6-focus" class="toc-item">Week 6 Focus</a>
+    <a href="#data-models" class="toc-item">Vector and Raster Data Models</a>
     <a href="#vector-core" class="toc-item">Vector Operations</a>
     <a href="#distance" class="toc-item">Distance and Proximity</a>
     <a href="#pattern" class="toc-item">Spatial Statistics</a>
@@ -67,10 +68,121 @@ By the end of this session, students should be able to:
 ## Lecture Structure
 
 1. What vector analysis is used for
-2. Buffering and overlay as core GIS operations
-3. Distance measurement and proximity questions
-4. Spatial statistics for describing patterns
-5. Tutorial workflow and reading material
+2. Vector and raster data models revisited
+3. Buffering and overlay as core GIS operations
+4. Distance measurement and proximity questions
+5. Spatial statistics for describing patterns
+6. Tutorial workflow and reading material
+
+---
+
+name: data-models
+
+## Vector and Raster Data Models
+
+In Week 1 we introduced the two major spatial data models. Before diving into vector analysis, let's look at them more closely: how they are created in QGIS, their strengths and weaknesses, and how to convert between them.
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector_n_raster_presentation.png" width="50%">
+    <figcaption>Raster and vector representation of real world entities.</figcaption>
+    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+  </figure>
+</div>
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/create_vector_qgis.png" width="100%">
+  </figure>
+]
+
+## Vector with QGIS
+
+QGIS can create spatially-referenced vector data:
+
+---
+
+## Vector with QGIS
+
+It can also be used to produce drawings that are not spatially meaningful:
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/vector_drawing_qgis.jpg" class="zoomable" id="ZoomableImage" alt="Data Structure Issue" width="50%">
+    <figcaption>Using QGIS to produce non-spatial drawings.</figcaption>
+    <figsubcaption>Source: https://www.xiaohongshu.com/discovery/item/6904d0d600000000030377eb?source=webshare&xhsshare=pc_web&xsec_token=CBGXxowpqIt_s8GpdYLDW6OcD31ABfaSln-8xkjALawQE=&xsec_source=pc_share</figsubcaption>
+  </figure>
+</div>
+
+*Note:* Adobe Illustrator and QGIS are both vector-based drawing tools, but QGIS is designed for spatial data, while Illustrator is for graphic design.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/raster/raster_creation_qgis.png" width="100%">
+  </figure>
+]
+
+## Raster with QGIS
+
+Raster layers need more parameters and structure, so QGIS uses specialized tools to ensure they’re correctly set up.
+
+You need to define resolution, extent, data type (e.g., integer, float), and sometimes initial values.
+
+--
+
+<xL>You can also create drawing using raster layer if you want.</xL>
+
+---
+
+## Comparison: Vector and Raster Data Model
+
+Rule of Thumb:
+
+- Use vector for objects with **clear boundaries and relationships**.
+
+- Use raster for **continuous data** or when performing spatial modeling that requires **grid-based calculations**.
+
+|             |         | Raster                                      |         |Vector |
+|-------------|---------|---------------------------------------------|---------|------------------------------------------------------|
+|Advantages   | *  | Simple Data Structure                       | *  | More compact                                         |
+|             | *  | Efficiency in overlay operations            | *  | Efficiency in topology-based operations              |
+|             | *  | Better representing high spatial variability| *  | Better map visualisation                             |
+|             | *  | Widely used in remote sensing and image data|      |                                                      |
+|Disadvantages| *  | Less compact                                | *  | More complex                                         |                                         
+|             | *  | Underrepresented topological relationship   | *  | Inefficient representation of high spatial variablity|
+|             | *  | Disadvantages in visualisation              | *  | Unable to handle image data                          |
+|             | *  | Less compact                                |      |                                                      |
+
+---
+
+## Interconversion between Vector and Raster Data
+
+.left_half[
+### Vector to Raster Conversion (Rasterisation)
+
+<div align="center">
+  <figure>
+    <img src="imgs/rasterize_qgis.png" width="72%">
+  </figure>
+</div>
+]
+
+.right_half[
+### Raster to Vector Conversion (Vectorisation/Polygonisation)
+
+<div align="center">
+  <figure>
+    <img src="imgs/polygonize_qgis.png" width="72%">
+  </figure>
+</div>
+]
+
+.clear[
+]
 
 ---
 

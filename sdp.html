@@ -148,44 +148,15 @@ This kind of dataset often requires data wrangling before the information can be
 
 name: formats-crs
 
-## Coordinate Reference Systems (CRS)
+## Recap: Coordinate Reference Systems (CRS)
 
-It is essential to work with the correct CRS before measuring, buffering, overlaying, or mapping.
+CRS was introduced in Week 1: <a href="index.html#crs" target="_blank">Coordinate Reference Systems (CRS)</a>
 
-<div align="center">
-  <figure>
-    <img src="imgs/vector/gcs_pcs.png" width="70%">
-    <figcaption>Geographic and projected coordinate reference systems serve different purposes.</figcaption>
-    <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/</figsubcaption>
-  </figure>
-</div>
+When cleaning data, check that:
 
----
-
-## Geographic vs Projected CRS
-
-- **Geographic CRS** stores locations on the globe, often in latitude and longitude
-- **Projected CRS** converts the earth surface into planar coordinates, often in metres
-
-With projected CRS, distances and areas can usually be handled in more appropriate linear units for analysis.
-
-*Note:* Different projections introduce different distortions. A CRS suitable for display is not always the best CRS for analysis.
-
----
-
-## EPSG Codes and Singapore
-
-EPSG codes are unique identifiers linked to specific coordinate reference systems.
-
-Common examples include:
-
-- EPSG: 4326
-- EPSG: 3857
-- EPSG: 7789
-
-Recommended EPSG codes for Singapore:
-
-[Coordinate reference systems for "Singapore" (epsg.io)](https://epsg.io/?q=Singapore)
+- every layer **has** a CRS (a missing `.prj` file means no defined CRS)
+- every layer uses the **same** CRS before overlaying or joining
+- data used for measurement is in a **projected** CRS, e.g. **EPSG:3414 (SVY21)** for Singapore
 
 ---
 
@@ -224,87 +195,18 @@ Open [3-01_vector.ipynb](https://github.com/BayiLi081/GIS-training/blob/py-bootc
 
 ---
 
-.right_half[
-  <figure>
-    <img src="imgs/vector/what_is_shp.jpg" width="50%">
-  </figure>
-  <figcaption>An example of Esri Shapefile.</figcaption>
+## Recap: Spatial Vector Data Formats
 
-<br>
+We introduced the main vector formats in [Week 1](index.html#vector-formats). A quick reminder before we read and write them in Python:
 
-| File      | Purpose        | Required          |
-| --------- | -------------- | ----------------- |
-| .shp      | Geometry       | Yes               |
-| .shx      | Geometry index | Yes               |
-| .dbf      | Attributes     | Yes               |
-| .prj      | Projection     | No (but critical) |
-| .cpg      | Text encoding  | No                |
-| .sbn/.sbx | Spatial index  | No                |
-| .xml      | Metadata       | No                |
-]
+| Format | Files | Strengths | Limitations |
+|---|---|---|---|
+| **Shapefile** (`.shp`) | Several files that must stay together | Widely supported, legacy standard | 10-character field names, 2 GB limit, no CRS without `.prj` |
+| **GeoJSON** (`.geojson`) | One text file | Human-readable, ideal for the web | Large and slow for big datasets |
+| **KML** (`.kml`) | One XML file | Easy to view in Google Earth / Maps | Visualisation only, WGS84 only |
+| **GeoPackage** (`.gpkg`) | One SQLite database | Multiple layers, no size/field-name limits, fast | Not human-readable |
 
-## Common Spatial Vector Data Formats
-
-Esri Shapefile
-
-A full Esri Shapefile is not one file. It is a set of files that must stay together in the same folder.
-
-**`.shp`**
-
-* Stores the geometry (points, lines, or polygons).
-
-**`.shx`**
-
-* Index file.
-
-**`.dbf`**
-
-* Attribute table.
-* Stores non-spatial data (names, IDs, values).
-
-**`.prj`**
-
-* Stores the coordinate reference system (CRS).
-* Without it, the data has no defined projection.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vector/what_is_geojson.jpg" width="100%">
-  </figure>
-  <figcaption>An example of GeoJSON.</figcaption>
-]
-
-## GeoJSON
-
-- A single text file: Easy to open, share, and inspect.
-
-- Human-readable (JSON format)
-
-- Designed for the web: 
-
-  Works well with JavaScript, Python, and web maps.
-
-- Slower and heavy for large datasets. 
-  
-  Best for small to medium data.
-
----
-
-## KML
-
-KML (Keyhole Markup Language)
-
-- A single text file based on XML.
-
-- Designed for visualisation, not analysis.
-
-- Closely linked to Google Products.
-
-- Uses WGS84 (lat–lon) only
-
-<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1821_umakbckIqqQrcKP2bU-n7vkvGwA&ehbc=2E312F" width="100%" height="280"></iframe>
+For cleaning and analysis workflows, **GeoPackage** is usually the best working format; export to **GeoJSON** when sharing on the web.
 
 ---
 
@@ -332,6 +234,9 @@ file_gpd.to_file(f"{file_path}.geojson", driver="GeoJSON")
 
 # 3. Save as KML (requires fiona support)
 file_gpd.to_file(f"{file_path}.kml", driver="KML")
+
+# 4. Save as GeoPackage
+file_gpd.to_file(f"{file_path}.gpkg", driver="GPKG")
 ```
 
 Refer to [Official Documentation: Write files](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.to_file.html)
@@ -433,7 +338,7 @@ Your checklist should include:
 
 - Spatial data cleaning is part of analysis, not a separate afterthought.
 - CRS, geometry validity, and attribute structure must be checked before spatial operations.
-- Shapefile, GeoJSON, and KML serve different purposes and carry different constraints.
+- Shapefile, GeoJSON, KML, and GeoPackage serve different purposes and carry different constraints.
 - QGIS is useful for inspection and repair, while Python is useful for reproducible transformation.
 - Clean, documented spatial data makes later cartography and spatial analysis more reliable.
 
