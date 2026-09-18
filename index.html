@@ -112,7 +112,6 @@ class: center
 ]
 
 <!-- <a href="about.html" class="toc-item">About This Project</a>
-<a href="svg-spotlight.html" class="toc-item">Demo: SVG Feature Spotlight</a>
 </div> -->
 
 
@@ -1182,6 +1181,79 @@ name: appendix_git
 4. **Edit → Commit → Push** a small change and watch your page update
 
 ]
+
+---
+
+name: practice_folium
+
+## Practice: Publish a Python-Generated Map with Folium
+
+.left_half[
+
+Generate an interactive web map with a few lines of **Python** using the [folium](https://python-visualization.github.io/folium/) library — no HTML or JavaScript required.
+
+folium builds on the same **Leaflet.js** engine behind the Interactive Metro Map demo in [Web-Based Spatial Visualisation](webmap.html), but lets you create the whole map from Python.
+
+You will learn to:
+- Generate a Leaflet-based map with `folium.Map()`
+- Add markers and popups from Python
+- Publish the resulting HTML file on the **GitHub Pages** site you built earlier
+
+]
+
+.right_half[
+
+```python
+import folium
+
+m = folium.Map(
+    location=[1.3521, 103.8198],
+    zoom_start=11,
+)
+
+folium.Marker(
+    [1.3521, 103.8198],
+    popup="Singapore",
+).add_to(m)
+
+m.save("map.html")
+```
+
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 1 — Install and generate:** in a terminal or notebook
+
+```bash
+pip install folium
+```
+
+Run the Python code from the previous slide. This saves a single self-contained **`map.html`** — the same kind of file used for the metro map demo in [Web-Based Spatial Visualisation](webmap.html).
+
+]
+
+.right_half[
+
+**Step 2 — Publish it:** copy `map.html` into the **`your-username.github.io`** repository you created in the resume practice
+
+- `edit` → `commit` → `push`, using the everyday Git loop from the Appendix
+- Wait 1–2 minutes, then visit **`https://your-username.github.io/map.html`** to see it live
+
+]
+
+---
+
+## Practice: Going Further
+
+- Add a marker for every row of a `pandas` DataFrame or `GeoDataFrame` instead of a single point
+- Try a different basemap with the `tiles=` argument, e.g. `"cartodbpositron"` or `"cartodbdark_matter"` (some CARTO styles now require a free API key)
+- Style markers by category, like the line colours in the Interactive Metro Map demo
+- Link `map.html` from your resume's *Projects* section
 
 </textarea>
     <script src="src/template.js"></script>

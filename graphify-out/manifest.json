@@ -1,0 +1,1472 @@
+{
+  "html_snippets/panoramic-segmentation/selected_example/selected_example_seg_meta.json": {
+    "mtime": 1784525752.876437,
+    "seen": 1789712734.1578753,
+    "ast_hash": "70c969a2c83e9ff1884d75309dc0b6a9",
+    "semantic_hash": ""
+  },
+  "html_snippets/policy_network/TianjinEcoCity_query_data.js": {
+    "mtime": 1784525752.984359,
+    "seen": 1789712734.1578836,
+    "ast_hash": "5ed5a43df1a3e5b6110f5593438c13cc",
+    "semantic_hash": ""
+  },
+  "html_snippets/policy_network/TianjinEcoCity_query_data.json": {
+    "mtime": 1784525753.026692,
+    "seen": 1789712734.1578848,
+    "ast_hash": "7c7c78276bd5833695609a07bdefa620",
+    "semantic_hash": ""
+  },
+  "html_snippets/policy_network/query_app.js": {
+    "mtime": 1784525753.0722797,
+    "seen": 1789712734.1578858,
+    "ast_hash": "0fd6d841072f4a3d9999bc8088ce045c",
+    "semantic_hash": ""
+  },
+  "qgis_py/clean_html.py": {
+    "mtime": 1784525768.5724797,
+    "seen": 1789712734.1578865,
+    "ast_hash": "190881f4a9d831e58b9d34c712dfe8c0",
+    "semantic_hash": ""
+  },
+  "src/custom.js": {
+    "mtime": 1789116171.9493177,
+    "seen": 1789712734.157887,
+    "ast_hash": "b61c09de03a442040076b65740d965f7",
+    "semantic_hash": ""
+  },
+  "src/remark-latest.min.js": {
+    "mtime": 1789116172.2640367,
+    "seen": 1789712734.1578877,
+    "ast_hash": "fb76a9403a02610715016ed5c42ed950",
+    "semantic_hash": ""
+  },
+  "src/template.js": {
+    "mtime": 1789116172.3283002,
+    "seen": 1789712734.1578882,
+    "ast_hash": "5a5cbf133b30e594450ad8abf0f38695",
+    "semantic_hash": ""
+  },
+  "-1_advise.md": {
+    "mtime": 1784525752.388654,
+    "seen": 1789712734.1578887,
+    "ast_hash": "3ca6f9faa5dc51c97190de15e8e97df6",
+    "semantic_hash": ""
+  },
+  "0-01_intro.md": {
+    "mtime": 1784525752.428506,
+    "seen": 1789712734.1578894,
+    "ast_hash": "f24d3824b360cc3331cff9a9df8a0782",
+    "semantic_hash": ""
+  },
+  "about.html": {
+    "mtime": 1787884477.6480806,
+    "seen": 1789712734.1578898,
+    "ast_hash": "95d089e01baf6684a855d188e5a3edfa",
+    "semantic_hash": ""
+  },
+  "advanced_datawrangling.html": {
+    "mtime": 1784525752.455361,
+    "seen": 1789712734.1578906,
+    "ast_hash": "6c7d81e91e52946e2f532d243393383b",
+    "semantic_hash": ""
+  },
+  "appliedgis.html": {
+    "mtime": 1784525752.475638,
+    "seen": 1789712734.157891,
+    "ast_hash": "1420aadc62d3db5477d1fe974a9e9c92",
+    "semantic_hash": ""
+  },
+  "challenge_answer.md": {
+    "mtime": 1784525752.4847174,
+    "seen": 1789712734.1578918,
+    "ast_hash": "64ce39b659e783d24d3db894b09848eb",
+    "semantic_hash": ""
+  },
+  "cvurban.html": {
+    "mtime": 1784525752.4989362,
+    "seen": 1789712734.157892,
+    "ast_hash": "0ff6c16aaa0815130eada602557c6104",
+    "semantic_hash": ""
+  },
+  "data.html": {
+    "mtime": 1784525752.5076585,
+    "seen": 1789712734.157893,
+    "ast_hash": "ba06207f4d5d02f7c77a2a00c794b150",
+    "semantic_hash": ""
+  },
+  "docs/Git_Setup.md": {
+    "mtime": 1789523567.8814971,
+    "seen": 1789712734.1578934,
+    "ast_hash": "7131560baeb702bebe598bf9fc2598b6",
+    "semantic_hash": ""
+  },
+  "docs/Python_Setup_Windows.md": {
+    "mtime": 1788920923.9624517,
+    "seen": 1789712734.1578937,
+    "ast_hash": "ec478c68de89fe904dd32344625963a2",
+    "semantic_hash": ""
+  },
+  "docs/Python_Setup_macOS.md": {
+    "mtime": 1788920918.0092998,
+    "seen": 1789712734.1578941,
+    "ast_hash": "aaa32cff9981faa9b10ecba207eb3adb",
+    "semantic_hash": ""
+  },
+  "final.html": {
+    "mtime": 1789121118.3705564,
+    "seen": 1789712734.1578946,
+    "ast_hash": "f2f57ee405e5701778bfd10d13158302",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/generated_curtain_color.html": {
+    "mtime": 1784525752.5747783,
+    "seen": 1789712734.157895,
+    "ast_hash": "dd258748a7ba2dd13ba84c3e9d0e0826",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/generated_curtain_overlay.html": {
+    "mtime": 1784525752.6041195,
+    "seen": 1789712734.1578953,
+    "ast_hash": "febba6c921a74c6525756e129590e1cd",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/generated_toggle.html": {
+    "mtime": 1784525752.6284344,
+    "seen": 1789712734.1578963,
+    "ast_hash": "cc4311aa25c57e45272f6abb83f7ec7e",
+    "semantic_hash": ""
+  },
+  "html_snippets/policy_network/TianjinEcoCity_query_explorer.html": {
+    "mtime": 1784525753.048306,
+    "seen": 1789712734.1578968,
+    "ast_hash": "970daa0f582016f91012254dc4e397b7",
+    "semantic_hash": ""
+  },
+  "html_snippets/resume.html": {
+    "mtime": 1784525753.1147525,
+    "seen": 1789712734.1578972,
+    "ast_hash": "4e8272c8b3123164a792c25bf3655c4b",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1789523567.9128602,
+    "seen": 1789712734.1578977,
+    "ast_hash": "823156c0f258eef5b319086e5a1f0ad9",
+    "semantic_hash": ""
+  },
+  "intro2python.html": {
+    "mtime": 1784525768.479184,
+    "seen": 1789712734.157898,
+    "ast_hash": "b27d7121b686fc131729346f34b61b45",
+    "semantic_hash": ""
+  },
+  "map.html": {
+    "mtime": 1784525768.5045586,
+    "seen": 1789712734.1578984,
+    "ast_hash": "f4fac079780b6af2d791d3db1b3ae5df",
+    "semantic_hash": ""
+  },
+  "mapdesign.html": {
+    "mtime": 1784525768.5176651,
+    "seen": 1789712734.157899,
+    "ast_hash": "298d0eb30f61301e1d5b565209dddbdd",
+    "semantic_hash": ""
+  },
+  "markdown.html": {
+    "mtime": 1788921078.8563614,
+    "seen": 1789712734.1578996,
+    "ast_hash": "b45ddfd2b1868f3a4f68d5c4368ab380",
+    "semantic_hash": ""
+  },
+  "network.html": {
+    "mtime": 1784525768.5340574,
+    "seen": 1789712734.1579,
+    "ast_hash": "b44ad422dad8e196f0c2354d1f1debc5",
+    "semantic_hash": ""
+  },
+  "project_practice.md": {
+    "mtime": 1784525768.5413823,
+    "seen": 1789712734.1579006,
+    "ast_hash": "dc98105222e5d0bfb5ca123d662fbbbc",
+    "semantic_hash": ""
+  },
+  "py-bootcamp.html": {
+    "mtime": 1784525768.5553937,
+    "seen": 1789712734.157901,
+    "ast_hash": "4bd852c60c5f90e9ad631127dc65d983",
+    "semantic_hash": ""
+  },
+  "raster.html": {
+    "mtime": 1784525768.6384344,
+    "seen": 1789712734.1579015,
+    "ast_hash": "25484ee3e0b262692ca30200732f3857",
+    "semantic_hash": ""
+  },
+  "readme.md": {
+    "mtime": 1789120940.9915123,
+    "seen": 1789712734.1579018,
+    "ast_hash": "45ba8f49da89762642f9554afffefc6f",
+    "semantic_hash": ""
+  },
+  "sdp.html": {
+    "mtime": 1789523567.9128602,
+    "seen": 1789712734.1579046,
+    "ast_hash": "99c7f4218d54900cb55b38eb40605e97",
+    "semantic_hash": ""
+  },
+  "spdeng.html": {
+    "mtime": 1784525768.680122,
+    "seen": 1789712734.1579053,
+    "ast_hash": "b3a4a776fd9d47b48b9151fc3483bc5e",
+    "semantic_hash": ""
+  },
+  "src/nav.html": {
+    "mtime": 1789116172.413413,
+    "seen": 1789712734.1579058,
+    "ast_hash": "b3c6650dc7259906c1b32fe56b5a636a",
+    "semantic_hash": ""
+  },
+  "src/nav2.html": {
+    "mtime": 1789116172.4294448,
+    "seen": 1789712734.1579065,
+    "ast_hash": "2637b4f2badafeb4ae79a6f82165c929",
+    "semantic_hash": ""
+  },
+  "svg-spotlight.html": {
+    "mtime": 1784525768.8848274,
+    "seen": 1789712734.157907,
+    "ast_hash": "b6ce47504bd96f6b4f1abd6643ebe9ff",
+    "semantic_hash": ""
+  },
+  "todo.md": {
+    "mtime": 1784525768.901585,
+    "seen": 1789712734.1579072,
+    "ast_hash": "0887d537074bc8b631d3cdee75d56082",
+    "semantic_hash": ""
+  },
+  "vector.html": {
+    "mtime": 1789523567.9128602,
+    "seen": 1789712734.1579077,
+    "ast_hash": "e8a75355f47c2627c0d16fe28f40bc3e",
+    "semantic_hash": ""
+  },
+  "webapp.html": {
+    "mtime": 1784525768.9350471,
+    "seen": 1789712734.1579082,
+    "ast_hash": "375bd45212cacd862ac66f4801a39253",
+    "semantic_hash": ""
+  },
+  "webmap.html": {
+    "mtime": 1784525768.948586,
+    "seen": 1789712734.15791,
+    "ast_hash": "64f24a8c15e42cebee8ff5cb8e4b27e1",
+    "semantic_hash": ""
+  },
+  "week05_Cartography.html": {
+    "mtime": 1784525768.962438,
+    "seen": 1789712734.1579103,
+    "ast_hash": "a20402b70cc1cb8ad488cea4331fe855",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/selected_example.jpg": {
+    "mtime": 1784525752.809239,
+    "seen": 1789712734.1579108,
+    "ast_hash": "71d6bf493582dfdfbb7a1f2683a3405f",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/selected_example_seg_color.png": {
+    "mtime": 1784525752.8331027,
+    "seen": 1789712734.1579113,
+    "ast_hash": "20a414283476c0735c2d4d3c27c6b985",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/selected_example_seg_idmap.png": {
+    "mtime": 1784525752.8567495,
+    "seen": 1789712734.1579118,
+    "ast_hash": "5ef446d30b06505c3c9931978af2876c",
+    "semantic_hash": ""
+  },
+  "html_snippets/panoramic-segmentation/selected_example/selected_example_seg_overlay.png": {
+    "mtime": 1784525752.933601,
+    "seen": 1789712734.157912,
+    "ast_hash": "a730d43c92ec8cf9724cfa2a036262ff",
+    "semantic_hash": ""
+  },
+  "imgs/DIKW_Pyramid.jpg": {
+    "mtime": 1784525753.2345726,
+    "seen": 1789712734.1579125,
+    "ast_hash": "ba010d30f8decd87375a55d864631ccf",
+    "semantic_hash": ""
+  },
+  "imgs/Nominal_versus_Ordinal.png": {
+    "mtime": 1784525753.3318875,
+    "seen": 1789712734.157913,
+    "ast_hash": "f7efcbad7fe713380a96d22469a12734",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/H3_Hex_nested.png": {
+    "mtime": 1784525753.364292,
+    "seen": 1789712734.1579137,
+    "ast_hash": "68445494fd8543cae35a09e60ac7d767",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/HexGridCartograms.jpg": {
+    "mtime": 1784525753.3958192,
+    "seen": 1789712734.157914,
+    "ast_hash": "c2046b38e8fb7f28e9e2d629e4986c3d",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/cartogram_example.jpg": {
+    "mtime": 1784525753.431686,
+    "seen": 1789712734.1579144,
+    "ast_hash": "c90e276eeff0581b32cc6e322e9fc757",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/cartogram_example2.jpg": {
+    "mtime": 1784525753.4734144,
+    "seen": 1789712734.1579146,
+    "ast_hash": "12d321e87bc65d6c0128805202526494",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/cartogram_example2.png": {
+    "mtime": 1784525753.7604468,
+    "seen": 1789712734.157915,
+    "ast_hash": "5363dea34acad59e26fcbebc4c3a3df9",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/continuous_surface_modelling.png": {
+    "mtime": 1784525753.9370153,
+    "seen": 1789712734.1579156,
+    "ast_hash": "d5f8b6ae866ffcf51a52dd3ccefc3bf0",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/create_grids.jpg": {
+    "mtime": 1784525753.9700124,
+    "seen": 1789712734.1579158,
+    "ast_hash": "b58ce1d5a54cf1975471c82f8836662e",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/dorlingcartogram.jpg": {
+    "mtime": 1784525754.024102,
+    "seen": 1789712734.1579163,
+    "ast_hash": "c309d0a82bfec218f42ee918a6b0c368",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/final_presentation_evaluation.jpg": {
+    "mtime": 1784525754.0986946,
+    "seen": 1789712734.157917,
+    "ast_hash": "f8c951b9952ee8c4d69b6596f96123d8",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/geotagged_tweets.webp": {
+    "mtime": 1784525754.1690397,
+    "seen": 1789712734.1579173,
+    "ast_hash": "91bde9de07850730d44a472197c9179f",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/gps_pts_in_park.png": {
+    "mtime": 1784525754.4191823,
+    "seen": 1789712734.1579177,
+    "ast_hash": "49455a808336d921929015eec908a218",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/gps_trajectory_reconstruction.png": {
+    "mtime": 1784525754.7726724,
+    "seen": 1789712734.157918,
+    "ast_hash": "7c5917d82506f3133771921e92241abe",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/gvi_segmentation_model.webp": {
+    "mtime": 1784525754.9359574,
+    "seen": 1789712734.1579185,
+    "ast_hash": "f558981ebbd96af70974c13f96bb0ff1",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/html_geojson_clean.jpg": {
+    "mtime": 1784525755.026785,
+    "seen": 1789712734.1579187,
+    "ast_hash": "19f1098039bf9dfe21cf2746cfa9a96d",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/informing-planning-decisions.jpg": {
+    "mtime": 1784525755.0588968,
+    "seen": 1789712734.1579192,
+    "ast_hash": "94b14805c18e5b5995d769c8c5772126",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/maup_scale_effect.jpg": {
+    "mtime": 1784525755.0794146,
+    "seen": 1789712734.1579196,
+    "ast_hash": "925aa0e945a3b87552274a4ddb4a0850",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/maup_sensitivity.png": {
+    "mtime": 1784525755.10626,
+    "seen": 1789712734.1579204,
+    "ast_hash": "66fe826f23091a5689c14bce63be95c4",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/maup_zonation_effect.png": {
+    "mtime": 1784525755.1334057,
+    "seen": 1789712734.1579206,
+    "ast_hash": "e3fe9f9e03e61c8a034f113e9edd0fb1",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/network_social_media_data.jpg": {
+    "mtime": 1784525755.1779206,
+    "seen": 1789712734.157921,
+    "ast_hash": "67baca86030554c2b5a0178b1c160673",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/overall_framework.webp": {
+    "mtime": 1784525755.207689,
+    "seen": 1789712734.1579216,
+    "ast_hash": "d0713afe86264823864643362b0eace4",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/smart-city-system.jpg": {
+    "mtime": 1784525755.2301822,
+    "seen": 1789712734.1579218,
+    "ast_hash": "aaa71d2cf70feaada3a8f31f91cafb3b",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/svi_nus.webp": {
+    "mtime": 1784525755.2543788,
+    "seen": 1789712734.1579223,
+    "ast_hash": "c5b6409f53becbb69f49bd01861b8246",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/tessellation_systems.png": {
+    "mtime": 1784525755.2760704,
+    "seen": 1789712734.1579227,
+    "ast_hash": "9f900ef20ea96c1e650de76d7a4e90a1",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/tile_map_cartogram.webp": {
+    "mtime": 1784525755.2878494,
+    "seen": 1789712734.157923,
+    "ast_hash": "11cc2852eacf7bcde5c41b7b21da8c6d",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/tweets_singapore.webp": {
+    "mtime": 1784525755.340697,
+    "seen": 1789712734.1579237,
+    "ast_hash": "56800fd6a1f5db025c5558c6cb00d99c",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/upload_data_2colab.png": {
+    "mtime": 1784525755.3624926,
+    "seen": 1789712734.1579242,
+    "ast_hash": "04b011654a19b7f5bf37e558abb665ae",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/upload_notebook2colab.png": {
+    "mtime": 1784525755.4012816,
+    "seen": 1789712734.1579244,
+    "ast_hash": "4d4c4b1c1e7881dbba38c535b44ae937",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/vlm_understanding.png": {
+    "mtime": 1784525755.5101497,
+    "seen": 1789712734.157925,
+    "ast_hash": "a29c3fbcc9ec553dc15e9ebba3cf1ccb",
+    "semantic_hash": ""
+  },
+  "imgs/applygis/zonedesign_azp.jpg": {
+    "mtime": 1784525755.5330415,
+    "seen": 1789712734.1579254,
+    "ast_hash": "aadad80280be934a5692914fcd7ee011",
+    "semantic_hash": ""
+  },
+  "imgs/crs/tissot_mercator.png": {
+    "mtime": 1789523567.8814971,
+    "seen": 1789712734.1579258,
+    "ast_hash": "9ae6a8c09aa89169e612dfb0c3c40223",
+    "semantic_hash": ""
+  },
+  "imgs/crs/worlds_animate.gif": {
+    "mtime": 1789523567.8814971,
+    "seen": 1789712734.1579266,
+    "ast_hash": "3b33150c6286ef28d70dbcee29edc578",
+    "semantic_hash": ""
+  },
+  "imgs/data_cleaning/data_page.jpg": {
+    "mtime": 1784525755.5784435,
+    "seen": 1789712734.1579273,
+    "ast_hash": "d7440ac29004064b4e603e19a1f5eb20",
+    "semantic_hash": ""
+  },
+  "imgs/data_cleaning/data_structure_issue.jpg": {
+    "mtime": 1784525755.6459363,
+    "seen": 1789712734.1579278,
+    "ast_hash": "e5166e884d916f43212aa19d93ea3dca",
+    "semantic_hash": ""
+  },
+  "imgs/data_cleaning/python_console_qgis.jpg": {
+    "mtime": 1784525755.6711307,
+    "seen": 1789712734.157928,
+    "ast_hash": "9e3b160535f3661f2a61d972a9de2857",
+    "semantic_hash": ""
+  },
+  "imgs/data_cleaning/python_editor.jpg": {
+    "mtime": 1784525755.694101,
+    "seen": 1789712734.1579285,
+    "ast_hash": "49b2d0645024e1ca94023abc80fb9f12",
+    "semantic_hash": ""
+  },
+  "imgs/data_cleaning/whynotrunpython_directly_withqgis.jpg": {
+    "mtime": 1784525755.7127957,
+    "seen": 1789712734.1579294,
+    "ast_hash": "b9b1a490bc06cf4593a5e264e9eb4dfe",
+    "semantic_hash": ""
+  },
+  "imgs/data_gov_sg/csv_data.jpg": {
+    "mtime": 1784525755.751816,
+    "seen": 1789712734.15793,
+    "ast_hash": "00a51ee3f68a6c8a3a1d40aefdadee05",
+    "semantic_hash": ""
+  },
+  "imgs/distance/different_type_distances.jpg": {
+    "mtime": 1784525755.793775,
+    "seen": 1789712734.1579306,
+    "ast_hash": "b599a9ee4d80127078576ebba86467d3",
+    "semantic_hash": ""
+  },
+  "imgs/distance/planar_geodesic.png": {
+    "mtime": 1784525755.8442764,
+    "seen": 1789712734.1579309,
+    "ast_hash": "9c1dac59101bcebbdfbc03ec67d303c0",
+    "semantic_hash": ""
+  },
+  "imgs/distance/routes_comparison.gif": {
+    "mtime": 1784525756.190671,
+    "seen": 1789712734.1579313,
+    "ast_hash": "de5e30578b4be35ef3df95f80fa2277e",
+    "semantic_hash": ""
+  },
+  "imgs/download_4_pygis.jpg": {
+    "mtime": 1784525756.2210095,
+    "seen": 1789712734.1579318,
+    "ast_hash": "ab857246c7c0d722dc96c73418b938f9",
+    "semantic_hash": ""
+  },
+  "imgs/git_page/commit_change.jpg": {
+    "mtime": 1789523567.897113,
+    "seen": 1789712734.1579323,
+    "ast_hash": "f8da4b09ea103ace7496204b55562914",
+    "semantic_hash": ""
+  },
+  "imgs/git_page/deployment.jpg": {
+    "mtime": 1789523567.899125,
+    "seen": 1789712734.1579328,
+    "ast_hash": "ed92fc0e5fce22198d27baa52b135229",
+    "semantic_hash": ""
+  },
+  "imgs/git_page/edit_yaml.jpg": {
+    "mtime": 1789523567.899125,
+    "seen": 1789712734.1579332,
+    "ast_hash": "551c8743982f1d83111f04ceec4f92ac",
+    "semantic_hash": ""
+  },
+  "imgs/git_page/fork_a_repository.jpg": {
+    "mtime": 1789523567.9057941,
+    "seen": 1789712734.1579337,
+    "ast_hash": "af21a9be585eface58f9bfeef0af74f5",
+    "semantic_hash": ""
+  },
+  "imgs/git_page/product_display.jpg": {
+    "mtime": 1789523567.9057941,
+    "seen": 1789712734.1579344,
+    "ast_hash": "38afce6f7f74ab57d0895ca6bdc107db",
+    "semantic_hash": ""
+  },
+  "imgs/github_search.png": {
+    "mtime": 1784525756.2472684,
+    "seen": 1789712734.157935,
+    "ast_hash": "c3c30e28cda37a4be48a308879e90041",
+    "semantic_hash": ""
+  },
+  "imgs/how-a-web-api-works.jpg": {
+    "mtime": 1784525756.2682886,
+    "seen": 1789712734.1579351,
+    "ast_hash": "c366b27b361943906ff1be158c6ebb2e",
+    "semantic_hash": ""
+  },
+  "imgs/install_QGIS.jpg": {
+    "mtime": 1788921570.6286082,
+    "seen": 1789712734.1579356,
+    "ast_hash": "e64524ecb193c16f1b7629741b527c69",
+    "semantic_hash": ""
+  },
+  "imgs/install_experimental.png": {
+    "mtime": 1784525756.2876973,
+    "seen": 1789712734.157936,
+    "ast_hash": "67a76adc718114bc9e90dcc58b0a5cb6",
+    "semantic_hash": ""
+  },
+  "imgs/install_hotspot_qgis.png": {
+    "mtime": 1784525756.3125372,
+    "seen": 1789712734.1579366,
+    "ast_hash": "04d73dd16b2f722f16889c5045e210b2",
+    "semantic_hash": ""
+  },
+  "imgs/jupyter/buffer-qgis.jpg": {
+    "mtime": 1784525756.3812523,
+    "seen": 1789712734.157937,
+    "ast_hash": "10b24f3faf8577afa39f000b4abe29f9",
+    "semantic_hash": ""
+  },
+  "imgs/jupyter/google_colab_interface.jpg": {
+    "mtime": 1784525756.4186158,
+    "seen": 1789712734.1579375,
+    "ast_hash": "ef35253d9fdd9a74d9fb026ec895247e",
+    "semantic_hash": ""
+  },
+  "imgs/logo.svg": {
+    "mtime": 1784525756.427364,
+    "seen": 1789712734.157938,
+    "ast_hash": "b062edf8bce883e6c0cdec843d74cf0f",
+    "semantic_hash": ""
+  },
+  "imgs/network/7_bridges_vectors.png": {
+    "mtime": 1784525756.4682143,
+    "seen": 1789712734.1579385,
+    "ast_hash": "777fe6317a411451d3e7fda31b32da82",
+    "semantic_hash": ""
+  },
+  "imgs/network/Euclidean_distance_2d_image.svg": {
+    "mtime": 1784525756.4880319,
+    "seen": 1789712734.1579387,
+    "ast_hash": "8c68ddeabd5660d19adfb75bf97000da",
+    "semantic_hash": ""
+  },
+  "imgs/network/available_tools_in_QGIS.png": {
+    "mtime": 1784525756.522518,
+    "seen": 1789712734.1579392,
+    "ast_hash": "93cd7216f5d5ae21fad6b0afa4c0be07",
+    "semantic_hash": ""
+  },
+  "imgs/network/avg_path_len.png": {
+    "mtime": 1784525756.5470548,
+    "seen": 1789712734.1579394,
+    "ast_hash": "7712dbb19a8067610aaad0a0c4c38751",
+    "semantic_hash": ""
+  },
+  "imgs/network/beta_index.webp": {
+    "mtime": 1784525756.568089,
+    "seen": 1789712734.15794,
+    "ast_hash": "f18fdef2e9f246a0806d648892384a9d",
+    "semantic_hash": ""
+  },
+  "imgs/network/beta_index_formula.png": {
+    "mtime": 1784525756.5865712,
+    "seen": 1789712734.1579404,
+    "ast_hash": "3e459772cc3c6211795c304d113d6f9f",
+    "semantic_hash": ""
+  },
+  "imgs/network/betweeness_centrality.png": {
+    "mtime": 1784525756.6246414,
+    "seen": 1789712734.1579406,
+    "ast_hash": "90f97dcb155c7c6653f8b4f3a8618304",
+    "semantic_hash": ""
+  },
+  "imgs/network/break_comparison.gif": {
+    "mtime": 1784525756.643214,
+    "seen": 1789712734.1579413,
+    "ast_hash": "12b5878055455a14dfb8a74ef8c71ce0",
+    "semantic_hash": ""
+  },
+  "imgs/network/broken_rd_segs.gif": {
+    "mtime": 1784525756.678093,
+    "seen": 1789712734.1579418,
+    "ast_hash": "2501c911179791fd9c0ae2b778e2dc50",
+    "semantic_hash": ""
+  },
+  "imgs/network/buffer_enquiry.png": {
+    "mtime": 1784525756.7118347,
+    "seen": 1789712734.157942,
+    "ast_hash": "f51241e447d81c1226645bfad7f5e0f0",
+    "semantic_hash": ""
+  },
+  "imgs/network/calculation_euclidean_dist.png": {
+    "mtime": 1784525756.732756,
+    "seen": 1789712734.1579425,
+    "ast_hash": "960fecb81119c64d7b66832719391fc0",
+    "semantic_hash": ""
+  },
+  "imgs/network/cleaning_process.gif": {
+    "mtime": 1784525756.7719488,
+    "seen": 1789712734.157943,
+    "ast_hash": "db73e4de2334d4ccf6ca1ca9c77667ca",
+    "semantic_hash": ""
+  },
+  "imgs/network/closeness_centrality.png": {
+    "mtime": 1784525756.7938037,
+    "seen": 1789712734.1579432,
+    "ast_hash": "318ef797cbc24e011fdb18281e3d4108",
+    "semantic_hash": ""
+  },
+  "imgs/network/closeness_centrality_eq.png": {
+    "mtime": 1784525756.8259847,
+    "seen": 1789712734.1579437,
+    "ast_hash": "81881c1d65436c81c51549c7c7fc757f",
+    "semantic_hash": ""
+  },
+  "imgs/network/co-keyword_network_analysis.png": {
+    "mtime": 1784525757.3713927,
+    "seen": 1789712734.1579442,
+    "ast_hash": "c396bdcba94b67758d6edea642d60b10",
+    "semantic_hash": ""
+  },
+  "imgs/network/composite_accessibility_index.png": {
+    "mtime": 1784525757.3893564,
+    "seen": 1789712734.157945,
+    "ast_hash": "27fe5b4f1ef97320ab441e21a49816f9",
+    "semantic_hash": ""
+  },
+  "imgs/network/different_types_network.jpg": {
+    "mtime": 1784525757.4097645,
+    "seen": 1789712734.1579452,
+    "ast_hash": "27246df1bfb7d3c5b15e649b6342d9d9",
+    "semantic_hash": ""
+  },
+  "imgs/network/euclidean_distance_calculation.png": {
+    "mtime": 1784525757.4444437,
+    "seen": 1789712734.1579456,
+    "ast_hash": "c04e36c06770195e4e985ab566398f9c",
+    "semantic_hash": ""
+  },
+  "imgs/network/formula_euclidean_dist.png": {
+    "mtime": 1784525757.459924,
+    "seen": 1789712734.157946,
+    "ast_hash": "239d3dbd6fc9b88aada58decb10cb106",
+    "semantic_hash": ""
+  },
+  "imgs/network/install_network_analysis_plugin.jpg": {
+    "mtime": 1784525757.5276809,
+    "seen": 1789712734.1579463,
+    "ast_hash": "352eb3b337a6bfb570b649b0dfba56fc",
+    "semantic_hash": ""
+  },
+  "imgs/network/m2n_networkdist_matrix.png": {
+    "mtime": 1784525757.5612745,
+    "seen": 1789712734.1579468,
+    "ast_hash": "cd1ab8fc5e2d40d429b5386d5ccf99fa",
+    "semantic_hash": ""
+  },
+  "imgs/network/measurement_in_difference.png": {
+    "mtime": 1784525757.589186,
+    "seen": 1789712734.157947,
+    "ast_hash": "25076c8572218d1366091d3c3d3fd6f1",
+    "semantic_hash": ""
+  },
+  "imgs/network/multi_network_plugins.jpeg": {
+    "mtime": 1784525757.6459396,
+    "seen": 1789712734.1579475,
+    "ast_hash": "c658c62158c4dd610d6f1379f5962dc7",
+    "semantic_hash": ""
+  },
+  "imgs/network/network_density_calculation.png": {
+    "mtime": 1784525757.6686933,
+    "seen": 1789712734.1579483,
+    "ast_hash": "19e61db115a199eec13234b70108dcf2",
+    "semantic_hash": ""
+  },
+  "imgs/network/network_distance_example.png": {
+    "mtime": 1784525757.8059483,
+    "seen": 1789712734.1579485,
+    "ast_hash": "5f090c13f51a84235d2ca278930e2f78",
+    "semantic_hash": ""
+  },
+  "imgs/network/node_degree.png": {
+    "mtime": 1784525757.834952,
+    "seen": 1789712734.157949,
+    "ast_hash": "819eded569d355d41c61ad769e1d0587",
+    "semantic_hash": ""
+  },
+  "imgs/network/practice_data_viz.png": {
+    "mtime": 1784525758.0864205,
+    "seen": 1789712734.1579494,
+    "ast_hash": "76aaf868b6f76fbe98bbb7131161e096",
+    "semantic_hash": ""
+  },
+  "imgs/network/practice_data_viz_edge_effect.jpg": {
+    "mtime": 1784525758.093228,
+    "seen": 1789712734.1579497,
+    "ast_hash": "5eb2512bfc0c33a3524db4a1dc10f69f",
+    "semantic_hash": ""
+  },
+  "imgs/network/reduce_network_size.png": {
+    "mtime": 1784525758.123736,
+    "seen": 1789712734.1579502,
+    "ast_hash": "d31d10e679497549ac9b42f1460ba62c",
+    "semantic_hash": ""
+  },
+  "imgs/network/sg_bio_database.gif": {
+    "mtime": 1784525758.3364112,
+    "seen": 1789712734.1579506,
+    "ast_hash": "14b9dd6724da8dd07d76e2f873e639a7",
+    "semantic_hash": ""
+  },
+  "imgs/network/social_network_analysis_example.png": {
+    "mtime": 1784525758.4997633,
+    "seen": 1789712734.157951,
+    "ast_hash": "22ec1c59756ff0ba9338392655b626ea",
+    "semantic_hash": ""
+  },
+  "imgs/network/topological_measures.png": {
+    "mtime": 1784525758.5428786,
+    "seen": 1789712734.1579516,
+    "ast_hash": "fd757d80132f76a7adc7fc0bb3c03400",
+    "semantic_hash": ""
+  },
+  "imgs/network/vclean_topolpgychecker.png": {
+    "mtime": 1784525758.5700028,
+    "seen": 1789712734.157952,
+    "ast_hash": "302bf5093720b0450329952584b1c3fb",
+    "semantic_hash": ""
+  },
+  "imgs/network/wrongly_generated_routes.png": {
+    "mtime": 1784525758.7843983,
+    "seen": 1789712734.1579525,
+    "ast_hash": "74ee2f23b8f922d3fecf1b3c1955cb58",
+    "semantic_hash": ""
+  },
+  "imgs/non-ascii_characters.jpg": {
+    "mtime": 1784525758.8067048,
+    "seen": 1789712734.157953,
+    "ast_hash": "040eb7fb074148b2a0a5d2e077a6038b",
+    "semantic_hash": ""
+  },
+  "imgs/numpy/numpy_simple_example.jpg": {
+    "mtime": 1784525758.8364167,
+    "seen": 1789712734.1579533,
+    "ast_hash": "65b4d3d8cb0dbec587435f26a2632d07",
+    "semantic_hash": ""
+  },
+  "imgs/onemap/geocoding_001.jpg": {
+    "mtime": 1784525758.8880475,
+    "seen": 1789712734.1579537,
+    "ast_hash": "df32a0d56a8d426bdfc12bd324eb8f32",
+    "semantic_hash": ""
+  },
+  "imgs/onemap/protect_api_key.jpg": {
+    "mtime": 1784525758.9300883,
+    "seen": 1789712734.1579542,
+    "ast_hash": "72c2e203e7d2031721092c9fa2f909f8",
+    "semantic_hash": ""
+  },
+  "imgs/onemap/services.jpg": {
+    "mtime": 1784525758.9581492,
+    "seen": 1789712734.1579545,
+    "ast_hash": "32370c28c33f6774e65cf71d89aa7f40",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/example_pandas.jpg": {
+    "mtime": 1784525758.9872274,
+    "seen": 1789712734.1579552,
+    "ast_hash": "e559c0928ea172bb5ff5007f558596c3",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/gpd/GeoPandas_geoseries.png": {
+    "mtime": 1784525759.0273428,
+    "seen": 1789712734.1579556,
+    "ast_hash": "711cd14deabc94235d0997c62f8ed535",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/img_full_outer_join.png": {
+    "mtime": 1784525759.0388505,
+    "seen": 1789712734.1579561,
+    "ast_hash": "5478fe9ada5b3d21cd0cdfd67750fb7c",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/img_inner_join.png": {
+    "mtime": 1784525759.0632937,
+    "seen": 1789712734.1579564,
+    "ast_hash": "9aaa6fb3fdf724358d86e5dba6004d56",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/img_left_join.png": {
+    "mtime": 1784525759.0820804,
+    "seen": 1789712734.1579568,
+    "ast_hash": "174532d42b9ee310ef59d0d37fe37ec2",
+    "semantic_hash": ""
+  },
+  "imgs/pandas/img_right_join.png": {
+    "mtime": 1784525759.088028,
+    "seen": 1789712734.1579573,
+    "ast_hash": "eb8bd7bfd95319540c08f84ab47e9735",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/hotspot_analysis_example.png": {
+    "mtime": 1784525759.4977756,
+    "seen": 1789712734.1579578,
+    "ast_hash": "41065bd77f21293ef90adbc8c973eafd",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/local_g_statistic_z_score.png": {
+    "mtime": 1784525759.5394106,
+    "seen": 1789712734.157958,
+    "ast_hash": "99a8604b9061e2e1ce189a81bd82392c",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/nearest_neighbour_analysis.jpg": {
+    "mtime": 1784525759.5573127,
+    "seen": 1789712734.1579587,
+    "ast_hash": "2ee483ff9bbd667fcb396268cacbb584",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/qgis_nearest_neighbour_analysis.png": {
+    "mtime": 1784525759.5773118,
+    "seen": 1789712734.1579592,
+    "ast_hash": "3a5aa609d5dfcb67af21d9f2c1f5f1e1",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/spatialautocorrelation_001.png": {
+    "mtime": 1784525759.590564,
+    "seen": 1789712734.1579597,
+    "ast_hash": "16076341161f5bc1b645d5f1fbbb6e8d",
+    "semantic_hash": ""
+  },
+  "imgs/pattern_analysis/spatialautocorrelation_example.jpeg": {
+    "mtime": 1784525759.6973617,
+    "seen": 1789712734.15796,
+    "ast_hash": "445dd6e610243dd71431100c370f6872",
+    "semantic_hash": ""
+  },
+  "imgs/placeholder.png": {
+    "mtime": 1784525759.7196238,
+    "seen": 1789712734.1579604,
+    "ast_hash": "93c681e7ca921d8f5d09c939432b00f4",
+    "semantic_hash": ""
+  },
+  "imgs/polygonize_qgis.png": {
+    "mtime": 1784525759.7409225,
+    "seen": 1789712734.157961,
+    "ast_hash": "5d4b10282f7c19cdef8b256374500f41",
+    "semantic_hash": ""
+  },
+  "imgs/precourse_survey.png": {
+    "mtime": 1789111095.3442678,
+    "seen": 1789712734.1579611,
+    "ast_hash": "34c24bb0936a1dece5738e32a83a2c09",
+    "semantic_hash": ""
+  },
+  "imgs/programmer_tailor_pixabay.png": {
+    "mtime": 1784525759.8372967,
+    "seen": 1789712734.1579618,
+    "ast_hash": "1a1de4524d36b5c943b81e4f87eb2e52",
+    "semantic_hash": ""
+  },
+  "imgs/programminglanguagerank_tiobe.png": {
+    "mtime": 1784525759.8791456,
+    "seen": 1789712734.1579623,
+    "ast_hash": "19b29214ef95376da90203aa8d140d54",
+    "semantic_hash": ""
+  },
+  "imgs/pump-system.svg": {
+    "mtime": 1784525759.8956733,
+    "seen": 1789712734.1579628,
+    "ast_hash": "1cf8ee79b31a247fa2ed9d10512dd514",
+    "semantic_hash": ""
+  },
+  "imgs/qr_site.jpg": {
+    "mtime": 1784525759.9189126,
+    "seen": 1789712734.1579633,
+    "ast_hash": "58254ab2ad163d313e32c15d7bc20feb",
+    "semantic_hash": ""
+  },
+  "imgs/qrcode_github_pygis.png": {
+    "mtime": 1784525759.9323852,
+    "seen": 1789712734.1579638,
+    "ast_hash": "d450631b87b092cccd8c6c5e357d58c3",
+    "semantic_hash": ""
+  },
+  "imgs/qrcode_github_repository.png": {
+    "mtime": 1784525759.9476562,
+    "seen": 1789712734.1579642,
+    "ast_hash": "4eb63e524b147ca577222b0c989bcd0d",
+    "semantic_hash": ""
+  },
+  "imgs/raster/5019-Landsat-timeline-L7_decomissioned_2025.png": {
+    "mtime": 1784525760.0052288,
+    "seen": 1789712734.1579647,
+    "ast_hash": "16ac1707eb86fd71d95edfc02ff328a9",
+    "semantic_hash": ""
+  },
+  "imgs/raster/a_simple_raster.png": {
+    "mtime": 1784525760.0871093,
+    "seen": 1789712734.157965,
+    "ast_hash": "f5270b661252a0cd5bf3747c3e7ff78f",
+    "semantic_hash": ""
+  },
+  "imgs/raster/clip_raster.png": {
+    "mtime": 1784525760.1251986,
+    "seen": 1789712734.1579657,
+    "ast_hash": "cbce7a7d388f7a04884365c225ee01b2",
+    "semantic_hash": ""
+  },
+  "imgs/raster/clip_raster_e1.png": {
+    "mtime": 1784525760.1809745,
+    "seen": 1789712734.1579661,
+    "ast_hash": "9b02f0cbd18bf322b06ab5a81af686ae",
+    "semantic_hash": ""
+  },
+  "imgs/raster/clip_raster_e2.png": {
+    "mtime": 1784525760.2585595,
+    "seen": 1789712734.1579664,
+    "ast_hash": "4c77e7ef8d0df0f306ec6f3f587a3ddc",
+    "semantic_hash": ""
+  },
+  "imgs/raster/corine_landcover_raster.jpg": {
+    "mtime": 1784525760.2880154,
+    "seen": 1789712734.1579669,
+    "ast_hash": "b3b2fe2e2c7382a7731140824dedeca5",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_dem.jpg": {
+    "mtime": 1784525760.320345,
+    "seen": 1789712734.157968,
+    "ast_hash": "b4fc2be0ebd09fd5bdcd100a22e05a2a",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_image_inQGIS.jpg": {
+    "mtime": 1784525760.4980316,
+    "seen": 1789712734.1579685,
+    "ast_hash": "1f290e5bf72e160bb404557707879a94",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_image_inQGIS_checkvalue.jpg": {
+    "mtime": 1784525760.5539563,
+    "seen": 1789712734.1579692,
+    "ast_hash": "b22dcb20ae9190414927489cda62714e",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_image_inQGIS_redband.jpg": {
+    "mtime": 1784525760.586097,
+    "seen": 1789712734.1579695,
+    "ast_hash": "212c93294cf734c06bebd9d4b81a27bb",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_image_inQGIS_truecolourvsfalsecolour.jpg": {
+    "mtime": 1784525760.6279278,
+    "seen": 1789712734.15797,
+    "ast_hash": "8d7d071ffb1121e474f8fc5571280a30",
+    "semantic_hash": ""
+  },
+  "imgs/raster/example_raster_LST_sg.jpg": {
+    "mtime": 1784525760.671059,
+    "seen": 1789712734.1579704,
+    "ast_hash": "7cc024ff914379a9a5f10a116a1e0dab",
+    "semantic_hash": ""
+  },
+  "imgs/raster/extension_ndvi_analysis.png": {
+    "mtime": 1784525761.537119,
+    "seen": 1789712734.157971,
+    "ast_hash": "efc3df8047de54637526f3cb3fca3e2c",
+    "semantic_hash": ""
+  },
+  "imgs/raster/gee.png": {
+    "mtime": 1784525761.6074593,
+    "seen": 1789712734.1579714,
+    "ast_hash": "6bffb60135e7292bf50ef513cc4c3472",
+    "semantic_hash": ""
+  },
+  "imgs/raster/gee_tutorial.png": {
+    "mtime": 1784525761.6819425,
+    "seen": 1789712734.1579716,
+    "ast_hash": "9701536dea82c4c36182b0310add17a2",
+    "semantic_hash": ""
+  },
+  "imgs/raster/invert_colour_ramp_raster.jpg": {
+    "mtime": 1784525761.7136805,
+    "seen": 1789712734.1579723,
+    "ast_hash": "dcd1e8438e70b7e44184287e1ded1038",
+    "semantic_hash": ""
+  },
+  "imgs/raster/landsat8.png": {
+    "mtime": 1784525762.6790931,
+    "seen": 1789712734.1579728,
+    "ast_hash": "82afa8544fa15757c18bf81f9abdf9b4",
+    "semantic_hash": ""
+  },
+  "imgs/raster/mask_operation.png": {
+    "mtime": 1784525762.6901114,
+    "seen": 1789712734.157973,
+    "ast_hash": "58e0d3a8fbe4bb1943c93570ef71e42d",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ndvi_comparison.jpg": {
+    "mtime": 1784525762.7226057,
+    "seen": 1789712734.1579735,
+    "ast_hash": "b792b6bd275588928b68432f23866b6a",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ndvi_eq.jpg": {
+    "mtime": 1784525762.7397594,
+    "seen": 1789712734.157974,
+    "ast_hash": "e6da98077ddb2957adcfab6702c815fd",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ndvi_reclassification.png": {
+    "mtime": 1784525763.9912283,
+    "seen": 1789712734.1579745,
+    "ast_hash": "18a379862e03e72a5d9c4ea01d73ce4f",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ndvi_results.png": {
+    "mtime": 1784525764.7066348,
+    "seen": 1789712734.1579747,
+    "ast_hash": "2abb56f87f390e50a79d6d05d85bbd6a",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ndvi_zonalanalysis.png": {
+    "mtime": 1784525765.388124,
+    "seen": 1789712734.1579752,
+    "ast_hash": "7529a7af0ea9b4c9992226b432c3d0b3",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ntl.jpg": {
+    "mtime": 1784525765.4091258,
+    "seen": 1789712734.157976,
+    "ast_hash": "a28aac9bf75a6fb3fec04aee29d91f1b",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ntl_urban_clusters_changes.gif": {
+    "mtime": 1784525765.5365229,
+    "seen": 1789712734.1579764,
+    "ast_hash": "6386b45b1b2d091395953b801f8c5cdf",
+    "semantic_hash": ""
+  },
+  "imgs/raster/ntl_urbanclusters.png": {
+    "mtime": 1784525766.301674,
+    "seen": 1789712734.1579766,
+    "ast_hash": "b4e9230776e09063df747878a14c4520",
+    "semantic_hash": ""
+  },
+  "imgs/raster/raster_creation_qgis.png": {
+    "mtime": 1784525766.3278599,
+    "seen": 1789712734.157977,
+    "ast_hash": "d1e470badf9627f375cb452bcb3f0bcd",
+    "semantic_hash": ""
+  },
+  "imgs/raster/raster_overlay.png": {
+    "mtime": 1784525766.3474565,
+    "seen": 1789712734.1579776,
+    "ast_hash": "3cd24f110b0b551962f43eb8f01de0f2",
+    "semantic_hash": ""
+  },
+  "imgs/raster/reclassify.png": {
+    "mtime": 1784525766.359894,
+    "seen": 1789712734.1579778,
+    "ast_hash": "4c91b752e6a8a9f0ad04144fb6674970",
+    "semantic_hash": ""
+  },
+  "imgs/raster/scale_raster_analysis.png": {
+    "mtime": 1784525766.488742,
+    "seen": 1789712734.1579783,
+    "ast_hash": "8478c1bef52cd879aba4adac120ec3db",
+    "semantic_hash": ""
+  },
+  "imgs/raster/slope_analysis.png": {
+    "mtime": 1784525766.5204055,
+    "seen": 1789712734.1579788,
+    "ast_hash": "2594cade9bb1106b7a8ab3e9b6660377",
+    "semantic_hash": ""
+  },
+  "imgs/raster/warp_project_raster.jpg": {
+    "mtime": 1784525766.540667,
+    "seen": 1789712734.1579795,
+    "ast_hash": "0dd4a8cd50afa071a677bd086b4d185f",
+    "semantic_hash": ""
+  },
+  "imgs/raster/worldpop_multibands.jpg": {
+    "mtime": 1784525766.5600846,
+    "seen": 1789712734.1579797,
+    "ast_hash": "0fb9c93523f705f6164ff0dd742a1cff",
+    "semantic_hash": ""
+  },
+  "imgs/raster/zonal_statistics_lst_singapore.jpg": {
+    "mtime": 1784525766.6019218,
+    "seen": 1789712734.1579802,
+    "ast_hash": "f4fbb3283307af042fce146a8ea912a6",
+    "semantic_hash": ""
+  },
+  "imgs/rasterize_qgis.png": {
+    "mtime": 1784525766.6230268,
+    "seen": 1789712734.1579807,
+    "ast_hash": "74d19944e31975b3c1470bc88a0b5053",
+    "semantic_hash": ""
+  },
+  "imgs/registerGitHub.jpg": {
+    "mtime": 1788922813.9903576,
+    "seen": 1789712734.157981,
+    "ast_hash": "0bac8b52a9145e9bc69891d3e65ac1ad",
+    "semantic_hash": ""
+  },
+  "imgs/spatial_patterns.jpg": {
+    "mtime": 1784525766.6456685,
+    "seen": 1789712734.1579814,
+    "ast_hash": "903cfb330f2bca16a7e173cfb1c1339d",
+    "semantic_hash": ""
+  },
+  "imgs/spatial_relations.png": {
+    "mtime": 1784525766.6978197,
+    "seen": 1789712734.1579819,
+    "ast_hash": "7edbf4aa29da1480cb986463ff040eb7",
+    "semantic_hash": ""
+  },
+  "imgs/tutorial/joinbyfield.png": {
+    "mtime": 1784525766.7269676,
+    "seen": 1789712734.157982,
+    "ast_hash": "33bcc3bfe14632ebc40234b586de0cb6",
+    "semantic_hash": ""
+  },
+  "imgs/tutorial/joinbyfield_specs.png": {
+    "mtime": 1784525766.75415,
+    "seen": 1789712734.1579828,
+    "ast_hash": "74959c9a7c7182d1466fde02eb6fa095",
+    "semantic_hash": ""
+  },
+  "imgs/urbanCV/AI&cv.jpeg": {
+    "mtime": 1784525766.7778265,
+    "seen": 1789712734.1579833,
+    "ast_hash": "6648a3e48b0165b5c83778aee54ac98e",
+    "semantic_hash": ""
+  },
+  "imgs/urbanCV/data_gov_sg_code_example.jpg": {
+    "mtime": 1784525766.8010294,
+    "seen": 1789712734.1579835,
+    "ast_hash": "32e3ed8b55621d0bf230b404bf575fc6",
+    "semantic_hash": ""
+  },
+  "imgs/urbanCV/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg": {
+    "mtime": 1784525766.846795,
+    "seen": 1789712734.157984,
+    "ast_hash": "9c3132f8e03d2a5112520a66a39dde3a",
+    "semantic_hash": ""
+  },
+  "imgs/vector/areal_interpolation.png": {
+    "mtime": 1784525766.8789718,
+    "seen": 1789712734.1579843,
+    "ast_hash": "230eeca2186aa3372e937e7a5efe322c",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer.png": {
+    "mtime": 1784525766.9349964,
+    "seen": 1789712734.1579847,
+    "ast_hash": "add251ba7fa91779a2975d96f380ac30",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer1.png": {
+    "mtime": 1784525766.960511,
+    "seen": 1789712734.1579852,
+    "ast_hash": "a2b023d5565202813ff7d92936d634b3",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer2.png": {
+    "mtime": 1784525767.1386504,
+    "seen": 1789712734.1579857,
+    "ast_hash": "0eb8365e1bd185dbbfd5a7b560c8a92a",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer3.png": {
+    "mtime": 1784525767.1827116,
+    "seen": 1789712734.1579862,
+    "ast_hash": "973fdbff3d6ed5bbb52c475ce72c0e8a",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer_application_examples.png": {
+    "mtime": 1784525767.357234,
+    "seen": 1789712734.1579866,
+    "ast_hash": "aa5d4d320c2f40fb8b15beb0f0e631c2",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer_interface_qgis.png": {
+    "mtime": 1784525767.3879871,
+    "seen": 1789712734.157987,
+    "ast_hash": "6c6fbb482c2a55653f705cd6a42e255f",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer_with_python.jpg": {
+    "mtime": 1784525767.4124868,
+    "seen": 1789712734.1579874,
+    "ast_hash": "5b2cbb3791fb82edafb7160d4469626e",
+    "semantic_hash": ""
+  },
+  "imgs/vector/buffer_with_qgis.png": {
+    "mtime": 1784525767.4370694,
+    "seen": 1789712734.1579878,
+    "ast_hash": "174a1d138b8c84ee20d61232b7f46a2e",
+    "semantic_hash": ""
+  },
+  "imgs/vector/create_vector_qgis.png": {
+    "mtime": 1784525767.4936128,
+    "seen": 1789712734.1579883,
+    "ast_hash": "e92c5e38c05d6dfe1c8906e0c9644947",
+    "semantic_hash": ""
+  },
+  "imgs/vector/dissolved_buffer.png": {
+    "mtime": 1784525767.556298,
+    "seen": 1789712734.1579888,
+    "ast_hash": "278e5fbce8629a0431cb03810a32733f",
+    "semantic_hash": ""
+  },
+  "imgs/vector/examples_overlay.png": {
+    "mtime": 1784525767.70666,
+    "seen": 1789712734.157989,
+    "ast_hash": "c175a81507d0a59bf0e6387dbc2787f3",
+    "semantic_hash": ""
+  },
+  "imgs/vector/gcs_pcs.png": {
+    "mtime": 1784525767.7228844,
+    "seen": 1789712734.1579897,
+    "ast_hash": "a13dabcadbf901b072baf212523a6658",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_bool.jpg": {
+    "mtime": 1784525767.7499776,
+    "seen": 1789712734.1579902,
+    "ast_hash": "2e89e042e9959938b8bacce38fd633eb",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_clip_intersection.png": {
+    "mtime": 1784525767.778821,
+    "seen": 1789712734.1579905,
+    "ast_hash": "38dc425d15cb326a0f2c00b166fbb810",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_concept.png": {
+    "mtime": 1784525767.8009987,
+    "seen": 1789712734.157991,
+    "ast_hash": "75166f6a3e1f3597a3c42cb317bec062",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_errors.png": {
+    "mtime": 1784525767.8268273,
+    "seen": 1789712734.1579914,
+    "ast_hash": "f1424a7502215946ce7aac40ee57ac31",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_example_types.png": {
+    "mtime": 1784525767.9018219,
+    "seen": 1789712734.157992,
+    "ast_hash": "5556a7209f9b1d1fac445a51f1f8ed78",
+    "semantic_hash": ""
+  },
+  "imgs/vector/overlay_qgistoolbox.png": {
+    "mtime": 1784525767.9262438,
+    "seen": 1789712734.1579921,
+    "ast_hash": "5efe33953533b33b4e1d4ae2d06d2be4",
+    "semantic_hash": ""
+  },
+  "imgs/vector/points-lines-polygons.png": {
+    "mtime": 1784525767.9458373,
+    "seen": 1789712734.1579926,
+    "ast_hash": "d70ed8a08a014efcebe32759b8c0957f",
+    "semantic_hash": ""
+  },
+  "imgs/vector/practice_crime_ntas.jpg": {
+    "mtime": 1784525767.9635687,
+    "seen": 1789712734.1579933,
+    "ast_hash": "a16e6f9b6e4960a5312753d23c7b6cf2",
+    "semantic_hash": ""
+  },
+  "imgs/vector/practice_crime_ntas_data.jpg": {
+    "mtime": 1784525767.9864113,
+    "seen": 1789712734.1579938,
+    "ast_hash": "c3385ed05f12cb6db493d7583dab7cf8",
+    "semantic_hash": ""
+  },
+  "imgs/vector/vec_presentation.png": {
+    "mtime": 1784525768.0056665,
+    "seen": 1789712734.157994,
+    "ast_hash": "02366e925739c4431d088ca7066be583",
+    "semantic_hash": ""
+  },
+  "imgs/vector/vector_drawing_qgis.jpg": {
+    "mtime": 1784525768.0297613,
+    "seen": 1789712734.1579945,
+    "ast_hash": "7fcd878b305d2dc95f9977005d1914d5",
+    "semantic_hash": ""
+  },
+  "imgs/vector/vectorbymath.png": {
+    "mtime": 1784525768.048921,
+    "seen": 1789712734.157995,
+    "ast_hash": "5b8fca4b680cca27ef17dfafa00ba699",
+    "semantic_hash": ""
+  },
+  "imgs/vector/what_is_geojson.jpg": {
+    "mtime": 1784525768.074399,
+    "seen": 1789712734.1579952,
+    "ast_hash": "7106db44cfd24b779856c59a24710bfc",
+    "semantic_hash": ""
+  },
+  "imgs/vector/what_is_shp.jpg": {
+    "mtime": 1784525768.092863,
+    "seen": 1789712734.1579957,
+    "ast_hash": "7bb3cec765787cca62a13c4d8d894dfc",
+    "semantic_hash": ""
+  },
+  "imgs/vector_n_raster_presentation.png": {
+    "mtime": 1784525768.1520782,
+    "seen": 1789712734.1579962,
+    "ast_hash": "70ef2d8e99f752c7e3389759c47e8618",
+    "semantic_hash": ""
+  },
+  "imgs/vis/eda.jpg": {
+    "mtime": 1784525768.1897848,
+    "seen": 1789712734.1579967,
+    "ast_hash": "e654e4e0e48f40fba788cbb54ca17141",
+    "semantic_hash": ""
+  },
+  "imgs/vis/matplotlib_axes_figure.jpg": {
+    "mtime": 1784525768.2116604,
+    "seen": 1789712734.1579971,
+    "ast_hash": "0ef958f5ee8baf57fd9cefd090f91f4d",
+    "semantic_hash": ""
+  },
+  "imgs/vis/matplotlib_gallery.jpg": {
+    "mtime": 1784525768.2356877,
+    "seen": 1789712734.1579976,
+    "ast_hash": "3d8842e26c95f79c11f298889dcbfd2c",
+    "semantic_hash": ""
+  },
+  "imgs/vis/seaborn_gallery.jpg": {
+    "mtime": 1784525768.2630587,
+    "seen": 1789712734.1579978,
+    "ast_hash": "63a9c64c0ab15c3c3ee044cebe0caca8",
+    "semantic_hash": ""
+  },
+  "imgs/vis/seaborn_gallery_homepage.jpg": {
+    "mtime": 1784525768.297228,
+    "seen": 1789712734.1579983,
+    "ast_hash": "c4f19ec43c0c3290b8f1d733c78f58fc",
+    "semantic_hash": ""
+  },
+  "imgs/vis/seaborn_grouped_barplots.jpg": {
+    "mtime": 1784525768.324644,
+    "seen": 1789712734.1579988,
+    "ast_hash": "15fc128210eef2a9233a22b21b1d3e7d",
+    "semantic_hash": ""
+  },
+  "imgs/vis/staticmapping_example.png": {
+    "mtime": 1784525768.4219117,
+    "seen": 1789712734.157999,
+    "ast_hash": "609a8f9ace9925e9d0065ea6fc6e2c47",
+    "semantic_hash": ""
+  },
+  "imgs/webapp/surrounding_images.jpg": {
+    "mtime": 1784525768.451044,
+    "seen": 1789712734.1579995,
+    "ast_hash": "f9bd74166cacd85942f6cf65c26abe23",
+    "semantic_hash": ""
+  },
+  "src/pig.svg": {
+    "mtime": 1789523676.9927716,
+    "seen": 1789712734.1580002,
+    "ast_hash": "f5845975e9d9e2d5e4ceff9e22c26cf6",
+    "semantic_hash": ""
+  }
+}
