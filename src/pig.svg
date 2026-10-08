@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 45.2 45.2">
+  <ellipse cx="22.6" cy="40.5" rx="13" ry="2.2" fill="#000000" opacity="0.08"/>
+
+  <!-- legs -->
+  <line x1="15" y1="37" x2="14" y2="43" stroke="#fb8c00" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="24" y1="38" x2="25.5" y2="44" stroke="#fb8c00" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M14 43 l-2.2 1.1 M14 43 l2.2 0.6 M14 43 l0.2 2" stroke="#fb8c00" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+  <path d="M25.5 44 l-2.2 0.8 M25.5 44 l2.2 0.9 M25.5 44 l-0.2 1.8" stroke="#fb8c00" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+
+  <!-- tail feathers -->
+  <path d="M10 30 Q1.5 28 5.5 19.5 Q9 24 10 30 Z" fill="#fb8c00"/>
+  <path d="M8 24 Q-0.5 19.5 5 13.5 Q8 18 8 24 Z" fill="#f57c00"/>
+  <path d="M9.5 18 Q3.5 11.5 9.5 8.5 Q11.5 13.5 9.5 18 Z" fill="#fb8c00"/>
+
+  <!-- body -->
+  <ellipse cx="20" cy="26" rx="13" ry="11" fill="#ffffff" stroke="#e2e2e2" stroke-width="0.6"/>
+  <ellipse cx="16" cy="28.5" rx="6" ry="8" fill="#efefef"/>
+
+  <!-- head -->
+  <circle cx="32" cy="15" r="7.5" fill="#ffffff" stroke="#e2e2e2" stroke-width="0.6"/>
+
+  <!-- comb -->
+  <circle cx="28" cy="7.2" r="2.1" fill="#e53935"/>
+  <circle cx="31" cy="5.2" r="2.4" fill="#e53935"/>
+  <circle cx="34" cy="6.6" r="2" fill="#e53935"/>
+
+  <!-- wattle -->
+  <circle cx="35.2" cy="20.8" r="1.7" fill="#e53935"/>
+  <circle cx="37" cy="22.4" r="1.4" fill="#e53935"/>
+
+  <!-- beak -->
+  <polygon points="37,14.3 43,15.4 37,17.4" fill="#fb8c00"/>
+
+  <!-- eye -->
+  <circle cx="33" cy="13" r="1.1" fill="#212121"/>
+</svg>

@@ -1,0 +1,51 @@
+/* Long-form Markdown pages only. Keep these rules separate from the slide deck. */
+.markdown-document {
+  padding: clamp(1rem, 4vw, 3.5rem);
+}
+
+.markdown-page {
+  box-sizing: border-box;
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: var(--surface-strong);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.markdown-page > :first-child {
+  margin-top: 0;
+}
+
+.markdown-page > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-page blockquote {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.markdown-page hr {
+  margin: 1.8rem 0;
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.markdown-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 640px) {
+  .markdown-document {
+    padding: 0;
+  }
+
+  .markdown-page {
+    border-width: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

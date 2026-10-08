@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B. Li | System Terminal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Neon Pink Terminal Theme */
+            --bg-color: #08050d;
+            --terminal-color: #ff4fd8;
+            --terminal-bright: #ffa3ee;
+            --terminal-dim: #8e2f77;
+            --border-color: #ff4fd8;
+            --scanline: rgba(255, 79, 216, 0.08);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255, 79, 216, 0.16), transparent 35%),
+                radial-gradient(circle at 80% 80%, rgba(104, 33, 114, 0.22), transparent 40%),
+                var(--bg-color);
+            color: var(--terminal-color);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        #matrix-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.38;
+        }
+
+        /* CRT Scanline Effect (Subtle) */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(to bottom,
+                    rgba(18, 16, 16, 0) 50%,
+                    var(--scanline) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 55%, rgba(0, 0, 0, 0.42) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .terminal-container {
+            width: 100%;
+            max-width: 900px;
+            border: 2px solid var(--terminal-color);
+            padding: 2rem;
+            position: relative;
+            z-index: 3;
+            background: rgba(13, 8, 20, 0.9);
+            box-shadow: 0 0 18px rgba(255, 79, 216, 0.35), inset 0 0 18px rgba(255, 79, 216, 0.08);
+        }
+
+        /* Header Layout */
+        header {
+            border-bottom: 1px solid var(--terminal-dim);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(255, 163, 238, 0.35);
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            border: 1px solid var(--terminal-color);
+            padding: 2px 8px;
+            background: rgba(255, 79, 216, 0.14);
+            box-shadow: inset 0 0 8px rgba(255, 79, 216, 0.2);
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 1.2rem;
+            color: var(--terminal-dim);
+            text-transform: uppercase;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px dashed var(--terminal-dim);
+            margin-left: 10px;
+        }
+
+        /* Abstract Text */
+        .bio-text {
+            font-family: 'VT323', monospace;
+            font-size: 1.4rem;
+            line-height: 1.4;
+            color: #f8d8f2;
+            /* Slightly lighter for readability */
+        }
+
+        .boot-log {
+            margin-top: 0.6rem;
+            min-height: 1.6em;
+            color: var(--terminal-bright);
+            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Stats Grid */
+        .metric-card {
+            border: 1px solid var(--terminal-dim);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--terminal-color);
+            background: rgba(255, 79, 216, 0.08);
+            box-shadow: 0 0 12px rgba(255, 79, 216, 0.25);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            display: block;
+            font-weight: bold;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--terminal-dim);
+        }
+
+        /* Links/Buttons */
+        .terminal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--terminal-color);
+            border: 1px solid var(--terminal-dim);
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .terminal-btn:hover {
+            background-color: var(--terminal-color);
+            color: var(--bg-color);
+            border-color: var(--terminal-color);
+            box-shadow: 0 0 14px rgba(255, 79, 216, 0.35);
+        }
+
+        /* Blinking Cursor */
+        .cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: var(--terminal-dim);
+            text-align: right;
+            border-top: 1px solid var(--terminal-dim);
+            padding-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="terminal-container">
+
+        <header>
+            <div>
+                <h1>Bayi Li</h1>
+                <div class="mt-2">URBAN DATA ANALYST</div>
+            </div>
+            <div class="text-end mt-3 mt-md-0">
+                <span class="status-badge">LOC: SINGAPORE</span>
+                <span class="status-badge">SYS: ONLINE</span>
+            </div>
+        </header>
+
+        <h2>01_EXECUTIVE_SUMMARY</h2>
+        <div class="bio-text">
+            <p>
+                > <span id="typewriter-text"></span><span class="cursor">_</span>
+            </p>
+            <p class="boot-log">> <span id="boot-log"></span></p>
+        </div>
+
+        <h2>02_PERFORMANCE_METRICS</h2>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <div class="metric-card">
+                    <span class="metric-value" id="gh-repos">--</span>
+                    <span class="metric-label">Public Repos</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="metric-card">
+                    <span class="metric-value" id="gh-followers">--</span>
+                    <span class="metric-label">GH Followers</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="metric-card">
+                    <span class="metric-value" id="scholar-citations">--</span>
+                    <span class="metric-label">Citations</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="metric-card">
+                    <span class="metric-value" id="scholar-hindex">--</span>
+                    <span class="metric-label">h-index</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>03_UPLINK_PROTOCOLS</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="https://www.sutd.edu.sg/profile/li-bayi" target="_blank" class="terminal-btn">
+                    <span>LKYCIC</span> <i class="fab fa-wpexplorer"></i>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://github.com/BayiLi081" target="_blank" class="terminal-btn">
+                    <span>GITHUB</span> <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://www.researchgate.net/profile/Bayi_Li?ev=hdr_xprf" target="_blank"
+                    class="terminal-btn">
+                    <span>ResearchGate</span> <i class="fas fa-graduation-cap"></i>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            ID: Bayi_Li | VER: 2026.1.0
+        </footer>
+
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        // Since Google Scholar has no public API, update these numbers manually here:
+        const scholarStats = {
+            citations: "0+", // Replace with your exact count
+            hIndex: "0+"        // Replace with your exact h-index
+        };
+
+        const bioText = "Trained across urban planning and geographical information science, his work integrates spatial analytics, machine learning, computer vision, and urban theory to examine mobility, public space, and environmental exposure in contemporary cities. He also teaches spatial analysis and urban data methods, with an emphasis on Python, GIS, and open-source analytical tools.";
+        const bootLines = [
+            "INIT SPATIAL ANALYTICS MODULE... OK",
+            "LOADING URBAN DATA PIPELINES... OK",
+            "SYNCING GITHUB TELEMETRY... OK",
+            "SYSTEM READY"
+        ];
+
+        // --- FUNCTIONS ---
+
+        // 1. Typewriter Effect
+        let i = 0;
+        const speed = 30;
+        function typeWriter() {
+            if (i < bioText.length) {
+                document.getElementById("typewriter-text").innerHTML += bioText.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // 2. Load Scholar Data (from config above)
+        function loadScholarStats() {
+            document.getElementById('scholar-citations').innerText = scholarStats.citations;
+            document.getElementById('scholar-hindex').innerText = scholarStats.hIndex;
+        }
+
+        // 3. Matrix Rain Background
+        function startMatrixRain() {
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+            const matrixChars = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+-<>[]{}';
+            const fontSize = 16;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            let columns = Math.floor(canvas.width / fontSize);
+            let drops = Array(columns).fill(1);
+
+            function resetColumns() {
+                columns = Math.floor(canvas.width / fontSize);
+                drops = Array(columns).fill(1);
+            }
+
+            window.addEventListener('resize', resetColumns);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(8, 5, 13, 0.12)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#ff72e5';
+                ctx.font = `${fontSize}px Share Tech Mono`;
+
+                for (let col = 0; col < drops.length; col++) {
+                    const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                    const x = col * fontSize;
+                    const y = drops[col] * fontSize;
+
+                    ctx.fillText(text, x, y);
+
+                    if (y > canvas.height && Math.random() > 0.975) {
+                        drops[col] = 0;
+                    }
+
+                    drops[col]++;
+                }
+            }
+
+            setInterval(draw, 45);
+        }
+
+        // 4. Boot Log Typing Loop
+        function startBootLog() {
+            const target = document.getElementById('boot-log');
+            let lineIndex = 0;
+            let charIndex = 0;
+
+            function typeLine() {
+                const line = bootLines[lineIndex];
+                if (charIndex < line.length) {
+                    target.textContent += line.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeLine, 22);
+                    return;
+                }
+
+                setTimeout(() => {
+                    target.textContent = '';
+                    charIndex = 0;
+                    lineIndex = (lineIndex + 1) % bootLines.length;
+                    typeLine();
+                }, 950);
+            }
+
+            typeLine();
+        }
+
+        // 5. Fetch GitHub Data (Live API)
+        async function fetchGitHubStats() {
+            try {
+                const response = await fetch('https://api.github.com/users/BayiLi081');
+                const data = await response.json();
+
+                if (data.public_repos) document.getElementById('gh-repos').innerText = data.public_repos;
+                if (data.followers) document.getElementById('gh-followers').innerText = data.followers;
+            } catch (error) {
+                console.log('GitHub fetch failed', error);
+                document.getElementById('gh-repos').innerText = "ERR";
+            }
+        }
+
+        // Initialize
+        window.onload = function () {
+            startMatrixRain();
+            typeWriter();
+            startBootLog();
+            loadScholarStats();
+            fetchGitHubStats();
+        };
+    </script>
+</body>
+
+</html>

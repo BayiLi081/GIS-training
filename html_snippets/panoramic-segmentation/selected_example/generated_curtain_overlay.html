@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>360 Curtain Compare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.14.1/index.css" />
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+
+    #viewer-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .viewer-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #viewer-top {
+      z-index: 2;
+      overflow: hidden;
+      clip-path: inset(0 50% 0 0);
+      -webkit-clip-path: inset(0 50% 0 0);
+    }
+
+    #viewer-bottom {
+      z-index: 1;
+    }
+
+    #divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 44px;
+      z-index: 20;
+      cursor: ew-resize;
+      pointer-events: auto;
+      touch-action: none;
+      transform: translateX(-50%);
+    }
+
+    #divider::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 1.5px);
+      width: 3px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+    }
+
+    #divider-handle {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      margin-top: -22px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    #divider-handle::before {
+      content: "<->";
+    }
+
+    .label {
+      position: absolute;
+      top: 16px;
+      z-index: 25;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(20, 20, 20, 0.75);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    #label-left { left: 16px; }
+    #label-right { right: 16px; }
+
+    #inspector {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 30;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(10, 10, 10, 0.72);
+      color: #f3f6f7;
+      font-size: 13px;
+      line-height: 1.35;
+      white-space: nowrap;
+      max-width: calc(100vw - 24px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+    }
+
+    #inspector .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #b9f4dd;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer-wrapper">
+    <div id="viewer-bottom" class="viewer-layer"></div>
+    <div id="viewer-top" class="viewer-layer"></div>
+
+    <div id="divider"><div id="divider-handle"></div></div>
+
+    <div id="label-left" class="label">Original</div>
+    <div id="label-right" class="label">Seg Overlay</div>
+    <div id="inspector">Hover on the right (compare) area to inspect class and coverage.</div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.179.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { Viewer } from 'https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.14.1/index.module.js';
+
+    const originalPanorama = 'selected_example.jpg';
+    const comparePanorama = 'selected_example_seg_overlay.png';
+    const segIdmapPath = "selected_example_seg_idmap.png";
+    const segMeta = {"image": "selected_example", "image_path": "selected_example.jpg", "width": 8000, "height": 4000, "seg_color_path": "selected_example_seg_color.png", "seg_overlay_path": "selected_example_seg_overlay.png", "seg_idmap_path": "selected_example_seg_idmap.png", "class_stats": [{"class_id": 9, "class_name": "grass", "pixels": 11153825, "coverage_pct": 34.8557, "color_rgb": [125, 88, 127]}, {"class_id": 2, "class_name": "sky", "pixels": 10789908, "coverage_pct": 33.7185, "color_rgb": [72, 94, 239]}, {"class_id": 4, "class_name": "tree", "pixels": 3819426, "coverage_pct": 11.9357, "color_rgb": [203, 67, 35]}, {"class_id": 1, "class_name": "building", "pixels": 2966664, "coverage_pct": 9.2708, "color_rgb": [76, 240, 173]}, {"class_id": 12, "class_name": "person", "pixels": 659333, "coverage_pct": 2.0604, "color_rgb": [78, 134, 229]}, {"class_id": 11, "class_name": "sidewalk, pavement", "pixels": 615695, "coverage_pct": 1.924, "color_rgb": [124, 58, 186]}, {"class_id": 53, "class_name": "stairs", "pixels": 513145, "coverage_pct": 1.6036, "color_rgb": [125, 227, 29]}, {"class_id": 17, "class_name": "plant", "pixels": 481096, "coverage_pct": 1.5034, "color_rgb": [189, 229, 21]}, {"class_id": 13, "class_name": "earth, ground", "pixels": 331453, "coverage_pct": 1.0358, "color_rgb": [113, 251, 87]}, {"class_id": 38, "class_name": "rail", "pixels": 279866, "coverage_pct": 0.8746, "color_rgb": [235, 184, 195]}, {"class_id": 69, "class_name": "bench", "pixels": 122254, "coverage_pct": 0.382, "color_rgb": [118, 190, 133]}, {"class_id": 34, "class_name": "rock, stone", "pixels": 99457, "coverage_pct": 0.3108, "color_rgb": [197, 26, 114]}, {"class_id": 20, "class_name": "car", "pixels": 79850, "coverage_pct": 0.2495, "color_rgb": [4, 66, 100]}, {"class_id": 32, "class_name": "fence", "pixels": 36781, "coverage_pct": 0.1149, "color_rgb": [219, 78, 141]}, {"class_id": 6, "class_name": "road, route", "pixels": 36414, "coverage_pct": 0.1138, "color_rgb": [51, 104, 178]}, {"class_id": 86, "class_name": "awning, sunshade, sunblind", "pixels": 8133, "coverage_pct": 0.0254, "color_rgb": [202, 115, 216]}, {"class_id": 59, "class_name": "stairway, staircase", "pixels": 3698, "coverage_pct": 0.0116, "color_rgb": [91, 121, 164]}, {"class_id": 0, "class_name": "wall", "pixels": 3002, "coverage_pct": 0.0094, "color_rgb": [148, 201, 58]}]};
+    const classById = new Map((segMeta.class_stats || []).map((item) => [Number(item.class_id), item]));
+
+    const wrapper = document.getElementById('viewer-wrapper');
+    const topLayer = document.getElementById('viewer-top');
+    const divider = document.getElementById('divider');
+    const handle = document.getElementById('divider-handle');
+    const inspector = document.getElementById('inspector');
+    const idMapCanvas = document.createElement('canvas');
+    const idMapCtx = idMapCanvas.getContext('2d', { willReadFrequently: true });
+    let idMapReady = false;
+
+    let split = 0.5;
+    let isDragging = false;
+    let syncing = false;
+
+    function setInspector(text) {
+      inspector.innerHTML = text;
+    }
+
+    function loadIdMap() {
+      if (!segIdmapPath) {
+        setInspector('No id-map path set. Hover inspect is disabled.');
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        idMapCanvas.width = img.width;
+        idMapCanvas.height = img.height;
+        idMapCtx.drawImage(img, 0, 0);
+        idMapReady = true;
+        setInspector('Hover on the right (compare) area to inspect class and coverage.');
+      };
+      img.onerror = () => {
+        setInspector('Could not load id-map image. Hover inspect disabled.');
+      };
+      img.src = segIdmapPath;
+    }
+
+    function yawPitchToPixel(yaw, pitch, width, height) {
+      let wrappedYaw = yaw;
+      while (wrappedYaw < -180) wrappedYaw += 360;
+      while (wrappedYaw >= 180) wrappedYaw -= 360;
+      const x = Math.floor(((wrappedYaw + 180) / 360) * width);
+      const y = Math.floor(((90 - pitch) / 180) * height);
+      return [
+        Math.min(width - 1, Math.max(0, x)),
+        Math.min(height - 1, Math.max(0, y)),
+      ];
+    }
+
+    function applySplit(value) {
+      split = Math.max(0, Math.min(1, value));
+      const percent = split * 100;
+      divider.style.left = `${percent}%`;
+      topLayer.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      topLayer.style.webkitClipPath = `inset(0 ${100 - percent}% 0 0)`;
+    }
+
+    const commonOptions = {
+      defaultYaw: Math.PI,
+      defaultPitch: 0,
+      defaultZoomLvl: 50,
+      navbar: ['zoom', 'move', 'fullscreen'],
+      mousewheel: true,
+      touchmoveTwoFingers: false,
+    };
+
+    const viewerBottom = new Viewer({
+      container: document.getElementById('viewer-bottom'),
+      panorama: comparePanorama,
+      caption: 'Seg Overlay',
+      ...commonOptions,
+    });
+
+    const viewerTop = new Viewer({
+      container: document.getElementById('viewer-top'),
+      panorama: originalPanorama,
+      caption: 'Original',
+      ...commonOptions,
+    });
+
+    function syncView(source, target) {
+      if (syncing) return;
+      syncing = true;
+      target.rotate(source.getPosition());
+      target.zoom(source.getZoomLevel());
+      syncing = false;
+    }
+
+    viewerTop.addEventListener('position-updated', () => syncView(viewerTop, viewerBottom));
+    viewerBottom.addEventListener('position-updated', () => syncView(viewerBottom, viewerTop));
+    viewerTop.addEventListener('zoom-updated', () => syncView(viewerTop, viewerBottom));
+    viewerBottom.addEventListener('zoom-updated', () => syncView(viewerBottom, viewerTop));
+
+    function updateFromClientX(clientX) {
+      const rect = wrapper.getBoundingClientRect();
+      applySplit((clientX - rect.left) / rect.width);
+    }
+
+    handle.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      handle.setPointerCapture(e.pointerId);
+      updateFromClientX(e.clientX);
+    });
+
+    handle.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      updateFromClientX(e.clientX);
+    });
+
+    handle.addEventListener('pointerup', (e) => {
+      isDragging = false;
+      handle.releasePointerCapture(e.pointerId);
+    });
+
+    divider.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      updateFromClientX(e.clientX);
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      updateFromClientX(e.clientX);
+    });
+
+    window.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+
+    window.addEventListener('resize', () => applySplit(split));
+
+    let hoverRaf = null;
+    let pendingHoverEvent = null;
+
+    function inspectCompareFromEvent(event) {
+      if (!idMapReady) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      if (x < 0 || y < 0 || x >= rect.width || y >= rect.height) return;
+
+      if (x < split * rect.width) {
+        setInspector('Pointer is on Original side. Move to right (compare) side to inspect.');
+        return;
+      }
+
+      let spherical = null;
+      try {
+        spherical = viewerBottom.dataHelper.viewerCoordsToSphericalCoords({ x, y });
+      } catch (err) {
+        return;
+      }
+      if (!spherical) return;
+
+      const yaw = (spherical.yaw * 180) / Math.PI;
+      const pitch = (spherical.pitch * 180) / Math.PI;
+      const [px, py] = yawPitchToPixel(yaw, pitch, idMapCanvas.width, idMapCanvas.height);
+      const pixel = idMapCtx.getImageData(px, py, 1, 1).data;
+      const classId = (pixel[0] << 16) + (pixel[1] << 8) + pixel[2];
+      const info = classById.get(classId);
+
+      if (!info) {
+        setInspector(`Unknown class at <span class="mono">(${px}, ${py})</span>. class_id=<span class="mono">${classId}</span>`);
+        return;
+      }
+
+      const pct = Number(info.coverage_pct).toFixed(4);
+      setInspector(`Class: <span class="mono">${info.class_name}</span> (id=${info.class_id}) | Coverage: <span class="mono">${pct}%</span> | Pixels: <span class="mono">${info.pixels}</span>`);
+    }
+
+    wrapper.addEventListener('mousemove', (event) => {
+      pendingHoverEvent = event;
+      if (hoverRaf !== null) return;
+      hoverRaf = window.requestAnimationFrame(() => {
+        hoverRaf = null;
+        if (pendingHoverEvent) inspectCompareFromEvent(pendingHoverEvent);
+      });
+    });
+
+    wrapper.addEventListener('touchmove', (event) => {
+      if (!event.touches || event.touches.length === 0) return;
+      inspectCompareFromEvent(event.touches[0]);
+    }, { passive: true });
+
+    if ((segMeta.class_stats || []).length === 0) {
+      setInspector('No class metadata found. Generate *_seg_meta.json first.');
+    }
+
+    loadIdMap();
+
+    applySplit(0.5);
+  </script>
+</body>
+</html>

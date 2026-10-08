@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assignment: Spatial Data Processing (Part I)</title>
+        <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="src/remark-latest.min.js"></script>
+        <script src="src/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+        <style>
+          .project-table table {
+            font-size: 0.78em;
+          }
+
+          .project-table th,
+          .project-table td {
+            padding: 0.4rem 0.55rem;
+            vertical-align: top;
+          }
+
+          .project-note {
+            font-size: 0.8em;
+            color: var(--ink-soft);
+          }
+        </style>
+    </head>
+  <body>
+
+    <div id="site-header"></div>
+
+    <textarea id="source">
+
+name: overview
+
+## Assignment Overview
+
+**Individual assignment** · Part I of the Spatial Data Processing assignment (Parts I & II together: **20%** of the course grade)
+
+In Part I you turn raw open data into **one finished thematic map of Singapore** that answers a clear question.
+
+You will:
+
+1. pose a focused spatial question about Singapore
+2. find, clean, and join a spatial and a non-spatial dataset
+3. calculate a meaningful mapping variable
+4. design a thematic map in **QGIS or Python** (your choice)
+5. explain and justify your choices in a short write-up
+
+Part II builds on the dataset you prepare here, so keep your workflow clean.
+
+---
+
+## Learning Objectives
+
+By completing Part I, you should be able to:
+
+1. locate and document open spatial data from Singapore government sources
+2. clean tabular data and join it to spatial boundaries using a common key
+3. derive a standardised variable (rate, ratio, share, or density) suitable for mapping
+4. choose a thematic map type, classification, and colour scheme that fit the data
+5. produce a complete map layout that communicates one clear message
+6. record the workflow so that someone else can reproduce the map
+
+This assignment applies the [Cartographic Design](week05_Cartography.html) lecture and the data skills from [Spatial Data Processing and Cleaning](sdp.html).
+
+---
+
+## Timeline
+
+.project-table[
+
+| Week | Milestone |
+|---|---|
+| Week 5 | Cartographic design lecture and tutorial practices; **Part I released** |
+| Week 6 | Choose your question and datasets; process the data; ask questions in the tutorial |
+| Week 7 | **Part I due**: Friday, 11:59pm |
+]
+
+<div class="project-note">Late submissions lose 10% per day (see Course Policies). If something serious comes up, contact the instructor before the deadline.</div>
+
+---
+
+name: task
+
+## The Task
+
+Create **one static thematic map** of Singapore that answers a question you define.
+
+Your map must:
+
+- show a **derived variable**, not a column copied straight from the download
+- use **at least two datasets** joined together (for example, a boundary layer and a statistics table, or a boundary layer and a point layer)
+- use an appropriate **thematic map type**: choropleth, proportional symbol, dot density, isopleth, or cartogram
+- be built in **QGIS** (Path A) or **Python** (Path B)
+
+The question should be answerable from a single map. Keep it focused.
+
+---
+
+## Example Questions
+
+You may adapt one of these or propose your own.
+
+- Which subzones have the highest share of residents living in 1- and 2-room HDB flats?
+- How does the number of hawker centres per 10,000 residents vary across planning areas?
+- Which planning areas have the most park area per resident?
+- Where are preschools most concentrated relative to the number of children aged 0–4?
+- How does the density of MRT and LRT station exits vary across planning areas?
+
+**Not allowed**: reproducing Practice 1 of the Week 5 tutorial (share of residents aged 65+ by planning area). You may use the same datasets, but your variable and question must differ.
+
+---
+
+## Choosing a Good Variable
+
+Your variable should match your map type.
+
+.left_half[
+
+### Choropleth
+
+Map **rates, shares, or densities**:
+
+- % of residents in a group
+- facilities per 10,000 residents
+- residents per km²
+- park area per resident
+
+Raw counts on a choropleth will lose marks: large areas dominate visually.
+
+]
+
+.right_half[
+
+### Other map types
+
+- **Proportional symbol**: totals at points or area centroids (e.g. number of residents per subzone)
+- **Dot density**: counts spread within areas
+- **Isopleth**: values sampled at points that vary continuously (e.g. temperature)
+- **Cartogram**: totals, when land area distorts the message
+
+]
+
+---
+
+name: data
+
+## Data Requirements
+
+Use **open data from official sources**. Good starting points:
+
+- [data.gov.sg](https://data.gov.sg): Census of Population 2020 tables, Master Plan 2019 boundaries, hawker centres, parks, preschools
+- [LTA DataMall](https://datamall.lta.gov.sg): bus stops, MRT station exits, road network
+- [OneMap](https://www.onemap.gov.sg): geocoding and themes
+- [URA SPACE](https://www.ura.gov.sg/maps/): master plan land use
+
+See [Urban Data Sources and Open Data in Singapore](data.html) for more.
+
+For each dataset, record: **name, issuing agency, version or year, download date, and licence**.
+
+Work in **SVY21 (EPSG:3414)** for any area or distance calculation.
+
+---
+
+## Data Processing Expectations
+
+Your processing must be transparent. In your write-up, state:
+
+- **Unit of analysis**: planning area, subzone, hexagon grid, or point
+- **Join key**: which fields you matched, and how you cleaned them (case, spaces, spelling)
+- **Records dropped**: how many, and why (e.g. unmatched names, uninhabited areas)
+- **Missing values**: how you handled them; `-` or blank is *no data*, not zero
+- **Formula**: the exact formula for your variable
+- **Parameters**: number of classes, classification method, buffer distances, symbol scaling
+
+Check your join. If 55 planning areas went in and 52 came out, explain the 3.
+
+---
+
+name: workflow
+
+## Path A: QGIS
+
+1. Load the boundary layer and the attribute table (or point layer)
+2. Clean the join field with the *Field Calculator* (e.g. `upper(trim("name"))`)
+3. Join with *Layer Properties → Joins*, or *Join Attributes by Field Value*
+4. For point data, count points per area with *Count Points in Polygon*
+5. Calculate your variable with the *Field Calculator*; save the result as a **GeoPackage**
+6. Style with *Symbology → Graduated* (or another renderer); compare Quantile, Natural Breaks, and Equal Interval
+7. Build the map in the **Print Layout**: title, legend, scale bar, source note
+8. Export as PNG (300 dpi) or PDF
+
+Keep a **step log**: a numbered list of every tool you ran and its key settings, with screenshots of the key dialogs. The [vector tools](#vector-tools) slides show the level of detail expected.
+
+---
+
+## Path B: Python
+
+```python
+import geopandas as gpd, pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib_scalebar.scalebar import ScaleBar
+
+areas = gpd.read_file("data/raw/planning_areas.geojson").to_crs(3414)
+stats = pd.read_csv("data/raw/my_table.csv")
+# ... clean the join key and compute your variable here ...
+gdf = areas.merge(stats, on="PLN_AREA_N", how="left")
+
+fig, ax = plt.subplots(figsize=(10, 7))
+gdf.plot(column="my_rate", scheme="NaturalBreaks", k=5, cmap="YlOrRd",
+         edgecolor="white", linewidth=0.3, legend=True, ax=ax,
+         legend_kwds={"title": "My variable (unit)", "loc": "lower right"},
+         missing_kwds={"color": "lightgrey", "label": "No data"})
+ax.add_artist(ScaleBar(1, units="m", location="lower left"))
+ax.set_title("A title that states the message"); ax.set_axis_off()
+fig.text(0.02, 0.02, "Source: ... | Author: ...", fontsize=8)
+fig.savefig("outputs/map.png", dpi=300, bbox_inches="tight")
+```
+
+`scheme=` requires `mapclassify`; the scale bar requires `matplotlib-scalebar`.
+
+---
+
+## Combining QGIS and Python
+
+You may also use the **dual workflow** from the Week 5 lecture:
+
+- **Python** for cleaning, joining, and calculating the variable, exported as a GeoPackage
+- **QGIS** for symbology and the print layout
+
+If you do, submit both the notebook and the QGIS project, and say in the write-up which steps happened where.
+
+Whichever path you choose, marks go to the **quality of your decisions and documentation**, not to the tool.
+
+---
+
+## Map Requirements
+
+Your final map must include:
+
+- a **title** that states the message or question, not just the variable name
+- the **thematic layer** as the strongest visual element
+- a **legend** with a readable title, units, and sensible rounded class breaks
+- a **scale bar**; a north arrow is optional (north is up)
+- a **source note**: datasets, year, and your name
+- a distinct style for **no data** areas, labelled in the legend
+
+Design rules:
+
+- 4–6 classes; a sequential ramp for ordered values, a diverging ramp only with a meaningful midpoint
+- no rainbow ramps; check that the colours work for colour-blind readers ([ColorBrewer](https://colorbrewer2.org) marks safe schemes)
+- light or no basemap; thin, quiet boundary lines
+
+---
+
+name: deliverables
+
+## Deliverables
+
+Submit one `.zip` named `SDP1_<StudentID>_<Name>.zip` on **system** by **Friday of Week 7, 11:59pm**, containing:
+
+1. **The map**: `map.png` (300 dpi) or `map.pdf` (A4 or A3)
+2. **The write-up**: `writeup.pdf`, **600–800 words** (excluding tables and references)
+3. **The workflow**:
+   - Path A: the `.qgz` project, the processed GeoPackage, and the step log with screenshots
+   - Path B: a notebook that runs top to bottom, plus `requirements.txt`
+4. **The data**: raw files, or download links and dates if a file is larger than 50 MB
+
+Use **relative paths** only. A suggested structure:
+
+```text
+SDP1_<StudentID>_<Name>/
+├── data/raw/          data/processed/
+├── notebook.ipynb  or  project.qgz + steplog.md
+├── outputs/map.png
+└── writeup.pdf
+```
+
+---
+
+## Write-up Structure
+
+1. **Question**: what the map answers, and why it matters for Singapore (≈100 words)
+2. **Data**: a table of datasets: name, agency, year, download date, licence
+3. **Processing**: unit of analysis, join, records dropped, missing values, formula
+4. **Design choices**: map type, classification method, number of classes, colour scheme. For each, say **why**, and what an alternative would have shown
+5. **Findings**: what the map shows. Name specific places and values
+6. **Limitations**: what the map cannot tell the reader (e.g. modifiable areal unit problem, small populations, data age)
+7. **AI-use statement**: see the next slide
+
+Include a screenshot of a **second classification method** you tested, and explain in two or three sentences how the pattern changed.
+
+---
+
+## Using AI Tools
+
+AI tools may help you write code, debug, or explain QGIS tools. They do not replace your judgement.
+
+In the write-up, state briefly:
+
+1. which tool you used
+2. what you used it for
+3. what you checked yourself
+4. any error it made that you had to fix
+
+Unchecked AI output that produces wrong numbers or a misleading map is your responsibility. "No AI tools were used" is also an acceptable statement.
+
+---
+
+name: rubric
+
+## Marking Rubric (100 marks)
+
+.project-table[
+
+| Criterion | Marks | A strong submission |
+|---|---|---|
+| Question and data choice | 15 | Focused, relevant question; suitable official data, fully documented |
+| Data processing and transparency | 20 | Correct join and variable; dropped records and missing values explained; formula stated |
+| Thematic design | 25 | Map type fits the variable; justified classification; suitable, accessible colour scheme |
+| Layout and readability | 15 | All required elements; clear hierarchy; legible legend and labels |
+| Interpretation and reflection | 15 | Specific findings; honest limitations; comparison of classification methods |
+| Reproducibility | 10 | Workflow runs or can be followed on a clean machine, from raw data to the final map |
+
+]
+
+---
+
+## Common Pitfalls
+
+- mapping **raw counts** on a choropleth
+- planning-area names that **do not match** (e.g. `Changi- Total`, extra spaces, mixed case)
+- treating `-` or blank as **zero**
+- computing area in **degrees** (EPSG:4326) instead of metres (EPSG:3414); see [Troubleshooting](#crs-troubleshooting)
+- leaving the default legend: `0.0034 - 0.1287` instead of `0–10%`
+- a **default title** such as "pct_rate by PLN_AREA_N"
+- absolute file paths such as `C:/Users/...` in the notebook
+- a write-up that describes the map but never **justifies** a choice
+
+---
+
+## Before You Submit
+
+- ☐ Does the title tell the reader what to notice?
+- ☐ Is the variable a rate, share, or density (if it is a choropleth)?
+- ☐ Does every legend class have a readable range and unit?
+- ☐ Are no-data areas shown and labelled?
+- ☐ Is every dataset cited with agency, year, and download date?
+- ☐ Did you explain every dropped or unmatched record?
+- ☐ Does the notebook run top to bottom, or can the step log be followed exactly?
+- ☐ Did you include the AI-use statement?
+
+<div class="project-note">A simple question, a correct variable, and a clean, honest map will score better than an ambitious map with an unclear message.</div>
+
+---
+
+<xL>Review the lecture: </xL><button onclick="window.location.href='week05_Cartography.html'">Go to Cartographic Design</button>
+
+<xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
+
+</textarea>
+    <script src="src/template.js"></script>
+    <script>
+      fetch('src/nav.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
+    </script>
+    </body>
+</html>

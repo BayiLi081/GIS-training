@@ -1,0 +1,209 @@
+{
+  "image": "selected_example",
+  "image_path": "../fov_tests/selected_example.jpg",
+  "width": 699,
+  "height": 349,
+  "seg_color_path": "./results/selected_example_seg_color.png",
+  "seg_overlay_path": "./results/selected_example_seg_overlay.png",
+  "seg_idmap_path": "./results/selected_example_seg_idmap.png",
+  "class_stats": [
+    {
+      "class_id": 9,
+      "class_name": "grass",
+      "pixels": 11153825,
+      "coverage_pct": 34.8557,
+      "color_rgb": [
+        125,
+        88,
+        127
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "sky",
+      "pixels": 10789908,
+      "coverage_pct": 33.7185,
+      "color_rgb": [
+        72,
+        94,
+        239
+      ]
+    },
+    {
+      "class_id": 4,
+      "class_name": "tree",
+      "pixels": 3819426,
+      "coverage_pct": 11.9357,
+      "color_rgb": [
+        203,
+        67,
+        35
+      ]
+    },
+    {
+      "class_id": 1,
+      "class_name": "building",
+      "pixels": 2966664,
+      "coverage_pct": 9.2708,
+      "color_rgb": [
+        76,
+        240,
+        173
+      ]
+    },
+    {
+      "class_id": 12,
+      "class_name": "person",
+      "pixels": 659333,
+      "coverage_pct": 2.0604,
+      "color_rgb": [
+        78,
+        134,
+        229
+      ]
+    },
+    {
+      "class_id": 11,
+      "class_name": "sidewalk, pavement",
+      "pixels": 615695,
+      "coverage_pct": 1.924,
+      "color_rgb": [
+        124,
+        58,
+        186
+      ]
+    },
+    {
+      "class_id": 53,
+      "class_name": "stairs",
+      "pixels": 513145,
+      "coverage_pct": 1.6036,
+      "color_rgb": [
+        125,
+        227,
+        29
+      ]
+    },
+    {
+      "class_id": 17,
+      "class_name": "plant",
+      "pixels": 481096,
+      "coverage_pct": 1.5034,
+      "color_rgb": [
+        189,
+        229,
+        21
+      ]
+    },
+    {
+      "class_id": 13,
+      "class_name": "earth, ground",
+      "pixels": 331453,
+      "coverage_pct": 1.0358,
+      "color_rgb": [
+        113,
+        251,
+        87
+      ]
+    },
+    {
+      "class_id": 38,
+      "class_name": "rail",
+      "pixels": 279866,
+      "coverage_pct": 0.8746,
+      "color_rgb": [
+        235,
+        184,
+        195
+      ]
+    },
+    {
+      "class_id": 69,
+      "class_name": "bench",
+      "pixels": 122254,
+      "coverage_pct": 0.382,
+      "color_rgb": [
+        118,
+        190,
+        133
+      ]
+    },
+    {
+      "class_id": 34,
+      "class_name": "rock, stone",
+      "pixels": 99457,
+      "coverage_pct": 0.3108,
+      "color_rgb": [
+        197,
+        26,
+        114
+      ]
+    },
+    {
+      "class_id": 20,
+      "class_name": "car",
+      "pixels": 79850,
+      "coverage_pct": 0.2495,
+      "color_rgb": [
+        4,
+        66,
+        100
+      ]
+    },
+    {
+      "class_id": 32,
+      "class_name": "fence",
+      "pixels": 36781,
+      "coverage_pct": 0.1149,
+      "color_rgb": [
+        219,
+        78,
+        141
+      ]
+    },
+    {
+      "class_id": 6,
+      "class_name": "road, route",
+      "pixels": 36414,
+      "coverage_pct": 0.1138,
+      "color_rgb": [
+        51,
+        104,
+        178
+      ]
+    },
+    {
+      "class_id": 86,
+      "class_name": "awning, sunshade, sunblind",
+      "pixels": 8133,
+      "coverage_pct": 0.0254,
+      "color_rgb": [
+        202,
+        115,
+        216
+      ]
+    },
+    {
+      "class_id": 59,
+      "class_name": "stairway, staircase",
+      "pixels": 3698,
+      "coverage_pct": 0.0116,
+      "color_rgb": [
+        91,
+        121,
+        164
+      ]
+    },
+    {
+      "class_id": 0,
+      "class_name": "wall",
+      "pixels": 3002,
+      "coverage_pct": 0.0094,
+      "color_rgb": [
+        148,
+        201,
+        58
+      ]
+    }
+  ]
+}

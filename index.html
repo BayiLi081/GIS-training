@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>Spatial Analysis of Urban Data</title>
+        <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="src/remark-latest.min.js"></script>
+        <script src="src/custom.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/custom.css"/>
+        <style>
+          .course-structure table {
+            font-size: 0.74em;
+            table-layout: fixed;
+          }
+
+          .course-structure th,
+          .course-structure td {
+            padding: 0.34rem 0.55rem;
+          }
+
+          .course-structure th:first-child,
+          .course-structure td:first-child {
+            width: 16%;
+            white-space: nowrap;
+          }
+
+          .course-structure a {
+            color: var(--accent-strong);
+            font-weight: 700;
+            text-decoration: none;
+          }
+
+          .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2em;
+            margin-top: 1em;
+          }
+
+          .tool-card {
+            padding: 0.9em 1.1em;
+            border-radius: 14px;
+            border-top: 4px solid var(--accent);
+            background: var(--accent-warm-soft);
+            font-size: 0.82em;
+          }
+
+          .tool-card h3 {
+            margin: 0;
+            color: var(--accent-strong);
+          }
+
+          .tool-card .tool-tag {
+            margin: 0.2em 0 0.6em;
+            font-size: 0.85em;
+            opacity: 0.7;
+          }
+
+          .tool-card ul {
+            padding-left: 1.1em;
+            margin: 0;
+          }
+
+          .tool-card li {
+            margin-bottom: 0.5em;
+          }
+
+          @media (max-width: 768px) {
+            .tool-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          .lecturer-frame {
+            width: 100%;
+            height: 500px;
+            border: 0;
+          }
+
+          @media (max-width: 768px) {
+            .lecturer-frame {
+              height: 700px;
+            }
+          }
+        </style>
+    </head>
+  <body>
+
+    <div id="site-header"></div>
+    <textarea id="source">
+
+class: center
+
+<br>
+
+# Spatial Analysis of Urban Data
+
+[Bayi Li](mailto:barryli081@gmail.com)
+
+.toc-wrapper[
+  <div class="toc">
+    <a href="#definition_uds" class="toc-item">Introduction to Urban Data Analytics</a>
+    <a href="week05_Cartography.html" class="toc-item">Cartographic Design</a>
+    <a href="vector.html" class="toc-item">Spatial Analysis of Vector Data</a>
+    <a href="raster.html" class="toc-item">Spatial Analysis of Raster Data</a>
+    <a href="spdeng.html" class="toc-item">Spatial Data Integration and Feature Engineering</a>
+    <a href="network.html" class="toc-item">Spatial Network Analysis</a>
+    <a href="appliedgis.html" class="toc-item">Urban Studies and Applied GIS</a>
+    <a href="cvurban.html" class="toc-item">Computer Vision and Urban Case Study</a>
+    <a href="webmap.html" class="toc-item">Web-Based Spatial Visualisation</a>
+]
+
+<!-- <a href="about.html" class="toc-item">About This Project</a>
+</div> -->
+
+
+???
+
+The session will cover the fundamental concepts of spatial analysis, types of spatial data, and the formulation of related research questions in urban studies.
+
+In the following weeks, vector, raster, and network, three main types of spatial data, will be introduced, along with their respective analysis techniques and applications in urban contexts.
+
+---
+
+name: tools
+
+## Why QGIS, Python and GitHub?
+
+<div class="tool-grid">
+  <div class="tool-card">
+    <h3>QGIS</h3>
+    <p class="tool-tag">Desktop GIS</p>
+    <ul>
+      <li>The leading <strong>open-source GIS software</strong>, free on Windows, macOS and Linux</li>
+      <li>Large community and plugin ecosystem, widely used in research, government and industry</li>
+      <li>Skills transfer directly to commercial tools such as ArcGIS</li>
+    </ul>
+  </div>
+  <div class="tool-card">
+    <h3>Python</h3>
+    <p class="tool-tag">Programming language</p>
+    <ul>
+      <li>The <strong>most widely used programming language</strong>, easy to learn and read</li>
+      <li>Rich geospatial and data science libraries (GeoPandas, Shapely, Rasterio, scikit-learn)</li>
+      <li>Makes analysis reproducible, automatable and scalable beyond point-and-click</li>
+    </ul>
+  </div>
+  <div class="tool-card">
+    <h3>GitHub</h3>
+    <p class="tool-tag">Code platform</p>
+    <ul>
+      <li>The <strong>most used platform for hosting and sharing code</strong></li>
+      <li>Built on <strong>Git</strong>, so you can track, version and manage every change to your code</li>
+      <li>Supports collaboration, portfolios and free web publishing via GitHub Pages</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Open-source
+
+.left_half[
+
+### Transparency, Collaboration, and Decentralization
+
+[What is Open Source Software (OSS)?](https://github.com/resources/articles/what-is-open-source-software)
+
+**O**pen **S**cience **F**ramework
+
+https://www.cos.io/products/osf
+
+For Open source geospatial data science:
+
+
+
+- The Open Source Geospatial Foundation: https://www.osgeo.org/
+
+- [**F**ree and **O**pen-**S**ource **S**oftware for **G**eospatial (**FOSS4G**) workflows](https://foss4g.org/)
+
+- [Python Spatial Analysis Library (PySAL)](https://pysal.org/)
+
+]
+
+.right_half[
+
+  <figure>
+    <img src="https://www.cos.io/hs-fs/hubfs/LOS%20final%20for%20web%20v2.png?width=2000&height=2000&name=LOS%20final%20for%20web%20v2.png" width="60%">
+    <figsubcaption>Source: https://www.cos.io/lifecycle-open-science?</figsubcaption>
+  </figure>
+
+]
+
+---
+
+## Open-source
+
+.left_half[
+
+  #### Open source
+  
+  "Open source starts off with a license that provides royalty free (re)use of software. 
+  
+  Next, open source guarantees access to the source code for audit and modification and the ability to redistribute the software with no additional costs."
+]
+
+.right_half[
+
+  #### Open data
+
+  "Open Data applies the principles of free and open to geospatial data, allowing communities to collaborate on a data product."
+
+  In Singapore, most government data is released under the [Singapore Open Data Licence](https://www.sla.gov.sg/singapore-open-data-licence/).
+
+  Urban Analytics Lab: [Guide to open urban data in Singapore](https://ual.sg/project/open-urban-data-singapore/)
+
+]
+
+.references[
+- [What is Open Source?](https://www.osgeo.org/about/what-is-open-source/)
+- [What is Open Data?](https://www.osgeo.org/about/what-is-open-data/)
+]
+
+---
+
+name: installation
+
+## Week 0 Before the class
+
+.left_half[
+
+- Install QGIS https://qgis.org/download/
+  - Explore the QGIS interface
+
+- Install Python
+  - <a href="markdown.html?file=docs/Python_Setup_macOS.md" target="_blank">
+    View the Python installation instructions for macOS
+  </a>
+  - <a href="markdown.html?file=docs/Python_Setup_Windows.md" target="_blank">
+    View the Python installation instructions for Windows
+  </a>
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/install_QGIS.jpg" width="100%">
+  </figure>
+]
+
+---
+
+## Week 0 Before the class
+
+.left_half[
+
+- Register a GitHub account https://github.com/signup
+  - Create a GitHub public repository name "GIS-course"
+  - Send your the link of the repository in Microsoft Teams channel (e.g., https://github.com/Baxxxx0cc/GIS-course)
+  - Verify you student status at https://github.com/education
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/registerGitHub.jpg" width="100%">
+  </figure>
+]
+
+---
+
+exclude: true
+
+.left_half[
+
+### Bayi Li
+
+[Online Profile](https://www.sutd.edu.sg/profile/li-bayi/)
+
+Trained across urban planning and geographical information science.
+
+His work integrates spatial analytics, machine learning, computer vision, and urban theory to examine mobility, public space, and environmental exposure in contemporary cities.
+]
+
+.left_half[
+
+### Xiaohan Liu
+
+[Online Profile](https://www.sutd.edu.sg/profile/liu-xiaohan/)
+
+She is an urban researcher whose work combines urban planning, GIS, mobility and network analysis, and urban data science. 
+
+Her research examines how built environments shape everyday mobility, public space use, health, environmental exposure, and social interaction, with a focus on creating more liveable and inclusive high-density cities.
+]
+
+---
+
+name: before-survey
+
+## Short before-survey
+
+  <figure class="image-70">
+    <img src="imgs/image_placeholder.jpg">
+    <figsubcaption>Source: https://</figsubcaption>
+  </figure>
+
+---
+
+## Course policies
+
+### Office hours and communication
+
+Office: LKYCIC / Online
+
+Office Hours: by appointment
+
+---
+
+## Course policies
+
+### AI use policy
+
+This course teaches you to use AI alongside GIS.
+.left_half[
+
+Permitted:
+
+- Generating, explaining, and debugging code
+
+- Getting unstuck on technical problems
+
+- Explaining a concept from the readings
+
+- Brainstorming and suggesting
+
+- Improving the writing you have drafted
+
+- Drafting documentation and code comments
+
+- Getting critical feedback on your own argument
+
+]
+
+.right_half[
+**NOT** permitted:
+
+- Submitting unchecked AI output
+
+- Unverified citations, DOIs, or author 
+
+- Numbers, statistics, or findings that cannot be traced back to your data and code
+
+- Any AI-generated image as final delivery
+
+- Passing off generated prose as your own analysis in the individual report
+]
+
+
+---
+## Course policies
+
+.left_half[
+
+### Attendance and participation
+
+- If you cannot attend a class, please inform the instructor in advance where possible.
+
+- Repeated absence may affect your participation assessment (10%).
+
+]
+
+.right_half[
+
+### Late submission policy
+
+All assignments are to be submitted on time. 
+
+Late submissions are **graded down 10% per day**. 
+
+If something serious comes up, contact us before the deadline rather than after it.
+
+]
+
+---
+## Course policies
+
+### Assessment and grading
+
+**Two standards** govern everything you submit:
+
+(1) **Methodological transparency**
+
+Someone reading only your report and your repository should be able to tell exactly what you did and why, without asking you.
+
+- **Which data, exactly.  **  Name the dataset, the issuing agency, the version or vintage, the download date, and the licence.
+
+- **Unit of analysis.  ** Planning area, subzone, hexagonal grid, 200 m cell, or individual point. 
+
+- **Filtering and exclusions.  ** How many records you dropped, why, and what was left.
+
+- **Every parameter. **  Buffer distance, number of classes and classification scheme in a choropleth, confidence threshold on a model. 
+
+---
+## Course policies
+
+### Assessment and grading
+
+**Two standards** govern everything you submit:
+
+(2) **Reproducibility**
+
+Someone else, on a different machine, running your code, gets your numbers back.
+
+| Level | Meaning | Status in this course |
+| --- | --- | --- |
+| Re-runnable | Runs on your laptop, today | Bare minimum |
+| Reproducible | Runs on a clean machine, from raw data to final figures | **The course standard** |
+| Replicable | Another team could apply your method to a different dataset or city | What "reusable workflow" means |
+
+---
+
+## Course Structure and Focuses
+
+### Spatial data foundations
+
+What spatial data is, where Singapore's open data comes from (data.gov.sg, LTA DataMall, OpenStreetMap), and how to get it analysis-ready: formats, coordinate systems, cleaning, and integration across sources.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 1 | Introduction to Urban Data Analytics |
+| Week 2 | [Urban Data Sources and Open Data in Singapore](data.html) |
+| Week 3 | [Introduction to Python in Urban Data Analytics](intro2python.html) |
+| Week 4 | [Spatial Data Processing and Cleaning](sdp.html) |
+| Week 9 | [Spatial Data Integration and Feature Engineering](spdeng.html) |
+
+]
+
+---
+
+## Course Structure and Focuses
+
+### Core spatial analysis
+
+Vector operations and spatial statistics, raster analysis, and network analysis for accessibility and routing. The methodological backbone.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 6 | [Spatial statistics and analysis of vector data](vector.html) |
+| Week 8 | [Spatial analysis of raster data](raster.html) |
+| Week 10 | [Network Analysis for Urban Systems](network.html) |
+
+]
+
+<br>
+
+### Cartographic and visual communication
+
+Turning analysis into maps people can read, from thematic map design through to interactive web-based visualization.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 5 | [Cartographic Design](Cartographic Design.html) |
+| Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
+
+]
+
+---
+
+## Course Structure and Focuses
+
+### Critical use of GeoAI
+
+AI-assisted coding and computer vision on street-level and aerial imagery.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 3 | [Introduction to Python in Urban Data Analytics](intro2python.html) |
+| Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
+| Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
+
+]
+
+<br>
+
+### Reproducible workflow practice
+
+Building a reusable, documented, open-source analytical workflow around a real Singapore urban question, as a team.
+
+.course-structure[
+
+| Week | Topics |
+|---|---|
+| Week 10 | [Network Analysis for Urban Systems](network.html) |
+| Week 11 | [Computer Vision and Urban Case Study](cvurban.html) |
+| Week 12 | [Web-Based Spatial Visualisation](webmap.html) |
+| Week 13 & 14 | Final Project |
+
+]
+
+---
+
+## Assessment
+
+The course combines continuous and summative assessment across the term.
+
+| Component | Weight | Period |
+|---|---|---|
+| Participation | 10% | Throughout the term |
+| Individual Assignment (Spatial Data Processing, Part I & II) | 20% | Weeks 3–9 |
+| Final group project presentation | 20% | Week 14 |
+| Final group project code | 20% | Week 14 |
+| Final individual report | 30% | End of term |
+
+The final group project accounts for 70% of the overall grade.
+
+---
+
+name: geoai_data
+
+
+# Core data modalities in GeoAI
+
+.left_half[
+
+1. **Geospatial vector data**
+
+2. **Images**
+
+3. Knowledge graphs
+
+4. Text
+
+5. Trajectory data
+
+...
+
+]
+
+--
+
+.right_half[
+
+Selected data for this course:
+
+- Geospatial data
+
+  - Vector data
+
+  - Raster data
+
+- Network data
+
+- Imagery data
+
+]
+
+.references[
+- [On the Opportunities and Challenges of Foundation Models for GeoAI](https://dl.acm.org/doi/10.1145/3653070)
+]
+
+
+---
+
+name: definition_uds
+
+# Definition of Spatial Analysis
+
+**Quantitative analysis** of **spatial data**
+
+1. **Quantitative analysis**
+
+2. **spatial data**
+
+???
+
+Spatial analysis can be easily defined as quantitative analysis of spatial data.
+
+It can be disaggregated into two key components: quantitative analysis and spatial data. The former describes a general approach, while the latter
+specifies the type of data being analyzed.
+
+--
+
+**Quantitative analysis**:
+
+Exploration of spatial data involves describing **patterns** and understanding the nature of underlying **relationships**.
+
+1. **Patterns**
+
+2. **Relationships**
+
+???
+
+Spatial analysis can be easily defined as quantitative analysis of spatial data.
+
+It can be disaggregated into two key components: quantitative analysis and spatial data. The former describes a general approach, while the latter
+specifies the type of data being analyzed.
+
+Let's first focus on quantitative analysis. 
+In general, quantitative analysis of spatial data involves two main aspects: describing patterns and understanding relationships.
+
+---
+
+## Spatial Patterns
+
+Patterns turn raw spatial data into meaningful geographic insight.
+
+<div align="center">
+  <figure>
+    <img src="imgs/spatial_patterns.jpg" width="50%">
+    <figcaption>Different types of spatial patterns of points.</figcaption>
+    <figsubcaption>Source: https://gisgeography.com/spatial-patterns/</figsubcaption>
+  </figure>
+</div>
+
+???
+
+Taking this spatial points as an example, we can observe different types of spatial patterns, including random, clustered and uniform patterns.
+
+It is a way to describe how spatial phenomena are distributed in space.
+
+---
+
+## Spatial Relationships
+
+Topological spatial relations are fundamental constructs that describe how two or more geometric objects relate to each other.
+
+<div align="center">
+  <figure>
+    <img src="imgs/spatial_relations.png" width="50%">
+    <figcaption>Different types of spatial relations based on two Polygon geometries.</figcaption>
+    <figsubcaption>Source: Egenhofer et al. (1992) and https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html</figsubcaption>
+  </figure>
+</div>
+
+???
+
+What is spatial analysis?
+
+---
+
+## Spatial Analysis: From Data to Wisdom
+
+.right_half[
+  <figure>
+    <img src="imgs/DIKW_Pyramid.jpg" width="100%">
+    <figcaption>Data, Information, Knowledge, Wisdom (DIKW) Pyramid.</figcaption>
+    <figsubcaption>Source: R. Ackoff (1989) and https://www.jeffwinterinsights.com/insights/dikw-pyramid</figsubcaption>
+  </figure>
+]
+
+Spatial analysis can reveal things that might otherwise be invisible – it can **make what is implicit explicit**
+
+<br>
+
+Spatial analysis adds to the value of geographic data and can **turn data into useful information**
+
+<br>
+
+Effective spatial analysis requires **an intelligent user**, not just a powerful computer
+
+---
+
+## From Exploration to Explanation
+
+Different spatial analysis projects have different aims, so the framework must align the aim with the methods. 
+
+| | **Exploratory**                                    | | **Descriptive**                                     | | **Explanatory**                                     |
+|-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |-| ------------------------------------------------------------ |
+|*| Aim -> |*| Aim -> |*| Aim -> |
+| | To discover patterns, trends, or anomalies in spatial data without starting from a clear hypothesis. | | To characterise and summarise spatial phenomena, often through quantification and comparison. | | To understand causation or association between spatial variables and to test hypotheses. |
+|*| Example -> |*| Example -> |*| Example -> |
+| | “What spatial patterns emerge from mapping daily pedestrian movement across Singapore's park network?” | | “How does accessibility to hawker centres vary across housing types in Singapore?” | | “To what extent do covered linkways influence the frequency of pedestrian movement across urban neighbourhoods?" |
+
+---
+
+## Vector and Raster Data
+
+Spatial data is primarily represented using two major models:
+
+.left_half[
+**Vector data** represents discrete features as geometries:
+
+- **Points**, **lines**, and **polygons**
+- e.g. bus stops, roads, buildings, planning areas
+
+**Raster data** represents space as a grid of cells:
+
+- Each cell (pixel) stores a value
+- e.g. satellite imagery, elevation, land surface temperature
+
+]
+
+.right_half[
+<div align="center">
+  <figure>
+    <img src="imgs/vector_n_raster_presentation.png" width="45%">
+    <figcaption>Raster and vector representation of real world entities.</figcaption>
+    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
+  </figure>
+</div>
+]
+
+.clear[
+]
+
+---
+
+## Vector vs. Raster: The Key Difference
+
+- **Vector** describes *where things are* using coordinates – best for objects with **clear boundaries** (e.g. parcels, roads).
+
+- **Raster** describes *what value each location has* – best for **continuous phenomena** that vary across space (e.g. temperature, elevation).
+
+The choice of data model affects how data is stored, visualised, and analysed. Both will be covered in detail in [Week 6 (vector)](vector.html) and [Week 8 (raster)](raster.html).
+
+---
+
+name: vector-formats
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/what_is_shp.jpg" width="50%">
+  </figure>
+  <figcaption>An example of Esri Shapefile.</figcaption>
+
+| File      | Purpose        | Required          |
+| --------- | -------------- | ----------------- |
+| .shp      | Geometry       | Yes               |
+| .shx      | Geometry index | Yes               |
+| .dbf      | Attributes     | Yes               |
+| .prj      | Projection     | No (but critical) |
+| .cpg      | Text encoding  | No                |
+| .sbn/.sbx | Spatial index  | No                |
+| .xml      | Metadata       | No                |
+]
+
+## Common Spatial Vector Data Formats
+
+Esri Shapefile
+
+A full Esri Shapefile is not one file. It is a set of files that must stay together in the same folder.
+
+**`.shp`:** Stores the geometry (points, lines, or polygons).
+
+**`.shx:`** Index file.
+
+**`.dbf:`** Attribute table which stores non-spatial data (names, IDs, values).
+
+**`.prj`**
+
+* Stores the coordinate reference system (CRS).
+* Without it, the data has no defined projection.
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/vector/what_is_geojson.jpg" width="100%">
+  </figure>
+  <figcaption>An example of GeoJSON.</figcaption>
+]
+
+## GeoJSON
+
+- A single text file: Easy to open, share, and inspect.
+
+- Human-readable (JSON format)
+
+- Designed for the web: 
+
+  Works well with JavaScript, Python, and web maps.
+
+- Slower and heavy for large datasets. 
+  
+  Best for small to medium data.
+
+---
+
+.right_half[
+<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1821_umakbckIqqQrcKP2bU-n7vkvGwA&ehbc=2E312F" width="100%" height="280"></iframe>
+]
+
+## KML
+
+KML (Keyhole Markup Language)
+
+- A single text file based on XML.
+
+- Designed for visualisation, not analysis.
+
+- Closely linked to Google Products.
+
+- Uses WGS84 (lat–lon) only
+
+---
+
+## GeoPackage
+
+.right_half[
+
+| | Shapefile | GeoPackage |
+|---|---|---|
+| Files | 3–7 files | **1 file** |
+| Layers per file | 1 | **Many** |
+| Field name length | 10 characters | Unlimited |
+| File size limit | 2 GB | Very large (SQLite) |
+| Raster support | No | Yes |
+
+]
+
+GeoPackage (`.gpkg`) is an open **OGC standard** built on an **SQLite** database.
+
+- A single file that can hold **multiple vector layers** (and rasters, tables, styles)
+
+- No field-name or 2 GB size limits of Shapefile
+
+- Stores the CRS inside the file
+
+- Default format in QGIS, well supported by GeoPandas
+
+- Not human-readable: open it in QGIS or Python rather than a text editor
+
+.references[
+- [GeoPackage (OGC)](https://www.geopackage.org/)
+- [Switch from Shapefile](http://switchfromshapefile.org/)
+]
+
+---
+
+## Choosing a Vector Format
+
+| Format | Best for | Avoid when |
+|---|---|---|
+| **Shapefile** | Exchanging data with older software and agencies | Long field names, large data, non-ASCII text |
+| **GeoJSON** | Web maps, APIs, small to medium datasets | Very large datasets |
+| **KML** | Quick visualisation in Google Earth / My Maps | Analysis or projected CRS |
+| **GeoPackage** | Day-to-day GIS work in QGIS and Python | You need to read or edit the file as plain text |
+
+<xL>Rule of thumb:</xL> work in **GeoPackage**, share on the web as **GeoJSON**.
+
+We will read and write these formats in Python in [Week 4](sdp.html).
+
+---
+
+name: crs
+
+## Coordinate Reference Systems (CRS)
+
+Every spatial dataset, vector or raster, is tied to the Earth through a CRS.
+
+It is essential to work with the correct CRS before measuring, buffering, overlaying, or mapping.
+
+<div align="center">
+  <figure>
+    <img src="imgs/vector/gcs_pcs.png" width="60%">
+    <figcaption>Geographic and projected coordinate reference systems serve different purposes.</figcaption>
+    <figsubcaption>Source: https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/</figsubcaption>
+  </figure>
+</div>
+
+---
+
+## Geographic vs Projected CRS
+
+- **Geographic CRS** stores locations on the globe, often in latitude and longitude (**degrees**)
+- **Projected CRS** converts the earth surface into planar coordinates, often in **metres**
+
+With projected CRS, distances and areas can usually be handled in more appropriate linear units for analysis.
+
+*Note:* Different projections introduce different distortions. A CRS suitable for display is not always the best CRS for analysis.
+
+--
+
+<xL>Always check the CRS.</xL> If a layer uses a geographic CRS, a 500 m buffer or a distance measurement will be calculated in degrees rather than metres.
+
+---
+
+## Map Distortion: Tissot's Indicatrix
+
+.right_half[
+  <figure>
+    <img src="imgs/crs/tissot_mercator.png" width="85%">
+    <figcaption>Mercator projection with Tissot's indicatrices: identical circles on the globe.</figcaption>
+    <figsubcaption>Source: Stefan Kühn, Wikimedia Commons (CC BY-SA 3.0)</figsubcaption>
+  </figure>
+]
+
+A flat map cannot preserve **area, shape, distance, and direction** all at once. Every projection trades some of them off.
+
+**Tissot's indicatrix** draws circles of the *same size* on the globe and shows how the projection deforms them:
+
+- Circles stay round → **shapes (angles)** are preserved locally
+- Circles change size → **areas** are distorted
+
+On Mercator (and Web Mercator, EPSG:3857), the scale grows by 1/cos(latitude):
+
+| Latitude | Length scale | Area scale |
+|---|---|---|
+| 0° (Singapore ≈ 1.3°) | ×1.00 | ×1.00 |
+| 45° | ×1.41 | ×2 |
+| 60° | ×2 | ×4 |
+
+.references[
+- [Tissot's Indicatrix: interactive explorer (M. Gimond)](https://mgimond.github.io/tissot/)
+- [Map Distortion with Tissot's Indicatrix (GIS Geography)](https://gisgeography.com/map-distortion-tissots-indicatrix/)
+]
+
+---
+
+## Map Distortion: The True Size of Countries
+
+.right_half[
+  <figure>
+    <img src="imgs/crs/worlds_animate.gif" width="85%">
+    <figcaption>Countries on the Mercator projection shrinking to their true relative size.</figcaption>
+    <figsubcaption>Source: Jakub Nowosad, Wikimedia Commons (CC BY-SA 4.0)</figsubcaption>
+  </figure>
+]
+
+On a Mercator map, Greenland looks as large as Africa, but **Africa is about 14 times larger**.
+
+High-latitude countries (Russia, Canada, Greenland) shrink the most, while countries near the equator barely change.
+
+<xL>What does this mean for measurement?</xL>
+
+- Measuring areas or distances in **EPSG:3857** at global scale gives wrong answers
+- For global analysis, use an **equal-area** projection for areas, or **geodesic** calculations for distances
+
+*Try it:* drag countries around on [The True Size Of](https://www.thetruesize.com/)
+
+.references[
+- [Mercator Misconceptions: The True Size of Countries (Visual Capitalist)](https://www.visualcapitalist.com/mercator-map-true-size-of-countries/)
+- [Animated map shows the true size of each country (Nature Index)](https://www.nature.com/nature-index/news-blog/data-visualisation-animated-map-mercater-projection-true-size-countries)
+]
+
+---
+
+## EPSG Codes and Singapore
+
+EPSG codes are unique identifiers linked to specific coordinate reference systems.
+
+| EPSG code | Name | Type | Typical use |
+|---|---|---|---|
+| **4326** | WGS 84 | Geographic (degrees) | GPS, GeoJSON, most APIs (e.g., LTA DataMall) |
+| **3857** | WGS 84 / Pseudo-Mercator | Projected (metres) | Web basemaps (OpenStreetMap, Google Maps) |
+| **3414** | SVY21 / Singapore TM | Projected (metres) | **Recommended for analysis in Singapore** |
+
+3857 looks right on a web map, but distorts distances and areas, so use **3414** for measurement in Singapore.
+
+.references[
+- [Coordinate reference systems for "Singapore" (epsg.io)](https://epsg.io/?q=Singapore)
+- [EPSG:3414 SVY21 / Singapore TM](https://epsg.io/3414)
+]
+
+---
+
+## Installing a QGIS Plugin: HCMGIS
+
+Plugins extend QGIS with extra tools. [HCMGIS](https://plugins.qgis.org/plugins/HCMGIS/) provides one-click basemaps (OpenStreetMap, Google, Esri, Carto, etc.) and other handy GIS tools.
+
+1. **Plugins → Manage and Install Plugins…**
+2. Go to the **All** tab and search for `HCMGIS`
+3. Select it and click **Install Plugin**
+4. A new **HCMGIS** menu appears in the menu bar
+5. Add a basemap: **HCMGIS → BaseMap →** choose a provider (e.g. **OpenStreetMap**)
+
+*Note:* Basemaps are loaded as online tiles (in EPSG:3857), so you need an internet connection. They are for reference only, not for analysis.
+
+---
+
+## Practice: Create a Point Layer in QGIS
+
+Create a layer with three Singapore landmarks in **EPSG:4326**.
+
+1. Add a basemap with the [HCMGIS](https://plugins.qgis.org/plugins/HCMGIS/) plugin: **HCMGIS → BaseMap → OpenStreetMap** (installed on the previous slide)
+2. **Layer → Create Layer → New GeoPackage Layer**
+   - File name: `sg_points.gpkg`, Geometry type: **Point**, CRS: **EPSG:4326 - WGS 84**
+   - Add a text field `name`, click **Add to Fields List**, then **OK**
+3. Select the layer, click **Toggle Editing** (pencil) → **Add Point Feature**
+4. Click on each location and type its `name`:
+   - **SUTD**, **Changi Airport**, **Merlion**
+5. Click **Save Layer Edits** and toggle editing off
+
+*Tip:* Zoom in on the basemap before clicking so each point lands in the right place.
+
+---
+
+## Practice: Reproject 4326 → 3857 → 3414
+
+1. **Processing Toolbox → Vector general → Reproject Layer**
+   - Input: `sg_points`, Target CRS: **EPSG:3857**, save as `sg_points_3857.gpkg`
+2. Run **Reproject Layer** again
+   - Input: `sg_points_3857`, Target CRS: **EPSG:3414**, save as `sg_points_3414.gpkg`
+3. Compare the layers: use **Identify Features** on the same point, or open **Layer Properties → Information** to confirm each CRS
+
+The points stay in the same place on the map, but their coordinates change (approximate values):
+
+| Point | EPSG:4326 (lon, lat) | EPSG:3857 (x, y) | EPSG:3414 (x, y) |
+|---|---|---|---|
+| SUTD | 103.964, 1.341 | 11573197, 149327 | 42521, 35940 |
+| Changi Airport | 103.992, 1.364 | 11576281, 151899 | 45604, 38495 |
+| Merlion | 103.855, 1.287 | 11561030, 143258 | 30357, 29913 |
+
+---
+
+## Checking and Reprojecting a CRS
+
+### QGIS
+
+- Check: **Layer Properties → Information** (or the CRS shown in the bottom-right status bar)
+- QGIS reprojects layers *on the fly* for display, which does **not** change the data
+- Reproject: **Processing Toolbox → Reproject Layer**, then save the output
+
+Make sure all layers share **one CRS** before overlaying, joining, or measuring.
+
+---
+
+name: practice_resume
+
+## Practice: Your Personal Resume Page on GitHub
+
+.left_half[
+
+Build a simple online resume in **15 minutes**, with **no coding and no installation**, everything happens in your web browser.
+
+We will copy an open-source template: [modern-resume-theme](https://github.com/sproogen/modern-resume-theme) (MIT licence)
+
+<br>
+
+You will learn to:
+- **Fork** (copy) a repository to your own account
+- **Edit** a file and **commit** the change
+- **Publish** a website for free with **GitHub Pages**
+
+]
+
+.right_half[
+  <figure>
+    <img src="https://raw.githubusercontent.com/sproogen/modern-resume-theme/master/screenshot.png" width="100%">
+    <figcaption>The resume page you will create.</figcaption>
+    <figsubcaption>Source: https://github.com/sproogen/modern-resume-theme</figsubcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 1 — Fork:** open https://github.com/sproogen/modern-resume-theme and click **Fork** (top right)
+- Set the repository name to **`your-username.github.io`** (e.g., `Baxxxx0cc.github.io`), then click **Create fork**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/fork_a_repository.jpg" width="100%">
+    <figcaption>How to fork a repository.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 2 — Turn on the website:** in your new repository, go to **Settings → Pages**
+- Under *Build and deployment*, choose **Deploy from a branch**, select **`master`** and **`/ (root)`**, then **Save**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/deployment.jpg" width="100%">
+    <figcaption>How to turn on the website.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 3 — Add your information:** open the file **`_config.yml`** and click the ✏️ **pencil icon**
+- Replace `Your Name`, `Your job title`, `email`, `about_content`, `Experience`, `Education` with your own details
+- Delete the lines you do not need (e.g., social media accounts you do not have)
+- Click **Commit changes**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/commit_change.jpg" alt="Commit change" class="zoomable" id="ZoomableImage" width="100%">
+    <figcaption>How to commit a change.</figcaption>
+  </figure>
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 4 — View your page:** wait 1–2 minutes, then visit **`https://your-username.github.io`**
+- Check progress in the **Actions** tab (green ✔ = published)
+- Still **404**? A forked repository is only published **after your first commit** (Step 3). If Actions asks, click **"I understand my workflows, go ahead and enable them"**
+
+]
+
+.right_half[
+  <figure>
+    <img src="imgs/git_page/product_display.jpg" width="100%">
+    <figcaption>How the page looks.</figcaption>
+  </figure>
+]
+
+---
+
+## Practice: Tips and Submission
+
+.left_half[
+
+**Tips**
+- Keep the **indentation** (spaces) in `_config.yml` unchanged, a wrong space can break the page
+- Text after `#` is a comment and will not be shown
+- If the page does not update, check the **Actions** tab for a red ✘ error message
+- Profile photo (optional): upload your photo into the `images` folder and set `about_profile_image: images/your-photo.jpg`
+
+]
+
+.right_half[
+
+**Submission**
+- Post the link to your resume page (e.g., `https://Baxxxx0cc.github.io`) in the Microsoft Teams channel
+
+<br>
+
+**Going further (optional)**
+- Add a *Projects* section and link your **GIS-course** repository
+- Try `darkmode: true`
+
+]
+
+---
+
+name: appendix_git
+
+## Appendix: Install Git on Your Computer
+
+**Take-home task:** so far we edited files on the GitHub website. For real projects, keep your code on **your own computer** and use **Git** to track changes and send them to GitHub.
+
+**The everyday Git loop**:  `edit` → `commit` → `push`
+
+.left_half[
+
+1. **Install Git**
+  <br>
+  <a href="markdown.html?file=docs/Git_Setup.md" target="_blank">
+    View the step-by-step Git setup guide (macOS and Windows)
+  </a>
+  - macOS: run `git --version` in Terminal and click **Install** if prompted
+  - Windows: download from https://git-scm.com/downloads/win, keep default options
+
+]
+
+.right_half[
+
+2. **Tell Git who you are**
+  - `git config --global user.name "Your Name"`
+  - `git config --global user.email "you@example.com"`
+3. **Clone** your resume repository in VS Code (*Git: Clone → Clone from GitHub*)
+4. **Edit → Commit → Push** a small change and watch your page update
+
+]
+
+---
+
+name: practice_folium
+
+## Practice: Publish a Python-Generated Map with Folium
+
+.left_half[
+
+Generate an interactive web map with a few lines of **Python** using the [folium](https://python-visualization.github.io/folium/) library — no HTML or JavaScript required.
+
+folium builds on the same **Leaflet.js** engine behind the Interactive Metro Map demo in [Web-Based Spatial Visualisation](webmap.html), but lets you create the whole map from Python.
+
+You will learn to:
+- Generate a Leaflet-based map with `folium.Map()`
+- Add markers and popups from Python
+- Publish the resulting HTML file on the **GitHub Pages** site you built earlier
+
+]
+
+.right_half[
+
+```python
+import folium
+
+m = folium.Map(
+    location=[1.3521, 103.8198],
+    zoom_start=11,
+)
+
+folium.Marker(
+    [1.3521, 103.8198],
+    popup="Singapore",
+).add_to(m)
+
+m.save("map.html")
+```
+
+]
+
+---
+
+.left_half[
+
+## Practice: Step by Step
+
+**Step 1 — Install and generate:** in a terminal or notebook
+
+```bash
+pip install folium
+```
+
+Run the Python code from the previous slide. This saves a single self-contained **`map.html`** — the same kind of file used for the metro map demo in [Web-Based Spatial Visualisation](webmap.html).
+
+]
+
+.right_half[
+
+**Step 2 — Publish it:** copy `map.html` into the **`your-username.github.io`** repository you created in the resume practice
+
+- `edit` → `commit` → `push`, using the everyday Git loop from the Appendix
+- Wait 1–2 minutes, then visit **`https://your-username.github.io/map.html`** to see it live
+
+]
+
+---
+
+## Practice: Going Further
+
+- Add a marker for every row of a `pandas` DataFrame or `GeoDataFrame` instead of a single point
+- Try a different basemap with the `tiles=` argument, e.g. `"cartodbpositron"` or `"cartodbdark_matter"` (some CARTO styles now require a free API key)
+- Style markers by category, like the line colours in the Interactive Metro Map demo
+- Link `map.html` from your resume's *Projects* section
+
+</textarea>
+    <script src="src/template.js"></script>
+    <script>
+      fetch('src/nav.html')
+        .then(function (res) { return res.text(); })
+        .then(function (html) {
+          document.getElementById('site-header').innerHTML = html;
+        })
+        .catch(function (err) {
+          console.error('Failed to load header:', err);
+        });
+    </script>
+  </body>
+</html>
