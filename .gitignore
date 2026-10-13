@@ -23,6 +23,5 @@ storymap/*
 
 CLAUDE.md
 
-*/output/*.pdf
-
-*/output/*.png
+**/output/*.pdf
+**/output/*.png
