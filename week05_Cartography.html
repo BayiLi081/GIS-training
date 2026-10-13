@@ -47,129 +47,119 @@ class: center
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
-.toc-wrapper[
-  <div class="toc">
-    <a href="#why-map-design" class="toc-item">1. Why Cartographic Design Matters</a>
-    <a href="#design-principles" class="toc-item">2. Design Principles</a>
-    <a href="#thematic-maps" class="toc-item">3. Choosing a Thematic Map Type</a>
-    <a href="#choropleth" class="toc-item">4. Designing a Choropleth Map</a>
-    <a href="#workflow" class="toc-item">5. Workflow and Practice</a>
-    <a href="#critique" class="toc-item">6. Critique and Assignment</a>
-  </div>
-]
-
 ---
 
 name: why-map-design
 
-## Week 5 Focus
+## Cartographic design is a form of analytical communication
 
-This lecture introduces cartographic design as the link between spatial analysis and communication.
+.right_half[
+  <figure>
+    <img src="imgs/cartography/snow_map.gif" class="zoomable" width="50%">
+    <figcaption>John Snow's cholera map (c. 1854): deaths cluster around the Broad Street water pump, making the case that cholera spread through contaminated water.</figcaption>
+    <figsubcaption>Source: <a href="https://www.york.ac.uk/depts/maths/histstat/snow_map.htm" target="_blank">"John Snow's Cholera Map"</a>, History of Statistics, University of York; redrawn version shown in Stamp, L. D. (1964), <i>A Geography of Life and Death</i>.</figsubcaption>
+  </figure>
+]
 
-1. **Why design matters**: maps answer questions and tell stories, for better or worse
-2. **Design principles**: map elements, visual hierarchy, visual variables, colour, labels, scale
-3. **Choosing a thematic map type**: matching the data and the message to a map type
-4. **Designing a choropleth map**: classification, good practice, QGIS + Python
-5. **Workflow and practice**: a step-by-step workflow, then three hands-on maps
-6. **Critique and assignment**: checking your own map and applying it in Assignment Part I
+The landmark example of spatial analysis:
 
----
+The map, produced during London's 1854 cholera outbreak, helped support the argument that **cholera was associated with contaminated water**.
 
-## Learning Objectives
+### What Makes a Map Tell a Story
 
-By the end of this session, students should be able to:
-
-1. explain the main principles of effective cartographic design
-2. choose suitable visual variables and colour schemes for qualitative and quantitative data
-3. distinguish between common thematic map types and match them to the data
-4. design a choropleth map with defensible classification and colour choices
-5. produce a clean map layout in QGIS (with Python for data preparation) for an urban analysis task
-6. evaluate a map critically for clarity, bias, and visual hierarchy
+- a clear **message**: one main idea
+- **focus**: visual hierarchy that leads the eye to that message first
+- **context**: necessary basemap and reference
 
 ---
 
-## What Does Cartographic Design Do?
+## Cartographic design is a form of analytical communication
 
-A map is not only a spatial dataset placed on a canvas.
+.right_half[
+  <figure>
+    <img src="imgs/cartography/snow_map_updated.png" class="zoomable" width="60%">
+    <figsubcaption>Source: <a href="https://geos270.github.io/LectureSlides/Choice_of_Data_Model/Slides.html#/working-together" target="_blank">"Recreation of John Snow's Cholera Map" GEOS 270@Dr. June skeeter</a>.</figsubcaption>
+  </figure>
+]
 
-A designed map should do three things well:
+### What the recreation improves
 
-- communicate the main message quickly
-- preserve enough context for interpretation
-- avoid misleading the reader through poor visual choices
+- Visual hierarchy.
 
-Cartographic design is therefore a form of analytical communication.
+  The kernel density surface makes Broad Street the darkest, most saturated spot on the map.
+
+- Framing and metadata.
+
+  - The title states what, where and when. 
+  
+  - The source, author and date make it credible and citable.
+
+- Magnitude per location. 
+
+  Graduated triangles show how many deaths each household had (1, 2, 3-15).
 
 ---
 
-## A Map Always Answers a Question
+## Cartographic design is a form of analytical communication
 
-Before styling a map, define the question first.
+.right_half[
+  <figure>
+    <img src="imgs/cartography/snow_map.gif" class="zoomable" width="50%">
+    <figcaption>John Snow's cholera map (c. 1854): deaths cluster around the Broad Street water pump, making the case that cholera spread through contaminated water.</figcaption>
+    <figsubcaption>Source: <a href="https://www.york.ac.uk/depts/maths/histstat/snow_map.htm" target="_blank">"John Snow's Cholera Map"</a>, History of Statistics, University of York; redrawn version shown in Stamp, L. D. (1964), <i>A Geography of Life and Death</i>.</figsubcaption>
+  </figure>
+]
+
+### A Map Always Answers a Question
+
+Define the question first.
 
 Examples:
 
-- Where are the strongest clusters of activity?
 - Which districts have the highest population density?
 - How accessible are transport stops from residential blocks?
 - How does land use differ across the city?
-
-The map design should support the question, not compete with it.
 
 ---
 
 name: storytelling
 
+.right_half[
+  <figure>
+    <img src="imgs/cartography/misleading_maps.jpg" class="zoomable" width="70%">
+    <figcaption>The Election Mapped Two Ways (choropleth and cartogram).</figcaption>
+    <figsubcaption>Source: <a href="https://www.linkedin.com/posts/inna-tsirlin-phd-6114374_data-datascience-datavisualization-share-7260658458847240193-TtMo/" target="_blank">LinkedIn post@Inna Tsirlin</a>.</figsubcaption>
+  </figure>
+]
+
 ## Maps: A Powerful Tool of Storytelling
 
-A map is rarely neutral. Every map makes an argument about what matters, where to look, and what to conclude.
+Every map makes an argument about what matters, where to look, and what to conclude.
 
-- Maps read as objective, so a spatial claim carries authority that plain text does not
-- They compress relationships — proximity, clustering, flow, inequality — into a single glance
-- Framing choices such as centring, colour, and what is left off guide the reader like a narrator
+No map is neutral. Every choice of data, classification, colour and scale shapes the message.
 
-Cartographic design is the craft of telling that story clearly, and honestly.
+- Done well: the main message lands quickly
 
-???
+- Done poorly: the same data misleads
 
-Think of John Snow's cholera map, or a choropleth of access to hawker centres. Each one does not just show data — it makes a point. The power to persuade is exactly what we are designing for.
+**Be transparent rather than "objective":**
 
----
-
-## What Makes a Map Tell a Story
-
-A map moves from a picture to a narrative when the design does deliberate work.
-
-- a clear **message**: one main idea the reader should leave with
-- **focus**: visual hierarchy that leads the eye to that message first
-- **context**: just enough basemap and reference to make the pattern legible
-- **sequence**: for a map series or interactive map, an order that builds an argument
-- **framing**: an honest title and legend that name what is, and is not, being shown
-
-The story should emerge from the data, not be imposed on it.
-
----
-
-## Storytelling and Responsibility: How Maps Can Mislead
-
-The same choices that make a map compelling are the choices that can mislead, even when the data is correct.
-
-- classification breaks can flip a choropleth's whole story
-- colour emphasis can exaggerate or hide a pattern
-- symbol scaling can inflate or shrink differences
-- unequal area sizes let large, sparsely populated areas dominate a choropleth
-- selective framing, or too much or too little context, can leave out inconvenient areas or values
-- visual precision can imply certainty the data does not support
-
-A persuasive map demands critical reading: of the design as well as the data. Storytelling power and cartographic responsibility are the same fact.
+  show your choices, state your sources, and let the data, not the styling, carry the claim.
 
 .references[
-- Monmonier, M. (2018). *How to Lie with Maps*, 3rd ed. University of Chicago Press.
-- Roth, R. E. (2021). Cartographic design as visual storytelling. *The Cartographic Journal.*
+- Roth, E. Roth (2020). Cartographic design as visual storytelling. *The Cartographic Journal.* https://www.tandfonline.com/doi/full/10.1080/00087041.2019.1633103
+- Sara Nelson; Steven Manson; and Eric Deluca. Lying With Maps. https://open.lib.umn.edu/mapping/chapter/7-lying-with-maps/#footnote-148-4
 ]
 
 ---
 
-name: design-principles
+.right_half[
+  <figure>
+    <img src="imgs/cartography/map-elements.png" class="zoomable" width="70%">
+    <figcaption>The Map Elements.</figcaption>
+    <figsubcaption>Source: <a href="https://open.maricopa.edu/gist/chapter/4-2-map-design-and-map-elements/" target="_blank">Map Design and Map Elements@Maricopa Community Colleges</a>.</figsubcaption>
+  </figure>
+]
 
 ## Elements of a Map
 
@@ -180,11 +170,10 @@ A complete map typically combines:
 - legend
 - labels
 - scale indicator
-- north arrow when appropriate
-- data source and author note
-- layout balance and whitespace
+- Directional indicator (north arrow)
+- Meta Data: data source and author note
 
-Not every map needs every element, but every element included should earn its place.
+**Not every map needs every element, but every map needs enough for readers to grasp the main point accurately**
 
 ---
 
@@ -197,66 +186,98 @@ Not every map needs every element, but every element included should earn its pl
   </figure>
 ]
 
-## Two examples from Journal
+## Two location maps from Journal
+
+Clear overview-to-detail logic; study area stands out
 
 **Map 1: Unley, Adelaide**
 
-- ✅ Clear overview-to-detail logic; study area stands out
-- ❌ Borrowed web-map tiles, not credited
-- ❌ Extent circle ≠ zoomed area; round frames clip labels
-- ❌ Basemap clutter competes with the study area; no legend
-- ❌ Scale bar invalid at continental scale (Web Mercator)
+- Not credited basemap
+- Frames clip labels
+- Basemap clutter competes with the study area
+- Scale bar invalid at continental scale (Web Mercator)
 
---
-
-**Map 2: Beijing afforestation**
-
-- ✅ Proper GIS layout: legend, graticule, scale bar, locator
+How about Map 2: Beijing afforestation?
 
 ---
 
-## Visual Hierarchy
+name: design-principles
 
-Visual hierarchy controls what the reader sees first, second, and last.
+.right_half[
+  <figure>
+    <img src="imgs/cartography/map_IN_layers.png" width="100%">
+    <figcaption>Organise Maps With layers of Data.</figcaption>
+    <figsubcaption>Sources: <a href="https://www.geomaptric.co.uk/IoW_web/layers/index.html" target="_blank">IoW Council Cranfield GeoMapTric</a></figsubcaption>
 
-To build hierarchy:
+  </figure>
+]
 
-- make the thematic layer the strongest visual element
-- reduce the contrast of the basemap
-- de-emphasise supporting layers
-- use size, colour, and weight deliberately
-- avoid giving every feature equal visual importance
+## Layers of a Map
+
+A map could be sigle layer of with multiple data layers to increase the details, for example: 
+
+1. transport networks
+2. places of interest
+3. Boundaries are overlaid
+4. natural features of hydrography
+5. a digital elevation map
+6. land useage
+7. a base map
 
 ---
+
+.right_half[
+  <figure>
+    <img src="imgs/basemaps.jpg" width="80%">
+    <figcaption>Several basemaps provided by ESRI.</figcaption>
+    <figsubcaption>Sources: <a href="https://community.esri.com/en/discussion/1132629/basemap-gallery-widget-missing-basemaps-under-configure-custom" target="_blank">RiverCOG@ESRI Community</a></figsubcaption>
+  </figure>
+]
+
 
 ## Basemaps and Context
 
 Basemaps should support the message, not dominate it.
 
-- use light neutral basemaps for thematic overlays
-- reduce labels if they conflict with your own annotations
-- choose satellite basemaps only when image detail is analytically necessary
-- remember that default basemaps often reflect someone else's design priorities
+- Use quiet, neutral basemaps for thematic overlays
+
+- Remove or mute basemap labels that compete with your annotations
+
+- Use satellite imagery only when image detail is analytically necessary, and desaturate it when you do
 
 ---
 
 name: visual-variables
 
+.right_half[
+  <figure>
+    <img src="imgs/cartography/visual_variables.png" width="100%">
+    <figcaption>Bertin's Visual Variables.</figcaption>
+    <figsubcaption>Sources: <a href="https://www.axismaps.com/guide/visual-variables" target="_blank">General Map Making Topics: Visual Variables; Jacques Bertin. Semiology of Graphics (1967)</a></figsubcaption>
+  </figure>
+]
+
 ## Visual Variables
 
 Cartographic design relies on a small set of visual variables:
 
-- position
-- size
-- shape
-- hue
-- value
-- texture
-- orientation
-
-These variables let us encode difference, order, magnitude, and category.
+- Position
+- Size
+- Shape
+- Value
+- Hue
+- Orientation
+- Texture
 
 ---
+
+.right_half[
+  <figure>
+    <img src="imgs/cartography/staticmapping_example.png" width="100%">
+    <figcaption>The MRT stations in Tampines.</figcaption>
+    <figsubcaption>Sources: Author</figsubcaption>
+  </figure>
+]
 
 .left_half[
 
@@ -264,11 +285,19 @@ These variables let us encode difference, order, magnitude, and category.
 
 Best represented by:
 
-- distinct hues
-- different shapes
-- clear category labels
+- Distinct hues
+- Different shapes or textures
 
-Use when the goal is to separate classes, such as land use type or transit mode.
+Use to separate classes, such as land use type or transit mode.
+]
+
+---
+
+.left_half[
+  <figure>
+    <img src="imgs/cartography/proportional-symbol-choropleth.png" width="100%">
+    <figsubcaption>Sources: <a href="https://observablehq.com/@joewdavies/eurostat-map-js#bivariate" target="_blank">Eurostat-map.js on observablehq.com</a></figsubcaption>
+  </figure>
 ]
 
 .right_half[
@@ -277,11 +306,14 @@ Use when the goal is to separate classes, such as land use type or transit mode.
 
 Best represented by:
 
-- ordered colour value
-- graduated symbol size
-- density or intensity
+- Ordered colour value (light → dark)
+- Graduated symbol size
 
-Use when the goal is to compare magnitude, such as population or count.
+Use to compare magnitude, such as population density or case counts.
+Map raw counts with symbols; map rates with colour.
+
+**Ordered categories** (e.g., low / medium / high) also use value, never unrelated hues.
+
 ]
 
 ---
@@ -298,9 +330,6 @@ Use when the goal is to compare magnitude, such as population or count.
 
 Colour should help interpretation rather than decorate the page.
 
-- use **sequential** schemes for ordered low-to-high values
-- use **diverging** schemes when the data has a meaningful midpoint
-- use **qualitative** schemes for categories without numeric order
 - keep saturation under control to avoid visual noise
 - check whether the scheme remains legible on a projector and in print
 
@@ -312,179 +341,48 @@ Colour should help interpretation rather than decorate the page.
 
 ---
 
-## Labels and Typography
-
-Labels are part of the map, not an afterthought.
-
-- label only what supports the task
-- use font size to indicate importance
-- avoid dense overlap
-- keep naming conventions consistent
-- use halos or light masks where backgrounds are busy
-
-Typography should clarify geography, not create clutter.
-
----
-
-## Scale and Generalisation
-
-A map at city scale cannot display the same detail as a map at neighbourhood scale.
-
-Generalisation may include:
-
-- simplifying geometry
-- aggregating features
-- reducing label density
-- merging categories
-- hiding minor features
-
-If everything remains visible at every scale, the map usually becomes unreadable.
-
----
-
-name: thematic-maps
-
-## What Is a Thematic Map?
-
-A thematic map focuses on **one theme, topic, or dataset** across a geographic area, rather than on physical or political features.
-
-> Thematic maps "focus on visualizing a specific theme, topic, or dataset across a geographic area." (Geoapify, 2025)
-
-Geoapify (2025) groups the common types into eight:
-
-.left_half[
-- Choropleth
-- Bivariate
-- Isoline
-- Isopleth
-]
+name: scale
 
 .right_half[
-- Heat map
-- Dot density
-- Graduated (proportional) symbol
-- Cartogram
-]
-
-<div class="clear"></div>
-
-The right choice depends on the **data** (points or areas, counts or rates, discrete or continuous) and on the **message**. Map type is a methodological choice, not just a design choice.
-
-<div class="source-note">Source: adapted from Geoapify (2025), <a href="https://www.geoapify.com/thematic-maps-types-examples/" target="_blank"><i>Thematic Maps Guide: Definition, Different Types, Use Cases and Examples</i></a>.</div>
-
-.references[
-- Geoapify. (2025, June 3). *Thematic maps guide: Definition, different types, use cases and examples*. Geoapify Blog. [https://www.geoapify.com/thematic-maps-types-examples/](https://www.geoapify.com/thematic-maps-types-examples/)
-]
-
----
-
-## Eight Thematic Map Types (1/2)
-
-.maptype-table[
-
-| Type | What it shows | Data needed | Strength | Watch out |
-|---|---|---|---|---|
-| **Choropleth** | Areas shaded by value | Aggregated values per region (rates, ratios) | Simple; easy regional comparison | Large areas dominate; class breaks shape the story; not for raw counts |
-| **Bivariate** | Two variables at once, by combining two colour scales | Two variables for the same areas | Reveals where two variables coincide | Hard for general readers; needs a clear 2-D legend; colour-blind accessibility |
-| **Isoline** | **Lines** joining points of equal value (contours, isotherms, isochrones) | Dense, accurate point measurements | Shows gradual change and gradients | Sparse data gives rough lines; cluttered where values change fast |
-| **Isopleth** | **Shaded bands** between isolines | Interpolated or aggregated values over a surface | Shows smooth regional patterns | Smooths away local extremes; depends on interpolation |
-
-]
-
-Examples from the source: income vs education (bivariate), travel-time zones (isoline), population density gradients (isopleth).
-
-<div class="source-note">Source: adapted from Geoapify (2025), <a href="https://www.geoapify.com/thematic-maps-types-examples/" target="_blank"><i>Thematic Maps Guide: Definition, Different Types, Use Cases and Examples</i></a>.</div>
-
----
-
-## Eight Thematic Map Types (2/2)
-
-.maptype-table[
-
-| Type | What it shows | Data needed | Strength | Watch out |
-|---|---|---|---|---|
-| **Heat map** | Density or intensity as a colour surface, without boundaries | Point events (GPS, sensors, logs) | Intuitive view of hotspots | Depends on radius and scaling; can exaggerate or over-smooth; not for exact comparison |
-| **Dot density** | Dots, each standing for a fixed count (e.g. 1 dot = 1,000 people) | Counts per area | Shows absolute numbers and distribution | Dots placed randomly within an area, not at true locations; overlap hides detail |
-| **Graduated symbol** | Symbols sized by value at locations | Quantities at points or area centroids | Compares absolute values between places | Overlap in dense areas; needs a clear size legend; unsuitable for rates |
-| **Cartogram** | Areas resized by a variable instead of land area | A quantity per region | Makes disparities memorable | Distorts geography; unfamiliar to many readers |
-
-]
-
-Note the pairing: **rates → choropleth**, **counts → dot density or graduated symbol**.
-
-<div class="source-note">Source: adapted from Geoapify (2025), <a href="https://www.geoapify.com/thematic-maps-types-examples/" target="_blank"><i>Thematic Maps Guide: Definition, Different Types, Use Cases and Examples</i></a>.</div>
-
----
-
-## Isoline vs Isopleth, and Kinds of Cartogram
-
-.left_half[
-
-### Isoline vs isopleth
-
-> "Isolines show the lines, while isopleths show the regions between them." (Geoapify, 2025)
-
-- **Isoline**: elevation contours, isobars, noise contours, isochrones from a station
-- **Isopleth**: the same surface, filled in colour bands
-
-Practice 2 builds both: IDW interpolation (isopleth surface), then contours (isolines).
-
-]
-
-.right_half[
-
-### Three kinds of cartogram
-
-- **Contiguous**: areas keep their shared borders, but shapes stretch
-- **Non-contiguous**: areas keep their shape and grow or shrink apart from each other
-- **Dorling**: each area becomes a circle sized by the value, placed near its real position
-
-Practice 3 uses a contiguous cartogram.
-
-]
-
-<div class="clear"></div>
-
-<div class="source-note">Source: adapted from Geoapify (2025), <a href="https://www.geoapify.com/thematic-maps-types-examples/" target="_blank"><i>Thematic Maps Guide: Definition, Different Types, Use Cases and Examples</i></a>.</div>
-
----
-
-## Cartograms: From Land Area to Data
-
-Cartograms intentionally distort geography to emphasise data relationships.
-
-- useful when area size visually dominates interpretation
-- useful for media communication and comparison
-- less suitable when exact geography is essential
-
-<div align="center">
   <figure>
-    <img src="imgs/applygis/cartogram_example2.png" class="zoomable" width="55%">
-    <figcaption>Cartograms shift attention from physical land area to thematic comparison.</figcaption>
+    <img src="imgs/cartography/map-scale-5.jpg" class="zoomable" width="100%">
+    <figsubcaption>Source: <a href="https://www.edrawsoft.com/what-is-map-scale.html?" target="_blank">Large Scale and Small Scale Maps</a></figsubcaption>
   </figure>
-</div>
+]
+
+## Map Scale: How Much Has the World Been Shrunk?
+
+- **large scale** = large fraction (1:1,000) → small area, lots of detail, e.g. an HDB precinct
+- **small scale** = small fraction (1:10,000,000) → large area, little detail, e.g. Southeast Asia
 
 ---
 
-## Matching Your Data to a Map Type
+## Scale Is Not Constant Across a Map
 
-.maptype-table[
+Every projection distorts something, so a single scale bar is only exact along certain lines.
 
-| Your data | Suggested map type | Urban example |
-|---|---|---|
-| A rate or ratio per region | Choropleth | % residents aged 65+ per planning area |
-| Two related variables per region | Bivariate choropleth | income vs education per subzone |
-| Point measurements of a continuous phenomenon | Isoline or isopleth | air temperature from weather stations |
-| Many point events, where broad pattern matters more than exact values | Heat map | taxi pick-ups, reported incidents |
-| Counts per region, where distribution within the region matters | Dot density | residents per subzone (1 dot = 500 people) |
-| Totals tied to discrete places rather than areas | Graduated symbol | passengers per MRT station, jobs per employment centre |
-| Totals per region, where land area distorts the message | Cartogram | population per planning area |
+.left_half[
+
+### Projected local maps
+
+- Singapore's **SVY21** (EPSG:3414) is a Transverse Mercator projection fitted to the island
+- distortion across Singapore is tiny, so one scale bar is valid everywhere on the map
 
 ]
 
-**Tools** mentioned in the source: QGIS, Kepler.gl, Leaflet and MapLibre for building maps yourself; Datawrapper, Flourish, ArcGIS Online, and CARTO for no-code maps.
+.right_half[
 
-<div class="source-note">Source: adapted from Geoapify (2025), <a href="https://www.geoapify.com/thematic-maps-types-examples/" target="_blank"><i>Thematic Maps Guide: Definition, Different Types, Use Cases and Examples</i></a>.</div>
+### Web Mercator and small-scale maps
+
+- the same zoom level 15 tile: **1 px ≈ 4.8 m** in Singapore (1.3°N), **≈ 3.0 m** in London (51.5°N)
+- on a continental or world map, one scale bar is wrong for most of the map
+]
+
+<div class="clear"></div>
+
+This is the error in the Unley (Adelaide) example earlier: a scale bar on a continental Web Mercator inset
+
+**Rule**: at small scales, drop the scale bar, use a latitude-specific one ("scale true at 1°N"), or choose an equal-area / equidistant projection that suits the question.
 
 ---
 
@@ -492,14 +390,16 @@ name: choropleth
 
 .right_half[
   <figure>
-    <img src="imgs/cartography/staticmapping_example.png" width="100%">
-    <figcaption>Example of a polished static thematic map with clear layout and hierarchy.</figcaption>
+    <img src="imgs/cartography/choropleth_map.jpg" width="100%">
+    <figsubcaption>Source: <a href="https://www-sciencedirect-com.sutd.idm.oclc.org/science/article/pii/S026427512200542X" target="_blank">Wei Zhu and Chao Yuan (2023). Figure 2.</a></figsubcaption>
   </figure>
 ]
 
 ## Choropleth Maps
 
-Choropleth maps are widely used because they summarise area-based data clearly.
+A choropleth map shades predefined areas, such as countries or districts, by a statistical value for each area, ideally a rate or density rather than a raw count.
+
+They are widely used because they summarise area-based data clearly.
 
 Use them when:
 
@@ -507,26 +407,34 @@ Use them when:
 - the reporting unit matters, such as planning zones or districts
 - the main goal is comparison across areas
 
-Do not use choropleths for raw counts unless the area sizes are already comparable.
-
 ---
+
+.right_half[
+  <figure>
+    <img src="imgs/cartography/dataclass.jpg" width="100%">
+    <figsubcaption>Source: <a href="https://blogs.ubc.ca/rightclickleona/2015/11/03/quantitative-data-classification/" target="_blank">Quantitative Data Classification.</a></figsubcaption>
+  </figure>
+]
 
 ## Classification Choices Matter
 
-For choropleth maps, class breaks strongly affect interpretation.
+For choropleth maps, class breaks strongly affect interpretation. Common approaches:
 
-Common approaches:
+- **natural breaks**: groups similar values together
 
-- equal interval
-- quantile
-- natural breaks
-- standard deviation
+- **equal interval**: divides the value range into equal-width classes
 
-Different classification methods can produce different visual stories from the same dataset.
+- **quantile**: puts an equal number of areas in each class
+
+- **standard deviation**: classes by distance from the mean
+
+- **manual**: manually set one or all of the class break
+
+The same data can tell different stories depending on the breaks, so choose them deliberately and state them in the legend.
 
 ---
 
-## Good Practice for Choropleth Maps in QGIS
+## Practice for Choropleth Maps in QGIS
 
 When building a choropleth map in QGIS, follow these rules first:
 
@@ -540,7 +448,30 @@ When building a choropleth map in QGIS, follow these rules first:
 
 ---
 
-## Good Practice for Choropleth Maps in QGIS
+## Practice for Choropleth Maps in QGIS
+
+**Question**: Which planning areas have the highest share of residents aged 65 and above?
+
+**Data** (data.gov.sg):
+
+- [Resident Population by Planning Area/Subzone of Residence, Age Group and Sex (Census of Population 2020)](https://data.gov.sg/datasets/d_d95ae740c0f8961a0b10435836660ce0/view)
+- [Master Plan 2019 Planning Area Boundary (No Sea)](https://data.gov.sg/datasets/d_4765db0e87b9c86336792efe8a1f7a66/view)
+
+**Steps**:
+
+1. Keep only the planning-area rows (e.g. `Ang Mo Kio - Total`), not the subzone rows
+2. **Do it in Excel?**: Clean the name to match `PLN_AREA_N` (upper case, without ` - Total`).
+3. Uninhabited areas show `-` instead of 0: convert them to empty values, not zero rates
+4. Calculate `pct_65plus = (Total_65_69 + ... + Total_90andOver) / Total_Total * 100`, then join to the boundary
+5. Style as a graduated map with 5 classes and a sequential colour ramp
+
+--
+
+<xL>Can you generate the map with Python code?</xL>
+
+---
+
+## Practice for Choropleth Maps in QGIS
 
 In QGIS, the usual workflow is:
 
@@ -555,133 +486,6 @@ The goal is not only a beautiful map, but one that is statistically defensible a
 
 ---
 
-name: workflow
-
-## Recommended Design Workflow
-
-1. define the question and audience
-2. choose the right map type
-3. decide the geographic extent and scale
-4. simplify the layer stack
-5. style the thematic layer first
-6. add labels and supporting context
-7. review the legend and layout
-8. test whether the message is immediately visible
-
----
-
-## Practical Workflow: Python + QGIS
-
-Use **Python for data preparation** (consistent, reproducible logic) and **QGIS for design and layout** (fast visual comparison).
-
-.left_half[
-
-### In Python
-
-1. clean the attribute table: check for nulls, outliers, and inconsistent units
-2. calculate the mapping variable (rate, percentage, or density)
-3. join it to the spatial identifiers
-4. export a GeoPackage with the new field
-
-]
-
-.right_half[
-
-### In QGIS
-
-5. load the layer and inspect fields and data types
-6. choose a symbology method suited to the variable (e.g. **Graduated**)
-7. test class breaks and colour ramps
-8. in layout view, add title, legend, scale bar, and source note
-9. export as image or PDF
-
-]
-
-<div class="clear"></div>
-
-Python handles the logic; QGIS handles the communication. Both keep design decisions tied to analytical intent.
-
----
-
-name: practice
-
-## Hands-on Practice: Three Thematic Maps
-
-Each practice builds one of these map types with Singapore open data.
-
-<div style="display: flex; gap: 28px; font-size: 0.8em; line-height: 1.4;">
-  <div style="flex: 1;">
-    <svg viewBox="0 0 160 110" width="100%" style="max-height: 150px;">
-      <polygon points="10,10 60,8 55,50 12,55" fill="#fee5d9" stroke="#555"/>
-      <polygon points="60,8 110,12 105,45 55,50" fill="#fb6a4a" stroke="#555"/>
-      <polygon points="110,12 150,10 148,60 105,45" fill="#fcae91" stroke="#555"/>
-      <polygon points="12,55 55,50 60,100 10,98" fill="#fcae91" stroke="#555"/>
-      <polygon points="55,50 105,45 100,100 60,100" fill="#cb181d" stroke="#555"/>
-      <polygon points="105,45 148,60 150,100 100,100" fill="#fb6a4a" stroke="#555"/>
-    </svg>
-    <p><b>Choropleth map</b></p>
-    <p><b>Shows</b>: a value for each predefined area, shaded by class</p>
-    <p><b>Data</b>: standardised rates or ratios per unit (e.g. % elderly per planning area)</p>
-    <p><b>Watch out</b>: large areas dominate visually; raw counts mislead</p>
-  </div>
-  <div style="flex: 1;">
-    <svg viewBox="0 0 160 110" width="100%" style="max-height: 150px;">
-      <rect x="8" y="30" width="30" height="30" fill="#9ecae1" stroke="#555"/>
-      <rect x="40" y="8" width="62" height="62" fill="#3182bd" stroke="#555"/>
-      <rect x="104" y="40" width="22" height="22" fill="#9ecae1" stroke="#555"/>
-      <rect x="20" y="64" width="40" height="40" fill="#6baed6" stroke="#555"/>
-      <rect x="64" y="74" width="16" height="16" fill="#c6dbef" stroke="#555"/>
-      <rect x="104" y="66" width="46" height="38" fill="#6baed6" stroke="#555"/>
-    </svg>
-    <p><b>Cartogram</b></p>
-    <p><b>Shows</b>: areas resized in proportion to a variable instead of land area</p>
-    <p><b>Data</b>: totals such as population, votes, or GDP per unit</p>
-    <p><b>Watch out</b>: shapes are distorted, so readers need familiar geography</p>
-  </div>
-</div>
-
-<div style="font-size: 0.78em;">Rule of thumb: data collected <b>by area</b> → choropleth; data that varies <b>continuously</b> → isopleth; when <b>area size</b> distorts the message → cartogram.</div>
-
----
-
-## Practice 1: Choropleth Map of an Ageing Population
-
-**Question**: Which planning areas have the highest share of residents aged 65 and above?
-
-**Data** (data.gov.sg):
-
-- [Resident Population by Planning Area/Subzone of Residence, Age Group and Sex (Census of Population 2020)](https://data.gov.sg/datasets/d_d95ae740c0f8961a0b10435836660ce0/view)
-- [Master Plan 2019 Planning Area Boundary (No Sea)](https://data.gov.sg/datasets/d_4765db0e87b9c86336792efe8a1f7a66/view)
-
-**Steps**:
-
-1. Keep only the planning-area rows (e.g. `Ang Mo Kio - Total`), not the subzone rows
-2. Clean the name to match `PLN_AREA_N` (upper case, without ` - Total`). Watch out: one row is spelled `Changi- Total`
-3. Uninhabited areas show `-` instead of 0: convert them to empty values, not zero rates
-4. Calculate `pct_65plus = (Total_65_69 + ... + Total_90andOver) / Total_Total * 100`, then join to the boundary
-5. Style as a graduated map with 5 classes and a sequential colour ramp
-
-**Reflect**: Outram (about 18,000 residents) tops the ranking at 25.5%, just ahead of Bukit Merah (about 151,000). Does the map make that difference in scale visible? How does the pattern change between Quantile and Natural Breaks?
-
----
-
-## Practice 2: Cartogram of Where Singaporeans Live
-
-**Question**: What does Singapore look like when each planning area is sized by its population instead of its land area?
-
-**Data**: reuse the joined layer from Practice 1 (`Total_Total` = resident population)
-
-**Steps**:
-
-1. Install the QGIS plugin **Cartogram3** (*Plugins → Manage and Install Plugins*)
-2. Run it with `Total_Total` as the size field (10–15 iterations is usually enough). Give uninhabited areas a small value such as 1, otherwise the algorithm cannot size them
-3. Colour the cartogram with `pct_65plus` from Practice 1, so the map shows both size and rate
-4. Place the ordinary map and the cartogram side by side in a layout
-
-**Reflect**: Which planning areas grow or shrink the most? Compare with your choropleth map: which one gives a fairer impression of how many elderly residents live in each area?
-
----
-
 name: critique
 
 ## Map Critique Checklist
@@ -693,46 +497,24 @@ When reviewing a map, ask:
 - Does the basemap help or distract?
 - Are colours and labels readable?
 - Is the legend easy to interpret?
+- Is the scale bar valid for the projection and extent, and does the grid help or clutter?
 - Could the map be misleading because of scale, classification, or symbol choice?
 
 If these questions are hard to answer, the design likely needs revision.
 
 ---
 
-## Mini Exercise
-
-Take one urban dataset from a previous week and propose a cartographic design for it.
-
-Your design should specify:
-
-- target audience
-- map type
-- variable being mapped
-- classification or symbol rule
-- basemap choice
-- key layout elements
-- one likely design risk
-
----
-
-## Key Takeaways
-
-- Cartographic design turns analysis into communication.
-- Every design choice shapes what the reader notices and concludes.
-- Map type, colour, labels, and scale must match the data and the question.
-- Good maps are selective, readable, and honest about uncertainty.
-
----
-
 name: assignment
 
-## Assignment: Spatial Data Processing (Part I)
-
-Apply this week's design principles: create **one thematic map of Singapore with QGIS or Python** that answers a question you define. Released this week; due end of Week 7.
-
+.right_half[
 <a href="assignment_sdp1.html" target="_blank">Open the full assignment brief in a new tab ↗</a>
 
 <iframe class="map-embed" src="assignment_sdp1.html" title="Assignment: Spatial Data Processing (Part I)" style="height: 55vh;"></iframe>
+]
+
+## Assignment: Spatial Data Processing (Part I)
+
+Apply this week's design principles: create **one location map of a place of interest in Singapore with QGIS or Python**, overlaying open datasets on a basemap with an inset locator map. Released this week; due end of Week 7. Part II (Weeks 8–9) adds calculations and a thematic map of the same place.
 
 ---
 

@@ -37,17 +37,17 @@ name: overview
 
 **Individual assignment** · Part I of the Spatial Data Processing assignment (Parts I & II together: **20%** of the course grade)
 
-In Part I you turn raw open data into **one finished thematic map of Singapore** that answers a clear question.
+In Part I you turn open data into **one finished location map** (also called a reference map) of a **place of interest in Singapore**.
 
 You will:
 
-1. pose a focused spatial question about Singapore
-2. find, clean, and join a spatial and a non-spatial dataset
-3. calculate a meaningful mapping variable
-4. design a thematic map in **QGIS or Python** (your choice)
+1. choose a study area: a neighbourhood, town centre, campus, park, or a small group of sites
+2. find open spatial datasets about it and prepare them so they line up correctly
+3. **overlay** them on a basemap, with an inset map that shows where the place is
+4. build the map in **QGIS or Python** (your choice)
 5. explain and justify your choices in a short write-up
 
-Part II builds on the dataset you prepare here, so keep your workflow clean.
+**No calculation is needed in Part I.** In [Part II](assignment_sdp2.html) you add the calculations: you join data, derive a variable, and make a thematic map of the same place. Keep your workflow clean so you can reuse it.
 
 ---
 
@@ -56,13 +56,14 @@ Part II builds on the dataset you prepare here, so keep your workflow clean.
 By completing Part I, you should be able to:
 
 1. locate and document open spatial data from Singapore government sources
-2. clean tabular data and join it to spatial boundaries using a common key
-3. derive a standardised variable (rate, ratio, share, or density) suitable for mapping
-4. choose a thematic map type, classification, and colour scheme that fit the data
-5. produce a complete map layout that communicates one clear message
-6. record the workflow so that someone else can reproduce the map
+2. read spatial data, check its coordinate reference system (CRS), and reproject layers so they overlay correctly
+3. select or clip the features that matter for a study area
+4. choose a map extent and scale that suit the place of interest
+5. overlay several layers with a clear visual hierarchy: a quiet basemap, context layers, and highlighted features
+6. produce a complete location map layout: main map, inset locator map, legend, scale bar, north arrow, and coordinates
+7. record the workflow so that someone else can reproduce the map
 
-This assignment applies the [Cartographic Design](week05_Cartography.html) lecture and the data skills from [Spatial Data Processing and Cleaning](sdp.html).
+This assignment applies the [Cartographic Design](week05_Cartography.html) lecture, the Week 5 tutorial practice on reference maps, and the data skills from [Spatial Data Processing and Cleaning](sdp.html).
 
 ---
 
@@ -72,9 +73,11 @@ This assignment applies the [Cartographic Design](week05_Cartography.html) lectu
 
 | Week | Milestone |
 |---|---|
-| Week 5 | Cartographic design lecture and tutorial practices; **Part I released** |
-| Week 6 | Choose your question and datasets; process the data; ask questions in the tutorial |
-| Week 7 | **Part I due**: Friday, 11:59pm |
+| Week 4 | Spatial data processing and cleaning: reading, reprojecting, and selecting data |
+| Week 5 | Cartographic design lecture and tutorial practices (including the reference map practice); **Part I released** |
+| Week 6 | Choose your place of interest and datasets; prepare the layers; ask questions in the tutorial |
+| Week 7 | **Part I due**: Friday, 11:59pm; **Part II released** |
+| Weeks 8–9 | **[Part II](assignment_sdp2.html)**: join data, calculate a variable, and make a thematic map of the same place; **due Friday of Week 9** |
 ]
 
 <div class="project-note">Late submissions lose 10% per day (see Course Policies). If something serious comes up, contact the instructor before the deadline.</div>
@@ -85,60 +88,80 @@ name: task
 
 ## The Task
 
-Create **one static thematic map** of Singapore that answers a question you define.
+Create **one static location map** of a place of interest in Singapore.
 
 Your map must:
 
-- show a **derived variable**, not a column copied straight from the download
-- use **at least two datasets** joined together (for example, a boundary layer and a statistics table, or a boundary layer and a point layer)
-- use an appropriate **thematic map type**: choropleth, proportional symbol, dot density, isopleth, or cartogram
+- focus on a **study area you choose**: a neighbourhood, town centre, campus, park, or a small group of sites
+- **overlay at least two datasets** from official sources on a basemap (for example, MRT stations, bus stops, hawker centres, parks, or planning-area boundaries)
+- include an **inset locator map** that shows where the study area sits within Singapore
 - be built in **QGIS** (Path A) or **Python** (Path B)
 
-The question should be answerable from a single map. Keep it focused.
+Write one sentence that states the **purpose** of the map: what a reader should learn from it. For example: *"Where are the MRT stations and hawker centres around Queenstown?"*
 
 ---
 
-## Example Questions
+## Example Places
 
 You may adapt one of these or propose your own.
 
-- Which subzones have the highest share of residents living in 1- and 2-room HDB flats?
-- How does the number of hawker centres per 10,000 residents vary across planning areas?
-- Which planning areas have the most park area per resident?
-- Where are preschools most concentrated relative to the number of children aged 0–4?
-- How does the density of MRT and LRT station exits vary across planning areas?
+- MRT stations, bus stops, and hawker centres in Queenstown
+- Parks and park connectors around Bishan–Ang Mo Kio Park
+- Preschools and bus stops in a neighbourhood of Punggol
+- The SUTD campus and its surroundings: MRT stations, bus stops, and cycling paths
+- Heritage sites and MRT stations in Chinatown and Tanjong Pagar
 
-**Not allowed**: reproducing Practice 1 of the Week 5 tutorial (share of residents aged 65+ by planning area). You may use the same datasets, but your variable and question must differ.
+**Not allowed**: reproducing the Week 5 tutorial reference map practice (Tampines, Simei, and Upper Changi MRT stations). You may use the same MRT dataset, but your place and layers must differ.
 
 ---
 
-## Choosing a Good Variable
+## What a Location Map Looks Like
 
-Your variable should match your map type.
+.left_half[
+<img src="imgs/assignment_sdp1/example_location_map.jpg" class="zoomable" width="100%">
+]
+
+.right_half[
+
+The tutorial example (not allowed as your submission) shows the parts every location map needs:
+
+- a **main map** with the features of interest on top of a quiet basemap
+- **labels** for the key sites
+- an **inset locator map** with a box showing where the main map is
+- a **scale bar** and a **north arrow**
+- **latitude/longitude** labels on the edge
+- a **basemap credit**
+
+Your map also needs a **title**, a **legend**, and a **source note**.
+
+]
+
+---
+
+## Choosing Your Place and Layers
+
+A good location map shows **one place clearly**.
 
 .left_half[
 
-### Choropleth
+### Place and layers
 
-Map **rates, shares, or densities**:
-
-- % of residents in a group
-- facilities per 10,000 residents
-- residents per km²
-- park area per resident
-
-Raw counts on a choropleth will lose marks: large areas dominate visually.
+- **Extent**: an area you can show on one page at a readable scale, typically **1–10 km across**. A map of the whole island is not a location map; that is the job of the inset.
+- **Layers**: **2–4 layers** that relate to the purpose. More layers make the map harder to read.
+- **Roles**: decide which layers are *context* (boundaries, roads, water, the basemap) and which are the *features of interest*. The features of interest should be the strongest visual element.
 
 ]
 
 .right_half[
 
-### Other map types
+### Symbols and labels
 
-- **Proportional symbol**: totals at points or area centroids (e.g. number of residents per subzone)
-- **Dot density**: counts spread within areas
-- **Isopleth**: values sampled at points that vary continuously (e.g. temperature)
-- **Cartogram**: totals, when land area distorts the message
+- You are showing *what* and *where*, not *how much*. Use **different shapes and colours** for different feature types, not graduated colour ramps.
+- **Name the key sites** so the reader can find them on the ground.
+
+### Plan ahead for Part II
+
+Point layers (e.g. hawker centres, bus stops) and planning-area or subzone boundaries work well, because in Part II you can count, join, and compare them.
 
 ]
 
@@ -150,31 +173,30 @@ name: data
 
 Use **open data from official sources**. Good starting points:
 
-- [data.gov.sg](https://data.gov.sg): Census of Population 2020 tables, Master Plan 2019 boundaries, hawker centres, parks, preschools
-- [LTA DataMall](https://datamall.lta.gov.sg): bus stops, MRT station exits, road network
-- [OneMap](https://www.onemap.gov.sg): geocoding and themes
+- [data.gov.sg](https://data.gov.sg): Master Plan 2019 boundaries, hawker centres, parks, park connectors, preschools, heritage sites
+- [LTA DataMall](https://datamall.lta.gov.sg): bus stops, MRT station exits, cycling paths, road network
+- [OneMap](https://www.onemap.gov.sg): geocoding, themes, and a Singapore basemap
 - [URA SPACE](https://www.ura.gov.sg/maps/): master plan land use
 
 See [Urban Data Sources and Open Data in Singapore](data.html) for more.
 
-For each dataset, record: **name, issuing agency, version or year, download date, and licence**.
+For each dataset, record: **name, issuing agency, version or year, download date, and licence**. If you use a basemap (for example OpenStreetMap or OneMap), credit it on the map.
 
-Work in **SVY21 (EPSG:3414)** for any area or distance calculation.
+All layers must be in the **same CRS** before you overlay them. **SVY21 (EPSG:3414)** is the standard projected CRS for Singapore and a good choice for the main map.
 
 ---
 
-## Data Processing Expectations
+## Data Preparation Expectations
 
-Your processing must be transparent. In your write-up, state:
+Your data preparation must be transparent. In your write-up, state:
 
-- **Unit of analysis**: planning area, subzone, hexagon grid, or point
-- **Join key**: which fields you matched, and how you cleaned them (case, spaces, spelling)
-- **Records dropped**: how many, and why (e.g. unmatched names, uninhabited areas)
-- **Missing values**: how you handled them; `-` or blank is *no data*, not zero
-- **Formula**: the exact formula for your variable
-- **Parameters**: number of classes, classification method, buffer distances, symbol scaling
+- **Study area**: how you defined it (for example, a planning-area boundary, a bounding box, or the area around a set of sites)
+- **CRS**: the original CRS of each layer, and the CRS you reprojected it to
+- **Selection**: which features you kept and how (for example, an attribute filter such as `Name` in a list of stations, or a clip to the study area)
+- **Cleaning**: duplicates removed (for example, an interchange station listed once per MRT line), names fixed, records with missing locations
+- **Feature counts**: how many features of each layer appear on the map
 
-Check your join. If 55 planning areas went in and 52 came out, explain the 3.
+Check your overlay. If points appear in the sea, far from where they should be, or not at all, a layer is probably in the wrong CRS.
 
 ---
 
@@ -182,43 +204,89 @@ name: workflow
 
 ## Path A: QGIS
 
-1. Load the boundary layer and the attribute table (or point layer)
-2. Clean the join field with the *Field Calculator* (e.g. `upper(trim("name"))`)
-3. Join with *Layer Properties → Joins*, or *Join Attributes by Field Value*
-4. For point data, count points per area with *Count Points in Polygon*
-5. Calculate your variable with the *Field Calculator*; save the result as a **GeoPackage**
-6. Style with *Symbology → Graduated* (or another renderer); compare Quantile, Natural Breaks, and Equal Interval
-7. Build the map in the **Print Layout**: title, legend, scale bar, source note
-8. Export as PNG (300 dpi) or PDF
+1. Load each layer and check its CRS in *Layer Properties → Information*
+2. Set the project CRS to **EPSG:3414** in *Project → Properties → CRS*; use *Export → Save Features As* to save a reprojected copy
+3. Add a basemap: in the *Browser* panel, *XYZ Tiles → OpenStreetMap* (or add the OneMap tile URL)
+4. Keep the features of interest with *Select by Expression* (e.g. `"Name" IN ('Queenstown', 'Commonwealth')`), then *Export → Save Selected Features As*; or *Vector → Geoprocessing Tools → Clip*. Save the results in one **GeoPackage**
+5. Style each layer with *Symbology → Single Symbol* or *Categorized*; turn on labels with a white *Buffer*
+6. In the **Print Layout**, add the main map and a **second map item** for the inset; use its *Overviews* setting to draw the main map extent as a box
+7. Add the legend, scale bar, north arrow, coordinate *Grid*, title, and source note; export as PNG (300 dpi) or PDF
 
-Keep a **step log**: a numbered list of every tool you ran and its key settings, with screenshots of the key dialogs. The [vector tools](#vector-tools) slides show the level of detail expected.
+Keep a **step log**: a numbered list of every tool you ran and its key settings, with screenshots of the key dialogs.
 
 ---
 
-## Path B: Python
+## Path B: Python (1/3): read and select
+
+This example overlays two point layers on an OpenStreetMap basemap. Replace the file names, the selected names, and the extent with your own. The Week 5 tutorial notebook (`MRT_map_Tampines.ipynb`) explains each step in detail. It needs `cartopy` and `matplotlib-scalebar`.
 
 ```python
-import geopandas as gpd, pandas as pd
+import geopandas as gpd
 import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import cartopy.io.img_tiles as cimgt
+from matplotlib.patches import Rectangle
 from matplotlib_scalebar.scalebar import ScaleBar
 
-areas = gpd.read_file("data/raw/planning_areas.geojson").to_crs(3414)
-stats = pd.read_csv("data/raw/my_table.csv")
-# ... clean the join key and compute your variable here ...
-gdf = areas.merge(stats, on="PLN_AREA_N", how="left")
+lonlat = ccrs.PlateCarree()
 
-fig, ax = plt.subplots(figsize=(10, 7))
-gdf.plot(column="my_rate", scheme="NaturalBreaks", k=5, cmap="YlOrRd",
-         edgecolor="white", linewidth=0.3, legend=True, ax=ax,
-         legend_kwds={"title": "My variable (unit)", "loc": "lower right"},
-         missing_kwds={"color": "lightgrey", "label": "No data"})
-ax.add_artist(ScaleBar(1, units="m", location="lower left"))
-ax.set_title("A title that states the message"); ax.set_axis_off()
-fig.text(0.02, 0.02, "Source: ... | Author: ...", fontsize=8)
-fig.savefig("outputs/map.png", dpi=300, bbox_inches="tight")
+# 1. Read each layer and convert it to longitude/latitude (EPSG:4326)
+mrt = gpd.read_file("data/raw/mrt_stations.geojson").to_crs(4326)
+stops = gpd.read_file("data/raw/bus_stops.geojson").to_crs(4326)
+
+# 2. Keep only the features to highlight
+sites = mrt[mrt["Name"].isin(["Tampines", "Simei"])].drop_duplicates(subset="Name")
 ```
 
-`scheme=` requires `mapclassify`; the scale bar requires `matplotlib-scalebar`.
+---
+
+## Path B: Python (2/3): the main map
+
+```python
+# 3. Main map: extent is [west, east, south, north] in degrees
+extent = [103.935, 103.970, 1.335, 1.362]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_axes([0.05, 0.05, 0.9, 0.9], projection=ccrs.UTM(zone=48))
+ax.set_extent(extent, crs=lonlat)
+ax.add_image(cimgt.OSM(), 15)                      # basemap tiles
+ax.scatter(stops.geometry.x, stops.geometry.y, transform=lonlat,
+           s=20, color="tab:blue", label="Bus stop")
+ax.scatter(sites.geometry.x, sites.geometry.y, transform=lonlat,
+           marker="^", s=150, color="red", label="MRT station")
+for name, pt in zip(sites["Name"], sites.geometry):
+    ax.text(pt.x, pt.y, "  " + name, transform=lonlat, fontweight="bold")
+ax.legend(loc="upper left")
+ax.set_title("A title that names the place and the purpose")
+fig.text(0.05, 0.01, "Source: ... | Basemap: © OpenStreetMap contributors | Author: ...",
+         fontsize=8)
+```
+
+Read the extent for your place off a map (e.g. OneMap). For a line or polygon layer, use `layer.plot(ax=ax, transform=lonlat, ...)` instead of `ax.scatter`.
+
+---
+
+## Path B: Python (3/3): map elements, inset, and export
+
+```python
+# 4. Coordinates, scale bar (the UTM map is in metres) and north arrow
+gl = ax.gridlines(draw_labels=True, color="none")
+gl.top_labels = gl.right_labels = False
+ax.add_artist(ScaleBar(1, units="m", location="lower right"))
+ax.annotate("N", xy=(0.95, 0.95), xytext=(0.95, 0.85),
+            xycoords="axes fraction", ha="center",
+            arrowprops=dict(facecolor="black", width=5))
+
+# 5. Inset locator map with a box showing the main map extent
+iax = ax.inset_axes([0.01, 0.01, 0.33, 0.33], projection=lonlat)
+iax.set_extent([103.55, 104.15, 1.15, 1.50], crs=lonlat)
+iax.add_feature(cfeature.LAND.with_scale("10m"), facecolor="lightgrey")
+iax.add_patch(Rectangle((extent[0], extent[2]), extent[1] - extent[0],
+                        extent[3] - extent[2], transform=lonlat,
+                        fill=False, edgecolor="green", linewidth=2))
+
+fig.savefig("outputs/map.png", dpi=300, bbox_inches="tight")
+```
 
 ---
 
@@ -226,7 +294,7 @@ fig.savefig("outputs/map.png", dpi=300, bbox_inches="tight")
 
 You may also use the **dual workflow** from the Week 5 lecture:
 
-- **Python** for cleaning, joining, and calculating the variable, exported as a GeoPackage
+- **Python** for reading, reprojecting, selecting, and cleaning the layers, exported as a GeoPackage
 - **QGIS** for symbology and the print layout
 
 If you do, submit both the notebook and the QGIS project, and say in the write-up which steps happened where.
@@ -239,18 +307,21 @@ Whichever path you choose, marks go to the **quality of your decisions and docum
 
 Your final map must include:
 
-- a **title** that states the message or question, not just the variable name
-- the **thematic layer** as the strongest visual element
-- a **legend** with a readable title, units, and sensible rounded class breaks
-- a **scale bar**; a north arrow is optional (north is up)
-- a **source note**: datasets, year, and your name
-- a distinct style for **no data** areas, labelled in the legend
+- a **title** that names the place and states the purpose, not just the dataset names
+- a **main map** in which the features of interest are the strongest visual element
+- an **inset locator map** with a box or marker showing where the main map is
+- a **legend** with a readable entry for every overlaid layer (not file names such as "mrt_stations_v2")
+- a **scale bar** and a **north arrow**
+- **latitude/longitude** (or grid) labels on the edge of the main map
+- **labels** for the key sites
+- a **source note**: datasets, year, basemap credit, and your name
 
 Design rules:
 
-- 4–6 classes; a sequential ramp for ordered values, a diverging ramp only with a meaningful midpoint
-- no rainbow ramps; check that the colours work for colour-blind readers ([ColorBrewer](https://colorbrewer2.org) marks safe schemes)
-- light or no basemap; thin, quiet boundary lines
+- a clear **visual hierarchy**: a light, quiet basemap; context layers thin and grey; features of interest bold
+- a **distinct symbol** for each layer; colours that work for colour-blind readers ([ColorBrewer](https://colorbrewer2.org) marks safe qualitative schemes)
+- **readable labels**: a white halo around text, and no labels overlapping each other or the symbols
+- a **simple inset**: land, coastline, and the location box only; placed where it does not hide important features
 
 ---
 
@@ -261,9 +332,9 @@ name: deliverables
 Submit one `.zip` named `SDP1_<StudentID>_<Name>.zip` on **system** by **Friday of Week 7, 11:59pm**, containing:
 
 1. **The map**: `map.png` (300 dpi) or `map.pdf` (A4 or A3)
-2. **The write-up**: `writeup.pdf`, **600–800 words** (excluding tables and references)
+2. **The write-up**: `writeup.pdf`, **500–700 words** (excluding tables and references)
 3. **The workflow**:
-   - Path A: the `.qgz` project, the processed GeoPackage, and the step log with screenshots
+   - Path A: the `.qgz` project, the prepared GeoPackage, and the step log with screenshots
    - Path B: a notebook that runs top to bottom, plus `requirements.txt`
 4. **The data**: raw files, or download links and dates if a file is larger than 50 MB
 
@@ -281,15 +352,15 @@ SDP1_<StudentID>_<Name>/
 
 ## Write-up Structure
 
-1. **Question**: what the map answers, and why it matters for Singapore (≈100 words)
+1. **Place and purpose**: which place the map shows, what the reader should learn, and why it matters (≈100 words)
 2. **Data**: a table of datasets: name, agency, year, download date, licence
-3. **Processing**: unit of analysis, join, records dropped, missing values, formula
-4. **Design choices**: map type, classification method, number of classes, colour scheme. For each, say **why**, and what an alternative would have shown
-5. **Findings**: what the map shows. Name specific places and values
-6. **Limitations**: what the map cannot tell the reader (e.g. modifiable areal unit problem, small populations, data age)
+3. **Preparation**: study area, CRS and reprojection, selection, cleaning, feature counts
+4. **Design choices**: extent and scale, basemap, symbols and colours, labels, inset extent and position. For each, say **why**, and what an alternative would have shown
+5. **What the map shows**: describe where the features are in relation to each other and to the place. Name specific places
+6. **Limitations**: what the map cannot tell the reader (e.g. data age, missing features, positional accuracy, basemap and data from different years)
 7. **AI-use statement**: see the next slide
 
-Include a screenshot of a **second classification method** you tested, and explain in two or three sentences how the pattern changed.
+Include a screenshot of **one alternative design** you tested (for example, a different basemap, extent, or inset position), and explain in two or three sentences why you chose the final version.
 
 ---
 
@@ -316,11 +387,11 @@ name: rubric
 
 | Criterion | Marks | A strong submission |
 |---|---|---|
-| Question and data choice | 15 | Focused, relevant question; suitable official data, fully documented |
-| Data processing and transparency | 20 | Correct join and variable; dropped records and missing values explained; formula stated |
-| Thematic design | 25 | Map type fits the variable; justified classification; suitable, accessible colour scheme |
-| Layout and readability | 15 | All required elements; clear hierarchy; legible legend and labels |
-| Interpretation and reflection | 15 | Specific findings; honest limitations; comparison of classification methods |
+| Place and data choice | 15 | Focused place and clear purpose; suitable official data, fully documented |
+| Data preparation and transparency | 20 | All layers in the same CRS and correctly aligned; selection and cleaning explained; feature counts stated |
+| Map composition and symbols | 25 | Suitable extent and scale; clear visual hierarchy; distinct, accessible symbols; quiet basemap |
+| Map elements and readability | 15 | Inset, legend, scale bar, north arrow, coordinates, labels, and source note all present and legible |
+| Interpretation and reflection | 15 | Specific description of the place; honest limitations; comparison with an alternative design |
 | Reproducibility | 10 | Workflow runs or can be followed on a clean machine, from raw data to the final map |
 
 ]
@@ -329,12 +400,14 @@ name: rubric
 
 ## Common Pitfalls
 
-- mapping **raw counts** on a choropleth
-- planning-area names that **do not match** (e.g. `Changi- Total`, extra spaces, mixed case)
-- treating `-` or blank as **zero**
-- computing area in **degrees** (EPSG:4326) instead of metres (EPSG:3414); see [Troubleshooting](#crs-troubleshooting)
-- leaving the default legend: `0.0034 - 0.1287` instead of `0–10%`
-- a **default title** such as "pct_rate by PLN_AREA_N"
+- layers in **different CRSs**, so points land in the sea or do not appear
+- a study area that is **too large** (the whole island) or too small to recognise
+- an inset with **no location box**, or an inset that shows the same area as the main map
+- a **busy basemap** or too many layers that drown the features of interest
+- **duplicate features** (e.g. an interchange station listed once per MRT line) producing overlapping labels
+- labels without a halo, or labels that **overlap** each other
+- legend entries that show **file names** such as "mrt_singapore_simplified"
+- a missing **basemap credit** (e.g. "© OpenStreetMap contributors")
 - absolute file paths such as `C:/Users/...` in the notebook
 - a write-up that describes the map but never **justifies** a choice
 
@@ -342,20 +415,23 @@ name: rubric
 
 ## Before You Submit
 
-- ☐ Does the title tell the reader what to notice?
-- ☐ Is the variable a rate, share, or density (if it is a choropleth)?
-- ☐ Does every legend class have a readable range and unit?
-- ☐ Are no-data areas shown and labelled?
-- ☐ Is every dataset cited with agency, year, and download date?
-- ☐ Did you explain every dropped or unmatched record?
+- ☐ Does the title name the place and tell the reader what to look for?
+- ☐ Do all layers line up correctly (same CRS, no points in the sea)?
+- ☐ Are the features of interest the strongest visual element?
+- ☐ Does the inset show clearly where the main map is?
+- ☐ Does every layer have a readable legend entry?
+- ☐ Are the scale bar, north arrow, coordinates, and labels present?
+- ☐ Is every dataset and the basemap cited with agency, year, and download date?
 - ☐ Does the notebook run top to bottom, or can the step log be followed exactly?
 - ☐ Did you include the AI-use statement?
 
-<div class="project-note">A simple question, a correct variable, and a clean, honest map will score better than an ambitious map with an unclear message.</div>
+<div class="project-note">A small, well-chosen place, a few relevant layers, and a clean, readable map will score better than a crowded map of the whole island.</div>
 
 ---
 
 <xL>Review the lecture: </xL><button onclick="window.location.href='week05_Cartography.html'">Go to Cartographic Design</button>
+
+<xL>Next part: </xL><button onclick="window.location.href='assignment_sdp2.html'">Go to Assignment (Part II)</button>
 
 <xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
