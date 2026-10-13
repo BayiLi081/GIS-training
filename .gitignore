@@ -22,3 +22,7 @@ pre-course-survey/*
 storymap/*
 
 CLAUDE.md
+
+*/output/*.pdf
+
+*/output/*.png
