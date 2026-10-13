@@ -47,38 +47,11 @@ You will:
 4. build the map in **QGIS or Python** (your choice)
 5. explain and justify your choices in a short write-up
 
-**No calculation is needed in Part I.** In [Part II](assignment_sdp2.html) you add the calculations: you join data, derive a variable, and make a thematic map of the same place. Keep your workflow clean so you can reuse it.
-
----
-
-## Learning Objectives
-
-By completing Part I, you should be able to:
-
-1. locate and document open spatial data from Singapore government sources
-2. read spatial data, check its coordinate reference system (CRS), and reproject layers so they overlay correctly
-3. select or clip the features that matter for a study area
-4. choose a map extent and scale that suit the place of interest
-5. overlay several layers with a clear visual hierarchy: a quiet basemap, context layers, and highlighted features
-6. produce a complete location map layout: main map, inset locator map, legend, scale bar, north arrow, and coordinates
-7. record the workflow so that someone else can reproduce the map
-
-This assignment applies the [Cartographic Design](week05_Cartography.html) lecture, the Week 5 tutorial practice on reference maps, and the data skills from [Spatial Data Processing and Cleaning](sdp.html).
-
 ---
 
 ## Timeline
 
-.project-table[
-
-| Week | Milestone |
-|---|---|
-| Week 4 | Spatial data processing and cleaning: reading, reprojecting, and selecting data |
-| Week 5 | Cartographic design lecture and tutorial practices (including the reference map practice); **Part I released** |
-| Week 6 | Choose your place of interest and datasets; prepare the layers; ask questions in the tutorial |
-| Week 7 | **Part I due**: Friday, 11:59pm; **Part II released** |
-| Weeks 8–9 | **[Part II](assignment_sdp2.html)**: join data, calculate a variable, and make a thematic map of the same place; **due Friday of Week 9** |
-]
+**Part I due**: Friday of Week 7, 11:59pm; **Part II released**
 
 <div class="project-note">Late submissions lose 10% per day (see Course Policies). If something serious comes up, contact the instructor before the deadline.</div>
 
@@ -101,29 +74,15 @@ Write one sentence that states the **purpose** of the map: what a reader should 
 
 ---
 
-## Example Places
-
-You may adapt one of these or propose your own.
-
-- MRT stations, bus stops, and hawker centres in Queenstown
-- Parks and park connectors around Bishan–Ang Mo Kio Park
-- Preschools and bus stops in a neighbourhood of Punggol
-- The SUTD campus and its surroundings: MRT stations, bus stops, and cycling paths
-- Heritage sites and MRT stations in Chinatown and Tanjong Pagar
-
-**Not allowed**: reproducing the Week 5 tutorial reference map practice (Tampines, Simei, and Upper Changi MRT stations). You may use the same MRT dataset, but your place and layers must differ.
-
----
-
 ## What a Location Map Looks Like
 
 .left_half[
-<img src="imgs/assignment_sdp1/example_location_map.jpg" class="zoomable" width="100%">
+<img src="imgs/cartography/reference_map_tampines_mrt.png" class="zoomable" width="50%">
 ]
 
 .right_half[
 
-The tutorial example (not allowed as your submission) shows the parts every location map needs:
+The tutorial example (not allowed as your submission) shows the parts:
 
 - a **main map** with the features of interest on top of a quiet basemap
 - **labels** for the key sites
@@ -132,7 +91,7 @@ The tutorial example (not allowed as your submission) shows the parts every loca
 - **latitude/longitude** labels on the edge
 - a **basemap credit**
 
-Your map also needs a **title**, a **legend**, and a **source note**.
+and a **title**, a **legend**, and a **source note**.
 
 ]
 
@@ -216,116 +175,29 @@ Keep a **step log**: a numbered list of every tool you ran and its key settings,
 
 ---
 
-## Path B: Python (1/3): read and select
+## Path B: Python: read and select
 
-This example overlays two point layers on an OpenStreetMap basemap. Replace the file names, the selected names, and the extent with your own. The Week 5 tutorial notebook (`MRT_map_Tampines.ipynb`) explains each step in detail. It needs `cartopy` and `matplotlib-scalebar`.
+This example overlays two point layers on an OpenStreetMap basemap. Replace the file names, the selected names, and the extent with your own. 
 
-```python
-import geopandas as gpd
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-import cartopy.io.img_tiles as cimgt
-from matplotlib.patches import Rectangle
-from matplotlib_scalebar.scalebar import ScaleBar
+The Week 5 tutorial notebook (`MRT_map_Tampines.ipynb`) explains each step in detail.
 
-lonlat = ccrs.PlateCarree()
-
-# 1. Read each layer and convert it to longitude/latitude (EPSG:4326)
-mrt = gpd.read_file("data/raw/mrt_stations.geojson").to_crs(4326)
-stops = gpd.read_file("data/raw/bus_stops.geojson").to_crs(4326)
-
-# 2. Keep only the features to highlight
-sites = mrt[mrt["Name"].isin(["Tampines", "Simei"])].drop_duplicates(subset="Name")
-```
-
----
-
-## Path B: Python (2/3): the main map
-
-```python
-# 3. Main map: extent is [west, east, south, north] in degrees
-extent = [103.935, 103.970, 1.335, 1.362]
-fig = plt.figure(figsize=(10, 8))
-ax = fig.add_axes([0.05, 0.05, 0.9, 0.9], projection=ccrs.UTM(zone=48))
-ax.set_extent(extent, crs=lonlat)
-ax.add_image(cimgt.OSM(), 15)                      # basemap tiles
-ax.scatter(stops.geometry.x, stops.geometry.y, transform=lonlat,
-           s=20, color="tab:blue", label="Bus stop")
-ax.scatter(sites.geometry.x, sites.geometry.y, transform=lonlat,
-           marker="^", s=150, color="red", label="MRT station")
-for name, pt in zip(sites["Name"], sites.geometry):
-    ax.text(pt.x, pt.y, "  " + name, transform=lonlat, fontweight="bold")
-ax.legend(loc="upper left")
-ax.set_title("A title that names the place and the purpose")
-fig.text(0.05, 0.01, "Source: ... | Basemap: © OpenStreetMap contributors | Author: ...",
-         fontsize=8)
-```
-
-Read the extent for your place off a map (e.g. OneMap). For a line or polygon layer, use `layer.plot(ax=ax, transform=lonlat, ...)` instead of `ax.scatter`.
-
----
-
-## Path B: Python (3/3): map elements, inset, and export
-
-```python
-# 4. Coordinates, scale bar (the UTM map is in metres) and north arrow
-gl = ax.gridlines(draw_labels=True, color="none")
-gl.top_labels = gl.right_labels = False
-ax.add_artist(ScaleBar(1, units="m", location="lower right"))
-ax.annotate("N", xy=(0.95, 0.95), xytext=(0.95, 0.85),
-            xycoords="axes fraction", ha="center",
-            arrowprops=dict(facecolor="black", width=5))
-
-# 5. Inset locator map with a box showing the main map extent
-iax = ax.inset_axes([0.01, 0.01, 0.33, 0.33], projection=lonlat)
-iax.set_extent([103.55, 104.15, 1.15, 1.50], crs=lonlat)
-iax.add_feature(cfeature.LAND.with_scale("10m"), facecolor="lightgrey")
-iax.add_patch(Rectangle((extent[0], extent[2]), extent[1] - extent[0],
-                        extent[3] - extent[2], transform=lonlat,
-                        fill=False, edgecolor="green", linewidth=2))
-
-fig.savefig("outputs/map.png", dpi=300, bbox_inches="tight")
-```
-
----
-
-## Combining QGIS and Python
-
-You may also use the **dual workflow** from the Week 5 lecture:
-
-- **Python** for reading, reprojecting, selecting, and cleaning the layers, exported as a GeoPackage
-- **QGIS** for symbology and the print layout
-
-If you do, submit both the notebook and the QGIS project, and say in the write-up which steps happened where.
-
-Whichever path you choose, marks go to the **quality of your decisions and documentation**, not to the tool.
-
----
-
-## Map Requirements
-
-Your final map must include:
-
-- a **title** that names the place and states the purpose, not just the dataset names
-- a **main map** in which the features of interest are the strongest visual element
-- an **inset locator map** with a box or marker showing where the main map is
-- a **legend** with a readable entry for every overlaid layer (not file names such as "mrt_stations_v2")
-- a **scale bar** and a **north arrow**
-- **latitude/longitude** (or grid) labels on the edge of the main map
-- **labels** for the key sites
-- a **source note**: datasets, year, basemap credit, and your name
-
-Design rules:
-
-- a clear **visual hierarchy**: a light, quiet basemap; context layers thin and grey; features of interest bold
-- a **distinct symbol** for each layer; colours that work for colour-blind readers ([ColorBrewer](https://colorbrewer2.org) marks safe qualitative schemes)
-- **readable labels**: a white halo around text, and no labels overlapping each other or the symbols
-- a **simple inset**: land, coastline, and the location box only; placed where it does not hide important features
+You need to create your own notebook adapted from the tutorial notebook.
 
 ---
 
 name: deliverables
+
+.right_half[
+A suggested structure:
+
+```text
+SDP1_<StudentID>_<Name>/
+├── data
+├── notebook.ipynb(Python) or steplog.pdf(QGIS)
+├── map.png/jpg/pdf
+└── writeup.pdf
+```
+]
 
 ## Deliverables
 
@@ -334,19 +206,9 @@ Submit one `.zip` named `SDP1_<StudentID>_<Name>.zip` on **system** by **Friday 
 1. **The map**: `map.png` (300 dpi) or `map.pdf` (A4 or A3)
 2. **The write-up**: `writeup.pdf`, **500–700 words** (excluding tables and references)
 3. **The workflow**:
-   - Path A: the `.qgz` project, the prepared GeoPackage, and the step log with screenshots
-   - Path B: a notebook that runs top to bottom, plus `requirements.txt`
+   - Path A: the step log with screenshots
+   - Path B: a notebook that runs top to bottom
 4. **The data**: raw files, or download links and dates if a file is larger than 50 MB
-
-Use **relative paths** only. A suggested structure:
-
-```text
-SDP1_<StudentID>_<Name>/
-├── data/raw/          data/processed/
-├── notebook.ipynb  or  project.qgz + steplog.md
-├── outputs/map.png
-└── writeup.pdf
-```
 
 ---
 
@@ -359,8 +221,6 @@ SDP1_<StudentID>_<Name>/
 5. **What the map shows**: describe where the features are in relation to each other and to the place. Name specific places
 6. **Limitations**: what the map cannot tell the reader (e.g. data age, missing features, positional accuracy, basemap and data from different years)
 7. **AI-use statement**: see the next slide
-
-Include a screenshot of **one alternative design** you tested (for example, a different basemap, extent, or inset position), and explain in two or three sentences why you chose the final version.
 
 ---
 
@@ -395,21 +255,6 @@ name: rubric
 | Reproducibility | 10 | Workflow runs or can be followed on a clean machine, from raw data to the final map |
 
 ]
-
----
-
-## Common Pitfalls
-
-- layers in **different CRSs**, so points land in the sea or do not appear
-- a study area that is **too large** (the whole island) or too small to recognise
-- an inset with **no location box**, or an inset that shows the same area as the main map
-- a **busy basemap** or too many layers that drown the features of interest
-- **duplicate features** (e.g. an interchange station listed once per MRT line) producing overlapping labels
-- labels without a halo, or labels that **overlap** each other
-- legend entries that show **file names** such as "mrt_singapore_simplified"
-- a missing **basemap credit** (e.g. "© OpenStreetMap contributors")
-- absolute file paths such as `C:/Users/...` in the notebook
-- a write-up that describes the map but never **justifies** a choice
 
 ---
 
