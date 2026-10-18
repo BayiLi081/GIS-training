@@ -222,16 +222,53 @@ code {
   margin-right: 0.1em;
   padding: 0;
   background: transparent;
+  font-size: 0.66em;
+  line-height: 1.4;
+  tab-size: 4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Wrapped code lines hang under their own indent (see template.js) */
+pre .remark-code-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding-left: calc((var(--code-indent, 0) + 2) * 1ch);
+  text-indent: calc((var(--code-indent, 0) + 2) * -1ch);
 }
 
 pre {
-  margin: 1rem 0;
-  padding: 1rem 1.15rem;
+  margin: 0.85rem 0;
+  padding: 0.85rem 1rem;
   border-radius: var(--radius-md);
   background: linear-gradient(180deg, rgba(110, 26, 70, 0.96) 0%, rgba(79, 18, 54, 0.98) 100%);
   color: #eef8fb;
   box-shadow: 0 16px 36px rgba(8, 29, 39, 0.16);
   overflow: auto;
+}
+
+.remark-slide-content pre {
+  position: relative;
+}
+
+.code-copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.45rem;
+  padding: 0.2em 0.6em;
+  border: 1px solid rgba(110, 26, 70, 0.25);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #6e1a46;
+  font: 600 0.5em/1.2 "Segoe UI", system-ui, sans-serif;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+pre:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
 }
 
 pre code {
@@ -754,7 +791,7 @@ img.icon {
 }
 
 .long_trunk .remark-code {
-    font-size: 0.72em;
+    font-size: 0.6em;
     line-height: 1.35;
 }
 
@@ -1863,4 +1900,10 @@ html[data-theme="dark"] .hljs-default .hljs-section,
 html[data-theme="dark"] .hljs-default .hljs-type,
 html[data-theme="dark"] .hljs-default .hljs-meta {
   color: #e0b3ff;
+}
+
+html[data-theme="dark"] .code-copy {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(40, 40, 46, 0.92);
+  color: #e8e8ec;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-        <title>Lecture and Tutorial: Spatial Statistics and Analysis of Vector Data</title>
+        <title>Lecture and Tutorial: Spatial Analysis of Vector Data</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -20,75 +20,31 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture and Tutorial: Spatial Statistics and Analysis of Vector Data
+## Lecture and Tutorial: Spatial Analysis of Vector Data
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
 <br>
 <button onclick="window.location.href='index.html'">Go Back to Menu</button>
 
-.toc-wrapper[
-  <div class="toc">
-    <a href="#week6-focus" class="toc-item">Week 6 Focus</a>
-    <a href="#data-models" class="toc-item">Vector and Raster Data Models</a>
-    <a href="#vector-core" class="toc-item">Vector Operations</a>
-    <a href="#distance" class="toc-item">Distance and Proximity</a>
-    <a href="#pattern" class="toc-item">Spatial Statistics</a>
-    <a href="#workflow" class="toc-item">Tutorial Workflow</a>
-  </div>
-]
-
 ---
 
 name: week6-focus
 
+.right_half[
+  <figure>
+    <img src="imgs/vector/vec_presentation.png" width="95%">
+    <figcaption>Vector data represents urban features as points, lines, and polygons.</figcaption>
+  </figure>
+]
+
 ## Week 6 Focus
 
-This week introduces the main analytical operations used with vector data and explains how simple spatial statistics can help interpret point and polygon patterns.
+This week introduces the main analytical operations used with vector data.
 
 - use vector operations to answer proximity, containment, and overlap questions
 - distinguish buffering, overlay, and spatial join
-- understand planar and geodesic distance in GIS workflows
-- interpret basic spatial-statistical methods for point and area patterns
-
----
-
-## Intended Learning Outcomes
-
-By the end of this session, students should be able to:
-
-1. explain how vector analysis differs from visual map inspection
-2. choose appropriate tools for proximity, overlay, and distance questions
-3. describe common vector workflows in QGIS
-4. interpret basic pattern-analysis results such as nearest neighbour, spatial autocorrelation, and hot spot analysis
-5. connect vector-analysis outputs to urban research questions
-
----
-
-## Lecture Structure
-
-1. What vector analysis is used for
-2. Vector and raster data models revisited
-3. Buffering and overlay as core GIS operations
-4. Distance measurement and proximity questions
-5. Spatial statistics for describing patterns
-6. Tutorial workflow and reading material
-
----
-
-name: data-models
-
-## Vector and Raster Data Models
-
-In Week 1 we introduced the two major spatial data models. Before diving into vector analysis, let's look at them more closely: how they are created in QGIS, their strengths and weaknesses, and how to convert between them.
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector_n_raster_presentation.png" width="50%">
-    <figcaption>Raster and vector representation of real world entities.</figcaption>
-    <figsubcaption>Source: Unknown authour, https://gis.stackexchange.com/questions/7077/what-are-raster-and-vector-data-in-gis-and-when-to-use</figsubcaption>
-  </figure>
-</div>
+- transfer attributes between layers with spatial join in QGIS and Python
 
 ---
 
@@ -102,116 +58,6 @@ In Week 1 we introduced the two major spatial data models. Before diving into ve
 
 QGIS can create spatially-referenced vector data:
 
----
-
-## Vector with QGIS
-
-It can also be used to produce drawings that are not spatially meaningful:
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/vector_drawing_qgis.jpg" class="zoomable" id="ZoomableImage" alt="Data Structure Issue" width="50%">
-    <figcaption>Using QGIS to produce non-spatial drawings.</figcaption>
-    <figsubcaption>Source: https://www.xiaohongshu.com/discovery/item/6904d0d600000000030377eb?source=webshare&xhsshare=pc_web&xsec_token=CBGXxowpqIt_s8GpdYLDW6OcD31ABfaSln-8xkjALawQE=&xsec_source=pc_share</figsubcaption>
-  </figure>
-</div>
-
-*Note:* Adobe Illustrator and QGIS are both vector-based drawing tools, but QGIS is designed for spatial data, while Illustrator is for graphic design.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/raster/raster_creation_qgis.png" width="100%">
-  </figure>
-]
-
-## Raster with QGIS
-
-Raster layers need more parameters and structure, so QGIS uses specialized tools to ensure they’re correctly set up.
-
-You need to define resolution, extent, data type (e.g., integer, float), and sometimes initial values.
-
---
-
-<xL>You can also create drawing using raster layer if you want.</xL>
-
----
-
-## Comparison: Vector and Raster Data Model
-
-Rule of Thumb:
-
-- Use vector for objects with **clear boundaries and relationships**.
-
-- Use raster for **continuous data** or when performing spatial modeling that requires **grid-based calculations**.
-
-|             |         | Raster                                      |         |Vector |
-|-------------|---------|---------------------------------------------|---------|------------------------------------------------------|
-|Advantages   | *  | Simple Data Structure                       | *  | More compact                                         |
-|             | *  | Efficiency in overlay operations            | *  | Efficiency in topology-based operations              |
-|             | *  | Better representing high spatial variability| *  | Better map visualisation                             |
-|             | *  | Widely used in remote sensing and image data|      |                                                      |
-|Disadvantages| *  | Less compact                                | *  | More complex                                         |                                         
-|             | *  | Underrepresented topological relationship   | *  | Inefficient representation of high spatial variablity|
-|             | *  | Disadvantages in visualisation              | *  | Unable to handle image data                          |
-|             | *  | Less compact                                |      |                                                      |
-
----
-
-## Interconversion between Vector and Raster Data
-
-.left_half[
-### Vector to Raster Conversion (Rasterisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/rasterize_qgis.png" width="72%">
-  </figure>
-</div>
-]
-
-.right_half[
-### Raster to Vector Conversion (Vectorisation/Polygonisation)
-
-<div align="center">
-  <figure>
-    <img src="imgs/polygonize_qgis.png" width="72%">
-  </figure>
-</div>
-]
-
-.clear[
-]
-
----
-
-name: vector-core
-
-## Why Vector Analysis Matters
-
-Vector analysis is useful when we want to study discrete features such as buildings, roads, bus stops, parcels, planning zones, and reported events.
-
-Typical urban questions include:
-
-- what is near what?
-- what falls inside which boundary?
-- which features overlap?
-- how far apart are important locations?
-- are observed patterns random or clustered?
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vector/vec_presentation.png" width="95%">
-    <figcaption>Vector data represents urban features as points, lines, and polygons.</figcaption>
-  </figure>
-]
-
-## Reminder: The Vector Data Model
-
-Vector data usually represents:
 
 - **Points**: bus stops, trees, crimes, MRT stations
 - **Lines**: roads, rivers, cycling routes
@@ -222,8 +68,145 @@ The geometry type matters because it determines which analysis tools are appropr
 ---
 
 .right_half[
+
+**Start a empty jupyter notebook:**
+
+  ```python
+  import pandas as pd
+  import geopandas as gpd
+  from shapely.geometry import Point, LineString, Polygon
+
+  df = pd.DataFrame({
+      "name": ["SUTD", "Tampines"],
+      "lat":  [1.3413, 1.3550],
+      "lon":  [103.9638, 103.9439],
+  })
+  points_gdf = gpd.GeoDataFrame(
+      df,
+      geometry=gpd.points_from_xy(x=df["lon"], y=df["lat"]),
+      crs="EPSG:4326",
+  )
+  ```
+]
+
+## Vector with Python (geopandas)
+
+GeoPandas brings spatial data into a **GeoDataFrame**: a pandas-style table with geometry and coordinate reference system (CRS) information. `read_file()` can load common formats such as GeoPackage, Shapefile, and GeoJSON.
+
+**create a geodataframe with only two points: **
+
+  - SUTD (lat: 1.3413 and lon: 103.9638); 
+  - Tampines (lat: 1.3550 and lon: 103.9439)
+
+.references[
+  - [GeoPandas getting-started guide](https://geopandas.org/en/stable/getting_started.html) for more examples.
+]
+
+Try `row by row` dataframe creation:
+
+```python
+df = pd.DataFrame(
+    [
+        ("SUTD", 1.3413, 103.9638),
+        ("Tampines", 1.3550, 103.9439),
+    ],
+    columns=["name", "lat", "lon"],
+)
+```
+
+---
+
+.right_half[
+  ```python
+  line_gdf = gpd.GeoDataFrame(
+      {"name": ["SUTD-Tampines"]},
+      geometry=[
+          LineString(points_gdf.geometry.tolist())
+      ],
+      crs="EPSG:4326",
+  )
+  ```
+]
+
+## Vector with Python (geopandas)
+
+GeoPandas brings spatial data into a **GeoDataFrame**: a pandas-style table with geometry and coordinate reference system (CRS) information. `read_file()` can load common formats such as GeoPackage, Shapefile, and GeoJSON.
+
+**connect the point of SUTD and Tampines with straightline, therefore, you got one line feature (line geodataframe)**
+
+---
+
+.right_half[
+  ```python
+    simei = Point(103.9532, 1.3434)  # (lon, lat)
+    polygon_gdf = gpd.GeoDataFrame(
+        {"name": ["SUTD-Tampines-Simei"]},
+        geometry=[Polygon(points_gdf.geometry.tolist() + [simei])],
+        crs="EPSG:4326",
+    )
+    
+    print(polygon_gdf)
+
+    print(f"Polygon area: {polygon_gdf.to_crs(3414).area.iloc[0] / 1e6:.2f} km²")
+  ```
+]
+
+## Vector with Python (geopandas)
+
+GeoPandas brings spatial data into a **GeoDataFrame**: a pandas-style table with geometry and coordinate reference system (CRS) information. `read_file()` can load common formats such as GeoPackage, Shapefile, and GeoJSON.
+
+**connect the points of SUTD, Tampines and Simei (third point: lat 1.3434 and lon 103.9532), then, you got a simple polygon feature (polygon geodataframe)**
+
+
+---
+
+.right_half[
+  ```python
+  import matplotlib.pyplot as plt
+
+  ax = polygon_gdf.plot(color="lightblue", edgecolor="steelblue")
+  line_gdf.plot(ax=ax, color="red", linewidth=2)
+  points_gdf.plot(ax=ax, color="black", zorder=3)
+  plt.show()
+  ```
+]
+
+## Vector with Python (geopandas)
+
+GeoPandas brings spatial data into a **GeoDataFrame**: a pandas-style table with geometry and coordinate reference system (CRS) information. `read_file()` can load common formats such as GeoPackage, Shapefile, and GeoJSON.
+
+**Plot the created point, line and polygon**
+
+---
+
+## Why both QGIS and Python
+
+QGIS is graphical user interface (GUI) software, so you can see the result of each operation immediately.
+
+Python is a powerful programming language that makes work repeatable and scalable, so it is especially efficient when handling many files or large datasets. With AI-assisted coding, it also integrates with other tools and workflows far more easily than traditional GUI software.
+
+<xL>We recommend learning both, but you can choose your own path (which is why Assignment Part I accepts either). This course focuses on Python, with QGIS as a tool to help you understand each method.</xL>
+
+---
+
+name: vector-core
+
+## Vector Analysis and Why Vector Analysis Matters
+
+Vector analysis is useful when we want to study discrete features.
+
+Typical urban questions include:
+
+- what is near what?
+- what falls inside which boundary?
+- which features overlap?
+- how far apart are important locations?
+
+---
+
+.right_half[
   <figure>
-    <img src="imgs/vector/buffer.png" width="55%">
+    <img src="imgs/vector/buffer.png" width="100%">
     <figcaption>Proximity questions are often solved through buffering.</figcaption>
     <figsubcaption>Source: Egenhofer et al. (1992) and https://pythongis.org/part2/chapter-06/nb/05-spatial-queries.html</figsubcaption>
   </figure>
@@ -235,78 +218,10 @@ Buffers are among the most common vector-analysis tools used to answer questions
 
 A buffer creates a zone around a point, line, or polygon at a chosen distance.
 
+
 Example question:
 
 <xL>Which grocery shops are within 200 m of my home?</xL>
-
----
-
-## Buffer Design Choices
-
-When creating buffers, you need to decide:
-
-1. the buffer distance
-2. whether the distance is constant or varies by feature
-3. whether overlapping buffers should be dissolved
-4. whether the result should include one ring or multiple rings
-
-These decisions change both the geometry and the interpretation.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vector/buffer1.png" width="100%">
-  </figure>
-]
-
-### Customised Buffering I
-
-Two common approaches are:
-
-- **Constant-width buffer**: all features use the same distance
-- **Variable-width buffer**: each feature uses a value from its attribute table
-
-For line features, buffers can also be:
-
-- on both sides
-- left side only
-- right side only
-- rounded or flat at the ends
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/vector/buffer2.png" width="100%">
-  </figure>
-]
-
-### Customised Buffering II
-
-Multiple-ring buffers create a sequence of distance bands around a feature.
-
-This is useful when studying:
-
-- walkable catchments
-- influence zones
-- graduated accessibility thresholds
-
----
-
-### Customised Buffering III
-
-.left_half[A doughnut buffer is a buffer around a polygon that excludes the polygon interior.]
-
-.right_half[A setback buffer works inward from the polygon boundary and is useful for internal restriction zones.]
-
-<br>
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/buffer3.png" width="60%">
-  </figure>
-</div>
 
 ---
 
@@ -328,7 +243,9 @@ In practice, always check:
 
 ---
 
-### Buffering in Practice
+## Buffering in QGIS
+
+### Comman pitfall: are you measuring unit is in metre?
 
 <div align="center">
   <figure>
@@ -338,26 +255,34 @@ In practice, always check:
 
 ---
 
-### Application Examples of Buffering
+.right_half[
+  ```python
+  points_3414 = points_gdf.to_crs(3414)
 
-<div align="center">
-  <figure>
-    <img src="imgs/vector/buffer_application_examples.png" width="100%">
-  </figure>
-</div>
+  buffer_gdf = points_3414[points_3414["name"] == "SUTD"].copy()
+  buffer_gdf["geometry"] = buffer_gdf.buffer(2000)  # 2 km
 
----
+  print(f"Buffer area: {buffer_gdf.area.iloc[0] / 1e6:.2f} km²")
+  ```
+]
 
-### Dissolved Buffer
+## Buffering in Python (geopandas)
 
-- removes overlapping boundaries
-- simplifies interpretation of a shared service area
+We continue with `points_gdf` and `line_gdf` from the earlier slides.
 
-<div align="center">
-  <figure>
-    <img src="imgs/vector/dissolved_buffer.png" width="70%">
-  </figure>
-</div>
+`GeoSeries.buffer(distance)` uses the **same unit as the CRS**, the same pitfall as in QGIS.
+
+<xL>Which of these places are within 2 km of SUTD?</xL>
+
+**Create a 2 km buffer around SUTD**
+
+  EPSG:4326 is in degrees -> buffer(2000) would mean 2000°
+
+  Project to SVY21 (EPSG:3414) so distances are in metres
+
+.references[
+  - [GeoPandas `buffer()` documentation](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.buffer.html)
+]
 
 ---
 
@@ -379,18 +304,6 @@ It can be used to:
 
 ---
 
-## Buffer + Overlay Workflow
-
-A common logic is:
-
-1. create a buffer around the feature of interest
-2. overlay that buffer with another layer
-3. keep only the features that intersect the buffer
-
-This is how a spatial question becomes an analytical workflow.
-
----
-
 .right_half[
   <figure>
     <img src="imgs/vector/overlay_example_types.png" width="100%">
@@ -401,26 +314,27 @@ This is how a spatial question becomes an analytical workflow.
 
 Common overlay relationships include:
 
-1. point-in-polygon
-2. polygon-on-point
-3. line-on-line
-4. line-in-polygon
-5. polygon-on-line
-6. polygon-on-polygon
+1. Point-in-polygon: Identifies points located within polygons.
+2. Polygon-on-point: Identifies polygons containing or intersecting points.
+3. Line-on-line: Identifies intersections or overlaps between lines.
+4. Line-in-polygon: Extracts line features or segments located within polygons.
+5. Polygon-on-line: Identifies polygons intersected by lines.
+6. Polygon-on-polygon: Identifies overlapping polygon area.
+7. Point on point: Identifies coincident points or points within a specified tolerance.
 
-At least one input must normally be a line or polygon layer.
+The attributes of latter will be joined to the first one
 
 ---
 
 .right_half[
   <figure>
-    <img src="imgs/vector/overlay_bool.jpg" width="80%">
+    <img src="imgs/vector/overlay_bool.jpg" width="70%">
     <figcaption>Map overlays can be understood through Boolean logic.</figcaption>
     <figsubcaption>Source: https://eeg260.academic.wlu.edu/course-notes/spatial-overlays-and-querying/map-overlays-and-boolean-logic/</figsubcaption>
   </figure>
 ]
 
-### Overlay with Boolean Operators
+### Polygon-on-polygon with Boolean Operators
 
 1. **Intersection (AND)**: keeps only the shared area
 2. **Union (OR)**: combines everything from both layers
@@ -430,297 +344,177 @@ At least one input must normally be a line or polygon layer.
 ---
 
 .right_half[
+  ```python
+  # Combine all three places into one layer (in metres)
+  simei_gdf = gpd.GeoDataFrame(
+      {"name": ["Simei"]}, geometry=[simei], crs="EPSG:4326"
+  )
+  places = pd.concat(
+      [points_gdf, simei_gdf], ignore_index=True
+  ).to_crs(3414)
+
+  # Keep the places that fall inside the buffer
+  sutd_zone = buffer_gdf.geometry.iloc[0]
+  inside = places[places.within(sutd_zone)]
+
+  print(inside["name"].tolist())
+  # ['SUTD', 'Simei']
+  ```
+]
+
+## Buffer + Overlay: Answering the Question
+
+1. create a buffer around the feature of interest
+2. overlay that buffer with another layer
+3. keep only the features that intersect the buffer
+
+This is how a spatial question becomes an analytical workflow.
+
+A buffer by itself is only a zone. To answer a proximity question, select the features that **fall within** it.
+
+<xL>How many MRT stations are within 2 km of SUTD?</xL>
+
+Fact: Simei (about 1.2 km away) is inside; Tampines (about 2.7 km away) is not.
+
+---
+
+.right_half[
   <figure>
-    <img src="imgs/vector/overlay_qgistoolbox.png" width="80%">
-    <figcaption>The overlay toolbox in QGIS.</figcaption>
+    <img src="imgs/vector/intersect_clip.jpg" class="zoomable" width="100%">
+    <figcaption>The overlay toolbox in QGIS. Clip and intersection solve related but different problems.</figcaption>
   </figure>
 ]
 
 ## Clip vs Intersection
 
-<xL>What is the difference between clip and intersection in QGIS?</xL>
+- **Clip** uses one layer to trim another and usually keeps attributes from **the input layer**
 
-- **Clip** uses one layer to trim another and usually keeps attributes from the input layer
-- **Intersection** creates new features from overlap and usually retains attributes from both layers
+  > What is the total length and geographic distribution of designated cycling paths located strictly within the boundaries of Tampines?
 
-<div align="center">
-  <figure>
-    <img src="imgs/vector/overlay_clip_intersection.png" width="50%">
-    <figcaption>Clip and intersection solve related but different problems.</figcaption>
-  </figure>
-</div>
+- **Intersection** creates new features from overlap and usually retains **attributes from both layers**
+  
+  > How do varying land use classifications overlap with planning areas in Singapore, and what specific land uses exist within each planning areas?
 
 ---
 
-## Spatial Join vs Overlay
-
-.left_half[
-### Spatial Join
-
-- primarily appends attributes based on a spatial relationship
-- often preserves the original feature geometry
-- useful when the main goal is enrichment of a layer
-]
 
 .right_half[
-### Overlay
-
-- combines geometry and attributes to create new features
-- changes the feature structure through geometric interaction
-- useful when the output geometry matters analytically
+<figure>
+  <img src="imgs/vector/geoprocessing_typology_tools.jpg" class="zoomable" width="100%">
+  <figcaption>Union, Intersect, Identify, Clip, Dissolve, Merge, Buffer.</figcaption>
+  <figsubcaption>Source: 
+QGIS Geoprocessing Tools & Operators. https://www.youtube.com/watch?v=tznoUk7GwLs</figsubcaption>
+</figure>
 ]
 
----
+# Vector data analysis with QGIS
 
-.right_half[
-  <figure>
-    <img src="imgs/vector/overlay_errors.png" width="100%">
-  </figure>
-]
+Union: Combines two polygon layers and retains all areas and attributes from both layers.
 
-## Overlay Errors
+Intersect: Extracts overlapping areas between layers and combines their attributes.
 
-Common problems include:
+Identify: Displays the attributes of a selected spatial feature.
 
-- **sliver polygons** created by imperfect boundaries
-- **error propagation** when input layers already contain inaccuracies
+Clip: Extracts features within the boundary of another layer.
 
-Topology checking and careful data cleaning reduce these problems before analysis.
+Dissolve: Combines adjacent features based on shared attribute values.
 
----
+Merge: Combines multiple layers of the same geometry type into one layer.
 
-### Application Examples of Overlay
-
-**Areal interpolation** transfers information from one polygon system to another.
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/areal_interpolation.png" width="45%">
-    <figcaption>Estimating population or other values through overlay.</figcaption>
-  </figure>
-</div>
-
----
-
-### More Overlay Examples
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/examples_overlay.png" width="99%">
-    <figcaption>Examples of overlay-based analysis.</figcaption>
-  </figure>
-</div>
-
----
-
-name: distance
-
-.right_half[
-  <figure>
-    <img src="imgs/distance/planar_geodesic.png" width="100%">
-  </figure>
-]
-
-## Distance Measurement
-
-### Planar vs Geodesic Distance
-
-Distance measurement depends on both the Earth model and the coordinate system.
-
-| Feature | Planar Distance | Geodesic Distance |
-|---|---|---|
-| Earth model | Flat plane | Curved surface |
-| Accuracy | Good for local analysis | Better for larger extents |
-| Common use | Projected local workflows | Global navigation and long distances |
-| Coordinate system | Usually projected CRS | Often geographic CRS |
+Buffer: Creates zones at a specified distance around spatial features.
 
 ---
 
 .right_half[
   <figure>
-    <img src="imgs/distance/different_type_distances.jpg" class="zoomable" width="100%">
-    <figcaption>Different distance concepts support different urban questions.</figcaption>
-    <figsubcaption>Source: 10.1186/1476-072X-7-7</figsubcaption>
+    <img src="imgs/spatial_relations.png" class="zoomable" width="100%">
+    <figcaption>Spatial predicates decide which features are matched in a spatial join.</figcaption>
   </figure>
 ]
 
-## Main Distance Concepts
+## Spatial Join with QGIS
 
-- Manhattan distance
-- Euclidean distance
-- network-based distance
+A **spatial join** transfers attributes from one layer to another based on **location** rather than a shared ID field. Geometries stay unchanged; only the attribute table grows.
 
-The correct choice depends on the movement process or analytical assumption being studied.
+**Processing Toolbox → Vector general → Join attributes by location**
 
----
+1. **Join to features in**: the target layer (preschool points)
+2. **Where the features**: the spatial predicate, e.g. *intersect*, *are within*, *contain*
+3. **By comparing to**: the join layer (subzone polygons)
+4. **Fields to add**: keep only what you need
+5. **Join type**: one-to-many or *take attributes of the first matching feature only*
 
-## Practice: Mapping the Data
-
-A point dataset often becomes more informative when paired with a polygon geography for aggregation or comparison.
-
-<div align="center">
-  <figure>
-    <img src="imgs/vector/practice_crime_ntas_data.jpg" class="zoomable" width="80%">
-    <figcaption>Example point events and neighbourhood units used for vector analysis practice.</figcaption>
-    <figsubcaption>Source: NYPD Complaint Data Historic and 2020 Neighborhood Tabulation Areas</figsubcaption>
-  </figure>
-</div>
+To summarise instead of copy, use **Join attributes by location (summary)** or **Count points in polygon** (number of preschools per subzone).
 
 ---
 
-name: pattern
+### Practice: Spatial Join with Singapore Open Data
 
-## Pattern Analysis
+<xL>Which subzone does each preschool in Singapore fall in, and which subzones have the most preschools?</xL>
 
-Mapping can give a first visual impression of a distribution, but visual clustering alone is not enough.
+**Data sources** (download as GeoJSON from data.gov.sg):
 
-Spatial statistics help us test whether an observed pattern is random, regular, or clustered.
+| Layer | Dataset | Publisher | Features |
+|---|---|---|---|
+| Points | [Pre-Schools Location](https://data.gov.sg/datasets/d_61eefab99958fd70e6aab17320a71f1c/view) | ECDA | 2,290 preschools |
+| Polygons | [Master Plan 2019 Subzone Boundary (No Sea)](https://data.gov.sg/datasets/d_8594ae9ff96d0c708bc2af633048edfb/view) | URA | 332 subzones |
 
-Pattern analysis studies the spatial arrangement of points or polygons in two-dimensional space.
+## Spatial Join with QGIS
+
+1. Load both layers and export them to SVY21 (EPSG:3414)
+2. *Join attributes by location*: preschools **are within** subzones, add `SUBZONE_N` and `PLN_AREA_N`
+3. *Count points in polygon*: subzones as polygons, preschools as points
+4. Style the count with a graduated colour map
 
 ---
 
 .right_half[
-  <figure>
-    <img src="imgs/pattern_analysis/nearest_neighbour_analysis.jpg" class="zoomable" width="120%">
-  </figure>
+  ```python
+  import geopandas as gpd
+
+  preschools = gpd.read_file("preschools.geojson").to_crs(3414)
+  subzones = gpd.read_file("subzones.geojson").to_crs(3414)
+
+  # 1. Join attributes by location
+  joined = gpd.sjoin(
+      preschools,
+      subzones[["SUBZONE_N", "PLN_AREA_N", "geometry"]],
+      how="left", predicate="within",
+  )
+  print(joined["SUBZONE_N"].isna().sum())  # 0 unmatched
+
+  # 2. Count points in polygon
+  counts = joined.groupby("SUBZONE_N").size().rename("n_preschools")
+  subzones = subzones.merge(counts, on="SUBZONE_N", how="left")
+  subzones["n_preschools"] = subzones["n_preschools"].fillna(0).astype(int)
+
+  print(subzones.nlargest(3, "n_preschools")[["SUBZONE_N", "n_preschools"]])
+  # TAMPINES EAST 72, WOODLANDS EAST 54, ALJUNIED 40
+
+  subzones.plot(column="n_preschools", cmap="Blues", legend=True)
+  ```
 ]
 
-## Pattern Analysis Methods I
+## Spatial Join with Python (geopandas)
 
-### Nearest Neighbour Analysis
+`gpd.sjoin(left, right)` is the geopandas equivalent of *Join attributes by location*: rows of the **left** layer gain the attributes of the **right** layer features they match.
 
-Nearest neighbour analysis uses the distance from each point to its closest neighbouring point to determine whether a point pattern is random, regular, or clustered.
+<xL>Which subzone does each preschool in Singapore fall in, and which subzones have the most preschools?</xL>
 
-<p>
-  R = <span>d<sub>obs</sub></span> / <span>d<sub>exp</sub></span>
-</p>
-
-- **R < 1**: clustered
-- **R ≈ 1**: random
-- **R > 1**: dispersed
-
-Z-scores and p-values help judge statistical significance.
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/pattern_analysis/qgis_nearest_neighbour_analysis.png" class="zoomable" width="80%">
-  </figure>
-]
-
-### Practice: Nearest Neighbour Analysis
-
-**Research Question**:
-
-<xL>Are reported crimes in New York City spatially clustered, randomly distributed, or dispersed?</xL>
-
----
-
-## Pattern Analysis Methods II
-
-### Spatial Autocorrelation
-
-Spatial autocorrelation measures the relationship among values of a variable according to their spatial arrangement.
-
-This is useful when we want to know whether similar values occur near one another in space.
-
-<div align="center">
-  <figure>
-    <img src="imgs/pattern_analysis/spatialautocorrelation_001.png" class="zoomable" width="80%">
-    <figcaption>Different types of spatial autocorrelation.</figcaption>
-  </figure>
-</div>
-
----
-
-### Application of Spatial Autocorrelation
-
-<div align="center">
-  <figure>
-    <img src="imgs/pattern_analysis/spatialautocorrelation_example.jpeg" class="zoomable" width="80%">
-    <figcaption>Example application of Global Moran's I to a spatial surface.</figcaption>
-    <figsubcaption>Source: 10.1080/24694452.2021.1935208</figsubcaption>
-  </figure>
-</div>
-
----
-
-.right_half[
-  <figure>
-    <img src="imgs/pattern_analysis/local_g_statistic_z_score.png" class="zoomable" width="70%">
-  </figure>
-]
-
-## Pattern Analysis Methods III
-
-### Hot Spot Analysis
-
-Hot spot analysis identifies statistically significant clusters of high or low values.
-
-**G-statistic output** is often summarised through z-scores and p-values:
-
-| z-score | Interpretation |
+| QGIS | geopandas |
 |---|---|
-| > +1.96 | Hot spot at 95% confidence |
-| < -1.96 | Cold spot at 95% confidence |
-| Near 0 | No significant clustering |
+| Join to features in | `left` (preschools) |
+| By comparing to | `right` (subzones) |
+| Where the features | `predicate="within"`, `"intersects"`, `"contains"` |
+| Fields to add | select columns of `right` |
+| Discard records which could not be joined | `how="inner"` (vs `"left"`) |
+| Count points in polygon | `groupby().size()` + `merge()` |
 
----
+As in QGIS, both layers must share a CRS; `sjoin` warns if they do not.
 
-### Application of Hot Spot Analysis
-
-<div align="center">
-  <figure>
-    <img src="imgs/pattern_analysis/hotspot_analysis_example.png" width="99%">
-    <figcaption>Hot spot analysis of COVID-19 cases in Singapore.</figcaption>
-    <figsubcaption>Source: 10.3390/ijgi11030152</figsubcaption>
-  </figure>
-</div>
-
----
-
-## Comparing Pattern Analysis Methods
-
-- **Nearest Neighbour Analysis** uses location only
-- **Spatial Autocorrelation** uses location plus attribute values
-- **Hot Spot Analysis** identifies local clusters of high or low values
-
-<xL>LISA can identify both clusters and outliers, while hot spot analysis focuses on clusters of extremes.</xL>
-
----
-
-## GeoDa as a Complement to QGIS
-
-Advanced spatial statistics such as Moran's I, spatial regression, and some hot spot methods are not part of QGIS core.
-
-QGIS plugins can help, but they often rely on extra Python libraries and dependency management.
-
-GeoDa is a useful complement when you need:
-
-- spatial autocorrelation
-- local indicators of spatial association
-- exploratory spatial data analysis
-- a simpler interface for statistical pattern analysis
-
-Installing GeoDa: https://geodacenter.github.io/download
-
----
-
-name: workflow
-
-## Tutorial Workflow
-
-A practical Week 6 workflow is:
-
-1. identify the feature type and research question
-2. choose the relevant vector operation: buffer, overlay, spatial join, or distance measure
-3. clean geometries and confirm the CRS
-4. run the vector analysis in QGIS
-5. summarise the outputs in maps, tables, or counts
-6. use spatial statistics when the question is about pattern rather than just location
-7. interpret the result in relation to the urban problem
+.references[
+  - [GeoPandas `sjoin()` documentation](https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html)
+]
 
 ---
 
@@ -729,20 +523,11 @@ A practical Week 6 workflow is:
 - Kang-tsung Chang and Carl M. Chang (2019), Introduction to Geographic Information Systems, 9th Edition, Chapter 11
 - Geospatial Analysis, 7th Edition, 2024 - de Smith, Goodchild, Longley et al. https://spatialanalysisonline.com/
 - QGIS documentation on vector geoprocessing tools
+- GeoPandas user guide: [Merging data (spatial joins)](https://geopandas.org/en/stable/docs/user_guide/mergingdata.html)
 
 ---
 
-## Key Takeaways
-
-- Vector analysis is used to answer urban questions about proximity, overlap, containment, and pattern.
-- Buffering, overlay, and spatial join solve different analytical problems and should not be treated as interchangeable.
-- Distance measurement depends on geometry, CRS, and the type of movement being modelled.
-- Spatial statistics help move from visual impression to statistical interpretation.
-- A defensible workflow depends on clean geometries, appropriate tools, and clear interpretation.
-
----
-
-<xL>Continue with Lecture: </xL><button onclick="window.location.href='raster.html'">Go to Spatial Analysis of Raster Data</button>
+<xL>Continue with Lecture: </xL><button onclick="window.location.href='pattern.html'">Go to Spatial Pattern Analysis</button>
 
 <xL>Back to course menu: </xL><button onclick="window.location.href='index.html'">Go Back to Menu</button>
 

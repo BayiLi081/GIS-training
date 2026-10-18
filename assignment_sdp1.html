@@ -161,13 +161,44 @@ Check your overlay. If points appear in the sea, far from where they should be, 
 
 name: workflow
 
+.right_half[
+  <figure>
+    <img src="imgs/assignment_sdp1/s1_choosebasemap.jpg" width="80%">
+  </figure>
+]
+
 ## Path A: QGIS
 
 1. Load each layer and check its CRS in *Layer Properties → Information*
 2. Set the project CRS to **EPSG:3414** in *Project → Properties → CRS*; use *Export → Save Features As* to save a reprojected copy
-3. Add a basemap: in the *Browser* panel, *XYZ Tiles → OpenStreetMap* (or add the OneMap tile URL)
-4. Keep the features of interest with *Select by Expression* (e.g. `"Name" IN ('Queenstown', 'Commonwealth')`), then *Export → Save Selected Features As*; or *Vector → Geoprocessing Tools → Clip*. Save the results in one **GeoPackage**
-5. Style each layer with *Symbology → Single Symbol* or *Categorized*; turn on labels with a white *Buffer*
+3. Add a basemap: in the *Browser* panel, *HCMGIS → Basemaps → OpenStreetMap or other basemaps*
+
+---
+
+## Path A: QGIS
+
+Keep the features of interest with *Select by Expression* (e.g. `"Name" IN ('Queenstown', 'Commonwealth')`), then *Export → Save Selected Features As*; 
+
+  or *Vector → Geoprocessing Tools → Clip or other tools appropriate*. Save the results in one **GeoPackage**
+
+<figure>
+  <img src="imgs/vector/geoprocessing_typology_tools.jpg" width="60%">
+  <figcaption>Union, Intersect, Identify, Clip, Dissolve, Merge, Buffer.</figcaption>
+  <figsubcaption>Source: 
+QGIS Geoprocessing Tools & Operators. https://www.youtube.com/watch?v=tznoUk7GwLs</figsubcaption>
+</figure>
+
+---
+
+.right_half[
+  <figure>
+    <img src="imgs/assignment_sdp1/s1_choosebasemap.jpg" width="80%">
+  </figure>
+]
+
+## Path A: QGIS
+
+5. Style each layer with *Symbology → Single Symbol* or *Categorized*
 6. In the **Print Layout**, add the main map and a **second map item** for the inset; use its *Overviews* setting to draw the main map extent as a box
 7. Add the legend, scale bar, north arrow, coordinate *Grid*, title, and source note; export as PNG (300 dpi) or PDF
 
