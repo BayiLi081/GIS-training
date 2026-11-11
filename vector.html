@@ -468,32 +468,6 @@ To summarise instead of copy, use **Join attributes by location (summary)** or *
 
 ---
 
-.right_half[
-  ```python
-  import geopandas as gpd
-
-  preschools = gpd.read_file("preschools.geojson").to_crs(3414)
-  subzones = gpd.read_file("subzones.geojson").to_crs(3414)
-
-  # 1. Join attributes by location
-  joined = gpd.sjoin(
-      preschools,
-      subzones[["SUBZONE_N", "PLN_AREA_N", "geometry"]],
-      how="left", predicate="within",
-  )
-  print(joined["SUBZONE_N"].isna().sum())  # 0 unmatched
-
-  # 2. Count points in polygon
-  counts = joined.groupby("SUBZONE_N").size().rename("n_preschools")
-  subzones = subzones.merge(counts, on="SUBZONE_N", how="left")
-  subzones["n_preschools"] = subzones["n_preschools"].fillna(0).astype(int)
-
-  print(subzones.nlargest(3, "n_preschools")[["SUBZONE_N", "n_preschools"]])
-  # TAMPINES EAST 72, WOODLANDS EAST 54, ALJUNIED 40
-
-  subzones.plot(column="n_preschools", cmap="Blues", legend=True)
-  ```
-]
 
 ## Spatial Join with Python (geopandas)
 
@@ -511,6 +485,36 @@ To summarise instead of copy, use **Join attributes by location (summary)** or *
 | Count points in polygon | `groupby().size()` + `merge()` |
 
 As in QGIS, both layers must share a CRS; `sjoin` warns if they do not.
+
+---
+
+
+## Spatial Join with Python (geopandas)
+
+`gpd.sjoin(left, right)` is the geopandas equivalent of *Join attributes by location*: rows of the **left** layer gain the attributes of the **right** layer features they match.
+
+  ```python
+  import geopandas as gpd
+  preschools = gpd.read_file("preschools.geojson").to_crs(3414)
+  subzones = gpd.read_file("subzones.geojson").to_crs(3414)
+
+  # 1. Join attributes by location
+  joined = gpd.sjoin(
+      preschools,
+      subzones[["SUBZONE_N", "PLN_AREA_N", "geometry"]],
+      how="left", predicate="within",
+  )
+  print(joined["SUBZONE_N"].isna().sum())
+
+  # 2. Count points in polygon
+  counts = joined.groupby("SUBZONE_N").size().rename("n_preschools")
+  subzones = subzones.merge(counts, on="SUBZONE_N", how="left")
+  subzones["n_preschools"] = subzones["n_preschools"].fillna(0).astype(int)
+
+  print(subzones.nlargest(3, "n_preschools")[["SUBZONE_N", "n_preschools"]])
+
+  subzones.plot(column="n_preschools", cmap="Blues", legend=True)
+  ```
 
 .references[
   - [GeoPandas `sjoin()` documentation](https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html)

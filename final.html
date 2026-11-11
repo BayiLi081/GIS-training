@@ -23,6 +23,14 @@
             font-size: 0.8em;
             color: var(--ink-soft);
           }
+
+          /* Seven contents items fit on two rows, keeping the title slide clear of the deck bar. */
+          @media (min-width: 901px) {
+            .toc {
+              grid-template-columns: repeat(4, minmax(100px, 1fr));
+              width: min(980px, 100%);
+            }
+          }
         </style>
     </head>
   <body>
@@ -46,6 +54,8 @@ class: center
 
 .toc-wrapper[
   <div class="toc">
+    <a href="#group" class="toc-item">Form Your Group</a>
+    <a href="#topic" class="toc-item">Choose Your Topic</a>
     <a href="#overview" class="toc-item">Project Overview</a>
     <a href="#brief" class="toc-item">Project Brief</a>
     <a href="#questions" class="toc-item">Research Questions</a>
@@ -56,19 +66,74 @@ class: center
 
 ---
 
+name: group
+
+## Task 1: Form Your Group
+
+In the [Week 8 class](raster.html), form a group of **3–4 people** and choose a **group alias**: a short name for your group.
+
+
+
+---
+
+name: topic
+
+## Task 2: Choose Your Topic
+
+Each group works on **one primary domain** as the main topic of its final project.
+
+.project-table[
+
+| Primary domain | Subfields and research topics |
+|---|---|
+| 1. Urban Planning &amp; Spatial Structure | Land use, urban morphology, density, zoning, spatial development, urban growth, urban regeneration |
+| 2. Transportation &amp; Human Mobility | Traffic, public transport, travel behaviour, mode choice, accessibility, walking, cycling, micromobility |
+| 3. Urban Environment &amp; Ecology | Urban greenspace, parks, tree canopy, biodiversity, air and noise pollution, ecosystem services |
+| 4. Urban Climate &amp; Resilience | Urban heat islands, flooding, climate adaptation, disaster risk, carbon emissions, environmental resilience |
+| 5. Built Environment &amp; Public Space | Streetscape, urban design, public-space activities, walkability, neighbourhood quality, place vitality |
+| 6. Housing &amp; Urban Economy | Housing affordability, property markets, employment, retail, commercial activity, tourism, economic geography |
+| 7. Urban Society, Equity &amp; Health | Spatial inequality, segregation, social inclusion, environmental justice, public health, well-being |
+| 8. Urban Infrastructure &amp; Services | Utilities, energy, water, waste, telecommunications, public facilities, infrastructure performance |
+| 9. Urban Governance &amp; Policy | Planning policy, urban management, public participation, policy evaluation, service delivery, smart governance |
+
+]
+
+---
+
+.right_half[
+<img src="imgs/QRCode.png" alt="QR code placeholder for the group form">
+
+*QR code placeholder: to be shared in class*
+]
+
+## Task 2: Rank Three Options
+
+In the form, rank three different domains from the list:
+
+- **First option**
+- **Second option**
+- **Third option**
+
+The lecturer decides each group's topic **by submission time**: earlier submissions are considered first, so a group that submits later may not get its first option.
+
+Agree on your three options as a group **before** you scan the QR code.
+
+Submit through the form, shared by **QR code in class**:
+
+- your **group alias**
+- the names of your **group members**
+
+The same form is used for [Task 2](#topic). 
+
+Each group submits **once**: only **one member** of the group needs to submit the form.
+
+---
+
 ## Final Project
 
 **Spatial Analysis for a real-world urban issue in Singapore** (70%, Weeks 9–14)
 
-Each group defines a focused Singapore-based urban question, justifies why it matters, and develops a spatial argument using open government datasets, appropriate methods, and critical interpretation.
-
-Possible themes:
-
-- Transport accessibility and daily mobility
-- Housing, land use, and neighbourhood change
-- Distribution of public amenities and services
-- Environmental quality, green space, and liveability
-- The role of data and AI-assisted interpretation in policy discussion
+Within its assigned [topic](#topic), each group defines a focused Singapore-based urban question, justifies why it matters, and develops a spatial argument using open government datasets, appropriate methods, and critical interpretation.
 
 Delivered as three outputs: a presentation slide deck, a 6–8 page report, and reproducible, open-source project code.
 
@@ -78,6 +143,7 @@ Delivered as three outputs: a presentation slide deck, a 6–8 page report, and 
 
 | Week | Milestone |
 |---|---|
+| Week 8 | Form groups and submit topic options in class |
 | Week 9 | Understand the project, find literature, list candidate datasets |
 | Week 10 | Review studies, plan the project, begin the analytical workflow |
 | Week 11 | Collect and integrate the datasets for the workflow |
@@ -119,7 +185,7 @@ name: brief
 
 This project focuses on urban issues in Singapore that can be explored through spatial analysis.
 
-Students may study themes such as transport accessibility, walkability, housing patterns, land-use change, green-space provision, environmental exposure, public amenity distribution, commercial activity, or other urban challenges that can be supported by available data.
+Within their assigned topic, students may study themes such as transport accessibility, walkability, housing patterns, land-use change, green-space provision, environmental exposure, public amenity distribution, commercial activity, or other urban challenges that can be supported by available data.
 
 In this project, students need to identify a clear Singapore-based urban question, justify why it matters, and develop a spatial argument using appropriate datasets, methods, and interpretation.
 
@@ -156,7 +222,7 @@ name: questions
 
 ## Example Research Questions
 
-You may work with one of these questions, adapt them, or propose your own related question.
+You may work with one of these questions, adapt them, or propose your own, as long as it fits your group's assigned topic.
 
 - How does public transport accessibility vary across neighbourhoods in Singapore?
 - How walkable are different parts of Singapore, and how can this be evaluated spatially?
@@ -201,6 +267,7 @@ name: timeline
 
 | Week | Main Task |
 |---|---|
+| Week 8 | Form your group and submit your topic options through the form, in the [raster class](raster.html). |
 | Week 9 | Understand the project, find relevant literature, and list potential datasets needed to answer the research question. |
 | Week 10 | Review documents and existing studies, plan the full project with your group, and begin building the analytical workflow that best fits your chosen urban issue. |
 | Week 11 | Find the datasets needed for the project and begin integrating them for the research workflow. |
@@ -261,6 +328,7 @@ The Week 14 presentation format is **15 minutes presentation + 5 minutes Q and A
 
 AI tools may be used to support the project, but they should assist analysis rather than replace reasoning.
 
+.left_half[
 Students may use AI tools to:
 
 - generate or refine code
@@ -268,13 +336,18 @@ Students may use AI tools to:
 - debug scripts or workflows
 - summarise literature or policy documents as a starting point
 - help compare alternative analytical approaches
+]
 
+.right_half[
 Students should also reflect critically on AI use by explaining:
 
 1. what tool was used
 2. what task it supported
 3. what was checked manually
 4. what errors, uncertainty, or limitations remained
+]
+
+<div class="clear"></div>
 
 If AI is used in a meaningful way, it should be discussed briefly in the methodology, workflow, or reflection section of the report and presentation.
 

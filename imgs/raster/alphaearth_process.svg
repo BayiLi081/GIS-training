@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450" font-family="Aptos, 'Trebuchet MS', 'Segoe UI', Arial, sans-serif" fill="#6f3050">
+  <rect width="900" height="450" fill="#ffffff"/>
+  <defs>
+    <marker id="head" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0 0 L5 2.5 L0 5 Z" fill="#b0708f"/>
+    </marker>
+    <linearGradient id="climate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f86c6"/>
+      <stop offset="1" stop-color="#ee9b4d"/>
+    </linearGradient>
+  </defs>
+
+  <text x="170" y="40" text-anchor="middle" font-size="28" font-weight="700">Observations over a year</text>
+
+  <!-- Optical tile, with a cloud hiding part of the scene -->
+  <g transform="translate(30 62)">
+    <rect width="80" height="80" fill="#7f9b5a"/>
+    <rect x="40" width="40" height="44" fill="#a98c62"/>
+    <rect y="44" width="44" height="36" fill="#55794a"/>
+    <ellipse cx="44" cy="30" rx="30" ry="15" fill="#f4f4f4"/>
+    <ellipse cx="28" cy="38" rx="20" ry="12" fill="#ffffff"/>
+  </g>
+  <text x="125" y="96" font-size="26" font-weight="700">Optical</text>
+  <text x="125" y="124" font-size="20">clouds hide many dates</text>
+
+  <!-- Radar tile -->
+  <g transform="translate(30 156)">
+    <rect width="80" height="80" fill="#8a8a8a"/>
+    <path d="M0 0h20v20H0zM40 0h20v20H40zM20 20h20v20H20zM60 20h20v20H60zM0 40h20v20H0zM40 40h20v20H40zM20 60h20v20H20zM60 60h20v20H60z" fill="#4e4e4e"/>
+  </g>
+  <text x="125" y="205" font-size="26" font-weight="700">Radar</text>
+
+  <!-- LiDAR tile: canopy heights -->
+  <g transform="translate(30 250)">
+    <rect width="80" height="80" fill="#eef3ea"/>
+    <path d="M6 80V50h12v30zM22 80V24h12v56zM38 80V40h12v40zM54 80V12h12v68z" fill="#4f8a4a"/>
+  </g>
+  <text x="125" y="299" font-size="26" font-weight="700">LiDAR</text>
+
+  <!-- Climate tile -->
+  <rect x="30" y="344" width="80" height="80" fill="url(#climate)"/>
+  <text x="125" y="378" font-size="26" font-weight="700">Climate</text>
+  <text x="125" y="408" font-size="26" font-weight="700">simulations</text>
+
+  <line x1="300" y1="243" x2="350" y2="243" stroke="#b0708f" stroke-width="7" marker-end="url(#head)"/>
+
+  <rect x="358" y="158" width="180" height="170" rx="18" fill="#d81b74"/>
+  <text x="448" y="225" text-anchor="middle" font-size="27" font-weight="700" fill="#ffffff">AlphaEarth</text>
+  <text x="448" y="258" text-anchor="middle" font-size="27" font-weight="700" fill="#ffffff">Foundations</text>
+  <text x="448" y="294" text-anchor="middle" font-size="21" fill="#ffffff">learned model</text>
+
+  <line x1="546" y1="243" x2="596" y2="243" stroke="#b0708f" stroke-width="7" marker-end="url(#head)"/>
+
+  <!-- Stack of embedding layers, back (A63) to front (A00) -->
+  <g stroke="#ffffff" stroke-width="2">
+    <rect x="664" y="106" width="150" height="150" fill="#7d5ba6"/>
+    <rect x="652" y="118" width="150" height="150" fill="#3f9e9a"/>
+    <rect x="640" y="130" width="150" height="150" fill="#c9a227"/>
+    <rect x="628" y="142" width="150" height="150" fill="#c2518f"/>
+    <rect x="616" y="154" width="150" height="150" fill="#5a8fd8"/>
+  </g>
+  <path d="M616 154h70v62h-70z" fill="#6fc7b2"/>
+  <path d="M686 216h80v88h-80z" fill="#e58fb1"/>
+  <text x="826" y="128" font-size="22" font-weight="700">A63</text>
+  <text x="628" y="294" font-size="22" font-weight="700" fill="#ffffff">A00</text>
+
+  <text x="715" y="350" text-anchor="middle" font-size="27" font-weight="700">Annual embedding</text>
+  <text x="715" y="384" text-anchor="middle" font-size="23">64 values per 10 m pixel</text>
+</svg>

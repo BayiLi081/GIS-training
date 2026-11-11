@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450" font-family="Aptos, 'Trebuchet MS', 'Segoe UI', Arial, sans-serif" fill="#6f3050">
+  <rect width="900" height="450" fill="#ffffff"/>
+  <line x1="450" y1="20" x2="450" y2="430" stroke="#e7c9d8" stroke-width="2" stroke-dasharray="8 8"/>
+
+  <!-- Spectral bands -->
+  <text x="225" y="44" text-anchor="middle" font-size="28" font-weight="700">Spectral bands</text>
+  <g>
+    <polygon points="120,120 300,120 350,80 170,80" fill="#b58b6a"/>
+    <polygon points="120,176 300,176 350,136 170,136" fill="#c46a9a"/>
+    <polygon points="120,232 300,232 350,192 170,192" fill="#e0584f"/>
+    <polygon points="120,288 300,288 350,248 170,248" fill="#5fb56d"/>
+    <polygon points="120,344 300,344 350,304 170,304" fill="#5a8fd8"/>
+  </g>
+  <line x1="235" y1="100" x2="235" y2="324" stroke="#3a1a2c" stroke-width="3"/>
+  <g fill="#3a1a2c">
+    <rect x="226" y="94" width="18" height="12"/>
+    <rect x="226" y="150" width="18" height="12"/>
+    <rect x="226" y="206" width="18" height="12"/>
+    <rect x="226" y="262" width="18" height="12"/>
+    <rect x="226" y="318" width="18" height="12"/>
+  </g>
+  <g font-size="24" font-weight="700" text-anchor="end">
+    <text x="118" y="108">SWIR</text>
+    <text x="118" y="164">NIR</text>
+    <text x="118" y="220">Red</text>
+    <text x="118" y="276">Green</text>
+    <text x="118" y="332">Blue</text>
+  </g>
+  <text x="225" y="385" text-anchor="middle" font-size="23">Each band: one wavelength range</text>
+  <text x="225" y="417" text-anchor="middle" font-size="23" font-weight="700">Physically interpretable</text>
+
+  <!-- Embedding bands -->
+  <text x="675" y="44" text-anchor="middle" font-size="28" font-weight="700">Embedding bands</text>
+  <g>
+    <polygon points="570,120 750,120 800,80 620,80" fill="#7d5ba6"/>
+    <polygon points="570,176 750,176 800,136 620,136" fill="#3f9e9a"/>
+    <polygon points="570,288 750,288 800,248 620,248" fill="#c2518f"/>
+    <polygon points="570,344 750,344 800,304 620,304" fill="#c9a227"/>
+  </g>
+  <line x1="685" y1="100" x2="685" y2="324" stroke="#3a1a2c" stroke-width="3"/>
+  <g fill="#3a1a2c">
+    <rect x="676" y="94" width="18" height="12"/>
+    <rect x="676" y="150" width="18" height="12"/>
+    <rect x="676" y="262" width="18" height="12"/>
+    <rect x="676" y="318" width="18" height="12"/>
+  </g>
+  <rect x="655" y="192" width="60" height="44" fill="#ffffff"/>
+  <g fill="#3a1a2c">
+    <circle cx="685" cy="202" r="4"/>
+    <circle cx="685" cy="214" r="4"/>
+    <circle cx="685" cy="226" r="4"/>
+  </g>
+  <g font-size="24" font-weight="700" text-anchor="end">
+    <text x="568" y="108">A63</text>
+    <text x="568" y="164">A62</text>
+    <text x="568" y="276">A01</text>
+    <text x="568" y="332">A00</text>
+  </g>
+  <text x="675" y="385" text-anchor="middle" font-size="23">Each band: one learned axis</text>
+  <text x="675" y="417" text-anchor="middle" font-size="23" font-weight="700">Read together as one vector</text>
+</svg>
