@@ -354,6 +354,83 @@ gdf = gpd.GeoDataFrame(df, geometry=pts, crs=4326)
 
 ---
 
+name: geocoding-hdb
+class: dense
+
+## 2. Prepare: A Real Geocoding Task with HDB Resale Prices
+
+.cols[
+.cell[
+### The Data Have Addresses, Not Coordinates
+
+[Resale flat prices from Jan 2017](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view) (HDB, data.gov.sg) lists every HDB resale, updated monthly:
+
+| month | town | block | street_name | resale_price |
+|---|---|---|---|---|
+| 2017-01 | ANG MO KIO | 406 | ANG MO KIO AVE 10 | 232,000 |
+| 2017-01 | ANG MO KIO | 108 | ANG MO KIO AVE 4 | 250,000 |
+
+There is no latitude, longitude or postcode. To map prices, or link them to MRT stations or planning areas, you must geocode `block + street_name`.
+
+**Geocode addresses, not rows:** the file downloaded on 17 Nov 2026 has **244,894 sales** but only **9,772 unique addresses**, about 25 sales per address.
+
+**Practice file:** [hdb_resale_sample.csv](data/hdb_resale_sample.csv), 50 sales at 35 addresses. **Full dataset:** Download on the [data.gov.sg page](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view).
+
+### Test Run: 100 Random Addresses, OneMap, 17 Nov 2026
+
+- **All 100** matched the right block on the right street, including HDB abbreviations: `JLN BT MERAH` → JALAN BUKIT MERAH.
+- **17** returned more than one result. Most were the same block listed twice, but `43 HOLLAND DR` also matched **43 HOLLAND GROVE DRIVE**, a private estate 1.5 km away.
+]
+.cell[
+### Geocode Once, Check, Then Join Back
+
+```python
+import pandas as pd, requests, time
+URL = "https://www.onemap.gov.sg/api/common/elastic/search"
+df = pd.read_csv("data/hdb_resale_sample.csv", dtype=str)
+df["addr"] = df.block + " " + df.street_name
+todo = df.addr.drop_duplicates()     # 35 addresses, not 50 rows
+
+def same(h, addr):                   # right block and street?
+    blk, st = addr.split(" ", 1)
+    ini = lambda s: "".join(w[0] for w in s.split())  # JLN → J
+    return h["BLK_NO"] == blk and ini(h["ROAD_NAME"]) == ini(st)
+
+hits = {}
+for a in todo:
+    q = {"searchVal": a, "returnGeom": "Y",
+         "getAddrDetails": "Y", "pageNum": 1}
+    res = requests.get(URL, params=q, timeout=10).json()["results"]
+    hits[a] = next((h for h in res if same(h, a)), None)
+    time.sleep(0.3)                  # OneMap: max 250 calls/min
+
+geo = pd.DataFrame([{"addr": a, **h} for a, h in hits.items() if h])
+df = df.merge(geo[["addr", "LATITUDE", "LONGITUDE", "POSTAL"]],
+              on="addr", how="left")  # unmatched sales keep NaN
+```
+
+`same()` keeps a result only if the block matches and each street word starts with the same letter, since abbreviations keep the first letter. Unmatched addresses stay in the table for review.
+
+The sample runs in about 15 seconds. For the full dataset, the 9,772 addresses take about 70 minutes: save `geo` to a file and reuse it.
+
+**Discuss:** every sale in a block shares one point. What is the finest scale at which you can compare prices?
+]
+]
+
+.references[
+- Contains information from [Resale flat prices based on registration date from Jan-2017 onwards](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view) (HDB), accessed on 17 November 2026 from data.gov.sg, which is made available under the terms of the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence).
+- [OneMap API: search](https://www.onemap.gov.sg/apidocs/search)
+]
+
+???
+The practice file data/hdb_resale_sample.csv holds 50 unaltered rows from that download: 35 addresses drawn from the 100 tested ones (including the Holland Drive and abbreviation cases), 15 of them with their two most recent sales. Numbers come from the full CSV downloaded on 17 Nov 2026 (data.gov.sg last updated 17 Nov 2026; coverage Jan 2017 to Nov 2026). The test used a random sample of 100 unique addresses (pandas random_state=42) and the code on this slide, unchanged except that todo was limited to the sample. Each call took about 0.43 s including the 0.3 s pause; at OneMap's cap of 250 calls a minute the full run cannot be shorter than about 39 minutes.
+
+The first-letter check is a teaching shortcut. It handles HDB abbreviations (NTH, UPP, BT, JLN, C'WEALTH, ST.) but could accept a different street with the same initials; for production work, also compare the town or check the returned postcode against an HDB block list. 43 HOLLAND GROVE DRIVE (postcode 278878) is 1.5 km from 43 HOLLAND DRIVE (270043).
+
+Block-level points mean every flat in a block shares one location; storey and unit position are not available, so the finest defensible unit is the block.
+
+---
+
 name: maup
 class: dense
 
