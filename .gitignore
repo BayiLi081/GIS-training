@@ -23,5 +23,15 @@ storymap/*
 
 CLAUDE.md
 
-**/output/*.pdf
-**/output/*.png
+# --- not course material (see catalog.md) ---
+catalog.md
+.agents/
+graphify-out/
+# rasters + outputs produced by running slide code or side projects
+*.tif
+*.aux.xml
+output/
+
+# Share the fictional SDP teaching fixture and its companion script.
+!data/sdp/facilities_raw.geojson
+!qgis_py/sdp_cleaning_demo.py

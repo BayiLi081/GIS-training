@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "name": "Fictional facilities for SDP teaching only",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A01",
+        "category": " Clinic ",
+        "capacity": "120"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.94,
+          1.34
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A01",
+        "category": " Clinic ",
+        "capacity": "120"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.94,
+          1.34
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A02",
+        "category": "clinic",
+        "capacity": "80"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.95,
+          1.35
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A03",
+        "category": "Library",
+        "capacity": "12"
+      },
+      "geometry": null
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A04",
+        "category": "Clinic",
+        "capacity": "unknown"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.96,
+          1.36
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A05",
+        "category": "Library",
+        "capacity": "-3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.97,
+          1.37
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "A06",
+        "category": "Library",
+        "capacity": "1,200"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.98,
+          1.38
+        ]
+      }
+    }
+  ]
+}

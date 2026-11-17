@@ -392,6 +392,33 @@ It is different from NDVI:
 
 ---
 
+name: street-view-proxy
+
+## Street View: Visible Environmental Features
+
+**Suitable for:** green view ratio, visible building/façade interface, sky exposure and other features of the captured streetscape.
+
+[**Li et al. (2015)**](https://doi.org/10.1016/j.ufug.2015.06.006), *Urban Forestry & Urban Greening* 14, 675–685, extracted visible vegetation from Google Street View to calculate a modified **Green View Index**.
+
+[**Yin et al. (2015)**](https://doi.org/10.1016/j.apgeog.2015.07.010), *Applied Geography* 63, 337–345, demonstrated automated pedestrian detection in Street View images. This supports counting visible people in images; temporal representativeness requires separate validation.
+
+**Interpretation limit:** people captured at one moment do not directly establish typical or stable pedestrian flow. Capture time, season, occlusion, direction and coverage affect observations; [Biljecki & Ito (2021)](https://doi.org/10.1016/j.landurbplan.2021.104217) review these imagery challenges.
+
+**Validation:** record capture dates and views. Validate any flow estimate with repeated, time-matched counts; an image detection count has no observation duration in people/hour.
+
+.references[
+- Li, X., Zhang, C., Li, W., Ricard, R., Meng, Q., & Zhang, W. (2015). [Assessing street-level urban greenery using Google Street View and a modified green view index](https://doi.org/10.1016/j.ufug.2015.06.006). Urban Forestry & Urban Greening, 14(3), 675–685.
+- Yin, L., Cheng, Q., Wang, Z., & Shao, Z. (2015). [‘Big data’ for pedestrian volume: Exploring the use of Google Street View images for pedestrian counts](https://doi.org/10.1016/j.apgeog.2015.07.010). Applied Geography, 63, 337–345.
+- Biljecki, F., & Ito, K. (2021). [Street view imagery in urban analytics and GIS: A review](https://doi.org/10.1016/j.landurbplan.2021.104217). Landscape and Urban Planning, 215, 104217.
+]
+
+???
+Li et al.'s modified GVI measures visible vegetation from selected perspectives; it is not aerial canopy cover. Biljecki and Ito review environmental and frontage applications as well as spatial and temporal gaps. Their historical observations about API access describe the services at the time of their review, not a claim about current API capabilities.
+
+Yin et al. explicitly explore pedestrian-volume estimation, so do not say that street imagery can never support such research. The narrower teaching conclusion is that detecting people in a snapshot alone does not establish representative flow over an interval. Independent repeated observations and a validated sampling or estimation model are needed to make that inference.
+
+---
+
 ## Sampling Street-View Images
 
 For urban analysis, image locations should be sampled systematically.
