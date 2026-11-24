@@ -12,6 +12,8 @@ cache/
 */cache*
 *.py
 *.ipynb
+!cvurban_colab.ipynb
+!data/sg_traffic_images/download_sample.py
 *.doc*
 .codex
 

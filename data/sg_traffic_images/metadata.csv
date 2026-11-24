@@ -1,0 +1,9 @@
+file,camera_id,latitude,longitude,timestamp,width,height,source_url
+images/cam_2701.jpg,2701,1.447023728,103.7716543,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/533219cf-aad3-4549-94cd-4fe02ecdd8fe.jpg
+images/cam_2702.jpg,2702,1.445554109,103.7683397,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/fb7caac0-2aa8-4913-a937-379861384025.jpg
+images/cam_2704.jpg,2704,1.429588536,103.769311,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/9ab9b8cd-3e89-4ef5-a9b2-7aeca3e100b8.jpg
+images/cam_4703.jpg,4703,1.348697862,103.6350413,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/ee8cf640-f88b-42a9-a38e-477f373ecb69.jpg
+images/cam_4712.jpg,4712,1.341244001,103.6439134,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/a90f59a6-9af7-48f5-aed6-a8754e48429f.jpg
+images/cam_4713.jpg,4713,1.347645829,103.6366955,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/fda6bfa7-7bf1-4619-a0d4-16c3ccf2b0ca.jpg
+images/cam_4798.jpg,4798,1.25999999687243,103.823611110166,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/ff9d75c5-5f2d-4c51-85ca-ab6cddef6540.jpg
+images/cam_4799.jpg,4799,1.26027777363278,103.823888890049,2026-11-18T14:40:58+08:00,640,360,https://images.data.gov.sg/api/traffic-images/2026/11/92e2b271-45fb-4fb0-ae13-8a901c4d45de.jpg

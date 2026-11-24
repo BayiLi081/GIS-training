@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lecture: Computer Vision and Urban Case Study</title>
+        <title>Lecture: Computer Vision for Urban Decisions</title>
         <link href="imgs/logo.svg" rel="icon" type="image/svg+xml"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -9,9 +9,19 @@
         <script src="src/custom.js"></script>
         <link rel="stylesheet" type="text/css" href="src/custom.css"/>
         <style>
+            .cv-code-small pre {
+                font-size: 0.72em;
+            }
+            .cv-video-frame {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                border: 0;
+                border-radius: 12px;
+                box-shadow: 0 18px 48px rgba(130, 34, 83, 0.18);
+            }
             .segmentation-example-frame {
                 width: 100%;
-                height: 430px;
+                height: 350px;
                 border: 1px solid rgba(143, 57, 95, 0.22);
                 border-radius: 12px;
                 background: #000;
@@ -34,6 +44,49 @@
             .cv-source-examples td {
                 vertical-align: top;
             }
+
+            .cv-yolo-columns {
+                display: grid;
+                grid-template-columns: 1.15fr 1fr;
+                gap: 24px;
+                font-size: 0.8em;
+            }
+
+            .cv-yolo-columns th,
+            .cv-yolo-columns td {
+                padding: 0.42rem 0.55rem;
+            }
+
+            .cv-yolo-note {
+                font-size: 0.68em;
+                line-height: 1.35;
+            }
+
+            .cv-flow {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 16px;
+                margin: 1em 0;
+                font-size: 0.82em;
+            }
+
+            .cv-flow > div {
+                border: 1px solid rgba(143, 57, 95, 0.22);
+                border-radius: 12px;
+                padding: 14px;
+                background: rgba(233, 162, 195, 0.1);
+            }
+
+            .cv-segmentation-workflow {
+                width: auto;
+                max-width: 100%;
+                height: 270px;
+                object-fit: contain;
+            }
+
+            .cv-api-response .long_trunk pre {
+                max-height: 210px;
+            }
         </style>
     </head>
   <body>
@@ -47,7 +100,9 @@ class: center
 
 # Spatial Analysis of Urban Data
 
-## Lecture: Computer Vision and Urban Case Study
+## Computer Vision for Urban Decisions
+
+One street view, three urban questions
 
 [Bayi Li](mailto:barryli081@gmail.com)
 
@@ -56,83 +111,663 @@ class: center
 
 ---
 
-## Computer Vision and Urban Case Study
+name: urban-questions
 
-### Today's Questions
-
-- What can visual data reveal about cities?
-
-- How does computer vision convert images into structured urban data?
-
-- How can image segmentation support urban environmental analysis?
-
-- What should we be careful about when using AI-derived visual indicators?
-
----
-
-## Why Visual Data Matters in Cities
+## What Would a Planner Want to Know About This Street?
 
 .right_half[
-  <figure>
-    <img src="imgs/applygis/svi_nus.webp" alt="Street-level visual data" class="zoomable" width="100%">
-    <figcaption>Street-level imagery as eye-level urban data.</figcaption>
-    <figsubcaption>Source: NUS Global Streetscapes, https://ual.sg/project/global-streetscapes/</figsubcaption>
-  </figure>
+<figure>
+<img src="data/sg_traffic_images/images/cam_4799.jpg" alt="Singapore traffic camera 4799 showing two carriageways, roadside planters, and a red-surfaced path" class="zoomable" width="100%">
+<figcaption>Camera 4799, 18 Nov 2026, 14:40.</figcaption>
+<figsubcaption>LTA traffic images via data.gov.sg; teaching sample.</figsubcaption>
+</figure>
 ]
 
-Urban experience is not only captured by census tables, parcels, or road networks.
+Look before measuring. What here could the city act on?
 
-Visual data records what people see from the street:
+*Data source: [Traffic Images by LTA](https://data.gov.sg/datasets/d_6cdb6b405b25aaaacbaf7689bcc6fae0/view#GET/transport/traffic-images)*
 
-- greenery and shade
-- road space and sidewalks
-- building frontage
-- street furniture
-- enclosure and openness
-- signs of maintenance or disorder
+--
 
----
+- **The vehicles:** is traffic pressure building, and when?
+- **The planters:** how much greenery does someone on this route see?
+- **The red path:** can people walk here safely and continuously?
 
-## What Is Computer Vision?
+--
 
-Computer vision is the use of algorithms to extract information from images or videos.
-
-<div align="center">
-  <figure>
-    <img src="imgs/urbanCV/AI%26cv.jpeg" alt="AI and computer vision" class="zoomable" width="64%">
-  </figure>
-</div>
-
-In urban analytics, the goal is not just to label images. The goal is to transform pixels into spatial variables that can be mapped, compared, and modeled.
+**Computer vision** extracts information from images or video. **GIS** connects those observations to places, populations, and networks.
 
 ---
 
-## Visual Data Sources for Urban Analysis
+name: traffic-pressure
+
+## Traffic: Where Should We Investigate Queues?
+
+.right_half[
+<figure>
+<img src="data/sg_traffic_images/images/cam_2702.jpg" alt="Singapore traffic camera 2702 showing vehicles on an expressway" class="zoomable" width="100%">
+<figcaption>What can this single view establish?</figcaption>
+<figsubcaption>LTA traffic images via data.gov.sg; teaching sample, 18 Nov 2026.</figsubcaption>
+</figure>
+]
+
+The vehicles in the opening view raise the first question. Queues affect bus reliability, access to services, and how easy a road is to cross.
+
+A single frame can tell us **how many vehicles are visible** on a defined stretch of road. 
+
+It cannot tell us how long a queue lasts or how fast it moves. It might need continuous observation.
+
+We start by counting with **object detection**, then ask what extra observation turns a count into flow.
+
+---
+
+name: traffic-sample
+
+## Traffic Evidence: What Does Our Sample Contain?
+
+.right_half[
+
+  <img src="data/sg_traffic_images/images/cam_2704.jpg" alt="Tree-lined road" class="zoomable" width="49%">
+  <img src="data/sg_traffic_images/images/cam_4703.jpg" alt="Causeway traffic" class="zoomable" width="49%">
+  <img src="data/sg_traffic_images/images/cam_4712.jpg" alt="Expressway with greenery" class="zoomable" width="49%">
+]
+
+**Singapore traffic camera sample:** 8 geotagged images from one snapshot (18 Nov 2026, 14:40:58 SGT).
+
+.cv-small[
+- **Source:** LTA traffic cameras via [data.gov.sg](https://data.gov.sg/collections/traffic-images/view)
+- **Licence:** [Singapore Open Data Licence v1.0](https://data.gov.sg/open-data-licence) (see source terms and attribution)
+- **Image handling:** downscaled to 640×360; inspect for identifiable details before sharing
+- **Files:** `images/*.jpg` + [`metadata.csv`](data/sg_traffic_images/metadata.csv) (camera_id, lat, lon, timestamp)
+- **Scope:** snapshot counts and image composition; these eight views cannot establish traffic flow or citywide conditions.
+]
+
+<button onclick="window.open('https://colab.research.google.com/github/BayiLi081/GIS-training/blob/gh-pages/cvurban_colab.ipynb')">Open hands-on notebook in Colab</button>
+<button onclick="window.open('https://github.com/BayiLi081/GIS-training/tree/gh-pages/data/sg_traffic_images')">Get the dataset</button>
+
+---
+
+name: tools-intro
+
+## Before the Notebook: Models, Weights, and Two Libraries
+
+.left_half[
 
 .cv-compact-table[
 
-| Source | Spatial Unit | What It Can Capture | Common Limitation |
-|---|---|---|---|
-| Satellite imagery | pixel, grid, parcel | land cover, vegetation, heat, urban expansion | top-down view, cloud cover |
-| Aerial imagery | building, parcel, block | rooftops, roads, tree canopy | cost, update frequency |
-| Street-view imagery | street point, road segment | eye-level environment, walkability, greenery | uneven coverage |
-| Traffic cameras | intersection, corridor | flows, events, congestion | privacy, access |
-| Social media images | place, venue, neighborhood | perception, activity, events | sampling bias |
+| Term | What It Means Here |
+|---|---|
+| **Model** | the architecture, a recipe of layers: RT-DETR, YOLO, SegFormer |
+| **Weights** | the numbers learned in training, saved as a file and downloaded once |
+| **Pretrained** | already trained by someone else on a large dataset (COCO, Cityscapes) |
+| **Inference** | running a trained model on new images; we do not train in class |
+| **Threshold** | the minimum confidence score for keeping a box |
 
+]
+
+**Same model, different weights, different skills:** COCO weights know cars and buses; Cityscapes weights know road, sidewalk and vegetation.
+]
+
+.right_half.cv-code-small[
+
+**Hugging Face `transformers`:** `pipeline` downloads the weights, resizes the image, runs the model and returns labelled results in one call.
+
+```python
+from transformers import pipeline
+detector = pipeline("object-detection",
+                    model="PekingU/rtdetr_v2_r18vd")
+detector(img, threshold=0.5)  # [{label, score, box}, ...]
+```
+
+**Ultralytics `YOLO`:** one object to predict, track, train, and export.
+
+```python
+from ultralytics import YOLO
+model = YOLO("yolo26s.pt")     # s = small; also n, m, l, x
+model.predict(img, conf=0.25)  # boxes, classes, scores
+```
+
+.cv-small[`model=` names a checkpoint on the [Hugging Face Hub](https://huggingface.co/models) as `publisher/model`; change it to try another model.]
+]
+
+<div style="clear: both"></div>
+
+---
+
+## Detect Vehicles: Turn Boxes into a Defined Count
+
+**Question:** how many vehicles are visible inside the same road area at each observation time?
+
+.cv-compact-table[
+
+| Stage | Method | Check Before Interpreting |
+|---|---|---|
+| Locate objects | RT-DETR and YOLO in the notebook: compare before choosing | boxes can miss small or occluded vehicles |
+| Select classes | retain specified vehicle labels | document whether bicycles and motorcycles are included |
+| Define the count | filter to a fixed road region and confidence threshold | the notebook counts the full image; add a region for a traffic study |
+| Validate | compare with manual boxes and counts | report misses, false detections, and count error |
+
+]
+
+**Output:** visible vehicle count per image and timestamp. Different camera views cover different road areas, so raw counts are not directly comparable traffic-density measurements.
+
+.cv-small[
+**Try notebook section 3:** run both detectors on camera 4703 and check them against your own count. This is inference with pretrained weights, not local model training.
+]
+
+.references[
+- [RT-DETRv2 model and COCO training information](https://huggingface.co/PekingU/rtdetr_v2_r18vd)
+- [Ultralytics detection task](https://docs.ultralytics.com/tasks/detect/)
 ]
 
 ---
 
-## Example Open Visual Data Sources
+name: traffic-result
+
+## Result: Two Detectors, Two Counts at Camera 4703
+
+<div align="center">
+<img src="imgs/urbanCV/result_detect_compare_cam4703.jpg" alt="RT-DETR (left) and YOLO (right) detections side by side on traffic camera 4703" class="zoomable" width="66%">
+</div>
+
+.cv-compact-table[
+
+| 18 Nov 2026, 14:40:58 | RT-DETR (threshold 0.5) | YOLO26s (threshold 0.25) |
+|---|---|---|
+| Vehicles counted | 9 | 11 |
+| Does better | boxes more individual cars (6 vs 3) | labels the motorcyclist as a motorcycle; no false "train" boxes |
+| Does worse | "train" on a booth; motorcyclists as "person" | some boxes enclose several queued vehicles |
+| CPU time per image | ~150 ms | ~35 ms |
+
+]
+
+**Back to the question:** vehicles were queuing at this instant, and both counts miss most of the queue. The models fail in different ways, so test the available ones against a hand count before choosing.
+
+---
+
+## Need Flow? Add Time and Track Crossings
+
+**Urban question:** how many vehicles or pedestrians pass a defined line during an observation interval?
+
+.left_half[
+<iframe
+    class="cv-video-frame"
+    src="https://www.youtube-nocookie.com/embed/OS5qI9YBkfk"
+    title="Roboflow: Track and Count Objects using YOLOv8, ByteTrack and Supervision"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="encrypted-media; picture-in-picture; fullscreen"
+    allowfullscreen>
+</iframe>
+.cv-small[Video: Roboflow, [Track & Count Objects using YOLOv8, ByteTrack & Supervision](https://www.youtube.com/watch?v=OS5qI9YBkfk).]
+]
+
+.right_half[
+**Detect → track → count:** the tracker keeps one ID per vehicle across frames, so each crossing is counted once, with its direction.
+
+.cv-compact-table[
+
+| Measure | Needs |
+|---|---|
+| Snapshot count | one image |
+| Crossing rate | unique crossings in a timed interval |
+| Typical flow | repeated, representative periods + independent counts |
+
+]
+
+**Check:** ID switches, occlusion, missed frames. API snapshots may be too far apart to track.
+]
+
+<div style="clear: both"></div>
+
+.references[
+- Yin et al. (2015), [‘Big data’ for pedestrian volume](https://doi.org/10.1016/j.apgeog.2015.07.010), Applied Geography, 63, 337–345.
+- [Ultralytics tracking mode](https://docs.ultralytics.com/modes/track/) · [Six trackers compared on ID stability (video)](https://www.youtube.com/watch?v=ZsxHIN2PoiY)
+]
+
+???
+In the video, point to the counting line and the in/out counter, and to the IDs that stay with each vehicle across frames.
+The supplied eight-camera sample contains one observation per camera, so it cannot demonstrate tracking across time. Tracking IDs are temporary associations, not personal identities. Yin et al. investigate estimation of pedestrian volume; the teaching distinction is between a raw snapshot count and a separately validated flow estimate.
+
+---
+
+name: street-greenery
+
+## Greenery: Which Walking Routes Need Attention?
+
+.right_half[
+<figure>
+<img src="imgs/applygis/svi_nus.webp" alt="Street-level imagery illustrating the pedestrian view of an urban street" class="zoomable" width="100%">
+<figcaption>The viewpoint matters when measuring visible greenery.</figcaption>
+<figsubcaption>Source: NUS Global Streetscapes, https://ual.sg/project/global-streetscapes/</figsubcaption>
+</figure>
+]
+
+In the opening view, the greenery is a row of planters and a verge. Is that typical of the route? A greening programme needs evidence at the scale of the street: **which walking routes have little visible greenery?**
+
+We measure it with **semantic segmentation**, which labels vegetation pixels; GIS then joins their share to walking routes.
+
+The result is a shortlist for field visits, where shade, planting space, and who walks there can be checked.
+
+---
+
+## Segment the Scene to Measure Visible Greenery
+
+**Semantic segmentation** assigns a class to each pixel: vegetation, road, sky, building, and more.
+
+<div align="center">
+<figure>
+<img src="imgs/applygis/gvi_segmentation_model.webp" alt="Published street-view sampling and semantic segmentation workflow" class="zoomable cv-segmentation-workflow">
+<figcaption>Sample street views → classify pixels → calculate visual indicators.</figcaption>
+<figsubcaption>Source: https://doi.org/10.1038/s41598-024-81451-6</figsubcaption>
+</figure>
+</div>
+
+.cv-small[
+**Notebook section 4 uses SegFormer with Cityscapes weights.** Check its labels against the Singapore images: a model trained for another setting may mislabel unfamiliar views. Instance segmentation instead separates individual objects; it need not label the entire scene.
+]
+
+.references[
+- [SegFormer Cityscapes checkpoint](https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024)
+]
+
+---
+
+name: mask-review
+
+## Inspect the Masks Before Trusting the Indicator
+
+<em>Compare the panorama and masks. Where could a wrong vegetation boundary change a greening shortlist?</em>
+
+.left_half[
+<iframe
+    class="segmentation-example-frame"
+    src="html_snippets/panoramic-segmentation/selected_example/generated_toggle.html"
+    title="Interactive panoramic image segmentation comparison"
+    loading="lazy"
+    allowfullscreen>
+</iframe>
+]
+
+.right_half[
+<iframe
+    class="segmentation-example-frame"
+    src="html_snippets/panoramic-segmentation/selected_example/generated_curtain_overlay.html"
+    title="Interactive panoramic image segmentation comparison"
+    loading="lazy"
+    allowfullscreen>
+</iframe>
+]
+
+
+
+<div style="clear: both"></div>
+
+.cv-small[Check trees against buildings, distant vegetation, and obstructed views. This panorama illustrates the method; it is separate from the traffic-camera sample.]
+
+---
+
+## Green View Share: A Number with a Viewpoint
+
+<div class="cv-flow">
+<div><strong>Numerator</strong><br>pixels labelled vegetation</div>
+<div><strong>Denominator</strong><br>all valid pixels in the chosen view</div>
+<div><strong>Share</strong><br>vegetation pixels / valid pixels</div>
+</div>
+
+.cv-compact-table[
+
+| Indicator | Observation | Urban Question |
+|---|---|---|
+| Eye-level Green View Index (GVI) | consistently sampled street-level views | how much greenery is visible along a walking route? |
+| Traffic-camera green share | elevated camera field of view | how much of this camera image is vegetation? |
+| NDVI | red and near-infrared reflectance | where is photosynthetically active vegetation evident in the raster? |
+
+]
+
+**For comparability:** use consistent viewpoints, directions, cropping, seasons, vegetation classes, and invalid-pixel rules. Panorama projection also affects pixel weighting.
+
+**For heat mitigation:** add shade observations and temperature or thermal-comfort evidence; visible greenery alone does not measure cooling.
+
+---
+
+name: greenery-result
+
+## Result: Green Share Across the Eight Cameras
+
+<div align="center">
+<img src="imgs/urbanCV/result_greenery_cam2704.jpg" alt="Camera 2704 photo beside the same view with SegFormer vegetation pixels shaded green" class="zoomable" width="62%">
+</div>
+
+.cv-compact-table[
+
+| Camera | 2704 | 4798 | 4712 | 4713 | 2702 | 4799 | 2701 | 4703 |
+|---|---|---|---|---|---|---|---|---|
+| Vegetation share | 0.55 | 0.50 | 0.37 | 0.36 | 0.27 | 0.10 | 0.03 | 0.02 |
+
+]
+
+**Camera 2704 (above), 0.55:** the mask follows the canopy, but also covers road seen through the trees on the left.
+
+**The opening view, 4799, 0.10:** mostly background trees and the right-hand verge; most planters on the left are missed. A low share flags the view for a closer look.
+
+.cv-small[SegFormer (Cityscapes weights), share of all pixels; notebook sections 4–5.]
+
+---
+
+name: pedestrian-access
+
+## Pedestrian Access: Where Should We Inspect?
+
+The red path in the opening view looks walkable. On the ground, a path that is mapped or visible may still be narrow, broken, or blocked.
+
+.cv-compact-table[
+
+| Inspection Question | Technology | Reviewable Output |
+|---|---|---|
+| Is a path visible in this view? | image classification | visible / not visible / uncertain |
+| Where are obstacles and path surfaces? | detection + segmentation | boxes and masks linked to the image |
+| Which visible features explain the flag? | vision-language model (VLM) | structured audit answer with visual evidence |
+| Is there enough usable space? | calibrated geometry + field measurement | verified dimensions and access conditions |
+
+]
+
+Images help **prioritise site visits** along routes to bus stops, schools, or clinics. They flag a site; they cannot certify it as accessible.
+
+---
+
+## Classification: Sort Views for a Pedestrian Audit
+
+**Question:** which images should a reviewer inspect for a possible missing footpath?
+
+<div class="cv-flow">
+<div><strong>Define the labels</strong><br>visible / not visible / uncertain</div>
+<div><strong>Classify the view</strong><br>image-level category</div>
+<div><strong>Review the flags</strong><br>confirm against the image</div>
+</div>
+
+- Create a locally labelled sample with a clear audit rubric.
+- Test on streets excluded from training; nearby duplicate views can inflate accuracy.
+- Review false negatives: a missed problem may remove a route from the inspection list.
+- Keep “uncertain” or request review when the view is obstructed.
+
+**Output:** an image-level audit label. It does not locate an obstacle; use detection or segmentation for that.
+
+.cv-small[
+Custom labels require suitable training or an evaluated prompting workflow. Off-the-shelf scene classes do not automatically match this audit rubric.
+]
+
+---
+
+## VLMs: Turn Visible Features into an Audit Record
+
+.right_half[
+<figure>
+<img src="imgs/applygis/vlm_understanding.png" alt="Illustration of vision-language model capabilities" class="zoomable" width="100%">
+<figcaption>VLMs accept images and language prompts.</figcaption>
+<figsubcaption>Source: https://www.ultralytics.com/blog/understanding-vision-language-models-and-their-applications</figsubcaption>
+</figure>
+]
+
+**Question:** what visible evidence suggests a path obstruction?
+
+.cv-small[
+**Example prompt:** “Is a pedestrian path visible? Is an obstruction visible on it? Return yes / no / uncertain for each, describe the supporting image region, and state what cannot be judged.”
+
+**Technology:** a vision-language model connects image content with a natural-language request.
+
+**Review:** compare answers with a human audit using the same rubric. Preserve the image ID, prompt, model version, and reviewer decision.
+
+**Output:** a draft inspection record. Fluent descriptions can be wrong; verify the cited region and avoid inferring residents' traits or intentions.
+]
+
+---
+
+name: access-result
+
+## Result: A Draft Audit Record for the Opening View
+
+.left_half[
+.cv-compact-table[
+
+| Prompt Item | VLM Answer | Reviewer |
+|---|---|---|
+| Path visible? | **yes**: red-surfaced strip along the outer edge of the left carriageway, separated by a kerb | ☐ agree ☐ change |
+| Obstruction visible? | **uncertain**: lamp posts and a red-and-white post stand at the outer edge; whether they narrow the path cannot be seen | ☐ agree ☐ change |
+| Cannot judge | width, surface condition, kerb ramps, whether cyclists share it, the path beyond the frame | — |
+
+]
+]
+
+.right_half[
+<figure>
+<img src="data/sg_traffic_images/images/cam_4799.jpg" alt="Traffic camera 4799; a red-surfaced path runs along the outer edge of the left carriageway" class="zoomable" width="100%">
+<figcaption>Camera 4799: the red-surfaced path is on the far left.</figcaption>
+</figure>
+]
+
+<div style="clear: both"></div>
+
+**Back to the question:** a separated path is visible here; check the edge posts and continuity on site before marking the route clear.
+
+.cv-small[Answer from a VLM (Claude) given this image and the previous slide's prompt. The reviewer column stays blank until someone checks it against the rubric.]
+
+---
+
+name: urban-evidence
+
+## Match the Imagery to the Urban Evidence Needed
+
+.cv-compact-table[
+
+| Urban Issue | Suitable Source | Observation Unit | Limitation to Resolve |
+|---|---|---|---|
+| Vehicle queues and crossings | traffic-camera images or video | fixed view + time interval | occlusion, view changes, insufficient frame frequency |
+| Greenery along walking routes | street-view images | sampled point + direction + date | uneven routes, seasons, capture dates |
+| Planting space and canopy | aerial imagery | georeferenced pixel / parcel | top-down view omits eye-level experience |
+| Vegetation and surface heat patterns | suitable satellite spectral / thermal data | pixel / grid + acquisition date | resolution, clouds; surface heat is not felt heat |
+| Reported place experience | volunteered or social images | contributed image + place | selective posting and uncertain representativeness |
+
+]
+
+**Choose the source after defining the question.** Combine complementary viewpoints with explicit dates and units; do not treat them as interchangeable measurements.
+
+[Open-source directory](#visual-data-sources) · [Traffic API practice](#api-practice)
+
+---
+
+## Aggregate Observations to Useful GIS Units
+
+**Question:** which streets need an inspection, and how much evidence supports each one?
+
+.cv-compact-table[
+
+| Observation | GIS Unit | Aggregation Rule | Keep Alongside the Value |
+|---|---|---|---|
+| green share per standardised view | walking street segment | summarise sampled views with stated weights | sample count, spread, dates, missing coverage |
+| reviewed obstruction label | route / street segment | flag observed locations for inspection | evidence image, direction, review status |
+| vehicle crossings per interval | counted line / approach | sum unique crossings over measured time | duration, direction, missing frames |
+| scene class per image | neighbourhood sample | report class proportions among sampled views | sample design and uncertain labels |
+
+]
+
+**Spatial join:** retain image IDs and link observations to the intended street or site. Nearest-road matching can pick the wrong carriageway; camera position may differ from the scene observed.
+
+**Avoid false precision:** broad averages can hide one obstructed link or a short stretch with low greenery.
+
+---
+
+## Combine Layers to Build an Inspection Shortlist
+
+**Planning workflow:** identify walking routes with low observed greenery, then inspect routes that connect people to everyday services.
+
+<div class="cv-flow">
+<div><strong>Visual evidence</strong><br>greenery + reviewed access flags</div>
+<div><strong>GIS context</strong><br>walking network + stops + destinations</div>
+<div><strong>Field shortlist</strong><br>candidate routes + evidence gaps</div>
+</div>
+
+- Join observations to streets; map coverage before ranking.
+- Add population, service access, and measured environmental conditions.
+- State the prioritisation rule; test whether different weights change the shortlist.
+- Visit candidate routes to check shade, usable space, and planting feasibility.
+
+**For urban models:** match dates and units, evaluate on separate areas, and consider confounding.
+
+---
+
+name: takeaways
+
+## Return to the Urban Questions
+
+.cv-compact-table[
+
+| Issue | Technology Contributes | What Our Sample Showed | Decision Still Needs |
+|---|---|---|---|
+| Traffic pressure | detection gives boxes; tracking gives temporal associations | queue at 4703; RT-DETR 9, YOLO 11, both miss many | defined observation intervals and validated movement measures |
+| Street greenery | segmentation gives masks; GVI summarises a chosen view | opening view 4799 among the lowest (0.10) | representative routes, consistent viewpoints, field checks |
+| Pedestrian access | classification and VLMs structure audits; geometry adds spatial evidence | path visible at 4799; edge posts uncertain | human review, verified dimensions, current site conditions |
+
+]
+
+**The reusable sequence:** urban question → suitable images → measurable output → local validation → GIS context → justified action.
+
+**A good result says both what was observed and what remains unknown.**
+
+[Revisit the opening view](#urban-questions) · [Toolkit reference](#image-raster) · [Data sources and API practice](#visual-data-sources)
+
+<button onclick="window.location.href='webmap.html'">Continue to Web-Based Spatial Visualisation</button>
+
+---
+
+name: image-raster
+
+## Reference: From a Photograph to Model Input
+
+.right_half[
+<figure>
+<img src="imgs/urbanCV/AI%26cv.jpeg" alt="Overview of artificial intelligence and computer vision" class="zoomable" width="100%">
+<figcaption>Computer vision supplies the image measurements in our workflow.</figcaption>
+</figure>
+]
+
+**An image is a raster:** our sample has 360 rows × 640 columns × 3 RGB bands.
+
+- Pixel values encode colour; they do not directly label a car or a tree.
+- A trained model turns visual patterns into boxes, masks, or labels.
+- Resizing can make distant motorcycles too small to recognise.
+
+**Keep a separate record:** image ID, camera ID, coordinates, capture time, viewpoint, and processing settings.
+
+.cv-small[
+A pixel location is not a map coordinate. Camera coordinates locate the observation point; locating objects on the ground needs camera geometry or other georeferencing.
+]
+
+---
+
+name: svi-indexs
+
+## Reference: Other Pixel Shares Help Frame Street Audits
+
+.cv-compact-table[
+
+| Visible Class | Image Measurement | Urban Use | Needs Additional Evidence |
+|---|---|---|---|
+| Vegetation | vegetation pixel share | identify low-greenery views | shade and planting feasibility |
+| Sky | sky pixel share | compare visual openness | calibrated geometry for a sky-view factor |
+| Road | road pixel share | describe the captured streetscape | mapped road area and perspective correction |
+| Sidewalk | sidewalk pixel share | flag views for pedestrian-path review | usable width, continuity, obstructions |
+| Building | building pixel share | describe visual enclosure | heights, setbacks, and street geometry |
+
+]
+
+**Pixel share measures the image.** It is not automatically ground-area share, pedestrian accessibility, or a physical dimension.
+
+**Practical:** compare camera 2704 with 2701. Inspect what the segmentation model does with water before mapping any class shares.
+
+---
+
+## Reference: When the Question Needs More Than a Label
+
+**Possible extensions:** select these only when the required observations and validation are available.
+
+.cv-compact-table[
+
+| Urban Investigation | Technology | Useful Output | Essential Check |
+|---|---|---|---|
+| Which objects occupy a kerbside area? | instance segmentation | separate masks for individual vehicles or objects | projected mask area is not ground area |
+| How are vehicles arranged in an aerial parking view? | oriented bounding boxes (OBB) | boxes with orientation | aerial resolution, classes, and georeferencing |
+| How do people move through a crossing? | pose estimation + temporal tracking | keypoints and movement sequences | occlusion, annotation quality; posture does not reveal intent |
+| Could a path contain a narrow passage? | depth estimation + camera geometry | estimated scene geometry | scale calibration and field measurements before width claims |
+
+]
+
+**These are study-design options, not outputs of the supplied notebook.** Each requires task-specific models or additional processing.
+
+---
+
+name: yolo-modes
+
+## Reference: YOLO Tasks and Modes
+
+**YOLO = You Only Look Once.** In Ultralytics, a **task** defines the output; a **mode** defines the operation.
+
+.cv-yolo-columns[
+.cv-yolo-column[
+
+### Urban question → task
+
+| Task | Urban Observation |
+|---|---|
+| Detection | boxes + classes → locate vehicles |
+| Instance segmentation | one mask per object → separate cars |
+| Semantic segmentation | class per pixel → road / sky / greenery |
+| Classification | image label → street scene type |
+| Pose estimation | keypoints → pedestrian posture |
+| Oriented boxes (OBB) | rotated boxes → aerial vehicle orientation |
+| Depth estimation | depth per pixel → scene geometry |
+
+]
+.cv-yolo-column[
+
+### Modes: what do you want to do?
+
+| Mode | Purpose |
+|---|---|
+| **Train** | adapt to local traffic images |
+| **Val** | check errors on labelled local views |
+| **Predict** | detect vehicles in new observations |
+| **Track** | link vehicles through video frames |
+| **Export** | prepare the model for a camera device |
+| **Benchmark** | compare device speed and accuracy |
+
+]
+]
+
+.cv-yolo-note[
+**Toolkit recap; the notebook compares YOLO with RT-DETR for detection and uses SegFormer for segmentation.** Choose compatible weights: task support depends on the model family, weights, and package version; one checkpoint does not perform every task. For greening, use vegetation classes; for flow, tracking needs sequential frames. Validate each task on local observations.
+
+Sources: [Ultralytics tasks](https://docs.ultralytics.com/tasks/) · [Ultralytics modes](https://docs.ultralytics.com/modes/)
+]
+
+???
+
+The task list follows the current Ultralytics documentation, including semantic segmentation and depth estimation. Older model families and package versions may support fewer tasks. Workflow modes are not universally available for every task; check the selected model's support matrix. Example: vehicle detection + Predict gives boxes in each image; vehicle detection + Track associates those boxes across consecutive video frames. Neither a snapshot count nor a track ID alone establishes representative traffic flow. Depth estimates also need local validation before use as physical measurements.
+
+---
+
+name: visual-data-sources
+
+## Resource: Find Images for Your Urban Question
 
 .cv-source-examples[
 
-| Source Type | Example Open Sources | Useful For | Check Before Use |
+| Source Type | Example Sources | Urban Investigation | Check Before Use |
 |---|---|---|---|
 | Satellite imagery | [USGS Landsat](https://www.usgs.gov/landsat-missions/landsat-data-access)<br>[Copernicus Sentinel](https://dataspace.copernicus.eu/) | land cover, NDVI, surface temperature, urban expansion | resolution, clouds, revisit interval |
 | Aerial imagery | [USDA NAIP](https://www.usgs.gov/centers/eros/science/usgs-eros-archive-aerial-photography-national-agriculture-imagery-program-naip)<br>[OpenAerialMap](https://openaerialmap.org/) | roofs, roads, tree canopy, fine-scale land cover | country coverage, capture date, license |
 | Street-view imagery | [Mapillary](https://www.mapillary.com/)<br>[Global Streetscapes](https://huggingface.co/datasets/NUS-UAL/global-streetscapes) | greenery, sidewalks, signs, facades, street quality | uneven coverage, privacy, API terms |
-| Traffic cameras | [Singapore LTA Traffic Images](https://data.gov.sg/collections/traffic-images/view)<br>[511NY Cameras API](https://511ny.org/developers/help) | live congestion, events, corridor monitoring | live-only data, key access, privacy |
+| Traffic cameras | [Singapore LTA Traffic Images](https://data.gov.sg/collections/traffic-images/view)<br>[511NY Cameras API](https://511ny.org/developers/help) | repeated traffic observations | live-only data, key access, privacy |
 | Social or volunteered images | [Flickr API](https://www.flickr.com/services/api/flickr.photos.search.html)<br>[Wikimedia Commons geocoded media](https://commons.wikimedia.org/wiki/Commons:Geocoding) | place perception, activity, tourism, landmark visibility | sampling bias, consent, content license |
 
 ]
@@ -141,34 +776,48 @@ In urban analytics, the goal is not just to label images. The goal is to transfo
 
 
 
+[Return to evidence design](#urban-evidence) · [Next: API practice](#api-practice)
+
 ---
 
-## Practice: Acquire traffic images from data.gov.sg (data source: LTA Datamall)
+name: api-practice
 
-<button onclick="window.location.href='#image-raster'">Skip the practice</button>
+## Optional Practice: Collect a New Traffic Observation
+
+**Purpose:** compare the same camera at another time; retain capture time and location with every image.
 
 .right_half[
   <figure>
-    <img src="imgs/urbanCV/data_gov_sg_code_example.jpg" width="100%">
+    <img src="imgs/urbanCV/data_gov_sg_code_example.jpg" alt="data.gov.sg example showing how to request traffic images" width="100%">
     <figcaption>The official code example to make API call with Python Request.</figcaption>
   </figure>
 ]
 
-step 1: [Register your data.gov.sg account](https://guide.data.gov.sg/developer-guide/api-overview/how-to-request-an-api-key)
+Step 1: Check [data.gov.sg access and API-key guidance](https://guide.data.gov.sg/developer-guide/api-overview/how-to-request-an-api-key)
 
-step 2: Identify your dataset from data.gov.sg (search traffic images)
+Step 2: Locate the [LTA traffic-images collection](https://data.gov.sg/collections/traffic-images/view).
 
-step 3: Run based on the code example
+Step 3: Run the provided [sample downloader](data/sg_traffic_images/download_sample.py) or follow the source API example. Save each collection separately to retain earlier observations.
+
+
+
+.cv-small[API snapshots support repeated observations; their spacing may not support tracking. Check each camera timestamp rather than assuming the response retrieval time is its capture time.]
+
+[Return to the hands-on investigation](#mini-exercise)
 
 ---
 
-## Example output of api call
+class: cv-api-response
+
+## API Response: Preserve Place and Capture Time
+
+**Archived response example (April 2026), separate from the November teaching sample.** Inspect camera timestamps for stale observations.
 
 ```
 root
 ├── api_info        → API status info
 └── items           → list of data snapshots
-      └── cameras   → list of camera records
+      ├── cameras   → list of camera records
       └── timestamp → Time when this batch of camera data was collected
 ```
 
@@ -233,13 +882,13 @@ root
 
 ---
 
-## Example output of api call
+## One Camera Record Becomes One GIS Observation
 
 .left_half[
 <div align="center">
   <figure>
-    <img src="imgs/urbanCV/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg" alt="Street view semantic segmentation workflow" class="zoomable" width="100%">
-    <figcaption>Example of the downloaded traffic camera image.</figcaption>
+    <img src="imgs/urbanCV/ffcfd4d1-5378-4243-a8c1-169a6ceb8c51.jpg" alt="Traffic camera 1111 image associated with the archived API record" class="zoomable" width="100%">
+    <figcaption>Archived LTA traffic image: camera 1111.</figcaption>
   </figure>
 </div>
 ]
@@ -260,299 +909,13 @@ root
 "timestamp": "2026-04-22T03:01:32+08:00"
 ```
 ]
----
 
-name: image-raster
 
-## Images as Raster Data
+<div style="clear: both"></div>
 
-An image is a raster: a grid of pixels with values.
+.cv-small[Use camera ID + image timestamp to identify the observation. The coordinates locate the camera; projected vehicle locations need further geometry. This record predates other images in the example batch.]
 
-Each pixel may store:
-
-- one value in grayscale imagery
-- three values in RGB images
-- many values in multispectral imagery
-- a class label after segmentation or classification
-
-<xL>Computer vision turns raster values into semantic information.</xL>
-
----
-
-## From Image to Urban Indicator
-
-.cv-compact-table[
-
-| Step | Input | Output | Urban Interpretation |
-|---|---|---|---|
-| Capture | street-view or remote image | geotagged image | observed location |
-| Preprocess | raw image | aligned, resized image | comparable samples |
-| Inference | image + model | classes, objects, masks | scene composition |
-| Measurement | model output | counts, area share, score | quantitative indicator |
-| GIS analysis | indicator + location | map, statistics, model | spatial pattern |
-
-]
-
-The critical move is to keep the spatial reference attached to every image and every derived measurement.
-
----
-
-## Three Common Computer Vision Tasks
-
-.cv-compact-table[
-
-| Task | Question | Output | Urban Example |
-|---|---|---|---|
-| Image classification | What is in this image? | one or more labels | residential vs commercial street scene |
-| Object detection | Where are specific objects? | bounding boxes | vehicles, pedestrians, traffic signs |
-| Semantic segmentation | What class is each pixel? | pixel-level class map | road, sky, building, tree, sidewalk |
-
-]
-
-Segmentation is especially useful when the quantity of interest is a visible proportion, such as greenery, sky openness, or road space allocation.
-
----
-
-## Semantic Segmentation
-
-Semantic segmentation assigns a class label to every pixel.
-
-<div align="center">
-  <figure>
-    <img src="imgs/applygis/gvi_segmentation_model.webp" alt="Street view semantic segmentation workflow" class="zoomable" width="78%">
-    <figcaption>Street view image sampling and semantic segmentation.</figcaption>
-    <figsubcaption>Source: 10.1038/s41598-024-81451-6</figsubcaption>
-  </figure>
-</div>
-
-The output can be measured directly: percentage of vegetation pixels, sky pixels, building facade pixels, and other visible classes.
-
----
-
-## Example: Image Segmentation
-
-<em>Drag the vertical divider to compare the original panorama with its segmented version.</em>
-
-.left_half[
-<iframe
-    class="segmentation-example-frame"
-    src="html_snippets/panoramic-segmentation/selected_example/generated_toggle.html"
-    title="Interactive panoramic image segmentation comparison"
-    loading="lazy"
-    allowfullscreen>
-</iframe>
-]
-
-.right_half[
-<iframe
-    class="segmentation-example-frame"
-    src="html_snippets/panoramic-segmentation/selected_example/generated_curtain_overlay.html"
-    title="Interactive panoramic image segmentation comparison"
-    loading="lazy"
-    allowfullscreen>
-</iframe>
-]
-
----
-
-name: svi-indexs
-
-## What the Segmented Image Gives Us
-
-.cv-compact-table[
-
-| Class | Possible Measurement | Urban Meaning |
-|---|---|---|
-| Vegetation | share of pixels | eye-level greenery, shade potential |
-| Sky | share of pixels | openness, enclosure, street canyon effect |
-| Road | share of pixels | vehicle-oriented public realm |
-| Sidewalk | share of pixels | pedestrian space |
-| Building | share of pixels | frontage, density, enclosure |
-
-]
-
-The model output is not the final answer. It is an intermediate data layer that needs spatial aggregation and interpretation.
-
----
-
-## Green View Index
-
-Green View Index (GVI) estimates the visible proportion of greenery from a street-level viewpoint.
-
-```text
-GVI = green pixels / all valid pixels
-```
-
-It is different from NDVI:
-
-- NDVI measures vegetation from spectral bands, usually from above.
-- GVI measures greenery as seen by pedestrians at eye level.
-
-<xL>These two indicators answer related but not identical urban questions.</xL>
-
----
-
-name: street-view-proxy
-
-## Street View: Visible Environmental Features
-
-**Suitable for:** green view ratio, visible building/façade interface, sky exposure and other features of the captured streetscape.
-
-[**Li et al. (2015)**](https://doi.org/10.1016/j.ufug.2015.06.006), *Urban Forestry & Urban Greening* 14, 675–685, extracted visible vegetation from Google Street View to calculate a modified **Green View Index**.
-
-[**Yin et al. (2015)**](https://doi.org/10.1016/j.apgeog.2015.07.010), *Applied Geography* 63, 337–345, demonstrated automated pedestrian detection in Street View images. This supports counting visible people in images; temporal representativeness requires separate validation.
-
-**Interpretation limit:** people captured at one moment do not directly establish typical or stable pedestrian flow. Capture time, season, occlusion, direction and coverage affect observations; [Biljecki & Ito (2021)](https://doi.org/10.1016/j.landurbplan.2021.104217) review these imagery challenges.
-
-**Validation:** record capture dates and views. Validate any flow estimate with repeated, time-matched counts; an image detection count has no observation duration in people/hour.
-
-.references[
-- Li, X., Zhang, C., Li, W., Ricard, R., Meng, Q., & Zhang, W. (2015). [Assessing street-level urban greenery using Google Street View and a modified green view index](https://doi.org/10.1016/j.ufug.2015.06.006). Urban Forestry & Urban Greening, 14(3), 675–685.
-- Yin, L., Cheng, Q., Wang, Z., & Shao, Z. (2015). [‘Big data’ for pedestrian volume: Exploring the use of Google Street View images for pedestrian counts](https://doi.org/10.1016/j.apgeog.2015.07.010). Applied Geography, 63, 337–345.
-- Biljecki, F., & Ito, K. (2021). [Street view imagery in urban analytics and GIS: A review](https://doi.org/10.1016/j.landurbplan.2021.104217). Landscape and Urban Planning, 215, 104217.
-]
-
-???
-Li et al.'s modified GVI measures visible vegetation from selected perspectives; it is not aerial canopy cover. Biljecki and Ito review environmental and frontage applications as well as spatial and temporal gaps. Their historical observations about API access describe the services at the time of their review, not a claim about current API capabilities.
-
-Yin et al. explicitly explore pedestrian-volume estimation, so do not say that street imagery can never support such research. The narrower teaching conclusion is that detecting people in a snapshot alone does not establish representative flow over an interval. Independent repeated observations and a validated sampling or estimation model are needed to make that inference.
-
----
-
-## Sampling Street-View Images
-
-For urban analysis, image locations should be sampled systematically.
-
-Common strategies:
-
-- points along every road segment
-- fixed spacing along walkable networks
-- intersections and transit stops
-- stratified samples by land use or neighborhood
-- repeated samples across time for change detection
-
-<xL>The sampling design controls what the final map can legitimately claim.</xL>
-
----
-
-## Spatial Aggregation
-
-After extracting image-level indicators, we often aggregate them to GIS units.
-
-.cv-compact-table[
-
-| Image-Level Value | Aggregation Unit | Output |
-|---|---|---|
-| GVI per panorama | road segment | average visible greenery |
-| sidewalk pixels | street block | pedestrian-space score |
-| building pixels | planning area | enclosure indicator |
-| object counts | intersection | traffic activity proxy |
-| scene labels | neighborhood | dominant street character |
-
-]
-
-Aggregation makes the output easier to map, but it can also hide local variation.
-
----
-
-## Case Study Questions
-
-Computer vision can support urban studies questions such as:
-
-- Which streets provide the most visible greenery?
-
-- Do greener streets align with walking and cycling infrastructure?
-
-- Are high-density districts visually enclosed or open?
-
-- Which neighborhoods have low pedestrian amenities?
-
-- How does the street environment differ across socioeconomic areas?
-
----
-
-## From Visual Features to Urban Models
-
-CV-derived indicators can be combined with other spatial data:
-
-- road networks and accessibility
-- land use and zoning
-- population and demographic variables
-- public transport access
-- heat, air quality, and noise data
-- real estate and business activity
-
-This allows visual environment variables to become explanatory or outcome variables in urban models.
-
----
-
-## Vision-Language Models
-
-<div align="center">
-  <figure>
-    <img src="imgs/applygis/vlm_understanding.png" alt="Vision-language model example" class="zoomable" width="76%">
-    <figcaption>An example of the capabilities of a vision-language model.</figcaption>
-    <figsubcaption>Source: https://www.ultralytics.com/blog/understanding-vision-language-models-and-their-applications</figsubcaption>
-  </figure>
-</div>
-
-Vision-language models can describe scenes, answer questions, or classify images using natural language prompts.
-
----
-
-## Validation, Bias, and Ethics
-
-.cv-compact-table[
-
-| Risk | Why It Matters | Check |
-|---|---|---|
-| model error | classes may be confused | manual labels, accuracy metrics |
-| domain shift | model trained elsewhere may fail locally | local validation sample |
-| temporal mismatch | image date may not match other data | metadata check |
-| sampling bias | coverage may favor some roads or districts | coverage map |
-| privacy concerns | people, plates, interiors may appear | blur, aggregate, minimize storage |
-
-]
-
-AI-derived indicators should report uncertainty, image sources, dates, coverage, and licensing constraints.
-
----
-
-## Mini Exercise
-
-Use the segmentation example and answer:
-
-1. Which visual classes are easiest to distinguish?
-
-2. Which classes may be confused in dense urban scenes?
-
-3. If you computed GVI from this image, what would the numerator and denominator be?
-
-4. What GIS layer would you join the result to?
-
-5. What urban planning question could this indicator help answer?
-
----
-
-## Key Takeaways and Reading
-
-- Images are raster data with rich semantic information.
-
-- Computer vision converts pixels into labels, objects, masks, and indicators.
-
-- Segmentation is useful for measuring visible proportions in street scenes.
-
-- Spatial sampling, aggregation, validation, and ethics determine the quality of the urban conclusion.
-
-.cv-small[
-Suggested reading: Long and Liu (2017), "How green are the streets?"; Zhang et al. (2018), "Measuring human perceptions of a large-scale urban region using machine learning"; NUS Global Streetscapes: https://ual.sg/project/global-streetscapes/
-]
-
-<br>
-
---
-
-<xL>Continue with Lecture: </xL><button onclick="window.location.href='webmap.html'">Go to Web-Based Spatial Visualisation</button>
+[Return to traffic evidence](#traffic-pressure) · [Return to the exercise](#mini-exercise)
 
 </textarea>
     <script src="src/template.js"></script>
